@@ -8,13 +8,13 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import LegalMentions from "./pages/LegalMentions/LegalMentions";
 import UserProfile from "./pages/UserProfile/UserProfile";
 import Navbar from "./components/Navbar";
-import Step from "./pages/Project/Step/Step";
-import Task from "./pages/Project/Step/Task/Task";
-import Members from "./pages/Project/Members/Members";
-import Purchases from "./pages/Project/Purchases/Purchases";
-import Documents from "./pages/Project/Documents/Documents";
+import Step from "./pages/Step/Step";
+import Task from "./pages/Task/Task";
+import Members from "./pages/Members/Members";
+import Purchases from "./pages/Purchases/Purchases";
+import Documents from "./pages/Documents/Documents";
 
-function App() {
+export default function App() {
 
   return (
     <>
@@ -23,18 +23,16 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/project" element={<Project />} />
-        <Route path="/project/documents" element={<Documents />} />
-        <Route path="/project/:idProject/purchases/:idPurchase" element={<Purchases />} />
-        <Route path="/project/members" element={<Members />} />
-        <Route path="/project/step" element={<Step />} />
-        <Route path="/project/step/task" element={<Task />} />
+        <Route path="/dashboard:/idUser" element={<Dashboard />} />
+        <Route path="/project/:idProject" element={<Project />} />
+        <Route path="/project/:idProject/documents" element={<Documents />} />
+        <Route path="/project/:idProject/purchases" element={<Purchases />} />
+        <Route path="/project/:idProject/members" element={<Members />} />
+        <Route path="/project/:idProject/step/:idStep" element={<Step />} />
+        <Route path="/project/:idProject/step/:idStep/task/:idTask" element={<Task />} />
         <Route path="/legal-mentions" element={<LegalMentions />} />
-        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/profile/:idProfile" element={<UserProfile />} />
       </Routes>
     </>
   )
 }
-
-export default App
