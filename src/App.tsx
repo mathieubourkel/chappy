@@ -26,7 +26,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/project" element={<Project />} />
         <Route path="/project/documents" element={<Documents />} />
-        <Route path="/project/purchases" element={<Purchases />} />
+        <Route path="/project/:idProject/purchases/:idPurchase" element={<Purchases />} />
         <Route path="/project/members" element={<Members />} />
         <Route path="/project/step" element={<Step />} />
         <Route path="/project/step/task" element={<Task />} />
