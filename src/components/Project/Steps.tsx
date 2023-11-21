@@ -13,8 +13,8 @@ export default function Steps({steps}:Props) {
                 <h1>Les jalons</h1>
             </div>
             <div className="steps-project-header-buttons">
-                <button>Créer</button>
-                <button>Filtres</button>
+                <button className="button-project">Créer</button>
+                <button className="button-project">Filtres</button>
             </div>
         </div>
         <div className="steps-project-steps">

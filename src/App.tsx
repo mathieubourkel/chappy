@@ -30,7 +30,7 @@ export default function App() {
         <Route path="/project" element={<Project />} />
         <Route path="/project/:idProject/documents" element={<Documents />} />
         <Route path="/project/:idProject/purchases" element={<Purchases />} />
-        <Route path="/project/:idProject/members" element={<Members />} />
+        <Route path="/project/members" element={<Members />} />
         <Route path="/project/:idProject/step/:idStep" element={<Step />} />
         <Route path="/project/:idProject/step/:idStep/task/:idTask" element={<Task />} />
         <Route path="/legal-mentions" element={<LegalMentions />} />
