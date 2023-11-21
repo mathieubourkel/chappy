@@ -27,7 +27,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard:/idUser" element={<Dashboard />} />
-        <Route path="/project/:idProject" element={<Project />} />
+        <Route path="/project" element={<Project />} />
         <Route path="/project/:idProject/documents" element={<Documents />} />
         <Route path="/project/:idProject/purchases" element={<Purchases />} />
         <Route path="/project/:idProject/members" element={<Members />} />
