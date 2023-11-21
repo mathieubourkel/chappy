@@ -13,15 +13,21 @@ import Task from "./pages/Task/Task";
 import Members from "./pages/Members/Members";
 import Purchases from "./pages/Purchases/Purchases";
 import Documents from "./pages/Documents/Documents";
+import { useState } from "react";
 
 export default function App() {
+
+  const [logins, setLogin]: any = useState<any>([])
+  function handleSubmitLogin(login: string) {
+setLogin([...logins, login])
+  }
 
   return (
     <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login handleSubmitLogin={handleSubmitLogin} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard:/idUser" element={<Dashboard />} />
         <Route path="/project/:idProject" element={<Project />} />
