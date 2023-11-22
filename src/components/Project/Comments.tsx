@@ -20,8 +20,8 @@ export default function Comments({comments}:Props) {
             <h2>Espace commentaire</h2>
         </div>
         <div className="comments">
-            {display ? comments.map((comment:intComment) => (
-                <div className="comment">
+            {display ? comments.map((comment:intComment, index:number) => (
+                <div className="comment" key={index}>
                     <div className="comment-header">
                         <h2>{comment.author}</h2>
                         <button>Répondre</button>

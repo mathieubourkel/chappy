@@ -18,8 +18,8 @@ export default function Steps({steps}:Props) {
             </div>
         </div>
         <div className="steps-project-steps">
-            {steps.map((step:intStep) => (
-                <div className="step">
+            {steps.map((step:intStep, index:number) => (
+                <div className="step" key={index}>
                 <h3>{step.name}</h3>
                 <p>{step.description}</p>
                 <button>Accéder</button>
