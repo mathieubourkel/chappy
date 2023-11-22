@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Routes, Route } from "react-router-dom";
 import './css/App.css'
 import Home from "./pages/Home/Home";
@@ -13,7 +14,6 @@ import Members from "./pages/Members/Members";
 import Purchases from "./pages/Purchases/Purchases";
 import Documents from "./pages/Documents/Documents";
 import Footer from "./components/Footer/Footer.tsx";
-import { useState } from "react";
 
 
 export default function App() {
@@ -34,7 +34,7 @@ setLogin([...logins, login])
         <Route path="/project" element={<Project />} />
         <Route path="/project/:idProject/documents" element={<Documents />} />
         <Route path="/project/:idProject/purchases" element={<Purchases />} />
-        <Route path="/project/:idProject/members" element={<Members />} />
+        <Route path="/project/members" element={<Members />} />
         <Route path="/project/:idProject/step/:idStep" element={<Step />} />
         <Route path="/project/:idProject/step/:idStep/task/:idTask" element={<Task />} />
         <Route path="/legal-mentions" element={<LegalMentions />} />
