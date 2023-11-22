@@ -14,6 +14,7 @@ import Purchases from "./pages/Purchases/Purchases";
 import Documents from "./pages/Documents/Documents";
 import Footer from "./components/Footer/Footer.tsx";
 import { useState } from "react";
+import { intUsers } from "./services/interfaces/intUser.tsx";
 
 
 export default function App() {
@@ -23,13 +24,18 @@ export default function App() {
 setLogin([...logins, login])
   }
 
+  const [users, setUser] = useState<intUsers>()
+  function handleSubmitUser(user: intUsers) {
+    setUser(user)
+  }
+
   return (
     <>
 
         <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login handleSubmitLogin={handleSubmitLogin} />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<Signup handleSubmitUser={handleSubmitUser} />} />
         <Route path="/dashboard:/idUser" element={<Dashboard />} />
         <Route path="/project" element={<Project />} />
         <Route path="/project/:idProject/documents" element={<Documents />} />
