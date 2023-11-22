@@ -6,6 +6,7 @@ export default function HomePage() {
           <header>
               <NavbarVisitor />
           </header>
+
           <main>test
           </main>
 

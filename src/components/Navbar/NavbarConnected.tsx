@@ -23,6 +23,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "./../../assets/img/logo.png";
 import iUser from "./../../assets/img/icon user.png";
+import {NavLink} from "react-router-dom";
 
 export function NavbarConnected() {
   const [openNav, setOpenNav] = React.useState(false);
@@ -42,16 +43,15 @@ export function NavbarConnected() {
               <FontAwesomeIcon icon={faPlay} className="h-3 w-3 text-white" />
             </IconButton>
 
-            <Typography
-                as="a"
-                href="/"
+            <NavLink
+                to={"/dashboard"}
                 className="mr-4 cursor-pointer lg:ml-[17em]"
             >
               <img src={logo} alt={"logo de Chappy"} />
-            </Typography>
+            </NavLink>
 
-            <div className="gap-4">
-              <div className="ml-auto gap-1 md:mr-4 hidden lg:inline-block">
+            <div className="flex items-center">
+              <div className="hidden lg:flex">
                 <IconButton variant="text" className={"hover:bg-marine-100/50"}>
                   <FontAwesomeIcon icon={faMoon} className="h-4 w-4 text-marine-300" />
                 </IconButton>
