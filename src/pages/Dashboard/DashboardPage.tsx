@@ -5,7 +5,13 @@ import {
 export default function DashboardPage() {
   return (
     <>
-      <NavbarConnected />
+
+        <header>
+            <NavbarConnected />
+        </header>
+        <main>test
+        </main>
+
     </>
   )
 }

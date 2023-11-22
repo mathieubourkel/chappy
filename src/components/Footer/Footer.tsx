@@ -1,5 +1,6 @@
 import { Typography } from "@material-tailwind/react";
 import logo from "./../../assets/img/icon_logo_footer.png";
+import {NavLink} from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -8,34 +9,31 @@ export default function Footer() {
           <img src={logo} alt="logo-chappy" className="w-10" />
           <ul className="flex flex-wrap gap-y-2 gap-x-8 justify-center">
             <li>
-              <Typography
-                  as="a"
-                  href="#"
+              <NavLink
+                  to={"/about"}
                   color="blue-gray"
                   className="font-normal transition-colors hover:text-brick-400 focus:text-brick-300"
               >
                 A propos
-              </Typography>
+              </NavLink>
             </li>
             <li>
-              <Typography
-                  as="a"
-                  href="#"
+              <NavLink
+                  to={"/legal-mentions"}
                   color="blue-gray"
                   className="font-normal transition-colors hover:text-brick-400 focus:text-brick-300"
               >
                 Mentions légales
-              </Typography>
+              </NavLink>
             </li>
             <li>
-              <Typography
-                  as="a"
-                  href="#"
+              <NavLink
+                  to={"/contact-us"}
                   color="blue-gray"
                   className="font-normal transition-colors hover:text-brick-400 focus:text-brick-300"
               >
                 Contactez-nous
-              </Typography>
+              </NavLink>
             </li>
           </ul>
         </div>
