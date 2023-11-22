@@ -4,7 +4,7 @@ import Resume from "../../components/Project/Resume";
 import Steps from "../../components/Project/Steps";
 import { intComments, intProject, intSteps } from "../../services/interfaces/intProject";
 
-export default function Project() {
+export default function ProjectPage() {
 
   const [project, setProject] = useState<intProject>({
     name: "Nom du projet", description: "Description du projet", budget: 500, status: "En cours", owner: "Mathieu", id: 0

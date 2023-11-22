@@ -1,17 +1,17 @@
 import { Routes, Route } from "react-router-dom";
 import './css/App.css'
-import Home from "./pages/Home/Home";
-import Login from "./pages/Login/Login";
-import Signup from "./pages/Signup/Signup";
-import Project from "./pages/Project/Project";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import LegalMentions from "./pages/LegalMentions/LegalMentions";
-import UserProfile from "./pages/UserProfile/UserProfile";
-import Step from "./pages/Step/Step";
-import Task from "./pages/Task/Task";
-import Members from "./pages/Members/Members";
-import Purchases from "./pages/Purchases/Purchases";
-import Documents from "./pages/Documents/Documents";
+import HomePage from "./pages/Home/HomePage.tsx";
+import LoginPage from "./pages/Login/LoginPage.tsx";
+import SignupPage from "./pages/Signup/SignupPage.tsx";
+import ProjectPage from "./pages/Project/ProjectPage.tsx";
+import DashboardPage from "./pages/Dashboard/DashboardPage.tsx";
+import LegalMentionsPage from "./pages/LegalMentions/LegalMentionsPage.tsx";
+import UserProfilePage from "./pages/UserProfile/UserProfilePage.tsx";
+import StepPage from "./pages/Step/StepPage.tsx";
+import TaskPage from "./pages/Task/TaskPage.tsx";
+import MembersPage from "./pages/Members/MembersPage.tsx";
+import PurchasesPage from "./pages/Purchases/PurchasesPage.tsx";
+import DocumentsPage from "./pages/Documents/DocumentsPage.tsx";
 import Footer from "./components/Footer/Footer.tsx";
 import { useState } from "react";
 
@@ -27,21 +27,23 @@ setLogin([...logins, login])
     <>
 
         <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login handleSubmitLogin={handleSubmitLogin} />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard:/idUser" element={<Dashboard />} />
-        <Route path="/project" element={<Project />} />
-        <Route path="/project/:idProject/documents" element={<Documents />} />
-        <Route path="/project/:idProject/purchases" element={<Purchases />} />
-        <Route path="/project/:idProject/members" element={<Members />} />
-        <Route path="/project/:idProject/step/:idStep" element={<Step />} />
-        <Route path="/project/:idProject/step/:idStep/task/:idTask" element={<Task />} />
-        <Route path="/legal-mentions" element={<LegalMentions />} />
-        <Route path="/profile/:idProfile" element={<UserProfile />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage handleSubmitLogin={handleSubmitLogin} />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/dashboard/" element={<DashboardPage />} />
+        <Route path="/project" element={<ProjectPage />} />
+        <Route path="/project/documents" element={<DocumentsPage />} />
+        <Route path="/project/purchases" element={<PurchasesPage />} />
+        <Route path="/project/members" element={<MembersPage />} />
+        <Route path="/project/step/" element={<StepPage />} />
+        <Route path="/project/step/task/" element={<TaskPage />} />
+        <Route path="/legal-mentions" element={<LegalMentionsPage />} />
+        <Route path="/profile/" element={<UserProfilePage />} />
       </Routes>
 
-                <Footer />
+        <footer>
+            <Footer />
+        </footer>
     </>
   )
 }
