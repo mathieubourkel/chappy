@@ -1,6 +1,11 @@
 
 export default function Signup() {
   return (
-    <div>Signup</div>
+    <>
+    <h1>Créer mon compte</h1>
+    <br />
+    <br />
+    
+    </>
   )
 }

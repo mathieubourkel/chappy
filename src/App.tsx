@@ -12,20 +12,26 @@ import Task from "./pages/Task/Task";
 import Members from "./pages/Members/Members";
 import Purchases from "./pages/Purchases/Purchases";
 import Documents from "./pages/Documents/Documents";
-import {Footer} from "./components/Footer/Footer.tsx";
+import Footer from "./components/Footer/Footer.tsx";
+import { useState } from "react";
 
 
 export default function App() {
+
+  const [logins, setLogin] = useState<any>([])
+  function handleSubmitLogin(login: string) {
+setLogin([...logins, login])
+  }
 
   return (
     <>
 
         <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login handleSubmitLogin={handleSubmitLogin} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard:/idUser" element={<Dashboard />} />
-        <Route path="/project/:idProject" element={<Project />} />
+        <Route path="/project" element={<Project />} />
         <Route path="/project/:idProject/documents" element={<Documents />} />
         <Route path="/project/:idProject/purchases" element={<Purchases />} />
         <Route path="/project/:idProject/members" element={<Members />} />
