@@ -1,5 +1,5 @@
 
-export default function Documents() {
+export default function DocumentsPage() {
   return (
     <div>Documents</div>
   )

@@ -2,10 +2,9 @@
 import React from "react";
 import {
   Navbar,
-  MobileNav,
   Typography,
   Button,
-  IconButton,
+  IconButton, Collapse,
 } from "@material-tailwind/react";
 import logo from "./../../assets/img/logo.png";
 
@@ -25,7 +24,7 @@ export function NavbarVisitor() {
             <Typography
                 as="a"
                 href="/"
-                className="mr-4 cursor-pointer py-1.5 font-medium m-auto"
+                className="mr-4 cursor-pointer m-auto"
             >
               <img src={logo} alt={"logo de Chappy"} />
             </Typography>
@@ -77,13 +76,13 @@ export function NavbarVisitor() {
               </IconButton>
             </div>
           </div>
-          <MobileNav open={openNav}>
+          <Collapse open={openNav}>
             <div className="flex items-center gap-x-1">
               <Button fullWidth variant="gradient" size="sm" className="">
                 <span>Se connecter</span>
               </Button>
             </div>
-          </MobileNav>
+          </Collapse>
         </Navbar>
   );
 }
