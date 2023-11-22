@@ -1,6 +1,10 @@
+import { NavbarVisitor } from "../../components/Navbar/NavbarVisitor.tsx";
 
 export default function Home() {
   return (
-    <div>Home</div>
+      <>
+        <NavbarVisitor />
+        <div>Home</div>
+      </>
   )
 }
