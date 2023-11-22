@@ -23,5 +23,5 @@ export interface intComment {
     author: string
 }
 
-export type intSteps = Array<intStep>
+// export type intSteps = Array<intStep>
 export type intComments = Array<intComment>

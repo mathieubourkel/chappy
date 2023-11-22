@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Routes, Route } from "react-router-dom";
 import './css/App.css'
 import Home from "./pages/Home/Home";
@@ -12,12 +13,13 @@ import Task from "./pages/Task/Task";
 import Members from "./pages/Members/Members";
 import Purchases from "./pages/Purchases/Purchases";
 import Documents from "./pages/Documents/Documents";
-import {Footer} from "./components/Footer/Footer.tsx";
+import { useState } from "react";
+import  Footer  from "./components/Footer/Footer";
 
 
 export default function App() {
 
-  const [logins, setLogin]: any = useState<any>([])
+  const [logins, setLogin] = useState<any>([])
   function handleSubmitLogin(login: string) {
 setLogin([...logins, login])
   }
