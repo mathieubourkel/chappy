@@ -30,7 +30,7 @@ export default function Steps({ steps }: Props) {
           <div>
             <Button className="mr-5 bg-brick-300 flex items-center">
               <FontAwesomeIcon icon={faSquarePlus} />
-              <a className="pl-2">Créer</a>
+              <a className="pl-2 hidden md:flex">Créer</a>
             </Button>
           </div>
           <div>

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-import { intProject } from "../../services/interfaces/intProject";
+import React, { useEffect, useState } from "react";
+import { intProject, FormEvent } from "../../services/interfaces/intProject";
 import { Link } from "react-router-dom";
 import calendar from "../../assets/img/calendar.webp";
 import {
@@ -28,16 +28,20 @@ type Props = {
   setProject: (project: intProject) => void;
 };
 export default function Resume({ project, setProject }: Props) {
+
+  // State
   const [displayBudget, setDisplayBudget] = useState<boolean>(true);
-  const [form, setForm] = useState<number>(0);
+  const status = [
+    {name: "En cours", id: 0},
+    {name: "En attente", id: 1},
+    {name: "Terminé", id: 2}
+  ];
 
-  function handleChange(e: any) {
-    setForm(e.target.value);
-  }
-
-  function handleSubmit(e: any) {
+  // Functions
+  const handleSubmit = (e:FormEvent) => {
     e.preventDefault();
-    setProject({ ...project, budget: form });
+    const newBudget = e.currentTarget.budget.value;
+    setProject({ ...project, budget: newBudget });
     handleDisplay();
   }
 
@@ -45,30 +49,31 @@ export default function Resume({ project, setProject }: Props) {
     displayBudget ? setDisplayBudget(false) : setDisplayBudget(true);
   }
 
+  // Render
   return (
     <section className="bloc-1 mb-40">
-      <div className="b1-header flex justify-between">
-        <div className="b1-header-title">
+      <div className="b1-header md:flex justify-between">
+        <div className="b1-header-title shrink-0">
           <h1>{project.name}</h1>
         </div>
-        <div className="b1-header-buttons flex flex-wrap gap-5">
+        <div className="b1-header-buttons flex gap-5">
           <Link to="/project/">
             <Button>
               <FontAwesomeIcon icon={faCode} className="mr-2" />
-              Code projet
+              <div className="hidden md:flex">Code projet</div>
             </Button>
           </Link>
-          
+
           <Link to="/project/members">
             <Button variant="outlined">
               <FontAwesomeIcon icon={faUser} className="mr-2" />
-              Les participants
+              <div className="hidden md:flex">Participants</div>
             </Button>
           </Link>
           <Link to="/project/documents">
             <Button className="bg-brick-300">
-              <FontAwesomeIcon icon={faFolderOpen} className="mr-2"/>
-              Mes documents
+              <FontAwesomeIcon icon={faFolderOpen} className="mr-2" />
+              <div className="hidden md:flex">Mes documents</div>
             </Button>
           </Link>
           <Link to="project/purchases">
@@ -76,15 +81,15 @@ export default function Resume({ project, setProject }: Props) {
               className="button-project text-brick-300 border-brick-300"
               variant="outlined"
             >
-              <FontAwesomeIcon icon={faCartShopping} className="mr-2"/>
-              Mes achats
+              <FontAwesomeIcon icon={faCartShopping} className="mr-2" />
+              <div className="hidden md:flex">Mes achats</div>
             </Button>
           </Link>
         </div>
       </div>
 
       <div className="b1-body mt-10">
-        <div className="b1-body-desc-calendar flex gap-5">
+        <div className="b1-body-desc-calendar lg:flex gap-5">
           <Card className="b1-body-desc basis-1/2 bg-white">
             <CardBody>
               <Typography variant="h4" className="mb-2">
@@ -94,12 +99,12 @@ export default function Resume({ project, setProject }: Props) {
             </CardBody>
           </Card>
           <div className="b1-body-calendar basis-1/2">
-            <img src={calendar}/>
+            <img className="hidden lg:flex" src={calendar} />
           </div>
         </div>
-        <div className="b1-body-budget-status flex gap-5 mt-5">
+        <div className="b1-body-budget-status md:flex gap-5 mt-5">
           {displayBudget ? (
-            <div className="b1-body-budget flex basis-1/2 gap-2">
+            <div className="b1-body-budget flex basis-1/2 gap-2 mb-5">
               <div className="flex w-full rounded-md bg-white">
                 <p className="p-2">
                   {"Budget : " + project.budget.toString() + "€"}
@@ -114,7 +119,7 @@ export default function Resume({ project, setProject }: Props) {
           ) : (
             <form
               className="b1-body-budget flex basis-1/2 gap-2"
-              onSubmit={(e) => handleSubmit(e)}
+              onSubmit={handleSubmit}
             >
               <div className="flex w-full bg-white rounded-md">
                 <Input
@@ -123,7 +128,6 @@ export default function Resume({ project, setProject }: Props) {
                   name="budget"
                   id="budget"
                   placeholder="Entrez le nouveau budget"
-                  onChange={(e) => handleChange(e)}
                   crossOrigin={undefined}
                 />
               </div>
@@ -137,11 +141,11 @@ export default function Resume({ project, setProject }: Props) {
             </form>
           )}
 
-          <div className="b1-body-status basis-1/2 w-72">
+          <div className="b1-body-status basis-1/2">
             <Select className="bg-white" label="Status">
-              <Option>En cours</Option>
-              <Option>Terminé</Option>
-              <Option>En attente</Option>
+                {status.map((element:any, index:number) => (
+                    <Option key={index}>{element.name}</Option>
+                ))}     
             </Select>
           </div>
         </div>

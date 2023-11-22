@@ -29,7 +29,7 @@ export default function ProjectPage() {
   return (
     <>
     <NavbarConnected />
-    <main className="project-page mr-20 ml-20">
+    <main className="project-page sm:mx-20 mx-5">
       <Resume project={project} setProject={setProject} />
       <Steps steps={steps} />
       <Comments comments={comments} />

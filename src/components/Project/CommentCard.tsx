@@ -9,9 +9,15 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import user from "../../assets/img/icon user.png";
+import { intComment } from "../../services/interfaces/intProject";
 
-export default function StepCard(props: any) {
-  const { comment, index } = props;
+type Props = {
+  index: number
+  comment: intComment
+}
+
+export default function CommentCard({comment, index}:Props) {
+
   return (
     <Card className="b3-comment w-full mb-5 shadow-none" key={index}>
       <CardBody>
@@ -33,7 +39,7 @@ export default function StepCard(props: any) {
               size="xl"
               className="mr-3 text-marine-100"
             />
-            <a className="md">Répondre</a>
+            <a className="hidden md:flex">Répondre</a>
           </Button>
             </div>
           
