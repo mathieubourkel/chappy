@@ -1,5 +1,5 @@
 
-export default function Purchases() {
+export default function PurchasesPage() {
   return (
     <div>Purchases</div>
   )

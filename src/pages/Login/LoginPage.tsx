@@ -1,6 +1,6 @@
 import FormLogin from "../../components/Authentication/formLogin";
 
-export default function Login(props: any) {
+export default function LoginPage(props: any) {
   const {handleSubmitLogin}= props;
   return (
     <>

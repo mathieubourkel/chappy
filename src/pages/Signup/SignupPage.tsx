@@ -1,5 +1,5 @@
 
-export default function Signup() {
+export default function SignupPage() {
   return (
     <>
     <h1>Créer mon compte</h1>

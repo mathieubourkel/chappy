@@ -1,5 +1,5 @@
 
-export default function LegalMentions() {
+export default function LegalMentionsPage() {
   return (
     <div>LegalMentions</div>
   )
