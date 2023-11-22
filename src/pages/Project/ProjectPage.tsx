@@ -4,6 +4,7 @@ import Resume from "../../components/Project/Resume";
 import Steps from "../../components/Project/Steps";
 import { intComments, intProject, intSteps } from "../../services/interfaces/intProject";
 import "../../css/Project.css";
+import { NavbarConnected } from "../../components/Navbar/NavbarConnected";
 
 export default function ProjectPage() {
 
@@ -26,11 +27,13 @@ export default function ProjectPage() {
   ])
 
   return (
+    <>
+    <NavbarConnected />
     <main className="project-page mr-20 ml-20">
-      <Resume project={project} setProject={setProject}/>
-      <Steps steps={steps}/>
-      <Comments comments={comments}/>
-    </main>
+      <Resume project={project} setProject={setProject} />
+      <Steps steps={steps} />
+      <Comments comments={comments} />
+    </main></>
   )
 }
 

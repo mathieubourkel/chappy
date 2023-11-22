@@ -11,9 +11,17 @@ import {
   CardBody,
   IconButton,
   Typography,
+  Input,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCartShopping,
+  faCheck,
+  faCode,
+  faFolderOpen,
+  faPen,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   project: intProject;
@@ -38,21 +46,26 @@ export default function Resume({ project, setProject }: Props) {
   }
 
   return (
-    <section className="bloc-1">
+    <section className="bloc-1 mb-40">
       <div className="b1-header flex justify-between">
         <div className="b1-header-title">
           <h1>{project.name}</h1>
         </div>
         <div className="b1-header-buttons">
-          <Button>Code projet</Button>
+          <Button>
+            <FontAwesomeIcon icon={faCode} />
+            <a className="pl-2"> Code projet</a>
+          </Button>
           <Link to="/project/members">
             <Button className="ml-5" variant="outlined">
-              Les participants
+              <FontAwesomeIcon icon={faUser} />
+              <a className="pl-2">Les participants</a>
             </Button>
           </Link>
           <Link to="/project/documents">
             <Button className="ml-5 bg-brick-300">
-              Mes documents
+              <FontAwesomeIcon icon={faFolderOpen} />
+              <a className="pl-2">Mes documents</a>
             </Button>
           </Link>
           <Link to="project/purchases">
@@ -60,15 +73,16 @@ export default function Resume({ project, setProject }: Props) {
               className="button-project ml-5 text-brick-300 border-brick-300"
               variant="outlined"
             >
-              Les achats
+              <FontAwesomeIcon icon={faCartShopping} />
+              <a className="pl-2">Mes achats</a>
             </Button>
           </Link>
         </div>
       </div>
 
-      <div className="b1-body">
-        <div className="b1-body-desc-calendar flex mt-5">
-          <Card className="b1-body-desc basis-1/2 bg-white mr-5">
+      <div className="b1-body mt-10">
+        <div className="b1-body-desc-calendar flex mt-5 gap-5">
+          <Card className="b1-body-desc basis-1/2 bg-white">
             <CardBody>
               <Typography variant="h5" className="mb-2">
                 Description du projet
@@ -80,38 +94,44 @@ export default function Resume({ project, setProject }: Props) {
             <img src={calendar}></img>
           </div>
         </div>
-        <div className="b1-body-budget-status flex mt-5">
+        <div className="b1-body-budget-status flex gap-5 mt-5">
           {displayBudget ? (
-            <div className="b1-body-budget flex  basis-1/2 mr-5">
-              <div className="bg-white flex justify-between basis-11/12 rounded-md">
-                <p className="p-2">Budget : </p>
-                <p className="p-2">{project.budget}</p>
-                <p className="p-2">€</p>
+            <div className="b1-body-budget flex basis-1/2 gap-2">
+              <div className="flex w-full rounded-md bg-white">
+                <p className="p-2">
+                  {"Budget : " + project.budget.toString() + "€"}
+                </p>
               </div>
-              <div className="basis-1/12 flex justify-end">
+              <div className="flex justify-end">
                 <IconButton onClick={handleDisplay} ripple={true}>
                   <FontAwesomeIcon icon={faPen} />
                 </IconButton>
               </div>
             </div>
           ) : (
-              <form className="b1-body-budget flex justify-between basis-1/2 mr-5" onSubmit={(e) => handleSubmit(e)}>
-                <div className="bg-white flex justify-between bg-white basis-11/12 rounded-md">
-                <p className="p-2">Budget : </p>
-                <input
-                  className="basis-8/2 p-2"
+            <form
+              className="b1-body-budget flex basis-1/2 gap-2"
+              onSubmit={(e) => handleSubmit(e)}
+            >
+              <div className="flex w-full bg-white rounded-md">
+                <Input
+                  className="p-2"
                   type="number"
                   name="budget"
                   id="budget"
-                  placeholder={project.budget.toString()}
+                  placeholder="Entrez le nouveau budget"
                   onChange={(e) => handleChange(e)}
+                  crossOrigin={undefined}
                 />
-                <p className="p-2">€</p>
-                </div>
-                <IconButton className="basis-1/12 flex justify-end" ripple={true} type="submit">
-                  <FontAwesomeIcon icon={faPen} />
-                </IconButton>
-              </form>
+              </div>
+              <IconButton
+                className="basis-1/12 flex justify-end"
+                ripple={true}
+                type="submit"
+              >
+                <FontAwesomeIcon icon={faCheck} />
+              </IconButton>
+            </form>
           )}
 
           <div className="b1-body-status basis-1/2 w-72">
