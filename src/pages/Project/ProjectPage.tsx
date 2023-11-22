@@ -3,6 +3,7 @@ import Comments from "../../components/Project/Comments";
 import Resume from "../../components/Project/Resume";
 import Steps from "../../components/Project/Steps";
 import { intComments, intProject, intSteps } from "../../services/interfaces/intProject";
+import "../../css/Project.css";
 
 export default function ProjectPage() {
 
@@ -25,11 +26,11 @@ export default function ProjectPage() {
   ])
 
   return (
-    <>
-      <Resume project={project}/>
+    <div className="project-page">
+      <Resume project={project} setProject={setProject}/>
       <Steps steps={steps}/>
       <Comments comments={comments}/>
-    </>
+    </div>
   )
 }
 

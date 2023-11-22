@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Routes, Route } from "react-router-dom";
 import './css/App.css'
 import HomePage from "./pages/Home/HomePage.tsx";
