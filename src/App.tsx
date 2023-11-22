@@ -15,6 +15,10 @@ import PurchasesPage from "./pages/Purchases/PurchasesPage.tsx";
 import DocumentsPage from "./pages/Documents/DocumentsPage.tsx";
 import Footer from "./components/Footer/Footer.tsx";
 import { useState } from "react";
+import AboutPage
+    from "./pages/About/AboutPage.tsx";
+import ContactUsPage
+    from "./pages/ContactUs/ContactUsPage.tsx";
 
 
 export default function App() {
@@ -39,6 +43,8 @@ setLogin([...logins, login])
         <Route path="/project/step/" element={<StepPage />} />
         <Route path="/project/step/task/" element={<TaskPage />} />
         <Route path="/legal-mentions" element={<LegalMentionsPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="/profile/" element={<UserProfilePage />} />
       </Routes>
 
