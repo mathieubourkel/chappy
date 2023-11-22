@@ -8,7 +8,7 @@ import "../../css/Project.css";
 export default function Project() {
 
   const [project, setProject] = useState<intProject>({
-    name: "Nom du projet", description: "Description du projet", budget: 500, status: "En cours", owner: "Mathieu", id: 0
+    name: "Nom du projet", description: "Description du projet la j,ffdkfdksdnfjnsdjnf ndf ndsf sdnfjfn sjfsf s,f f sd fsdnf bfsd, ds,n fbdsnsbd", budget: 500, status: "En cours", owner: "Mathieu", id: 0
   })
 
   const [steps, setStep] = useState<intSteps>([
@@ -26,11 +26,11 @@ export default function Project() {
   ])
 
   return (
-    <div className="project-page">
+    <main className="project-page mr-20 ml-20">
       <Resume project={project} setProject={setProject}/>
       <Steps steps={steps}/>
       <Comments comments={comments}/>
-    </div>
+    </main>
   )
 }
 

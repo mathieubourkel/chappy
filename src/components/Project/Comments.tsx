@@ -15,7 +15,7 @@ export default function Comments({comments}:Props) {
 
   return (
 
-    <div className="project-comments">
+    <section className="bloc-3">
         <div className="project-comments-header">
             <h2>Espace commentaire</h2>
         </div>
@@ -59,6 +59,6 @@ export default function Comments({comments}:Props) {
                 <button>Envoyer</button>
             </div>
         </div>
-    </div>
+    </section>
   )
 }

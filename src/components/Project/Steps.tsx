@@ -7,13 +7,13 @@ type Props = {
 export default function Steps({steps}:Props) {
 
   return (
-    <div className="steps-project">
+    <section className="bloc-2">
         <div className="steps-project-header">
             <div className="steps-project-header-title">
                 <h1>Les jalons</h1>
             </div>
             <div className="steps-project-header-buttons">
-                <button className="button-project">Créer</button>
+                <button className="button-project ">Créer</button>
                 <button className="button-project">Filtres</button>
             </div>
         </div>
@@ -27,6 +27,6 @@ export default function Steps({steps}:Props) {
             ))}
             
         </div>
-    </div>
+    </section>
   )
 }
