@@ -51,47 +51,50 @@ export default function Resume({ project, setProject }: Props) {
         <div className="b1-header-title">
           <h1>{project.name}</h1>
         </div>
-        <div className="b1-header-buttons">
-          <Button>
-            <FontAwesomeIcon icon={faCode} />
-            <a className="pl-2"> Code projet</a>
-          </Button>
+        <div className="b1-header-buttons flex flex-wrap gap-5">
+          <Link to="/project/">
+            <Button>
+              <FontAwesomeIcon icon={faCode} className="mr-2" />
+              Code projet
+            </Button>
+          </Link>
+          
           <Link to="/project/members">
-            <Button className="ml-5" variant="outlined">
-              <FontAwesomeIcon icon={faUser} />
-              <a className="pl-2">Les participants</a>
+            <Button variant="outlined">
+              <FontAwesomeIcon icon={faUser} className="mr-2" />
+              Les participants
             </Button>
           </Link>
           <Link to="/project/documents">
-            <Button className="ml-5 bg-brick-300">
-              <FontAwesomeIcon icon={faFolderOpen} />
-              <a className="pl-2">Mes documents</a>
+            <Button className="bg-brick-300">
+              <FontAwesomeIcon icon={faFolderOpen} className="mr-2"/>
+              Mes documents
             </Button>
           </Link>
           <Link to="project/purchases">
             <Button
-              className="button-project ml-5 text-brick-300 border-brick-300"
+              className="button-project text-brick-300 border-brick-300"
               variant="outlined"
             >
-              <FontAwesomeIcon icon={faCartShopping} />
-              <a className="pl-2">Mes achats</a>
+              <FontAwesomeIcon icon={faCartShopping} className="mr-2"/>
+              Mes achats
             </Button>
           </Link>
         </div>
       </div>
 
       <div className="b1-body mt-10">
-        <div className="b1-body-desc-calendar flex mt-5 gap-5">
+        <div className="b1-body-desc-calendar flex gap-5">
           <Card className="b1-body-desc basis-1/2 bg-white">
             <CardBody>
-              <Typography variant="h5" className="mb-2">
+              <Typography variant="h4" className="mb-2">
                 Description du projet
               </Typography>
               <Typography>{project.description}</Typography>
             </CardBody>
           </Card>
           <div className="b1-body-calendar basis-1/2">
-            <img src={calendar}></img>
+            <img src={calendar}/>
           </div>
         </div>
         <div className="b1-body-budget-status flex gap-5 mt-5">

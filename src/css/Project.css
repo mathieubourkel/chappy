@@ -5,40 +5,19 @@
     margin-top: 5rem;
 }
 
-/* SECTION 2 */
-
-.steps-project-header {
-    display: flex;
+.b3-comment {
+    border: 1px solid #1e1d2233;
 }
 
-.steps-project-header-title {
-    width: 30%;
-}
-.steps-project-header-buttons {
-    width: 70%;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.steps-project-steps {
-    display: flex;
-}
-
-
-.step {
-    border: solid;
-    width: 25%;
-}
-
-/* SECTION 3 */
-
-.project-comments {
-    display: flex;
-    flex-direction: column;
-    margin-top: 5rem;
-}
-
-.comment {
-    margin:1rem;
-    border:solid;
+.b3-comment-bar {
+    display: block;
+    border-left: 3px solid;
+    padding-left: 1rem;
+    margin-left: 3rem;
+    border-image: 
+      linear-gradient(
+        to bottom, 
+        rgb(47,44,54,1), 
+        rgb(126,55,47,1)
+      ) 1 100%;
 }
