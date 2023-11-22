@@ -13,8 +13,7 @@ import Task from "./pages/Task/Task";
 import Members from "./pages/Members/Members";
 import Purchases from "./pages/Purchases/Purchases";
 import Documents from "./pages/Documents/Documents";
-import { useState } from "react";
-import  Footer  from "./components/Footer/Footer";
+import Footer from "./components/Footer/Footer.tsx";
 
 
 export default function App() {

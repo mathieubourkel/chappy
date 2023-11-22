@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function FormLogin(props: any) {
-    const {handleSubmitLogin}: any = props;
+    const {handleSubmitLogin} = props;
 
     type formulaire= {
         email: string,
