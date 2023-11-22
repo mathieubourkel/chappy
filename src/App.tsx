@@ -12,12 +12,13 @@ import Task from "./pages/Task/Task";
 import Members from "./pages/Members/Members";
 import Purchases from "./pages/Purchases/Purchases";
 import Documents from "./pages/Documents/Documents";
-import {Footer} from "./components/Footer/Footer.tsx";
+import Footer from "./components/Footer/Footer.tsx";
+import { useState } from "react";
 
 
 export default function App() {
 
-  const [logins, setLogin]: any = useState<any>([])
+  const [logins, setLogin] = useState<any>([])
   function handleSubmitLogin(login: string) {
 setLogin([...logins, login])
   }
