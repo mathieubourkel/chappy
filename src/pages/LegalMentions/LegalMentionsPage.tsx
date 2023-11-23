@@ -1,13 +1,6 @@
-import {
-  NavbarConnected
-} from "../../components/Navbar/NavbarConnected.tsx";
 
 export default function LegalMentionsPage() {
   return (
-    <>
-      <header>
-        <NavbarConnected />
-      </header>
 
       <main className={"mt-10 flex justify-center"}>
         <article className={"w-2/3"}>
@@ -25,7 +18,6 @@ export default function LegalMentionsPage() {
 
         </article>
       </main>
-    </>
   )
 }
 

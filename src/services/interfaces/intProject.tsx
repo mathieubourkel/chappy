@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react"
+
 export interface intProject {
     name: string,
     description: string,
@@ -23,5 +25,7 @@ export interface intComment {
     author: string
 }
 
-// export type intSteps = Array<intStep>
+export type intSteps = Array<intStep>
 export type intComments = Array<intComment>
+export type InputEvent = ChangeEvent<HTMLInputElement>
+export type FormEvent = React.FormEvent<HTMLFormElement>;

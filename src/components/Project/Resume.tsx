@@ -1,80 +1,155 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-import { intProject } from "../../services/interfaces/intProject";
-import {Link} from "react-router-dom";
-import { Button } from "@material-tailwind/react";
+import React, { useEffect, useState } from "react";
+import { intProject, FormEvent } from "../../services/interfaces/intProject";
+import { Link } from "react-router-dom";
+import calendar from "../../assets/img/calendar.webp";
+import {
+  Select,
+  Option,
+  Button,
+  Card,
+  CardBody,
+  IconButton,
+  Typography,
+  Input,
+} from "@material-tailwind/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCartShopping,
+  faCheck,
+  faCode,
+  faFolderOpen,
+  faPen,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   project: intProject;
-  setProject: (project:intProject) => void;
+  setProject: (project: intProject) => void;
 };
 export default function Resume({ project, setProject }: Props) {
 
-    const [displayBudget, setDisplayBudget] = useState<boolean>(true);
-    const [form, setForm] = useState<number>(0);
+  // State
+  const [displayBudget, setDisplayBudget] = useState<boolean>(true);
+  const status = [
+    {name: "En cours", id: 0},
+    {name: "En attente", id: 1},
+    {name: "Terminé", id: 2}
+  ];
 
-    function handleChange(e:any){
-        setForm(e.target.value)
-    }
+  // Functions
+  const handleSubmit = (e:FormEvent) => {
+    e.preventDefault();
+    const newBudget = e.currentTarget.budget.value;
+    setProject({ ...project, budget: newBudget });
+    handleDisplay();
+  }
 
-    function handleSubmit(e:any) {
-        e.preventDefault();
-        setProject({...project, budget: form})
-        handleDisplay();
-    }
+  function handleDisplay() {
+    displayBudget ? setDisplayBudget(false) : setDisplayBudget(true);
+  }
 
-    function handleDisplay(){
-        displayBudget ? setDisplayBudget(false) : setDisplayBudget(true); 
-    }
-
+  // Render
   return (
-    <div className="header-project-nav">
-      <div className="header-nav-project">
-        <div className="nav-project-name">
+    <section className="bloc-1 mb-40">
+      <div className="b1-header md:flex justify-between">
+        <div className="b1-header-title shrink-0">
           <h1>{project.name}</h1>
         </div>
-        <div className="nav-project-buttons">
-          <button className="button-project">Code projet</button>
+        <div className="b1-header-buttons flex gap-5">
+          <Link to="/project/">
+            <Button>
+              <FontAwesomeIcon icon={faCode} className="mr-2" />
+              <div className="hidden md:flex">Code projet</div>
+            </Button>
+          </Link>
+
           <Link to="/project/members">
-            <button className="button-project">Les participants</button>
+            <Button variant="outlined">
+              <FontAwesomeIcon icon={faUser} className="mr-2" />
+              <div className="hidden md:flex">Participants</div>
+            </Button>
           </Link>
           <Link to="/project/documents">
-            <button className="button-project">Mes documents</button>
+            <Button className="bg-brick-300">
+              <FontAwesomeIcon icon={faFolderOpen} className="mr-2" />
+              <div className="hidden md:flex">Mes documents</div>
+            </Button>
           </Link>
           <Link to="project/purchases">
-            <button className="button-project">Les achats</button>
+            <Button
+              className="button-project text-brick-300 border-brick-300"
+              variant="outlined"
+            >
+              <FontAwesomeIcon icon={faCartShopping} className="mr-2" />
+              <div className="hidden md:flex">Mes achats</div>
+            </Button>
           </Link>
-          
         </div>
       </div>
-      <div className="header-body-project">
-        <div className="header-project-desc half">
-          <p>Description du projet : {project.description}</p>
+
+      <div className="b1-body mt-10">
+        <div className="b1-body-desc-calendar lg:flex gap-5">
+          <Card className="b1-body-desc basis-1/2 bg-white">
+            <CardBody>
+              <Typography variant="h4" className="mb-2">
+                Description du projet
+              </Typography>
+              <Typography>{project.description}</Typography>
+            </CardBody>
+          </Card>
+          <div className="b1-body-calendar basis-1/2">
+            <img className="hidden lg:flex" src={calendar} />
+          </div>
         </div>
-        <div className="header-project-planning half">
-          <p>planning</p>
-        </div>
-      </div>
-      <div className="header-body2-project">
-        {displayBudget ? 
-        <div className="header-project-budget half">
-          <p>Budget : {project.budget}</p>
-            <button onClick={handleDisplay}>
-                <a>Modifier</a>
-            </button>
-        </div> : 
-        <div className="header-project-budget half">
-            <form onSubmit={(e) => handleSubmit(e)}>
-                <label htmlFor="budget">Budget : </label>
-                <input className="w-full"  type="number" name="budget" id="budget" placeholder={project.budget.toString()}
-                onChange={(e) => handleChange(e)} />
-                <Button className='bg-brick-300' type="submit">Modifier</Button>
+        <div className="b1-body-budget-status md:flex gap-5 mt-5">
+          {displayBudget ? (
+            <div className="b1-body-budget flex basis-1/2 gap-2 mb-5">
+              <div className="flex w-full rounded-md bg-white">
+                <p className="p-2">
+                  {"Budget : " + project.budget.toString() + "€"}
+                </p>
+              </div>
+              <div className="flex justify-end">
+                <IconButton onClick={handleDisplay} ripple={true}>
+                  <FontAwesomeIcon icon={faPen} />
+                </IconButton>
+              </div>
+            </div>
+          ) : (
+            <form
+              className="b1-body-budget flex basis-1/2 gap-2"
+              onSubmit={handleSubmit}
+            >
+              <div className="flex w-full bg-white rounded-md">
+                <Input
+                  className="p-2"
+                  type="number"
+                  name="budget"
+                  id="budget"
+                  placeholder="Entrez le nouveau budget"
+                  crossOrigin={undefined}
+                />
+              </div>
+              <IconButton
+                className="basis-1/12 flex justify-end"
+                ripple={true}
+                type="submit"
+              >
+                <FontAwesomeIcon icon={faCheck} />
+              </IconButton>
             </form>
-      </div>}
-        <div className="header-project-status half">
-          <p>{project.status}</p>
+          )}
+
+          <div className="b1-body-status basis-1/2">
+            <Select className="bg-white" label="Status">
+                {status.map((element:any, index:number) => (
+                    <Option key={index}>{element.name}</Option>
+                ))}     
+            </Select>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

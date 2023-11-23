@@ -4,11 +4,12 @@ import Resume from "../../components/Project/Resume";
 import Steps from "../../components/Project/Steps";
 import { intComments, intProject, intSteps } from "../../services/interfaces/intProject";
 import "../../css/Project.css";
+import { NavbarConnected } from "../../components/Navbar/NavbarConnected";
 
 export default function ProjectPage() {
 
   const [project, setProject] = useState<intProject>({
-    name: "Nom du projet", description: "Description du projet", budget: 500, status: "En cours", owner: "Mathieu", id: 0
+    name: "Nom du projet", description: "Description du projet la j,ffdkfdksdnfjnsdjnf ndf ndsf sdnfjfn sjfsf s,f f sd fsdnf bfsd, ds,n fbdsnsbd", budget: 500, status: "En cours", owner: "Mathieu", id: 0
   })
 
   const [steps, setStep] = useState<intSteps>([
@@ -26,11 +27,13 @@ export default function ProjectPage() {
   ])
 
   return (
-    <div className="project-page">
-      <Resume project={project} setProject={setProject}/>
-      <Steps steps={steps}/>
-      <Comments comments={comments}/>
-    </div>
+    <>
+    
+    <main className="project-page sm:mx-20 mx-5">
+      <Resume project={project} setProject={setProject} />
+      <Steps steps={steps} />
+      <Comments comments={comments} />
+    </main></>
   )
 }
 
