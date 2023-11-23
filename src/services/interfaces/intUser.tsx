@@ -5,5 +5,8 @@ export interface intUsers {
     address: string,
     postal: number,
     city: string,
+    phone: number,
+    password: string,
+    checkPassword: string,
 }
 
