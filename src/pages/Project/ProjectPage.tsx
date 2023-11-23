@@ -28,7 +28,7 @@ export default function ProjectPage() {
 
   return (
     <>
-    <NavbarConnected />
+    
     <main className="project-page sm:mx-20 mx-5">
       <Resume project={project} setProject={setProject} />
       <Steps steps={steps} />
