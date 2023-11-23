@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Navbar,
@@ -18,14 +17,15 @@ import {
 import {
   faBell, faClock,
   faMagnifyingGlass,
-  faMoon,
-  faPlay,
+  faMoon, faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "./../../assets/img/logo.png";
 import iUser from "./../../assets/img/icon user.png";
 import {NavLink} from "react-router-dom";
 
-export function NavbarConnected() {
+export function NavbarConnected(props:any) {
+
+  const {toggleSidebar} = props;
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {
@@ -36,10 +36,11 @@ export function NavbarConnected() {
   }, []);
 
   return (
-        <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 shadow-none border-b-text-200">
+        <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 shadow-none border-b-text-200 navbar">
 
           <div className="text-blue-gray-900 flex justify-between items-center">
-            <IconButton variant="text" className={"bg-marine-300 rounded-2xl hover:bg-marine-100"}>
+
+            <IconButton variant="text" className={"bg-marine-300 rounded-2xl hover:bg-marine-100"} onClick={toggleSidebar}>
               <FontAwesomeIcon icon={faPlay} className="h-3 w-3 text-white" />
             </IconButton>
 

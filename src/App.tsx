@@ -17,21 +17,34 @@ import Footer from "./components/Footer/Footer.tsx";
 import { useState } from "react";
 import AboutPage from "./pages/About/AboutPage.tsx";
 import ContactUsPage from "./pages/ContactUs/ContactUsPage.tsx";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import PrivateRoute from "./services/utils/PrivateRoute.tsx";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import NotFoundPage from "./services/utils/NotFoundPage.tsx";
 import { NavbarConnected } from "./components/Navbar/NavbarConnected.tsx";
 import { NavbarVisitor } from "./components/Navbar/NavbarVisitor.tsx";
+import {
+  Sidebar
+} from "./components/Sidebar/Sidebar.tsx";
 
 export default function App() {
   const [logins, setLogin] = useState<any>([]);
-  const isLogged = false;
+  const isLogged = true;
   function handleSubmitLogin(login: string) {
     setLogin([...logins, login]);
   }
 
+  const [open, setOpen] = useState(false);
+  function toggleSidebar() {
+    open ? setOpen(false) : setOpen(true)
+  }
+
   return (
     <>
-      <header>{isLogged ? <NavbarConnected /> : <NavbarVisitor />}</header>
+      <header>{isLogged ? <><NavbarConnected toggleSidebar={toggleSidebar} /><Sidebar openSidebar={open} toggleSidebar={toggleSidebar} /></> : <NavbarVisitor />}
+      </header>
 
       <Routes>
         <Route path="/" element={<HomePage />} />

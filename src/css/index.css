@@ -23,16 +23,29 @@
     --bg-color: rgb(240,240,240,1);
     --border-color: rgb(30,29,34, 0.2);
     --gradient: linear-gradient(90deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
-    --gradient-top: linear-gradient(0deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);;
+    --gradient-top: linear-gradient(0deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
 
 }
 
 /*==================== GLOBAL CSS ====================*/
 
+        /* Sidebar */
+
+.sidebar {
+    position: absolute;
+    z-index: 1000000;
+    top:0;
+    bottom:0;
+    left: 0;
+    height: 100lvh;
+    border-radius: 0;
+}
+
         /* Page */
 
 body {
     background: var(--bg-color);
+    position: relative;
 }
 
 main {
