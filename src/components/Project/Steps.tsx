@@ -11,15 +11,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
   faFilter,
-  faSquarePlus,
   faTableList,
 } from "@fortawesome/free-solid-svg-icons";
+import { CreateStepModal } from "./CreateStepModal";
+import { Link } from "react-router-dom";
 
 type Props = {
   steps: intSteps;
+  setStep: (steps:intSteps) =>void;
 };
 
-export default function Steps({ steps }: Props) {
+export default function Steps({ steps, setStep }: Props) {
   return (
     <section className="bloc-2 mb-40">
       <div className="b2-header flex justify-between">
@@ -28,10 +30,7 @@ export default function Steps({ steps }: Props) {
         </div>
         <div className="b2-header-buttons flex">
           <div>
-            <Button className="mr-5 bg-brick-300 flex items-center">
-              <FontAwesomeIcon icon={faSquarePlus} />
-              <a className="pl-2 hidden md:flex">Créer</a>
-            </Button>
+            <CreateStepModal steps={steps} setStep={setStep}/>
           </div>
           <div>
             <IconButton>
@@ -54,6 +53,7 @@ export default function Steps({ steps }: Props) {
               <Typography>{step.description}</Typography>
             </CardBody>
             <CardFooter className="pt-0 flex justify-end">
+              <Link to="/project/step">
               <Button
                 variant="outlined"
                 className="text-brick-300 border-brick-300"
@@ -61,6 +61,8 @@ export default function Steps({ steps }: Props) {
                 <a className="pr-2">Accéder</a>
                 <FontAwesomeIcon icon={faArrowRight} />
               </Button>
+              </Link>
+              
             </CardFooter>
           </Card>
         ))}

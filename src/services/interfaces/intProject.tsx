@@ -12,19 +12,25 @@ export interface intProject {
 export interface intStep {
     name: string,
     description: string,
-    id: number,
     budget: number,
-    startTime: Date,
-    endTime: Date
+    startDate: string,
 }
 
 export interface intComment {
-    name: string,
     content: string,
-    id: number
     author: string
 }
 
+export interface intTask {
+    name: string,
+    status: string,
+    categorie: string,
+    description: string,
+    startDate: string,
+    endDate: string
+}
+
+export type intTasks = Array<intTask>
 export type intSteps = Array<intStep>
 export type intComments = Array<intComment>
 export type InputEvent = ChangeEvent<HTMLInputElement>

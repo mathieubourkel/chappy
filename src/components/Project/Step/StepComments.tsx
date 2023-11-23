@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormEvent, useState } from "react";
-import { intComment, intComments } from "../../services/interfaces/intProject";
+import { intComment, intComments } from "../../../services/interfaces/intProject";
 import { Button, Textarea } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,16 +8,17 @@ import {
   faPaperPlane,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import CommentCard from "./CommentCard";
+import CommentCard from "../CommentCard";
 
-type Props = {
-  comments: intComments;
-  setComment: (comments:intComments) => void;
-};
 
-export default function Comments({ comments, setComment }: Props) {
+export default function Comments() {
   const [display, setDisplay] = useState<boolean>(false);
+  const [comments, setComment] = useState<intComments>([
+    {content: "contenu du commentaire 1", author: "Bob"},
+    {content: "contenu du commentaire 2", author: "Jean"},
+    {content: "contenu du commentaire 3", author: "Michel"},
 
+  ])
   function handleDisplay() {
     display ? setDisplay(false) : setDisplay(true);
   }

@@ -24,7 +24,7 @@ import { NavbarVisitor } from "./components/Navbar/NavbarVisitor.tsx";
 
 export default function App() {
   const [logins, setLogin] = useState<any>([]);
-  const isLogged = false;
+  const isLogged = true;
   function handleSubmitLogin(login: string) {
     setLogin([...logins, login]);
   }
