@@ -7,8 +7,8 @@ import {
   CardBody,
   Typography,
 } from "@material-tailwind/react";
-import user from "../../assets/img/icon user.png";
-import { intComment } from "../../services/interfaces/intProject";
+import user from "../../../assets/img/icon user.png"
+import { intComment } from "../../../services/interfaces/intProject";
 
 type Props = {
   comment: intComment;

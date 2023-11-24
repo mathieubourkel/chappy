@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Button,
   Dialog,
@@ -11,9 +11,10 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode, faCopy, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
  
-export function CodeModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen((cur) => !cur);
+export function ProjectDisplayCode() {
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen((bool) => !bool);
  
   return (
     <div>

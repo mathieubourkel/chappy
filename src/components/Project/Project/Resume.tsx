@@ -1,53 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { intProject, FormEvent } from "../../services/interfaces/intProject";
+import { intProject } from "../../../services/interfaces/intProject";
 import { Link } from "react-router-dom";
-import calendar from "../../assets/img/calendar.webp";
-import {
-  Select,
-  Option,
-  Button,
-  Card,
-  CardBody,
-  IconButton,
-  Typography,
-  Input,
-} from "@material-tailwind/react";
+import calendar from "../../../assets/img/calendar.webp";
+import { Button, Card, CardBody, Typography } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartShopping,
-  faCheck,
   faFolderOpen,
-  faPen,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { CodeModal } from "./CodeModal";
+import { ProjectDisplayCode } from "../Modals/ProjectDisplayCode";
+import SelectInput from "../Buttons/SelectInput";
+import DisplayInput from "../Buttons/DisplayInput";
+import ModifyInput from "../Buttons/ModifyInput";
 
 type Props = {
   project: intProject;
   setProject: (project: intProject) => void;
+  isOwner: boolean;
 };
-export default function Resume({ project, setProject }: Props) {
-
+export default function Resume({ project, setProject, isOwner }: Props) {
   // State
   const [displayBudget, setDisplayBudget] = useState<boolean>(true);
   const status = [
-    {name: "En cours", id: 0},
-    {name: "En attente", id: 1},
-    {name: "Terminé", id: 2}
+    { name: "En cours", id: 0 },
+    { name: "En attente", id: 1 },
+    { name: "Terminé", id: 2 },
   ];
-
-  // Functions
-  const handleSubmit = (e:FormEvent) => {
-    e.preventDefault();
-    const newBudget = e.currentTarget.budget.value;
-    setProject({ ...project, budget: newBudget });
-    handleDisplay();
-  }
-
-  function handleDisplay() {
-    displayBudget ? setDisplayBudget(false) : setDisplayBudget(true);
-  }
 
   // Render
   return (
@@ -57,7 +37,7 @@ export default function Resume({ project, setProject }: Props) {
           <h1>{project.name}</h1>
         </div>
         <div className="b1-header-buttons flex gap-5">
-          <CodeModal />
+          <ProjectDisplayCode />
 
           <Link to="/project/members">
             <Button variant="outlined" className="flex">
@@ -99,50 +79,28 @@ export default function Resume({ project, setProject }: Props) {
         </div>
         <div className="b1-body-budget-status md:flex gap-5 mt-5">
           {displayBudget ? (
-            <div className="b1-body-budget flex basis-1/2 gap-2 mb-5">
-              <div className="flex w-full rounded-md bg-white">
-                <p className="p-2">
-                  {"Budget : " + project.budget.toString() + "€"}
-                </p>
-              </div>
-              <div className="flex justify-end">
-                <IconButton onClick={handleDisplay} ripple={true}>
-                  <FontAwesomeIcon icon={faPen} />
-                </IconButton>
-              </div>
-            </div>
+            <DisplayInput
+              isOwner={isOwner}
+              value={"Budget : " + project.budget.toString() + "€"}
+              state={displayBudget}
+              setState={setDisplayBudget}
+            />
           ) : (
-            <form
-              className="b1-body-budget flex basis-1/2 gap-2"
-              onSubmit={handleSubmit}
-            >
-              <div className="flex w-full bg-white rounded-md">
-                <Input
-                  className="p-2"
-                  type="number"
-                  name="budget"
-                  id="budget"
-                  placeholder="Entrez le nouveau budget"
-                  crossOrigin={undefined}
-                />
-              </div>
-              <IconButton
-                className="basis-1/12 flex justify-end"
-                ripple={true}
-                type="submit"
-              >
-                <FontAwesomeIcon icon={faCheck} />
-              </IconButton>
-            </form>
+            <ModifyInput
+              state={project}
+              setState={setProject}
+              setDisplay={setDisplayBudget}
+              type="number"
+              label="budget"
+              placeHolder="Entrez le nouveau budget"
+            />
           )}
-
-          <div className="b1-body-status basis-1/2">
-            <Select className="bg-white" label="Status">
-                {status.map((element:any, index:number) => (
-                    <Option key={index}>{element.name}</Option>
-                ))}     
-            </Select>
-          </div>
+          <SelectInput
+            isOwner={isOwner}
+            state={status}
+            classState="basis-1/2"
+            label="Status"
+          />
         </div>
       </div>
     </section>

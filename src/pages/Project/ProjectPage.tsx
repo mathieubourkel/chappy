@@ -1,7 +1,7 @@
 import {  useState } from "react";
-import Comments from "../../components/Project/Comments";
-import Resume from "../../components/Project/Resume";
-import Steps from "../../components/Project/Steps";
+import Comments from "../../components/Project/Project/Comments";
+import Resume from "../../components/Project/Project/Resume";
+import Steps from "../../components/Project/Project/Steps";
 import { intComments, intProject, intSteps } from "../../services/interfaces/intProject";
 import "../../css/Project.css";
 
@@ -25,11 +25,13 @@ export default function ProjectPage() {
 
   ])
 
+  const isOwner = true;
+
   return (
     <main className="project-page sm:mx-20 mx-5">
-      <Resume project={project} setProject={setProject} />
-      <Steps steps={steps} setStep={setStep}/>
-      <Comments comments={comments} setComment={setComment} />
+      <Resume project={project} setProject={setProject} isOwner={isOwner}/>
+      <Steps steps={steps} setStep={setStep} isOwner={isOwner}/>
+      <Comments comments={comments} setComment={setComment} isOwner={isOwner} />
     </main>
   )
 }

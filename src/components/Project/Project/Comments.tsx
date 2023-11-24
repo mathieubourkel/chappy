@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormEvent, useState } from "react";
-import { intComment, intComments } from "../../services/interfaces/intProject";
+import { intComment, intComments } from "../../../services/interfaces/intProject";
 import { Button, Textarea } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

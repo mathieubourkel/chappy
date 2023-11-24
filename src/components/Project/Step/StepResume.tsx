@@ -9,43 +9,34 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheck,
-  faPen,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import DisplayInput from "../Buttons/DisplayInput";
 
 type Props = {
-    step: intStep
-    setStep: (step:intStep) => void;
-}
+  step: intStep;
+  setStep: (step: intStep) => void;
+  isOwner: boolean;
+};
 
-export default function StepResume({step, setStep}:Props) {
-
+export default function StepResume({ step, setStep, isOwner }: Props) {
   // State
   const [displayBudget, setDisplayBudget] = useState<boolean>(true);
   const [displayDate, setDisplayDate] = useState<boolean>(true);
 
   // Functions
-  const handleSubmit = (e:FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const newBudget = e.currentTarget.budget.value;
     setStep({ ...step, budget: newBudget });
-    handleDisplay();
-  }
+    setDisplayBudget(true);
+  };
 
-  const handleSubmitDate = (e:FormEvent) => {
+  const handleSubmitDate = (e: FormEvent) => {
     e.preventDefault();
     const newDate = e.currentTarget.startDate.value;
     setStep({ ...step, startDate: newDate });
-    handleDisplayDate();
-  }
-
-  function handleDisplay() {
-    displayBudget ? setDisplayBudget(false) : setDisplayBudget(true);
-  }
-  function handleDisplayDate() {
-    displayDate ? setDisplayDate(false) : setDisplayDate(true);
-  }
+    setDisplayDate(true);
+  };
 
   // Render
   return (
@@ -69,31 +60,25 @@ export default function StepResume({step, setStep}:Props) {
         </div>
         <div className="b1-body-budget-status md:flex gap-5 mt-5">
           {displayBudget ? (
-            <div className="b1-body-budget flex basis-1/2 gap-2 mb-5">
-              <div className="flex w-full rounded-md bg-white">
-                <p className="p-2">
-                  {"Budget : " + step.budget.toString() + "€"}
-                </p>
-              </div>
-              <div className="flex justify-end">
-                <IconButton onClick={handleDisplay} ripple={true}>
-                  <FontAwesomeIcon icon={faPen} />
-                </IconButton>
-              </div>
-            </div>
+            <DisplayInput
+              isOwner={isOwner}
+              value={"Budget : " + step.budget.toString() + "€"}
+              state={displayBudget}
+              setState={setDisplayBudget}
+            />
           ) : (
             <form
               className="b1-body-budget flex basis-1/2 gap-2"
               onSubmit={handleSubmit}
             >
-                <Input
-                  className="flex w-full bg-white rounded-md"
-                  type="number"
-                  name="budget"
-                  id="budget"
-                  placeholder="Entrez le nouveau budget"
-                  crossOrigin={undefined}
-                />
+              <Input
+                className="flex w-full bg-white rounded-md"
+                type="number"
+                name="budget"
+                id="budget"
+                placeholder="Entrez le nouveau budget"
+                crossOrigin={undefined}
+              />
               <IconButton
                 className="basis-1/12 flex justify-end"
                 ripple={true}
@@ -104,32 +89,26 @@ export default function StepResume({step, setStep}:Props) {
             </form>
           )}
 
-{displayDate ? (
-            <div className="b1-body-budget flex basis-1/2 gap-2 mb-5">
-              <div className="flex w-full rounded-md bg-white">
-                <p className="p-2">
-                  {"Date de départ : " + step.startDate.toString()}
-                </p>
-              </div>
-              <div className="flex justify-end">
-                <IconButton onClick={handleDisplayDate} ripple={true}>
-                  <FontAwesomeIcon icon={faPen} />
-                </IconButton>
-              </div>
-            </div>
+          {displayDate ? (
+            <DisplayInput
+              isOwner={isOwner}
+              value={"Date de départ : " + step.startDate.toString()}
+              state={displayDate}
+              setState={setDisplayDate}
+            />
           ) : (
             <form
               className="b1-body-budget flex basis-1/2 gap-2"
               onSubmit={handleSubmitDate}
             >
-                <Input
+              <Input
                 className="flex w-full bg-white rounded-md"
-                  type="text"
-                  name="startDate"
-                  id="startDate"
-                  placeholder="Entrez la nouvelle date"
-                  crossOrigin={undefined}
-                />
+                type="text"
+                name="startDate"
+                id="startDate"
+                placeholder="Entrez la nouvelle date"
+                crossOrigin={undefined}
+              />
               <IconButton
                 className="basis-1/12 flex justify-end"
                 ripple={true}

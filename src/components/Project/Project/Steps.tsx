@@ -6,22 +6,23 @@ import {
   CardFooter,
   Typography,
 } from "@material-tailwind/react";
-import { intStep, intSteps } from "../../services/interfaces/intProject";
+import { intStep, intSteps } from "../../../services/interfaces/intProject";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
+  faChartPie,
   faFilter,
-  faTableList,
 } from "@fortawesome/free-solid-svg-icons";
-import { CreateStepModal } from "./CreateStepModal";
 import { Link } from "react-router-dom";
+import { ProjectCreateStep } from "../Modals/ProjectCreateStep";
 
 type Props = {
   steps: intSteps;
   setStep: (steps:intSteps) =>void;
+ 
 };
 
-export default function Steps({ steps, setStep }: Props) {
+export default function Steps({ steps, setStep}: Props) {
   return (
     <section className="bloc-2 mb-40">
       <div className="b2-header flex justify-between">
@@ -30,7 +31,7 @@ export default function Steps({ steps, setStep }: Props) {
         </div>
         <div className="b2-header-buttons flex">
           <div>
-            <CreateStepModal steps={steps} setStep={setStep}/>
+            <ProjectCreateStep steps={steps} setStep={setStep}/>
           </div>
           <div>
             <IconButton>
@@ -46,7 +47,7 @@ export default function Steps({ steps, setStep }: Props) {
             key={index}
           >
             <CardBody>
-              <FontAwesomeIcon icon={faTableList} size="2xl" className="mb-5" />
+              <FontAwesomeIcon icon={faChartPie} size="2xl" className="mb-5" />
               <Typography variant="h5" color="blue-gray" className="mb-2">
                 {step.name}
               </Typography>

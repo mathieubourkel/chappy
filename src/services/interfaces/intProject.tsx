@@ -30,6 +30,7 @@ export interface intTask {
     endDate: string
 }
 
+export type intUsers = Array<string>
 export type intTasks = Array<intTask>
 export type intSteps = Array<intStep>
 export type intComments = Array<intComment>

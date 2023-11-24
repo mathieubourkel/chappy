@@ -12,19 +12,19 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
-import { intStep, intSteps } from "../../services/interfaces/intProject";
+import { intTask, intTasks } from "../../../services/interfaces/intProject";
  
 type Props = {
-  steps: intSteps,
-  setStep: (steps:intSteps) => void;
+  tasks: intTasks,
+  setTask: (tasks:intTasks) => void;
 }
 
-export function CreateStepModal({steps, setStep}:Props) {
+export function StepCreateTask({tasks, setTask}:Props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 
-  const [form, setForm] = useState<intStep>({
-    name: "", description: "", budget: 0, startDate: "Date"
+  const [form, setForm] = useState<intTask>({
+    name: "", description: "", categorie: "", startDate: "", endDate: "", status: "En cours"
 })
 
   function handleChange(e:any){
@@ -35,8 +35,8 @@ export function CreateStepModal({steps, setStep}:Props) {
 
   function handleSubmit(e:any){
     e.preventDefault(); 
-    setStep([...steps, form])
-    setForm({name: "", description: "", budget: 0, startDate: "Date"})
+    setTask([...tasks, form])
+    setForm({name: "", description: "", categorie: "", startDate: "", endDate: "", status: "En cours"})
   }
  
   return (
@@ -57,16 +57,18 @@ export function CreateStepModal({steps, setStep}:Props) {
           <CardBody className="flex flex-col gap-4">
             <Typography variant="h4" color="blue-gray">
             <FontAwesomeIcon icon={faSquarePlus} className="mr-3" />
-              Créer un jalon
+              Créer une tâche
             </Typography>
-            <Input label="Nom du jalon" size="lg" name="name" id="name" crossOrigin={undefined} 
+            <Input label="Nom de la tâche" size="lg" name="name" id="name" crossOrigin={undefined} 
             onChange={(e:any) => handleChange(e)}/>
             <Textarea label="Description" size="lg" name="description" id="description" 
             onChange={(e:any) => handleChange(e)}/>
-            <div className="md: flex gap-3">
-            <Input label="Budget" size="lg" crossOrigin={undefined} type="number" name="budget" id="budget"
+            <Textarea label="Catégorie" size="lg" name="categorie" id="categorie" 
             onChange={(e:any) => handleChange(e)}/>
-            <Input label="Date de début" size="lg" crossOrigin={undefined} name="startTime" id="startTime"
+            <div className="md: flex gap-3">
+            <Input label="Date de début" size="lg" crossOrigin={undefined} name="startDate" id="startDate"
+            onChange={(e:any) => handleChange(e)}/>
+            <Input label="Date de fin" size="lg" crossOrigin={undefined} name="endDate" id="endDate"
             onChange={(e:any) => handleChange(e)}/>
             </div>
             

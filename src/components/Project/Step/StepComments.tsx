@@ -8,7 +8,7 @@ import {
   faPaperPlane,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import CommentCard from "../CommentCard";
+import CommentCard from "../Project/CommentCard";
 
 
 export default function Comments() {
@@ -59,15 +59,15 @@ function handleDelete(){
       <div className="flex justify-center">
         <Button onClick={handleDisplay} className="bg-brick-300">
           {display ? (
-            <div>
+            <>
               <FontAwesomeIcon icon={faMinus} className="mr-3" />
               <a>Réduire</a>
-            </div>
+            </>
           ) : (
-            <div>
+            <>
               <FontAwesomeIcon icon={faPlus} className="mr-3" />
               <a>Afficher plus</a>
-            </div>
+            </>
           )}
         </Button>
       </div>

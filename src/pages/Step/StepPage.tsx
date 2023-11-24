@@ -2,7 +2,7 @@ import { useState } from "react"
 import Comments from "../../components/Project/Step/StepComments"
 import StepResume from "../../components/Project/Step/StepResume"
 import StepTasks from "../../components/Project/Step/StepTasks"
-import { intStep, intTasks } from "../../services/interfaces/intProject"
+import { intStep, intTasks, intUsers } from "../../services/interfaces/intProject"
 
 export default function StepPage() {
 
@@ -21,11 +21,13 @@ startDate:"10-12-23", endDate:"12-12-23", categorie: "Electricite"},
 startDate:"10-12-23", endDate:"12-12-23", categorie: "Electricite"}
   ])
 
+  const [users, setUser] = useState<intUsers>(["Pierre", "Paul", "Jack"])
+  const isOwner = true;
   return (
     <main className="project-page sm:mx-20 mx-5">
-      <StepResume step={step} setStep={setStep}/>
-      <StepTasks tasks={tasks} setTask={setTask}/>
-      <Comments />
+      <StepResume step={step} setStep={setStep} isOwner={isOwner}/>
+      <StepTasks tasks={tasks} setTask={setTask} isOwner={isOwner} users={users} setUser={setUser}/>
+      <Comments isOwner={isOwner}/>
     </main>
   )
 }
