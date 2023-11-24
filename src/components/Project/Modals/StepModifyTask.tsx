@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Dialog,
@@ -9,25 +9,30 @@ import {
   Typography,
   Input,
   Textarea,
+  IconButton,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
-import { intStep, intSteps } from "../../../services/interfaces/intProject";
+import { faPen, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
+import { intTask, intTasks } from "../../../services/interfaces/intProject";
 
 type Props = {
-  steps: intSteps;
-  setStep: (steps: intSteps) => void;
+  task: intTask;
+  tasks: intTasks;
+  setTask: (task: intTasks) => void;
+  index: number;
 };
 
-export function ProjectCreateStep({ steps, setStep }: Props) {
-  const [open, setOpen] = React.useState(false);
+export function StepModifyTask({ task, setTask, tasks, index }: Props) {
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 
-  const [form, setForm] = useState<intStep>({
-    name: "",
-    description: "",
-    budget: 0,
-    startDate: "Date",
+  const [form, setForm] = useState<intTask>({
+    name: task.name,
+    description: task.description,
+    categorie: task.categorie,
+    startDate: task.startDate,
+    endDate: task.endDate,
+    status: task.status,
   });
 
   function handleChange(e: any) {
@@ -37,19 +42,20 @@ export function ProjectCreateStep({ steps, setStep }: Props) {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    setStep([...steps, form]);
-    setForm({ name: "", description: "", budget: 0, startDate: "Date" });
+    const tempArray = [...tasks];
+    tempArray[index] = form;
+    setTask(tempArray);
   }
 
   return (
     <div>
-      <Button
-        className="mr-5 bg-brick-300 flex items-center"
+      <IconButton
+        variant="outlined"
+        className="text-brick-300 border-brick-300"
         onClick={handleOpen}
       >
-        <FontAwesomeIcon icon={faSquarePlus} />
-        <a className="pl-2 hidden md:flex">Créer</a>
-      </Button>
+        <FontAwesomeIcon icon={faPen} />
+      </IconButton>
       <Dialog
         size="lg"
         open={open}
@@ -61,10 +67,12 @@ export function ProjectCreateStep({ steps, setStep }: Props) {
             <CardBody className="flex flex-col gap-4">
               <Typography variant="h4" color="blue-gray">
                 <FontAwesomeIcon icon={faSquarePlus} className="mr-3" />
-                Créer un jalon
+                Modifier la tâche
               </Typography>
               <Input
-                label="Nom du jalon"
+                label="Nom de la tâche"
+                type="text"
+                value={form.name}
                 size="lg"
                 name="name"
                 id="name"
@@ -73,34 +81,44 @@ export function ProjectCreateStep({ steps, setStep }: Props) {
               />
               <Textarea
                 label="Description"
+                value={form.description}
                 size="lg"
                 name="description"
                 id="description"
                 onChange={(e: any) => handleChange(e)}
               />
+              <Textarea
+                label="Catégorie"
+                value={form.categorie}
+                size="lg"
+                name="categorie"
+                id="categorie"
+                onChange={(e: any) => handleChange(e)}
+              />
               <div className="md: flex gap-3">
                 <Input
-                  label="Budget"
+                  label="Date de début"
+                  value={form.startDate}
                   size="lg"
                   crossOrigin={undefined}
-                  type="number"
-                  name="budget"
-                  id="budget"
+                  name="startDate"
+                  id="startDate"
                   onChange={(e: any) => handleChange(e)}
                 />
                 <Input
-                  label="Date de début"
+                  label={task.endDate}
+                  value={form.endDate}
                   size="lg"
                   crossOrigin={undefined}
-                  name="startTime"
-                  id="startTime"
+                  name="endDate"
+                  id="endDate"
                   onChange={(e: any) => handleChange(e)}
                 />
               </div>
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button variant="gradient" onClick={handleOpen} type="submit">
-                Créer
+                Modifier
               </Button>
             </CardFooter>
           </form>

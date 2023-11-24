@@ -5,11 +5,11 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   type: string;
-  label: any;
+  label: string;
   placeHolder: string;
   state: any;
-  setState: any;
-  setDisplay: any;
+  setState: (element:any) => void;
+  setDisplay: (bool:boolean) => void;
 };
 
 export default function ModifyInput({
@@ -20,11 +20,11 @@ export default function ModifyInput({
   state,
   setDisplay,
 }: Props) {
-    
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const newBudget = e.currentTarget[label].value;
-    setState({ ...state, [label]: newBudget });
+    const value = e.currentTarget[label].value;
+    setState({ ...state, [label]: value });
     setDisplay(true);
   };
 

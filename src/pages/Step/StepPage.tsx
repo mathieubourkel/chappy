@@ -1,8 +1,8 @@
 import { useState } from "react"
-import Comments from "../../components/Project/Step/StepComments"
-import StepResume from "../../components/Project/Step/StepResume"
 import StepTasks from "../../components/Project/Step/StepTasks"
-import { intStep, intTasks, intUsers } from "../../services/interfaces/intProject"
+import { intComments, intStep, intTasks, intUsers } from "../../services/interfaces/intProject"
+import EspaceComment from "../../components/Project/Comments/EspaceComment"
+import StepHeader from "../../components/Project/Step/StepHeader"
 
 export default function StepPage() {
 
@@ -20,14 +20,21 @@ startDate:"10-12-23", endDate:"12-12-23", categorie: "Electricite"},
 {name: "Nomtache4", description: "desription tache4", status: "En cours", 
 startDate:"10-12-23", endDate:"12-12-23", categorie: "Electricite"}
   ])
+  const [comments, setComment] = useState<intComments>([
+    {content: "contenu du commentaire 1", author: "Bob"},
+    {content: "contenu du commentaire 2", author: "Jean"},
+    {content: "contenu du commentaire 3", author: "Michel"},
 
-  const [users, setUser] = useState<intUsers>(["Pierre", "Paul", "Jack"])
+  ])
+  const [users, setUser] = useState<intUsers>(["Pierre", "Paul", "Jack"]);
   const isOwner = true;
+
+  const [status, setStatus] = useState<Array<string>>(["En cours", "En attente", "Terminée"]);
   return (
     <main className="project-page sm:mx-20 mx-5">
-      <StepResume step={step} setStep={setStep} isOwner={isOwner}/>
-      <StepTasks tasks={tasks} setTask={setTask} isOwner={isOwner} users={users} setUser={setUser}/>
-      <Comments isOwner={isOwner}/>
+      <StepHeader step={step} setStep={setStep} isOwner={isOwner}/>
+      <StepTasks tasks={tasks} setTask={setTask} isOwner={isOwner} users={users} setUser={setUser} status={status} setStatus={setStatus}/>
+      <EspaceComment comments={comments} setComment={setComment}  />
     </main>
   )
 }

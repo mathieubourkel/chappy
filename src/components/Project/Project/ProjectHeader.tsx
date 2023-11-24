@@ -20,7 +20,7 @@ type Props = {
   setProject: (project: intProject) => void;
   isOwner: boolean;
 };
-export default function Resume({ project, setProject, isOwner }: Props) {
+export default function ProjectResume({ project, setProject, isOwner }: Props) {
   // State
   const [displayBudget, setDisplayBudget] = useState<boolean>(true);
   const status = [
@@ -38,7 +38,6 @@ export default function Resume({ project, setProject, isOwner }: Props) {
         </div>
         <div className="b1-header-buttons flex gap-5">
           <ProjectDisplayCode />
-
           <Link to="/project/members">
             <Button variant="outlined" className="flex">
               <FontAwesomeIcon icon={faUser} className="mr-2" />
@@ -95,12 +94,12 @@ export default function Resume({ project, setProject, isOwner }: Props) {
               placeHolder="Entrez le nouveau budget"
             />
           )}
-          <SelectInput
+          {/* <SelectInput
             isOwner={isOwner}
             state={status}
             classState="basis-1/2"
             label="Status"
-          />
+          /> */}
         </div>
       </div>
     </section>

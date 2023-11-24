@@ -1,9 +1,9 @@
 import {  useState } from "react";
-import Comments from "../../components/Project/Project/Comments";
-import Resume from "../../components/Project/Project/Resume";
-import Steps from "../../components/Project/Project/Steps";
 import { intComments, intProject, intSteps } from "../../services/interfaces/intProject";
 import "../../css/Project.css";
+import EspaceComment from "../../components/Project/Comments/EspaceComment";
+import ProjectSteps from "../../components/Project/Project/ProjectSteps";
+import ProjectHeader from "../../components/Project/Project/ProjectHeader";
 
 export default function ProjectPage() {
 
@@ -29,9 +29,9 @@ export default function ProjectPage() {
 
   return (
     <main className="project-page sm:mx-20 mx-5">
-      <Resume project={project} setProject={setProject} isOwner={isOwner}/>
-      <Steps steps={steps} setStep={setStep} isOwner={isOwner}/>
-      <Comments comments={comments} setComment={setComment} isOwner={isOwner} />
+      <ProjectHeader project={project} setProject={setProject} isOwner={isOwner}/>
+      <ProjectSteps steps={steps} setStep={setStep} />
+      <EspaceComment comments={comments} setComment={setComment} />
     </main>
   )
 }

@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconButton, Typography } from "@material-tailwind/react";
 
 type Props = {
-  value: any;
+  value: string;
   state: boolean;
   setState: (bool: boolean) => void;
   isOwner: boolean
