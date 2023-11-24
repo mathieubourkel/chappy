@@ -40,7 +40,7 @@ export function NavbarConnected(props:any) {
 
           <div className="text-blue-gray-900 flex justify-between items-center">
 
-            <IconButton variant="text" className={"bg-marine-300 rounded-2xl hover:bg-marine-100"} onClick={toggleSidebar}>
+            <IconButton variant="text" size={"lg"} className={"bg-marine-300 rounded-2xl hover:bg-marine-100 h-5"} onClick={toggleSidebar}>
               <FontAwesomeIcon icon={faPlay} className="h-3 w-3 text-white" />
             </IconButton>
 

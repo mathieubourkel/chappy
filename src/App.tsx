@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Routes, Route } from "react-router-dom";
 import "./css/App.css";
 import HomePage from "./pages/Home/HomePage.tsx";
@@ -6,6 +5,7 @@ import LoginPage from "./pages/Login/LoginPage.tsx";
 import SignupPage from "./pages/Signup/SignupPage.tsx";
 import ProjectPage from "./pages/Project/ProjectPage.tsx";
 import DashboardPage from "./pages/Dashboard/DashboardPage.tsx";
+import CalendarPage from "./pages/Calendar/CalendarPage.tsx";
 import LegalMentionsPage from "./pages/LegalMentions/LegalMentionsPage.tsx";
 import UserProfilePage from "./pages/UserProfile/UserProfilePage.tsx";
 import StepPage from "./pages/Step/StepPage.tsx";
@@ -17,17 +17,12 @@ import Footer from "./components/Footer/Footer.tsx";
 import { useState } from "react";
 import AboutPage from "./pages/About/AboutPage.tsx";
 import ContactUsPage from "./pages/ContactUs/ContactUsPage.tsx";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 import PrivateRoute from "./services/utils/PrivateRoute.tsx";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 import NotFoundPage from "./services/utils/NotFoundPage.tsx";
 import { NavbarConnected } from "./components/Navbar/NavbarConnected.tsx";
 import { NavbarVisitor } from "./components/Navbar/NavbarVisitor.tsx";
-import {
-  Sidebar
-} from "./components/Sidebar/Sidebar.tsx";
+import { Sidebar } from "./components/Sidebar/Sidebar.tsx";
+
 
 export default function App() {
   const [logins, setLogin] = useState<any>([]);
@@ -55,6 +50,7 @@ export default function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route element={<PrivateRoute isLogged={isLogged} />}>
           <Route path="/dashboard/" element={<DashboardPage />} />
+          <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/project" element={<ProjectPage />} />
           <Route path="/project/documents" element={<DocumentsPage />} />
           <Route path="/project/purchases" element={<PurchasesPage />} />
