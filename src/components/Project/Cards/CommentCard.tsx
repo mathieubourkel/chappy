@@ -1,12 +1,6 @@
 import { faReply } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Avatar,
-  Button,
-  Card,
-  CardBody,
-  Typography,
-} from "@material-tailwind/react";
+import {Avatar,Button,Card,CardBody,Typography} from "@material-tailwind/react";
 import user from "../../../assets/img/icon user.png"
 import { intComment } from "../../../services/interfaces/intProject";
 

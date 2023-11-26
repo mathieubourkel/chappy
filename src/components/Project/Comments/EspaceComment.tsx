@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { intComment, intComments } from "../../../services/interfaces/intProject";
-import DisplayMore from "../Buttons/DisplayMore";
-import CreateComment from "./CreateComment";
 import { useState } from "react";
+import { intComment, intComments } from "../../../services/interfaces/intProject";
+import DisplayMore from "./DisplayMore";
+import CreateComment from "./CreateComment";
 import CommentCard from "../Cards/CommentCard";
 
 type Props = {

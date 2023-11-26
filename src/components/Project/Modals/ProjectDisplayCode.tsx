@@ -11,7 +11,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode, faCopy, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
  
-export function ProjectDisplayCode() {
+export default function ProjectDisplayCode() {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((bool) => !bool);

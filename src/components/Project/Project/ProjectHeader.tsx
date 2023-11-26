@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
 import { intProject } from "../../../services/interfaces/intProject";
 import { Link } from "react-router-dom";
 import calendar from "../../../assets/img/calendar.webp";
@@ -10,10 +9,9 @@ import {
   faFolderOpen,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { ProjectDisplayCode } from "../Modals/ProjectDisplayCode";
+import ProjectDisplayCode from "../Modals/ProjectDisplayCode";
 import SelectInput from "../Buttons/SelectInput";
-import DisplayInput from "../Buttons/DisplayInput";
-import ModifyInput from "../Buttons/ModifyInput";
+import ModifyInput from "../Buttons/ModifiableInput";
 
 type Props = {
   project: intProject;
@@ -21,8 +19,8 @@ type Props = {
   isOwner: boolean;
 };
 export default function ProjectResume({ project, setProject, isOwner }: Props) {
+  
   // State
-  const [displayBudget, setDisplayBudget] = useState<boolean>(true);
   const status = [
     { name: "En cours", id: 0 },
     { name: "En attente", id: 1 },
@@ -77,29 +75,21 @@ export default function ProjectResume({ project, setProject, isOwner }: Props) {
           </div>
         </div>
         <div className="b1-body-budget-status md:flex gap-5 mt-5">
-          {displayBudget ? (
-            <DisplayInput
+
+            <ModifyInput
               isOwner={isOwner}
               value={"Budget : " + project.budget.toString() + "€"}
-              state={displayBudget}
-              setState={setDisplayBudget}
-            />
-          ) : (
-            <ModifyInput
               state={project}
               setState={setProject}
-              setDisplay={setDisplayBudget}
               type="number"
               label="budget"
               placeHolder="Entrez le nouveau budget"
-            />
-          )}
+              />
           {/* <SelectInput
             isOwner={isOwner}
             state={status}
             classState="basis-1/2"
-            label="Status"
-          /> */}
+            label="Status" index setState={undefined} select={[]}   /> */}
         </div>
       </div>
     </section>

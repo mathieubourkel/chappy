@@ -26,12 +26,13 @@ export default function SelectInput({
     tempArray[index][label] = value;
     setState(tempArray);
   }
+  
   return (
     <div className={classState}>
       {isOwner ? (
         <Select
           className="border border-brick-300 rounded-xl p-2 text-brick-300"
-          value={state[index].status}
+          value={state[index][label]}
           onChange={(value: any) => handleSubmit(value, index)}
         >
           {select.map((i: string, indexS: number) => (

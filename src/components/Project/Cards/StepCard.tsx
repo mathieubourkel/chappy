@@ -1,13 +1,7 @@
+import { Link } from "react-router-dom";
 import { faArrowRight, faChartPie } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
-} from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import {Button,Card,CardBody,CardFooter,Typography} from "@material-tailwind/react";
 import { intStep } from "../../../services/interfaces/intProject";
 
 type Props = {

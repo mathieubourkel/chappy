@@ -19,7 +19,7 @@ type Props = {
   setStep: (steps: intSteps) => void;
 };
 
-export function ProjectCreateStep({ steps, setStep }: Props) {
+export default function ProjectCreateStep({ steps, setStep }: Props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 

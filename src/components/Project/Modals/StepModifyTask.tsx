@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -16,24 +16,19 @@ import { faPen, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import { intTask, intTasks } from "../../../services/interfaces/intProject";
 
 type Props = {
-  task: intTask;
   tasks: intTasks;
   setTask: (task: intTasks) => void;
   index: number;
 };
 
-export function StepModifyTask({ task, setTask, tasks, index }: Props) {
+export default function StepModifyTask({ setTask, tasks, index }: Props) {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen((cur) => !cur);
+  const handleOpen = () => setOpen((bool) => !bool);
+  const [form, setForm] = useState<intTask>({ ...tasks[index] });
 
-  const [form, setForm] = useState<intTask>({
-    name: task.name,
-    description: task.description,
-    categorie: task.categorie,
-    startDate: task.startDate,
-    endDate: task.endDate,
-    status: task.status,
-  });
+  useEffect(() => {
+    setForm({ ...tasks[index] });
+  }, [index, open, tasks]);
 
   function handleChange(e: any) {
     const { name, value } = e.target;
@@ -48,7 +43,7 @@ export function StepModifyTask({ task, setTask, tasks, index }: Props) {
   }
 
   return (
-    <div>
+    <>
       <IconButton
         variant="outlined"
         className="text-brick-300 border-brick-300"
@@ -106,7 +101,7 @@ export function StepModifyTask({ task, setTask, tasks, index }: Props) {
                   onChange={(e: any) => handleChange(e)}
                 />
                 <Input
-                  label={task.endDate}
+                  label="Date de fin"
                   value={form.endDate}
                   size="lg"
                   crossOrigin={undefined}
@@ -124,6 +119,6 @@ export function StepModifyTask({ task, setTask, tasks, index }: Props) {
           </form>
         </Card>
       </Dialog>
-    </div>
+    </>
   );
 }

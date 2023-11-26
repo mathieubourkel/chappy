@@ -1,32 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import { IconButton } from "@material-tailwind/react";
-import {
-  intTask,
-  intTasks,
-  intUsers,
-} from "../../../services/interfaces/intProject";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
-import { StepCreateTask } from "../Modals/StepCreateTask";
+import StepCreateTask from "../Modals/StepCreateTask";
 import TaskCard from "../Cards/TaskCard";
+import {intTask,intTasks} from "../../../services/interfaces/intProject";
+
 
 type Props = {
-  tasks: intTasks;
-  setTask: (tasks: intTasks) => void;
-  users: intUsers;
-  setUser: (user: intUsers) => void;
-  status: Array<string>;
   isOwner: boolean
 };
 
-export default function Steps({
-  tasks,
-  setTask,
-  users,
-  setUser,
-  status,
-  isOwner
-}: Props) {
+export default function Steps({isOwner}: Props) {
+
+  // Temp
+  const [tasks, setTask] = useState<intTasks>([
+    {name: "Nomtache1", description: "desription tache1", status: "En cours", 
+    startDate:"10-12-23", endDate:"12-12-23", categorie: "Electricite"},
+    {name: "Nomtache2", description: "desription tache2", status: "Terminée", 
+    startDate:"10-12-23", endDate:"12-12-23", categorie: "Electricite"},
+    {name: "Nomtache3", description: "desription tache3", status: "En attente", 
+    startDate:"10-12-23", endDate:"12-12-23", categorie: "Electricite"},
+    {name: "Nomtache4", description: "desription tache4", status: "En cours", 
+    startDate:"10-12-23", endDate:"12-12-23", categorie: "Electricite"}])
+
   return (
     <section className="bloc-2 mb-40">
       <div className="b2-header flex justify-between">
@@ -45,16 +43,12 @@ export default function Steps({
         </div>
       </div>
       <ul className="b2-body flex flex-col gap-10 mt-5">
-        {tasks.map((task: intTask, index: number) => (
+        {tasks.map((_task: intTask, index: number) => (
           <TaskCard
-            task={task}
             key={index}
             index={index}
             tasks={tasks}
             setTask={setTask}
-            status={status}
-            users={users}
-            setUser={setUser}
             isOwner={isOwner}
           />
         ))}

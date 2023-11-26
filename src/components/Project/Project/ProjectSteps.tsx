@@ -1,9 +1,9 @@
 import { IconButton } from "@material-tailwind/react";
-import { intStep, intSteps } from "../../../services/interfaces/intProject";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
-import { ProjectCreateStep } from "../Modals/ProjectCreateStep";
+import ProjectCreateStep from "../Modals/ProjectCreateStep";
 import StepCard from "../Cards/StepCard";
+import { intStep, intSteps } from "../../../services/interfaces/intProject";
 
 type Props = {
   steps: intSteps;

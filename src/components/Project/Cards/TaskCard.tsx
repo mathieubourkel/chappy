@@ -1,35 +1,40 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import { Typography, IconButton } from "@material-tailwind/react";
-import { StepModifyTask } from "../Modals/StepModifyTask";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import DeleteButton from "../Buttons/DeleteButton";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { intTasks, intUsers } from "../../../services/interfaces/intProject";
+import StepModifyTask from "../Modals/StepModifyTask";
 import SelectInput from "../Buttons/SelectInput";
+import DeleteButton from "../Buttons/DeleteButton";
 
-export default function TaskCard({
-  task,
-  index,
-  status,
-  users,
-  setUser,
-  setTask,
-  tasks,
-  isOwner,
-}: any) {
+type Props = {
+  index: number,
+  setTask: (tasks:intTasks) => void;
+  tasks: intTasks;
+  isOwner: boolean
+}
+
+export default function TaskCard({ index, setTask, tasks, isOwner }: Props) {
+
+  const status:Array<string> = ["En cours", "En attente", "Terminée"];
+  const [users, setUser] = useState<intUsers>(["Pierre", "Paul", "Jack"]);
+
   return (
-    <div>
+    <>
       <li
         className="flex justify-between gap-5
           p-5 rounded-xl bg-white border-solid border-4 border-b-brick-200"
       >
         <Typography variant="h5" color="blue-gray" className="flex">
-          <p className="border p-2 rounded-xl bg-light-200">{task.categorie}</p>
+          <p className="border p-2 rounded-xl bg-light-200">
+            {tasks[index].categorie}
+          </p>
         </Typography>
         <Typography variant="h5" className="p-2 text-brick-300">
-          {task.name}
+          {tasks[index].name}
         </Typography>
         <Typography variant="h5" className="p-2 text-brick-300">
-          {task.description}
+          {tasks[index].description}
         </Typography>
         <div className="pt-0 flex justify-end gap-10">
           <form>
@@ -45,15 +50,7 @@ export default function TaskCard({
           </form>
 
           <div className="flex gap-2">
-            <div>
-              <StepModifyTask
-                task={task}
-                index={index}
-                tasks={tasks}
-                setTask={setTask}
-              />
-            </div>
-
+            <StepModifyTask index={index} tasks={tasks} setTask={setTask} />
             <IconButton
               variant="outlined"
               className="text-brick-300 border-brick-300"
@@ -72,6 +69,6 @@ export default function TaskCard({
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 }

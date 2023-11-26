@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Dialog,
@@ -19,10 +19,10 @@ type Props = {
   setTask: (tasks: intTasks) => void;
 };
 
-export function StepCreateTask({ tasks, setTask }: Props) {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen((cur) => !cur);
+export default function StepCreateTask({ tasks, setTask }: Props) {
 
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intTask>({
     name: "",
     description: "",
@@ -40,14 +40,6 @@ export function StepCreateTask({ tasks, setTask }: Props) {
   function handleSubmit(e: any) {
     e.preventDefault();
     setTask([...tasks, form]);
-    setForm({
-      name: "",
-      description: "",
-      categorie: "",
-      startDate: "",
-      endDate: "",
-      status: "En cours",
-    });
   }
 
   return (
