@@ -13,7 +13,7 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
-import { intTask, intTasks } from "../../../services/interfaces/intProject";
+import { FormEvent, InputEvent, intTask, intTasks } from "../../../services/interfaces/intProject";
 
 type Props = {
   tasks: intTasks;
@@ -22,6 +22,7 @@ type Props = {
 };
 
 export default function StepModifyTask({ setTask, tasks, index }: Props) {
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((bool) => !bool);
   const [form, setForm] = useState<intTask>({ ...tasks[index] });
@@ -30,12 +31,12 @@ export default function StepModifyTask({ setTask, tasks, index }: Props) {
     setForm({ ...tasks[index] });
   }, [index, open, tasks]);
 
-  function handleChange(e: any) {
+  function handleChange(e: InputEvent) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
 
-  function handleSubmit(e: any) {
+  function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const tempArray = [...tasks];
     tempArray[index] = form;
@@ -58,7 +59,7 @@ export default function StepModifyTask({ setTask, tasks, index }: Props) {
         className="bg-transparent shadow-none"
       >
         <Card className="mx-auto w-full">
-          <form onSubmit={(e: any) => handleSubmit(e)}>
+          <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
               <Typography variant="h4" color="blue-gray">
                 <FontAwesomeIcon icon={faSquarePlus} className="mr-3" />
@@ -72,7 +73,7 @@ export default function StepModifyTask({ setTask, tasks, index }: Props) {
                 name="name"
                 id="name"
                 crossOrigin={undefined}
-                onChange={(e: any) => handleChange(e)}
+                onChange={(e: InputEvent) => handleChange(e)}
               />
               <Textarea
                 label="Description"
@@ -80,7 +81,7 @@ export default function StepModifyTask({ setTask, tasks, index }: Props) {
                 size="lg"
                 name="description"
                 id="description"
-                onChange={(e: any) => handleChange(e)}
+                onChange={(e:any) => handleChange(e)}
               />
               <Textarea
                 label="Catégorie"
@@ -98,7 +99,7 @@ export default function StepModifyTask({ setTask, tasks, index }: Props) {
                   crossOrigin={undefined}
                   name="startDate"
                   id="startDate"
-                  onChange={(e: any) => handleChange(e)}
+                  onChange={(e: InputEvent) => handleChange(e)}
                 />
                 <Input
                   label="Date de fin"
@@ -107,7 +108,7 @@ export default function StepModifyTask({ setTask, tasks, index }: Props) {
                   crossOrigin={undefined}
                   name="endDate"
                   id="endDate"
-                  onChange={(e: any) => handleChange(e)}
+                  onChange={(e: InputEvent) => handleChange(e)}
                 />
               </div>
             </CardBody>

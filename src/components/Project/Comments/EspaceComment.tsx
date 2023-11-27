@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { intComment, intComments } from "../../../services/interfaces/intProject";
 import DisplayMore from "./DisplayMore";

@@ -8,9 +8,10 @@ import { intStep, intSteps } from "../../../services/interfaces/intProject";
 type Props = {
   steps: intSteps;
   setStep: (steps: intSteps) => void;
+  isOwner: boolean
 };
 
-export default function ProjectSteps({ steps, setStep }: Props) {
+export default function ProjectSteps({ steps, setStep, isOwner }: Props) {
   return (
     <section className="bloc-2 mb-40">
       <div className="b2-header flex justify-between">
@@ -18,9 +19,10 @@ export default function ProjectSteps({ steps, setStep }: Props) {
           <h2>Les jalons</h2>
         </div>
         <div className="b2-header-buttons flex">
+          {isOwner && 
           <div>
             <ProjectCreateStep steps={steps} setStep={setStep} />
-          </div>
+          </div> }
           <div>
             <IconButton>
               <FontAwesomeIcon icon={faFilter} />

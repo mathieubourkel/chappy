@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import {
   Button,
@@ -8,28 +7,22 @@ import {
   CardFooter,
   Typography,
   Input,
-  Textarea,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
-import { FormEvent, InputEvent, intTask, intTasks } from "../../../services/interfaces/intProject";
+import { FormEvent, InputEvent, intPurchase, intPurchases } from "../../../services/interfaces/intProject";
 
 type Props = {
-  tasks: intTasks;
-  setTask: (tasks: intTasks) => void;
+  purchases: intPurchases
+  setPurchase: (purchases: intPurchases) => void;
 };
 
-export default function StepCreateTask({ tasks, setTask }: Props) {
+export default function PurchaseAdd({ purchases, setPurchase}: Props) {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  const [form, setForm] = useState<intTask>({
-    name: "",
-    description: "",
-    categorie: "",
-    startDate: "",
-    endDate: "",
-    status: "En cours",
+  const [form, setForm] = useState<intPurchase>({
+    name: "", price:0
   });
 
   function handleChange(e: InputEvent) {
@@ -39,7 +32,7 @@ export default function StepCreateTask({ tasks, setTask }: Props) {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setTask([...tasks, form]);
+    setPurchase([...purchases, form]);
   }
 
   return (
@@ -49,7 +42,7 @@ export default function StepCreateTask({ tasks, setTask }: Props) {
         onClick={handleOpen}
       >
         <FontAwesomeIcon icon={faSquarePlus} />
-        <a className="pl-2 hidden md:flex">Créer</a>
+        <a className="pl-2 hidden md:flex">Ajouter</a>
       </Button>
       <Dialog
         size="lg"
@@ -62,52 +55,29 @@ export default function StepCreateTask({ tasks, setTask }: Props) {
             <CardBody className="flex flex-col gap-4">
               <Typography variant="h4" color="blue-gray">
                 <FontAwesomeIcon icon={faSquarePlus} className="mr-3" />
-                Créer une tâche
+                Ajouter un achat
               </Typography>
               <Input
-                label="Nom de la tâche"
+                label="Nom de l'achat"
                 size="lg"
                 name="name"
                 id="name"
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />
-              <Textarea
-                label="Description"
+              <Input
+                label="Prix de l'achat"
+                type="number"
                 size="lg"
-                name="description"
-                id="description"
-                onChange={(e: any) => handleChange(e)}
+                name="price"
+                id="price"
+                crossOrigin={undefined}
+                onChange={(e: InputEvent) => handleChange(e)}
               />
-              <Textarea
-                label="Catégorie"
-                size="lg"
-                name="categorie"
-                id="categorie"
-                onChange={(e: any) => handleChange(e)}
-              />
-              <div className="md: flex gap-3">
-                <Input
-                  label="Date de début"
-                  size="lg"
-                  crossOrigin={undefined}
-                  name="startDate"
-                  id="startDate"
-                  onChange={(e: InputEvent) => handleChange(e)}
-                />
-                <Input
-                  label="Date de fin"
-                  size="lg"
-                  crossOrigin={undefined}
-                  name="endDate"
-                  id="endDate"
-                  onChange={(e: InputEvent) => handleChange(e)}
-                />
-              </div>
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button variant="gradient" onClick={handleOpen} type="submit">
-                Créer
+                Ajouter
               </Button>
             </CardFooter>
           </form>

@@ -1,18 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
-import {
-  Button,
-  Dialog,
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
-  Input,
-  Textarea,
-} from "@material-tailwind/react";
+import { useState } from "react";
+import {Button,Dialog,Card,CardBody,CardFooter,Typography,Input,Textarea,} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
-import { intStep, intSteps } from "../../../services/interfaces/intProject";
+import { FormEvent, InputEvent, intStep, intSteps } from "../../../services/interfaces/intProject";
 
 type Props = {
   steps: intSteps;
@@ -20,7 +11,8 @@ type Props = {
 };
 
 export default function ProjectCreateStep({ steps, setStep }: Props) {
-  const [open, setOpen] = React.useState(false);
+
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 
   const [form, setForm] = useState<intStep>({
@@ -30,12 +22,12 @@ export default function ProjectCreateStep({ steps, setStep }: Props) {
     startDate: "Date",
   });
 
-  function handleChange(e: any) {
+  function handleChange(e: InputEvent) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
 
-  function handleSubmit(e: any) {
+  function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setStep([...steps, form]);
     setForm({ name: "", description: "", budget: 0, startDate: "Date" });
@@ -57,7 +49,7 @@ export default function ProjectCreateStep({ steps, setStep }: Props) {
         className="bg-transparent shadow-none"
       >
         <Card className="mx-auto w-full">
-          <form onSubmit={(e: any) => handleSubmit(e)}>
+          <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
               <Typography variant="h4" color="blue-gray">
                 <FontAwesomeIcon icon={faSquarePlus} className="mr-3" />
@@ -69,7 +61,7 @@ export default function ProjectCreateStep({ steps, setStep }: Props) {
                 name="name"
                 id="name"
                 crossOrigin={undefined}
-                onChange={(e: any) => handleChange(e)}
+                onChange={(e: InputEvent) => handleChange(e)}
               />
               <Textarea
                 label="Description"
@@ -86,7 +78,7 @@ export default function ProjectCreateStep({ steps, setStep }: Props) {
                   type="number"
                   name="budget"
                   id="budget"
-                  onChange={(e: any) => handleChange(e)}
+                  onChange={(e: InputEvent) => handleChange(e)}
                 />
                 <Input
                   label="Date de début"
@@ -94,7 +86,7 @@ export default function ProjectCreateStep({ steps, setStep }: Props) {
                   crossOrigin={undefined}
                   name="startTime"
                   id="startTime"
-                  onChange={(e: any) => handleChange(e)}
+                  onChange={(e: InputEvent) => handleChange(e)}
                 />
               </div>
             </CardBody>

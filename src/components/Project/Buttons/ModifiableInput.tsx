@@ -15,16 +15,9 @@ type Props = {
   isOwner: boolean;
 };
 
-export default function ModifyInput({
-  type,
-  label,
-  placeHolder,
-  setState,
-  state,
-  value,
-  isOwner,
-}: Props) {
-
+export default function ModifiableInput(props: Props) {
+  
+  const { type, label, placeHolder, setState, state, value, isOwner } = props;
   const [display, setDisplay] = useState(true);
 
   const handleSubmit = (e: FormEvent) => {
@@ -36,7 +29,7 @@ export default function ModifyInput({
   function handleDisplay() {
     setDisplay(false);
   }
-  
+
   return (
     <div className="b1-body-budget flex w-full gap-2 mb-5">
       {display ? (

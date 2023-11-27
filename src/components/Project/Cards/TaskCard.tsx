@@ -4,19 +4,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { intTasks, intUsers } from "../../../services/interfaces/intProject";
 import StepModifyTask from "../Modals/StepModifyTask";
-import SelectInput from "../Buttons/SelectInput";
 import DeleteButton from "../Buttons/DeleteButton";
+import SelectInputArray from "../Buttons/SelectInputArray";
 
 type Props = {
-  index: number,
-  setTask: (tasks:intTasks) => void;
+  index: number;
+  setTask: (tasks: intTasks) => void;
   tasks: intTasks;
-  isOwner: boolean
-}
+  isOwner: boolean;
+};
 
 export default function TaskCard({ index, setTask, tasks, isOwner }: Props) {
 
-  const status:Array<string> = ["En cours", "En attente", "Terminée"];
+  const status: Array<string> = ["En cours", "En attente", "Terminée"];
   const [users, setUser] = useState<intUsers>(["Pierre", "Paul", "Jack"]);
 
   return (
@@ -38,7 +38,7 @@ export default function TaskCard({ index, setTask, tasks, isOwner }: Props) {
         </Typography>
         <div className="pt-0 flex justify-end gap-10">
           <form>
-            <SelectInput
+            <SelectInputArray
               select={status}
               isOwner={isOwner}
               state={tasks}

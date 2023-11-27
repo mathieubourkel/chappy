@@ -2,7 +2,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Textarea } from '@material-tailwind/react'
 import { FormEvent, useState } from 'react';
-import { intComment, intComments } from '../../../services/interfaces/intProject';
+import { InputEvent, intComment, intComments } from '../../../services/interfaces/intProject';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
@@ -11,11 +11,12 @@ type Props = {
 }
 
 export default function CreateComment({state, setState}:Props) {
+  
   const [form, setForm] = useState<intComment>({
     content: "", author: "Auteur Dynamique"
 })
 
-function handleChange(e:any){
+function handleChange(e:InputEvent){
   const { name, value } = e.target;
   setForm({...form, [name] : value})
 
@@ -33,7 +34,7 @@ function handleDelete(){
   return (
     
     <div className="mt-10">
-        <form onSubmit={(e:any) => handleSubmit(e)}>
+        <form onSubmit={(e:FormEvent) => handleSubmit(e)}>
         <Textarea
           variant="static"
           placeholder="Rédiger un nouveau commentaire"

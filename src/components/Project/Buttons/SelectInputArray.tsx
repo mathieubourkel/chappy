@@ -7,26 +7,20 @@ type Props = {
   classState: string;
   isOwner: boolean;
   index: number;
-  setState: any;
+  setState: (state:Array<any>) => void;
   select: Array<any>;
 };
 
-export default function SelectInput({
-  state,
-  setState,
-  select,
-  label,
-  classState,
-  isOwner,
-  index,
-}: Props) {
+export default function SelectInputArray(props: Props) {
+
+  const { state, setState, select, label, classState, isOwner, index } = props;
 
   function handleSubmit(value: any, index: number) {
     const tempArray = [...state];
     tempArray[index][label] = value;
     setState(tempArray);
   }
-  
+
   return (
     <div className={classState}>
       {isOwner ? (

@@ -4,12 +4,15 @@ import "../../css/Project.css";
 import EspaceComment from "../../components/Project/Comments/EspaceComment";
 import ProjectSteps from "../../components/Project/Project/ProjectSteps";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
+import ProjectDesc from "../../components/Project/Project/ProjectDesc";
 
-export default function ProjectPage() {
+type Props = {
+  project: intProject,
+  setProject: (project:intProject) => void;
+  isOwner: boolean
+}
 
-  const [project, setProject] = useState<intProject>({
-    name: "Nom du projet", description: "Description du projet la j,ffdkfdksdnfjnsdjnf ndf ndsf sdnfjfn sjfsf s,f f sd fsdnf bfsd, ds,n fbdsnsbd", budget: 500, status: "En cours", owner: "Mathieu", id: 0
-  })
+export default function ProjectPage({project, setProject, isOwner}:Props) {
 
   const [steps, setStep] = useState<intSteps>([
     {name: "Nom step1", description: "description step1", budget: 300, startDate: "new Date()"},
@@ -25,12 +28,11 @@ export default function ProjectPage() {
 
   ])
 
-  const isOwner = true;
-
   return (
     <main className="project-page sm:mx-20 mx-5">
-      <ProjectHeader project={project} setProject={setProject} isOwner={isOwner}/>
-      <ProjectSteps steps={steps} setStep={setStep} />
+      <ProjectHeader project={project}/>
+      <ProjectDesc project={project} setProject={setProject} isOwner={isOwner}/>
+      <ProjectSteps steps={steps} setStep={setStep} isOwner={isOwner} />
       <EspaceComment comments={comments} setComment={setComment} />
     </main>
   )

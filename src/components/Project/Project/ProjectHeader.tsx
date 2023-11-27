@@ -1,36 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { intProject } from "../../../services/interfaces/intProject";
 import { Link } from "react-router-dom";
-import calendar from "../../../assets/img/calendar.webp";
-import { Button, Card, CardBody, Typography } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCartShopping,
-  faFolderOpen,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import {faCartShopping,faFolderOpen,faUser} from "@fortawesome/free-solid-svg-icons";
 import ProjectDisplayCode from "../Modals/ProjectDisplayCode";
-import SelectInput from "../Buttons/SelectInput";
-import ModifyInput from "../Buttons/ModifiableInput";
+import { intProject } from "../../../services/interfaces/intProject";
+
 
 type Props = {
   project: intProject;
-  setProject: (project: intProject) => void;
-  isOwner: boolean;
 };
-export default function ProjectResume({ project, setProject, isOwner }: Props) {
-  
-  // State
-  const status = [
-    { name: "En cours", id: 0 },
-    { name: "En attente", id: 1 },
-    { name: "Terminé", id: 2 },
-  ];
+
+export default function ProjectHeader({ project }: Props) {
 
   // Render
   return (
-    <section className="bloc-1 mb-40">
-      <div className="b1-header md:flex justify-between">
+      <section className="b1-header md:flex justify-between">
         <div className="b1-header-title shrink-0">
           <h1>{project.name}</h1>
         </div>
@@ -58,40 +42,7 @@ export default function ProjectResume({ project, setProject, isOwner }: Props) {
             </Button>
           </Link>
         </div>
-      </div>
+      </section>
 
-      <div className="b1-body mt-10">
-        <div className="b1-body-desc-calendar lg:flex gap-5">
-          <Card className="b1-body-desc basis-1/2 bg-white">
-            <CardBody>
-              <Typography variant="h4" className="mb-2">
-                Description du projet
-              </Typography>
-              <Typography>{project.description}</Typography>
-            </CardBody>
-          </Card>
-          <div className="b1-body-calendar basis-1/2">
-            <img className="hidden lg:flex" src={calendar} />
-          </div>
-        </div>
-        <div className="b1-body-budget-status md:flex gap-5 mt-5">
-
-            <ModifyInput
-              isOwner={isOwner}
-              value={"Budget : " + project.budget.toString() + "€"}
-              state={project}
-              setState={setProject}
-              type="number"
-              label="budget"
-              placeHolder="Entrez le nouveau budget"
-              />
-          {/* <SelectInput
-            isOwner={isOwner}
-            state={status}
-            classState="basis-1/2"
-            label="Status" index setState={undefined} select={[]}   /> */}
-        </div>
-      </div>
-    </section>
   );
 }

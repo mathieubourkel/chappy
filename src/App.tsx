@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Routes, Route } from "react-router-dom";
 import "./css/App.css";
 import HomePage from "./pages/Home/HomePage.tsx";
@@ -21,10 +20,15 @@ import PrivateRoute from "./services/utils/PrivateRoute.tsx";
 import NotFoundPage from "./services/utils/NotFoundPage.tsx";
 import { NavbarConnected } from "./components/Navbar/NavbarConnected.tsx";
 import { NavbarVisitor } from "./components/Navbar/NavbarVisitor.tsx";
+import { intProject } from "./services/interfaces/intProject.tsx";
 
 export default function App() {
-  const [logins, setLogin] = useState<any>([]);
+  const [logins, setLogin] = useState<Array<string>>([]);
   const isLogged = true;
+  const isOwner = true;
+  const [project, setProject] = useState<intProject>({
+    name: "Projet1", description: "Description du projet la j,ffdkfdksdnfjnsdjnf ndf ndsf sdnfjfn sjfsf s,f f sd fsdnf bfsd, ds,n fbdsnsbd", budget: 500, status: "En cours", owner: "Mathieu", id: 0
+  })
   function handleSubmitLogin(login: string) {
     setLogin([...logins, login]);
   }
@@ -42,11 +46,11 @@ export default function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route element={<PrivateRoute isLogged={isLogged} />}>
           <Route path="/dashboard/" element={<DashboardPage />} />
-          <Route path="/project" element={<ProjectPage />} />
-          <Route path="/project/documents" element={<DocumentsPage />} />
-          <Route path="/project/purchases" element={<PurchasesPage />} />
-          <Route path="/project/members" element={<MembersPage />} />
-          <Route path="/project/step/" element={<StepPage />} />
+          <Route path="/project" element={<ProjectPage project={project} setProject={setProject} isOwner={isOwner}/>} />
+          <Route path="/project/documents" element={<DocumentsPage project={project} isOwner={isOwner}/>} />
+          <Route path="/project/purchases" element={<PurchasesPage project={project} isOwner={isOwner}/>} />
+          <Route path="/project/members" element={<MembersPage project={project} isOwner={isOwner}/>} />
+          <Route path="/project/step/" element={<StepPage isOwner={isOwner} />} />
           <Route path="/project/step/task/" element={<TaskPage />} />
           <Route path="/profile/" element={<UserProfilePage />} />
         </Route>

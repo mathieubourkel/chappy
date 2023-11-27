@@ -29,7 +29,25 @@ export interface intTask {
     startDate: string,
     endDate: string
 }
+export interface intPurchase {
+    name: string,
+    price: number
+  }
 
+export interface intDocument {
+    name: string,
+    type: string
+}
+
+export interface intMember {
+    name: string,
+    company: string,
+    tasks: number
+}
+
+export type intMembers = Array<intMember>
+export type intDocuments = Array<intDocument>
+export type intPurchases = Array<intPurchase>
 export type intUsers = Array<string>
 export type intTasks = Array<intTask>
 export type intSteps = Array<intStep>
