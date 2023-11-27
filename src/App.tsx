@@ -5,7 +5,6 @@ import LoginPage from "./pages/Login/LoginPage.tsx";
 import SignupPage from "./pages/Signup/SignupPage.tsx";
 import ProjectPage from "./pages/Project/ProjectPage.tsx";
 import DashboardPage from "./pages/Dashboard/DashboardPage.tsx";
-import CalendarPage from "./pages/Calendar/CalendarPage.tsx";
 import LegalMentionsPage from "./pages/LegalMentions/LegalMentionsPage.tsx";
 import UserProfilePage from "./pages/UserProfile/UserProfilePage.tsx";
 import StepPage from "./pages/Step/StepPage.tsx";
@@ -22,6 +21,7 @@ import NotFoundPage from "./services/utils/NotFoundPage.tsx";
 import { NavbarConnected } from "./components/Navbar/NavbarConnected.tsx";
 import { NavbarVisitor } from "./components/Navbar/NavbarVisitor.tsx";
 import { Sidebar } from "./components/Sidebar/Sidebar.tsx";
+import { intProject } from "./services/interfaces/intProject.tsx";
 
 export default function App() {
   const [logins, setLogin] = useState<Array<string>>([]);
@@ -53,11 +53,11 @@ export default function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route element={<PrivateRoute isLogged={isLogged} />}>
           <Route path="/dashboard/" element={<DashboardPage />} />
-          <Route path="/project" element={<ProjectPage />} />
-          <Route path="/project/documents" element={<DocumentsPage />} />
-          <Route path="/project/purchases" element={<PurchasesPage />} />
-          <Route path="/project/members" element={<MembersPage />} />
-          <Route path="/project/step/" element={<StepPage />} />
+          <Route path="/project" element={<ProjectPage project={project} setProject={setProject} isOwner={isOwner}/>} />
+          <Route path="/project/documents" element={<DocumentsPage project={project} isOwner={isOwner}/>} />
+          <Route path="/project/purchases" element={<PurchasesPage project={project} isOwner={isOwner}/>} />
+          <Route path="/project/members" element={<MembersPage project={project} isOwner={isOwner}/>} />
+          <Route path="/project/step/" element={<StepPage isOwner={isOwner} />} />
           <Route path="/project/step/task/" element={<TaskPage />} />
           <Route path="/profile/" element={<UserProfilePage />} />
         </Route>
@@ -67,6 +67,7 @@ export default function App() {
         <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+
 
       <footer>
         <Footer />
