@@ -28,7 +28,7 @@ export default function App() {
   const isLogged = true;
   const isOwner = true;
   const [project, setProject] = useState<intProject>({
-    name: "Projet1", description: "Description du projet la j,ffdkfdksdnfjnsdjnf ndf ndsf sdnfjfn sjfsf s,f f sd fsdnf bfsd, ds,n fbdsnsbd", budget: 500, status: "En cours", owner: "Mathieu", id: 0
+    name: "Projet1", description: "Description du projet la j,ffdkfdksdnfjnsdjnf ndf ndsf sdnfjfn sjfsf s,f f sd fsdnf bfsd, ds,n fbdsnsbd", budget: 500, status: "En cours", owner: "Mathieu"
   })
   function handleSubmitLogin(login: string) {
     setLogin([...logins, login]);
@@ -52,7 +52,7 @@ export default function App() {
         />
         <Route path="/signup" element={<SignupPage />} />
         <Route element={<PrivateRoute isLogged={isLogged} />}>
-          <Route path="/dashboard/" element={<DashboardPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/project" element={<ProjectPage project={project} setProject={setProject} isOwner={isOwner}/>} />
           <Route path="/project/documents" element={<DocumentsPage project={project} isOwner={isOwner}/>} />
           <Route path="/project/purchases" element={<PurchasesPage project={project} isOwner={isOwner}/>} />
