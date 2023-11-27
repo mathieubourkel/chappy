@@ -15,6 +15,7 @@ import Documents from "./pages/Documents/Documents";
 import Footer from "./components/Footer/Footer.tsx";
 import { useState } from "react";
 import { intUsers } from "./services/interfaces/intUser.tsx";
+import { intCompagny } from "./services/interfaces/intCompagny.tsx";
 
 
 export default function App() {
@@ -28,6 +29,7 @@ setLogin([...logins, login])
   function handleSubmitUser(user: intUsers) {
     setUser(user)
   }
+
 
   return (
     <>

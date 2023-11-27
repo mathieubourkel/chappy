@@ -2,7 +2,6 @@ import { useState } from "react";
 import { intUsers } from "../../services/interfaces/intUser";
 import { Input } from "@material-tailwind/react";
 
-
 export default function FormUser(props: any) {
   const { handleSubmitUser } = props;
 
@@ -18,31 +17,29 @@ export default function FormUser(props: any) {
     checkPassword: "",
   });
 
-  const [errors, setErrors] = useState<{ [key in keyof intUsers]?: string }>({});
+  const [errors, setErrors] = useState<{ [key in keyof intUsers]?: string }>(
+    {}
+  );
 
   const validateForm = () => {
     let valid = true;
     const newErrors: { [key in keyof intUsers]?: string } = {};
 
-  
     if (form.lastname.length < 2) {
       newErrors.lastname = "Le nom doit contenir au moins 2 caractères";
       valid = false;
     }
 
-  
     if (form.firstname.length < 2) {
       newErrors.firstname = "Le prénom doit contenir au moins 2 caractères";
       valid = false;
     }
 
-  
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(form.email)) {
       newErrors.email = "L'e-mail doit être une adresse e-mail valide";
       valid = false;
     }
-
 
     if (form.password !== form.checkPassword) {
       newErrors.password = "Les mots de passe ne correspondent pas";
@@ -79,7 +76,6 @@ export default function FormUser(props: any) {
     setErrors({ ...errors, [name]: undefined });
   }
 
-
   return (
     <>
       <article className="flex justify-center">
@@ -100,6 +96,8 @@ export default function FormUser(props: any) {
                 handleChange(evt);
               }}
               crossOrigin={undefined}
+              required
+              aria-required
             />
 
             <Input
@@ -112,6 +110,8 @@ export default function FormUser(props: any) {
                 handleChange(evt);
               }}
               crossOrigin={undefined}
+              required
+              aria-required
             />
           </div>
           <Input
@@ -124,6 +124,8 @@ export default function FormUser(props: any) {
               handleChange(evt);
             }}
             crossOrigin={undefined}
+            required
+            aria-required
           />
 
           <Input
@@ -136,6 +138,8 @@ export default function FormUser(props: any) {
               handleChange(evt);
             }}
             crossOrigin={undefined}
+            required
+            aria-required
           />
 
           <div className="flex gap-2">
@@ -149,6 +153,8 @@ export default function FormUser(props: any) {
                 handleChange(evt);
               }}
               crossOrigin={undefined}
+              required
+              aria-required
             />
 
             <Input
@@ -161,6 +167,8 @@ export default function FormUser(props: any) {
                 handleChange(evt);
               }}
               crossOrigin={undefined}
+              required
+              aria-required
             />
           </div>
           <Input
@@ -173,6 +181,8 @@ export default function FormUser(props: any) {
               handleChange(evt);
             }}
             crossOrigin={undefined}
+            required
+            aria-required
           />
           <div className="flex gap-2">
             <Input
@@ -185,6 +195,8 @@ export default function FormUser(props: any) {
                 handleChange(evt);
               }}
               crossOrigin={undefined}
+              required
+              aria-required
             />
 
             <Input
@@ -197,6 +209,8 @@ export default function FormUser(props: any) {
                 handleChange(evt);
               }}
               crossOrigin={undefined}
+              required
+              aria-required
             />
           </div>
         </form>
