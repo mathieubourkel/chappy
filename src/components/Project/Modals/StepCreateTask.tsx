@@ -10,9 +10,8 @@ import {
   Input,
   Textarea,
 } from "@material-tailwind/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import { FormEvent, InputEvent, intTask, intTasks } from "../../../services/interfaces/intProject";
+import CreateButton from "../Buttons/CreateButton";
 
 type Props = {
   tasks: intTasks;
@@ -44,13 +43,7 @@ export default function StepCreateTask({ tasks, setTask }: Props) {
 
   return (
     <div>
-      <Button
-        className="mr-5 bg-brick-300 flex items-center"
-        onClick={handleOpen}
-      >
-        <FontAwesomeIcon icon={faSquarePlus} />
-        <a className="pl-2 hidden md:flex">Créer</a>
-      </Button>
+      <CreateButton handleClick={handleOpen} value="Créer" />
       <Dialog
         size="lg"
         open={open}
@@ -60,8 +53,7 @@ export default function StepCreateTask({ tasks, setTask }: Props) {
         <Card className="mx-auto w-full">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-              <Typography variant="h4" color="blue-gray">
-                <FontAwesomeIcon icon={faSquarePlus} className="mr-3" />
+              <Typography variant="h2" color="blue-gray">
                 Créer une tâche
               </Typography>
               <Input

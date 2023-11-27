@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { Typography, IconButton } from "@material-tailwind/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { Typography } from "@material-tailwind/react";
 import { intTasks, intUsers } from "../../../services/interfaces/intProject";
 import StepModifyTask from "../Modals/StepModifyTask";
 import DeleteButton from "../Buttons/DeleteButton";
@@ -51,12 +49,6 @@ export default function TaskCard({ index, setTask, tasks, isOwner }: Props) {
 
           <div className="flex gap-2">
             <StepModifyTask index={index} tasks={tasks} setTask={setTask} />
-            <IconButton
-              variant="outlined"
-              className="text-brick-300 border-brick-300"
-            >
-              <FontAwesomeIcon icon={faStar} />
-            </IconButton>
             <DeleteButton index={index} state={tasks} setState={setTask} />
           </div>
         </div>

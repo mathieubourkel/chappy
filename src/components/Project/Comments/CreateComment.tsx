@@ -5,13 +5,14 @@ import { FormEvent, useState } from 'react';
 import { InputEvent, intComment, intComments } from '../../../services/interfaces/intProject';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 type Props = {
   state: intComments,
   setState: (comments:intComments) => void;
 }
 
 export default function CreateComment({state, setState}:Props) {
-  
   const [form, setForm] = useState<intComment>({
     content: "", author: "Auteur Dynamique"
 })
@@ -31,6 +32,7 @@ function handleSubmit(e:FormEvent){
 function handleDelete(){
   setForm({...form, content: ""})
 }
+
   return (
     
     <div className="mt-10">

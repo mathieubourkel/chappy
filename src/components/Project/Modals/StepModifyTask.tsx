@@ -12,7 +12,7 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FormEvent, InputEvent, intTask, intTasks } from "../../../services/interfaces/intProject";
 
 type Props = {
@@ -61,8 +61,7 @@ export default function StepModifyTask({ setTask, tasks, index }: Props) {
         <Card className="mx-auto w-full">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-              <Typography variant="h4" color="blue-gray">
-                <FontAwesomeIcon icon={faSquarePlus} className="mr-3" />
+            <Typography variant="h2" color="blue-gray">
                 Modifier la tâche
               </Typography>
               <Input

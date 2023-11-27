@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {Button,Dialog,Card,CardBody,Typography,Input,IconButton,} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faCode,faCopy,faSquarePlus,} from "@fortawesome/free-solid-svg-icons";
+import {faCode,faCopy} from "@fortawesome/free-solid-svg-icons";
 
 export default function ProjectDisplayCode() {
 
@@ -22,8 +22,7 @@ export default function ProjectDisplayCode() {
       >
         <Card className="mx-auto w-full">
           <CardBody className="flex flex-col gap-4">
-            <Typography variant="h4" color="blue-gray">
-              <FontAwesomeIcon icon={faSquarePlus} className="mr-3" />
+          <Typography variant="h2" color="blue-gray">
               Obtenir un code projet
             </Typography>
             <p>
