@@ -23,7 +23,22 @@
     --bg-color: rgb(240,240,240,1);
     --border-color: rgb(30,29,34, 0.2);
     --gradient: linear-gradient(90deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
+    --alt-gradient: linear-gradient(90deg, rgba(126,55,47,1) 0%, rgba(47,44,54,1) 12%);
     --gradient-top: linear-gradient(0deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
+
+
+    ::-webkit-scrollbar {
+        width: 0.75em;
+    }
+
+    ::-webkit-scrollbar-track {
+        border-radius: 2px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--gradient-top);
+        border-radius: 2px;
+    }
 
 }
 
@@ -39,12 +54,20 @@
     left: 0;
     height: 100lvh;
     border-radius: 0;
-    overflow-y:auto;
 }
 
-.l-item:active, .l-item:hover {
-    background: var(--gradient);
-    color: var(--bg-color);
+.l-item:hover, .l-item:active, .l-item:focus {
+    background: var(--gradient) !important;
+    color: var(--bg-color) !important;
+}
+
+.l-small-item:hover, .l-small-item:active, .l-small-item:focus {
+    background: var(--alt-gradient) !important;
+    color: var(--bg-color) !important;
+}
+
+.l-small-item, .l-item {
+    background: transparent;
 }
 
 .user-sidebar {

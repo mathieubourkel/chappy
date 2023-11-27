@@ -9,7 +9,8 @@ import {
   AccordionBody,
   IconButton,
   Drawer,
-  Button, Avatar,
+  Button,
+  Avatar
 } from "@material-tailwind/react";
 import {
   FontAwesomeIcon
@@ -36,17 +37,18 @@ export function Sidebar(props:any) {
   };
 
   return (
-      <Drawer className="w-full max-w-[20rem] p-4 sidebar bg-marine-300 text-white" open={openSidebar} onClose={toggleSidebar}>
+      <Drawer overlay={false} className="w-full max-w-[20rem] p-4 sidebar bg-marine-300 text-white" open={openSidebar} onClose={toggleSidebar}>
         <div className={"flex justify-end"}>
           <IconButton variant="text" size={"lg"} className={'bg-marine-100 rounded-2xl hover:bg-marine-100/50 h-5'} onClick={toggleSidebar}>
             <FontAwesomeIcon icon={faPlay} className='h-3 w-3 text-white rotate-180' />
           </IconButton>
         </div>
 
-        <div className="mb-2 flex justify-center items-center gap-4 p-4">
+        <div className="mb-5 flex justify-center items-center gap-4">
           <NavLink to={'/dashboard'}><img src={logo} alt="logo chappy" className="w-12" /></NavLink>
         </div>
 
+        <div className={"overflow-x-auto max-h-[41.3rem]"}>
         <Typography className="text-center font-bold uppercase text-marine-100 text-sm">
           Votre espace
         </Typography>
@@ -78,7 +80,7 @@ export function Sidebar(props:any) {
           </ListItem>
         </List>
 
-        <Typography className="text-center font-bold uppercase text-marine-100 text-sm mt-3">
+        <Typography className="text-center font-bold uppercase text-marine-100 text-sm mt-2">
           Vos projets
         </Typography>
 
@@ -148,7 +150,7 @@ export function Sidebar(props:any) {
             </AccordionBody>
           </Accordion>
 
-          <hr className={"my-5 border-marine-100/20"} />
+          <hr className={"mt-3 border-marine-100/20"} />
           <Accordion
               open={open === 11}
               icon={
@@ -165,26 +167,26 @@ export function Sidebar(props:any) {
             </AccordionHeader>
             <AccordionBody className="p-0">
               <List className={"text-light-200"}>
-                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2"}>
+                <ListItem className={"py-0.5 px-3 hover:pl-2 l-small-item"}>
                   <NavLink to={'/project/'} className={"flex items-center"}>
                     <ListItemPrefix>
-                      <FontAwesomeIcon icon={faSquarePollHorizontal} className="h-4 w-4 text-light-200" />
+                      <FontAwesomeIcon icon={faSquarePollHorizontal} className="h-4 w-4 text-marine-100" />
                     </ListItemPrefix>
                     Nom du projet
                   </NavLink>
                 </ListItem>
-                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2"}>
+                <ListItem className={"py-0.5 px-3 hover:pl-2 l-small-item"}>
                   <NavLink to={'/project/'} className={"flex items-center"}>
                     <ListItemPrefix>
-                      <FontAwesomeIcon icon={faSquarePollHorizontal} className="h-4 w-4 text-light-200" />
+                      <FontAwesomeIcon icon={faSquarePollHorizontal} className="h-4 w-4 text-marine-100" />
                     </ListItemPrefix>
                     Nom du projet
                   </NavLink>
                 </ListItem>
-                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2"}>
+                <ListItem className={"py-0.5 px-3 hover:pl-2 l-small-item"}>
                   <NavLink to={'/project/'} className={"flex items-center"}>
                     <ListItemPrefix>
-                      <FontAwesomeIcon icon={faSquarePollHorizontal} className="h-4 w-4 text-light-200" />
+                      <FontAwesomeIcon icon={faSquarePollHorizontal} className="h-4 w-4 text-marine-100" />
                     </ListItemPrefix>
                     Nom du projet
                   </NavLink>
@@ -209,7 +211,7 @@ export function Sidebar(props:any) {
             </AccordionHeader>
             <AccordionBody className="p-0">
               <List className={"text-light-200"}>
-                  <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2"}>
+                  <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
                     <NavLink to={'/project/step/task'} className={"flex items-center"}>
                     <ListItemPrefix>
                       <FontAwesomeIcon icon={faListCheck} className="h-4 w-4 text-marine-100" />
@@ -217,15 +219,7 @@ export function Sidebar(props:any) {
                     Nom de la tâche
                     </NavLink>
                   </ListItem>
-                  <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2"}>
-                    <NavLink to={'/project/step/task'} className={"flex items-center"}>
-                      <ListItemPrefix>
-                        <FontAwesomeIcon icon={faListCheck} className="h-4 w-4 text-marine-100" />
-                      </ListItemPrefix>
-                      Nom de la tâche
-                    </NavLink>
-                  </ListItem>
-                  <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2"}>
+                  <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
                     <NavLink to={'/project/step/task'} className={"flex items-center"}>
                       <ListItemPrefix>
                         <FontAwesomeIcon icon={faListCheck} className="h-4 w-4 text-marine-100" />
@@ -233,7 +227,15 @@ export function Sidebar(props:any) {
                       Nom de la tâche
                     </NavLink>
                   </ListItem>
-                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2"}>
+                  <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
+                    <NavLink to={'/project/step/task'} className={"flex items-center"}>
+                      <ListItemPrefix>
+                        <FontAwesomeIcon icon={faListCheck} className="h-4 w-4 text-marine-100" />
+                      </ListItemPrefix>
+                      Nom de la tâche
+                    </NavLink>
+                  </ListItem>
+                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
                   <NavLink to={'/project/step/task'} className={"flex items-center"}>
                     <ListItemPrefix>
                       <FontAwesomeIcon icon={faListCheck} className="h-4 w-4 text-marine-100" />
@@ -241,7 +243,7 @@ export function Sidebar(props:any) {
                     Nom de la tâche
                   </NavLink>
                 </ListItem>
-                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2"}>
+                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
                   <NavLink to={'/project/step/task'} className={"flex items-center"}>
                     <ListItemPrefix>
                       <FontAwesomeIcon icon={faListCheck} className="h-4 w-4 text-marine-100" />
@@ -249,7 +251,7 @@ export function Sidebar(props:any) {
                     Nom de la tâche
                   </NavLink>
                 </ListItem>
-                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2"}>
+                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
                   <NavLink to={'/project/step/task'} className={"flex items-center"}>
                     <ListItemPrefix>
                       <FontAwesomeIcon icon={faListCheck} className="h-4 w-4 text-marine-100" />
@@ -257,7 +259,7 @@ export function Sidebar(props:any) {
                     Nom de la tâche
                   </NavLink>
                 </ListItem>
-                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2"}>
+                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
                   <NavLink to={'/project/step/task'} className={"flex items-center"}>
                     <ListItemPrefix>
                       <FontAwesomeIcon icon={faListCheck} className="h-4 w-4 text-marine-100" />
@@ -265,7 +267,23 @@ export function Sidebar(props:any) {
                     Nom de la tâche
                   </NavLink>
                 </ListItem>
-                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2"}>
+                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
+                  <NavLink to={'/project/step/task'} className={"flex items-center"}>
+                    <ListItemPrefix>
+                      <FontAwesomeIcon icon={faListCheck} className="h-4 w-4 text-marine-100" />
+                    </ListItemPrefix>
+                    Nom de la tâche
+                  </NavLink>
+                </ListItem>
+                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
+                  <NavLink to={'/project/step/task'} className={"flex items-center"}>
+                    <ListItemPrefix>
+                      <FontAwesomeIcon icon={faListCheck} className="h-4 w-4 text-marine-100" />
+                    </ListItemPrefix>
+                    Nom de la tâche
+                  </NavLink>
+                </ListItem>
+                <ListItem className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
                   <NavLink to={'/project/step/task'} className={"flex items-center"}>
                     <ListItemPrefix>
                       <FontAwesomeIcon icon={faListCheck} className="h-4 w-4 text-marine-100" />
@@ -277,6 +295,8 @@ export function Sidebar(props:any) {
             </AccordionBody>
           </Accordion>
         </List>
+
+        </div>
 
           <div className={"w-full max-w-[17rem] flex flex-col gap-3 user-sidebar bg-marine-300"}>
             <div className={"flex items-center justify-start gap-10 my-3"}>
