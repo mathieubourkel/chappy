@@ -21,13 +21,12 @@ import NotFoundPage from "./services/utils/NotFoundPage.tsx";
 import { NavbarConnected } from "./components/Navbar/NavbarConnected.tsx";
 import { NavbarVisitor } from "./components/Navbar/NavbarVisitor.tsx";
 import { Sidebar } from "./components/Sidebar/Sidebar.tsx";
-import { intProject } from "./services/interfaces/intProject.tsx";import { intUsers } from "./services/interfaces/intUser.tsx";
-import { intCompagny } from "./services/interfaces/intCompagny.tsx";
+import { intProject } from "./services/interfaces/intProject.tsx";
 
 
 export default function App() {
   const [logins, setLogin] = useState<Array<string>>([]);
-  const isLogged = true;
+  const isLogged = false;
   const isOwner = true;
   const [project, setProject] = useState<intProject>({
     name: "Projet1", description: "Description du projet la j,ffdkfdksdnfjnsdjnf ndf ndsf sdnfjfn sjfsf s,f f sd fsdnf bfsd, ds,n fbdsnsbd", budget: 500, status: "En cours", owner: "Mathieu", id: 0
