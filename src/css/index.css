@@ -25,54 +25,33 @@
     --gradient: linear-gradient(90deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
     --alt-gradient: linear-gradient(90deg, rgba(126,55,47,1) 0%, rgba(47,44,54,1) 12%);
     --gradient-top: linear-gradient(0deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
-
-
-    ::-webkit-scrollbar {
-        width: 0.75em;
-    }
-
-    ::-webkit-scrollbar-track {
-        border-radius: 2px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: var(--gradient-top);
-        border-radius: 2px;
-    }
-
 }
 
 /*==================== GLOBAL CSS ====================*/
 
-        /* Sidebar */
+        /* Scrollbar */
 
-.sidebar {
-    position: fixed;
-    z-index: 1000000;
-    top:0;
-    bottom:0;
-    left: 0;
-    height: 100lvh;
-    border-radius: 0;
+:root::-webkit-scrollbar {
+    width: 0.75em;
 }
 
-.l-item:hover, .l-item:active, .l-item:focus {
-    background: var(--gradient) !important;
-    color: var(--bg-color) !important;
+:root::-webkit-scrollbar-thumb {
+    background: var(--gradient-top);
+    border-radius: 2px;
 }
 
-.l-small-item:hover, .l-small-item:active, .l-small-item:focus {
-    background: var(--alt-gradient) !important;
-    color: var(--bg-color) !important;
+.custom-scroll::-webkit-scrollbar {
+    width: 0.75em;
+    border-radius: 2px;
 }
 
-.l-small-item, .l-item {
-    background: transparent;
+.custom-scroll::-webkit-scrollbar-thumb {
+    background: var(--gradient-top);
+    border-radius: 2px;
 }
 
-.user-sidebar {
-    position: fixed;
-    bottom: 0;
+.custom-scroll {
+    overflow-x: auto;
 }
 
         /* Page */
@@ -111,12 +90,4 @@ h2:before {
     margin-right: 0.5em;
     margin-bottom: -0.5em;
 }
-
-        /* Footer */
-
-footer {
-    border-top : 1px solid var(--border-color);
-    bottom: 0;
-}
-
 

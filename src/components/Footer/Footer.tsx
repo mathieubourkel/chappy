@@ -1,4 +1,5 @@
 import { Typography } from "@material-tailwind/react";
+import './footer.css';
 import logo from "./../../assets/img/icon_logo_footer.png";
 import {NavLink} from "react-router-dom";
 
