@@ -1,74 +1,43 @@
 import { Routes, Route } from "react-router-dom";
-import "./css/App.css";
-import HomePage from "./pages/Home/HomePage.tsx";
-import LoginPage from "./pages/Login/LoginPage.tsx";
-import SignupPage from "./pages/Signup/SignupPage.tsx";
-import ProjectPage from "./pages/Project/ProjectPage.tsx";
-import DashboardPage from "./pages/Dashboard/DashboardPage.tsx";
-import CalendarPage from "./pages/Calendar/CalendarPage.tsx";
-import LegalMentionsPage from "./pages/LegalMentions/LegalMentionsPage.tsx";
-import UserProfilePage from "./pages/UserProfile/UserProfilePage.tsx";
-import StepPage from "./pages/Step/StepPage.tsx";
-import TaskPage from "./pages/Task/TaskPage.tsx";
-import MembersPage from "./pages/Members/MembersPage.tsx";
-import PurchasesPage from "./pages/Purchases/PurchasesPage.tsx";
-import DocumentsPage from "./pages/Documents/DocumentsPage.tsx";
+import './css/App.css'
+import Home from "./pages/Home/Home";
+import Login from "./pages/Login/Login";
+import Signup from "./pages/Signup/Signup";
+import Project from "./pages/Project/Project";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import LegalMentions from "./pages/LegalMentions/LegalMentions";
+import UserProfile from "./pages/UserProfile/UserProfile";
+import Navbar from "./components/Navbar/Navbar.tsx";
+import Step from "./pages/Step/Step";
+import Task from "./pages/Task/Task";
+import Members from "./pages/Members/Members";
+import Purchases from "./pages/Purchases/Purchases";
+import Documents from "./pages/Documents/Documents";
 import Footer from "./components/Footer/Footer.tsx";
-import { useState } from "react";
-import AboutPage from "./pages/About/AboutPage.tsx";
-import ContactUsPage from "./pages/ContactUs/ContactUsPage.tsx";
-import PrivateRoute from "./services/utils/PrivateRoute.tsx";
-import NotFoundPage from "./services/utils/NotFoundPage.tsx";
-import { NavbarConnected } from "./components/Navbar/NavbarConnected.tsx";
-import { NavbarVisitor } from "./components/Navbar/NavbarVisitor.tsx";
-import { Sidebar } from "./components/Sidebar/Sidebar.tsx";
 
 
 export default function App() {
-  const [logins, setLogin] = useState<any>([]);
-  const isLogged = true;
-  function handleSubmitLogin(login: string) {
-    setLogin([...logins, login]);
-  }
-
-  const [open, setOpen] = useState(false);
-  function toggleSidebar() {
-    open ? setOpen(false) : setOpen(true)
-  }
 
   return (
     <>
-      <header>{isLogged ? <><NavbarConnected toggleSidebar={toggleSidebar} /><Sidebar openSidebar={open} toggleSidebar={toggleSidebar} /></> : <NavbarVisitor />}
-      </header>
+              <Navbar />
 
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/login"
-          element={<LoginPage handleSubmitLogin={handleSubmitLogin} />}
-        />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route element={<PrivateRoute isLogged={isLogged} />}>
-          <Route path="/dashboard/" element={<DashboardPage />} />
-          <Route path="/calendar" element={<CalendarPage />} />
-          <Route path="/project" element={<ProjectPage />} />
-          <Route path="/project/documents" element={<DocumentsPage />} />
-          <Route path="/project/purchases" element={<PurchasesPage />} />
-          <Route path="/project/members" element={<MembersPage />} />
-          <Route path="/project/step/" element={<StepPage />} />
-          <Route path="/project/step/task/" element={<TaskPage />} />
-          <Route path="/profile/" element={<UserProfilePage />} />
-        </Route>
-
-        <Route path="/legal-mentions" element={<LegalMentionsPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact-us" element={<ContactUsPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/dashboard:/idUser" element={<Dashboard />} />
+        <Route path="/project/:idProject" element={<Project />} />
+        <Route path="/project/:idProject/documents" element={<Documents />} />
+        <Route path="/project/:idProject/purchases" element={<Purchases />} />
+        <Route path="/project/:idProject/members" element={<Members />} />
+        <Route path="/project/:idProject/step/:idStep" element={<Step />} />
+        <Route path="/project/:idProject/step/:idStep/task/:idTask" element={<Task />} />
+        <Route path="/legal-mentions" element={<LegalMentions />} />
+        <Route path="/profile/:idProfile" element={<UserProfile />} />
       </Routes>
 
-      <footer>
-        <Footer />
-      </footer>
+                <Footer />
     </>
-  );
+  )
 }
