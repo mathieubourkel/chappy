@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import {  Typography } from "@material-tailwind/react";
+import { Typography } from "@material-tailwind/react";
 import {
   intPurchases,
   intProject,
@@ -9,7 +9,8 @@ import {
 import PurchaseCard from "../../components/Project/Cards/PurchaseCard";
 import PurchaseAdd from "../../components/Project/Modals/PurchaseAdd";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
-
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 type Props = {
   project: intProject;
@@ -17,12 +18,20 @@ type Props = {
 };
 
 export default function MembersPage({ project, isOwner }: Props) {
-  const [purchases, setPurchase] = useState<intPurchases>([
-    { name: "Carrelage", price: 40 },
-    { name: "Prises", price: 400 },
-    { name: "Placo", price: 4000 },
-    { name: "Main d'oeuvre", price: 32 },
-  ]);
+  
+  const { idProject } = useParams();
+  const [error, setError] = useState(null);
+  const [purchases, setPurchase] = useState<intPurchases>([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        "http://localhost:1337/api/purchases?populate[0]=project&filters[project][id][$eq]=" +
+          idProject
+      )
+      .then(({ data }) => setPurchase(data.data))
+      .catch((error) => setError(error));
+  }, [idProject]);
 
   const calcul = () => {
     let total: number = 0;
@@ -31,6 +40,10 @@ export default function MembersPage({ project, isOwner }: Props) {
     });
     return total;
   };
+
+  if (error) {
+    return <div>Erreur lors de la recupération de la tata</div>;
+  }
 
   return (
     <main className="project-page sm:mx-20 mx-5 mb-20">

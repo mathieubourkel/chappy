@@ -34,18 +34,30 @@ export interface intTask {
 }
 export interface intPurchase {
     name: string,
-    price: number
+    price: number,
+    ref: string,
+    commandDate: Date,
+    deliveryDate: Date,
+    status: number
   }
 
 export interface intDocument {
-    name: string,
-    type: string
+    path: string,
+    type: string,
+    id: number
 }
 
 export interface intMember {
-    name: string,
+    firstName: string,
     company: string,
-    tasks: number
+    email: string,
+    lastName: string,
+    address: string,
+    status: number,
+    city: string,
+    zip: number,
+    id: number,
+    phone: string
 }
 
 export interface intUser {

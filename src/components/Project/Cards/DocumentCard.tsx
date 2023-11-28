@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function DocumentCard({ index, setDocument, documents, isOwner }: Props) {
-
+  
   return (
     <>
       <li
@@ -29,7 +29,7 @@ export default function DocumentCard({ index, setDocument, documents, isOwner }:
           color="blue-gray"
           className="p-2 text-brick-300 font-bold"
         >
-          {documents[index].name}
+          {documents[index].path}
         </Typography>
         </div>
         {isOwner &&

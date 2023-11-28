@@ -1,6 +1,6 @@
 import { Avatar, Typography } from "@material-tailwind/react";
 import DeleteButton from "../Buttons/DeleteButton";
-import { intMembers } from "../../../services/interfaces/intProject";
+import { intMember, intMembers } from "../../../services/interfaces/intProject";
 import user from "../../../assets/img/icon user.png"
 
 type Props = {
@@ -8,9 +8,10 @@ type Props = {
   setMember: (members: intMembers) => void;
   members: intMembers
   isOwner:boolean
+  member:intMember
 };
 
-export default function MemberCard({ index, setMember, members, isOwner }: Props) {
+export default function MemberCard({ index, setMember, members, isOwner, member }: Props) {
   return (
     <>
       <li
@@ -21,7 +22,7 @@ export default function MemberCard({ index, setMember, members, isOwner }: Props
         <Avatar variant="circular" alt="toto" src={user} />
         <Typography variant="h5" color="blue-gray" className="flex">
           <p className="border p-2 rounded-xl bg-light-200">
-            {members[index].company}
+            {members[member.id].company}
           </p>
         </Typography>
         <Typography
@@ -29,7 +30,7 @@ export default function MemberCard({ index, setMember, members, isOwner }: Props
           color="blue-gray"
           className="p-2 text-brick-300 font-bold"
         >
-          {members[index].name}
+          {members[member.id].firstName}  {members[member.id].lastName}
         </Typography>
         </div>
         <div className='flex gap-10'>

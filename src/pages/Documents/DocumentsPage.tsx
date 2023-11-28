@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
 import { intDocument, intDocuments, intProject } from "../../services/interfaces/intProject";
 import DocumentCard from "../../components/Project/Cards/DocumentCard";
 import DocumentsAdd from "../../components/Project/Modals/DocumentsAdd";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 type Props = {
   project: intProject;
@@ -11,12 +13,23 @@ type Props = {
 
 export default function DocumentsPage({ project, isOwner }: Props) {
 
-  const [documents, setDocument] = useState<intDocuments>([
-    { name: "Devis", type: "pdf" },
-    { name: "Facture", type: "word" },
-    { name: "Contrat", type: "pdf" },
-    { name: "Photo", type: "png" },
-  ]);
+  const {idProject} = useParams();
+  const [error, setError] = useState(null);
+  const [documents, setDocument] = useState<intDocuments>([]);
+
+  useEffect(() => {
+    axios
+    .get(
+      "http://localhost:1337/api/documents?populate[0]=project&filters[project][id][$eq]=" +
+        idProject
+    )
+      .then(({ data }) => setDocument(data.data))
+      .catch((error) => setError(error));
+  }, [idProject]);
+
+  if (error) {
+    return <div>Erreur lors de la recupération de la tata</div>;
+  }
 
   return (
     <main className="project-page sm:mx-20 mx-5">

@@ -42,7 +42,7 @@ export default function StepPage({isOwner}:Props) {
 
   return (
     <main className="project-page sm:mx-20 mx-5">
-      <StepHeader isOwner={isOwner} step={step}/>
+      <StepHeader isOwner={isOwner} step={step} setStep={setStep}/>
       <StepTasks isOwner={isOwner} step={step}/>
       <EspaceComment comments={comments} setComment={setComment} />
     </main>
