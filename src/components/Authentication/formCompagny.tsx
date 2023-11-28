@@ -15,7 +15,7 @@ export default function FormCompagny() {
   const {handleChange, handleSubmit, values, errors} = useFormik<intCompagny>({
     initialValues: {
         compagnyName: "",
-        siret: "",
+        siret: null,
         compagnySActivity:"",
     },
    onSubmit: values =>{
@@ -46,7 +46,7 @@ export default function FormCompagny() {
           type="text"
           name="siret"
           id="siret"
-          value={values.siret}
+          value={values.siret !== null ? values.siret : ''}
           aria-required
           onChange={handleChange}
           crossOrigin={undefined}

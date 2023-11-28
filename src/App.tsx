@@ -25,10 +25,7 @@ export default function App() {
 setLogin([...logins, login])
   }
 
-  const [users, setUser] = useState<intUsers>()
-  function handleSubmitUser(user: intUsers) {
-    setUser(user)
-  }
+ 
 
 
   return (
@@ -37,7 +34,7 @@ setLogin([...logins, login])
         <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login handleSubmitLogin={handleSubmitLogin} />} />
-        <Route path="/signup" element={<Signup handleSubmitUser={handleSubmitUser} />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard:/idUser" element={<Dashboard />} />
         <Route path="/project" element={<Project />} />
         <Route path="/project/:idProject/documents" element={<Documents />} />

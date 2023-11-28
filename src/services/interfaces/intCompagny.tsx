@@ -1,5 +1,5 @@
 export interface intCompagny {
     compagnyName: string,
-    siret: string,
+    siret: number | null,
     compagnySActivity: string,
 }

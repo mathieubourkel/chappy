@@ -3,9 +3,9 @@ export interface intUsers {
     firstname: string,
     email: string,
     address: string,
-    postal: number,
+    postal: number | null,
     city: string,
-    phone: number,
+    phone: number | null,
     password: string,
     checkPassword: string,
 }

@@ -1,89 +1,45 @@
-import { useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { intUsers } from "../../services/interfaces/intUser";
 import { Input } from "@material-tailwind/react";
 
-export default function FormUser(props: any) {
-  const { handleSubmitUser } = props;
-
-  const [form, setForm] = useState<intUsers>({
-    lastname: "",
-    firstname: "",
-    email: "",
-    address: "",
-    postal: 0,
-    city: "",
-    phone: 0,
-    password: "",
-    checkPassword: "",
+export default function FormUser() {
+  const validationUser = Yup.object({
+    lastname: Yup.string().min(2).required(),
+    firstname: Yup.string().min(2).required(),
+    email: Yup.string().required(),
+    address: Yup.string().required(),
+    postal: Yup.number().min(5).max(5).required(),
+    city: Yup.string().min(2).required(),
+    phone: Yup.number().required(),
+    password: Yup.string().min(8).required(),
+    checkPassword: Yup.string().min(8).required(),
   });
 
-  const [errors, setErrors] = useState<{ [key in keyof intUsers]?: string }>(
-    {}
-  );
-
-  const validateForm = () => {
-    let valid = true;
-    const newErrors: { [key in keyof intUsers]?: string } = {};
-
-    if (form.lastname.length < 2) {
-      newErrors.lastname = "Le nom doit contenir au moins 2 caractères";
-      valid = false;
-    }
-
-    if (form.firstname.length < 2) {
-      newErrors.firstname = "Le prénom doit contenir au moins 2 caractères";
-      valid = false;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(form.email)) {
-      newErrors.email = "L'e-mail doit être une adresse e-mail valide";
-      valid = false;
-    }
-
-    if (form.password !== form.checkPassword) {
-      newErrors.password = "Les mots de passe ne correspondent pas";
-      newErrors.checkPassword = "Les mots de passe ne correspondent pas";
-      valid = false;
-    }
-
-    setErrors(newErrors);
-    return valid;
-  };
-
-  function handleSubmit(evt: React.FormEvent) {
-    evt.preventDefault();
-    if (validateForm()) {
-      handleSubmitUser(form);
-      setForm({
-        lastname: "",
-        firstname: "",
-        email: "",
-        address: "",
-        postal: 0,
-        city: "",
-        phone: 0,
-        password: "",
-        checkPassword: "",
-      });
-      setErrors({});
-    }
-  }
-
-  function handleChange(evt: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = evt.target;
-    setForm({ ...form, [name]: value });
-    setErrors({ ...errors, [name]: undefined });
-  }
+  const {handleChange, handleSubmit, values, errors} = useFormik<intUsers>({
+    initialValues: {
+      lastname: "",
+      firstname: "",
+      email: "",
+      address: "",
+      postal: null,
+      city: "",
+      phone: null,
+      password: "",
+      checkPassword: "",
+    },
+    onSubmit:values =>{
+      console.log(values)
+     },
+     validationSchema: validationUser
+  })
 
   return (
     <>
       <article className="flex justify-center">
         <form
           className="w-96 flex gap-5 flex-col items-center"
-          onSubmit={(evt) => {
-            handleSubmit(evt);
-          }}
+          onSubmit={handleSubmit}
         >
           <div className="flex gap-2">
             <Input
@@ -91,12 +47,10 @@ export default function FormUser(props: any) {
               type="text"
               name="lastname"
               id="lastname"
-              value={form.lastname}
-              onChange={(evt) => {
-                handleChange(evt);
-              }}
+              value={values.lastname}
+              onChange={handleChange}
               crossOrigin={undefined}
-              required
+             
               aria-required
             />
 
@@ -105,12 +59,10 @@ export default function FormUser(props: any) {
               type="text"
               name="firstname"
               id="firstname"
-              value={form.firstname}
-              onChange={(evt) => {
-                handleChange(evt);
-              }}
+              value={values.firstname}
+              onChange={handleChange}
               crossOrigin={undefined}
-              required
+     
               aria-required
             />
           </div>
@@ -119,12 +71,10 @@ export default function FormUser(props: any) {
             type="email"
             name="email"
             id="email"
-            value={form.email}
-            onChange={(evt) => {
-              handleChange(evt);
-            }}
+            value={values.email}
+            onChange={handleChange}
             crossOrigin={undefined}
-            required
+       
             aria-required
           />
 
@@ -133,12 +83,10 @@ export default function FormUser(props: any) {
             type="text"
             name="address"
             id="address"
-            value={form.address}
-            onChange={(evt) => {
-              handleChange(evt);
-            }}
+            value={values.address}
+            onChange={handleChange}
             crossOrigin={undefined}
-            required
+           
             aria-required
           />
 
@@ -148,12 +96,10 @@ export default function FormUser(props: any) {
               type="number"
               name="postal"
               id="postal"
-              value={form.postal}
-              onChange={(evt) => {
-                handleChange(evt);
-              }}
+              value={values.postal !== null ? values.postal : ''}
+              onChange={handleChange}
               crossOrigin={undefined}
-              required
+         
               aria-required
             />
 
@@ -162,12 +108,10 @@ export default function FormUser(props: any) {
               type="text"
               name="city"
               id="city"
-              value={form.city}
-              onChange={(evt) => {
-                handleChange(evt);
-              }}
+              value={values.city}
+              onChange={handleChange}
               crossOrigin={undefined}
-              required
+            
               aria-required
             />
           </div>
@@ -176,12 +120,10 @@ export default function FormUser(props: any) {
             type="tel"
             name="phone"
             id="phone"
-            value={form.phone}
-            onChange={(evt) => {
-              handleChange(evt);
-            }}
+            value={values.phone !== null ? values.phone : ''}
+            onChange={handleChange}
             crossOrigin={undefined}
-            required
+       
             aria-required
           />
           <div className="flex gap-2">
@@ -190,12 +132,10 @@ export default function FormUser(props: any) {
               type="password"
               name="password"
               id="password"
-              value={form.password}
-              onChange={(evt) => {
-                handleChange(evt);
-              }}
+              value={values.password}
+              onChange={handleChange}
               crossOrigin={undefined}
-              required
+          
               aria-required
             />
 
@@ -204,12 +144,10 @@ export default function FormUser(props: any) {
               type="password"
               name="checkPassword"
               id="checkPassword"
-              value={form.checkPassword}
-              onChange={(evt) => {
-                handleChange(evt);
-              }}
+              value={values.checkPassword}
+              onChange={handleChange}
               crossOrigin={undefined}
-              required
+         
               aria-required
             />
           </div>

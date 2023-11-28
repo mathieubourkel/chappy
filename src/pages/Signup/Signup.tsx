@@ -11,6 +11,10 @@ export default function Signup(props: any) {
 
   const handleRadioChange = (value: string) => {
     setSelectedOption(value);
+
+    if (value === "neitherOfTheTwo") {
+      setSelectedOption("");
+    }
   };
   return (
     <>
@@ -19,7 +23,8 @@ export default function Signup(props: any) {
       </header>
       <main>
         <h1>Créer mon compte</h1>
-        <FormUser handleSubmitUser={handleSubmitUser} />
+
+        <FormUser />
 
         <div className="w-30 flex justify-center">
           <div className="flex justify-center flex-col">
@@ -54,14 +59,24 @@ export default function Signup(props: any) {
                 </Typography>
               }
               name="check"
-              value=""
+              value="neitherOfTheTwo"
               crossOrigin={undefined}
-              defaultChecked
+              checked={selectedOption === "neitherOfTheTwo"}
+              onChange={() => handleRadioChange("neitherOfTheTwo")}
             />
           </div>
         </div>
         {selectedOption === "chekCompagny" && <FormCompagny />}
         {selectedOption === "checkEmployee" && <FormEmployee />}
+        {selectedOption === "neitherOfTheTwo" && null}
+
+        <article className="flex justify-center">
+          <div className="flex items-center ">
+            <button type="submit" className="bg-marine-300 text-white">
+              S'inscrire
+            </button>
+          </div>
+        </article>
       </main>
     </>
   );
