@@ -54,6 +54,27 @@
     overflow-x: auto;
 }
 
+/* Sidebar */
+
+.sidebar {
+    height: 100lvh;
+    border-radius: 0;
+}
+
+.l-item:hover, .l-item:active, .l-item:focus {
+    background: var(--gradient) !important;
+    color: var(--bg-color) !important;
+}
+
+.l-small-item:hover, .l-small-item:active, .l-small-item:focus {
+    background: var(--alt-gradient) !important;
+    color: var(--bg-color) !important;
+}
+
+.l-small-item, .l-item {
+    background: transparent;
+}
+
         /* Page */
 
 body {
@@ -90,4 +111,5 @@ h2:before {
     margin-right: 0.5em;
     margin-bottom: -0.5em;
 }
+
 
