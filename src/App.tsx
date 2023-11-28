@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import "./css/App.css";
 import HomePage from "./pages/Home/HomePage.tsx";
 import LoginPage from "./pages/Login/LoginPage.tsx";
@@ -39,6 +39,7 @@ export default function App() {
     open ? setOpen(false) : setOpen(true)
   }
 
+
   return (
     <>
       <header>{isLogged ? <><NavbarConnected toggleSidebar={toggleSidebar} /><Sidebar openSidebar={open} toggleSidebar={toggleSidebar} /></> : <NavbarVisitor />}
@@ -53,12 +54,12 @@ export default function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route element={<PrivateRoute isLogged={isLogged} />}>
           <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/project" element={<ProjectPage project={project} setProject={setProject} isOwner={isOwner}/>} />
-          <Route path="/project/documents" element={<DocumentsPage project={project} isOwner={isOwner}/>} />
-          <Route path="/project/purchases" element={<PurchasesPage project={project} isOwner={isOwner}/>} />
-          <Route path="/project/members" element={<MembersPage project={project} isOwner={isOwner}/>} />
-          <Route path="/project/step/" element={<StepPage isOwner={isOwner} />} />
-          <Route path="/project/step/task/" element={<TaskPage />} />
+          <Route path="/project/:idProject" element={<ProjectPage project={project} setProject={setProject} isOwner={isOwner}/>} />
+          <Route path="/project/:idProject/documents" element={<DocumentsPage project={project} isOwner={isOwner}/>} />
+          <Route path="/project/:idProject/purchases" element={<PurchasesPage project={project} isOwner={isOwner}/>} />
+          <Route path="/project/:idProject/members" element={<MembersPage project={project} isOwner={isOwner}/>} />
+          <Route path="/project/:idProject/step/:idStep" element={<StepPage isOwner={isOwner} />} />
+          <Route path="/project/:idProject/step/:idStep/task/" element={<TaskPage />} />
           <Route path="/profile/" element={<UserProfilePage />} />
         </Route>
 

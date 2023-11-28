@@ -20,19 +20,19 @@ export default function ProjectHeader({ project }: Props) {
         </div>
         <div className="b1-header-buttons flex gap-5">
           <ProjectDisplayCode />
-          <Link to="/project/members">
+          <Link to="/project/1/members">
             <Button variant="outlined" className="flex">
               <FontAwesomeIcon icon={faUser} className="mr-2" />
               <div className="hidden md:flex">Participants</div>
             </Button>
           </Link>
-          <Link to="/project/documents">
+          <Link to="/project/1/documents">
             <Button className="bg-brick-300 flex">
               <FontAwesomeIcon icon={faFolderOpen} className="mr-2" />
               <div className="hidden md:flex">Mes documents</div>
             </Button>
           </Link>
-          <Link to="/project/purchases">
+          <Link to="/project/1/purchases">
             <Button
               className="button-project flex text-brick-300 border-brick-300"
               variant="outlined"

@@ -20,7 +20,7 @@ export default function StepCard({ step }: Props) {
         <Typography>{step.description}</Typography>
       </CardBody>
       <CardFooter className="pt-0 flex justify-end">
-        <Link to="/project/step">
+        <Link to="/project/1/step/1">
           <AccederButton />
         </Link>
       </CardFooter>
