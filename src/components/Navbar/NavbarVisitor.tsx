@@ -2,12 +2,12 @@
 import React from "react";
 import {
   Navbar,
-  MobileNav,
   Typography,
   Button,
-  IconButton,
+  IconButton, Collapse,
 } from "@material-tailwind/react";
 import logo from "./../../assets/img/logo.png";
+import {NavLink} from "react-router-dom";
 
 export function NavbarVisitor() {
   const [openNav, setOpenNav] = React.useState(false);
@@ -23,9 +23,8 @@ export function NavbarVisitor() {
         <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 shadow-none border-b-text-200">
           <div className="flex items-center justify-between text-blue-gray-900">
             <Typography
-                as="a"
                 href="/"
-                className="mr-4 cursor-pointer py-1.5 font-medium m-auto"
+                className="mr-4 cursor-pointer m-auto"
             >
               <img src={logo} alt={"logo de Chappy"} />
             </Typography>
@@ -35,7 +34,7 @@ export function NavbarVisitor() {
                     size="sm"
                     className="hidden lg:inline-block bg-marine-300"
                 >
-                  <span>Se connecter</span>
+                  <NavLink to={"/login"}>Se connecter</NavLink>
                 </Button>
               </div>
               <IconButton
@@ -77,13 +76,13 @@ export function NavbarVisitor() {
               </IconButton>
             </div>
           </div>
-          <MobileNav open={openNav}>
+          <Collapse open={openNav}>
             <div className="flex items-center gap-x-1">
-              <Button fullWidth variant="gradient" size="sm" className="">
+              <Button fullWidth variant="gradient" size="sm">
                 <span>Se connecter</span>
               </Button>
             </div>
-          </MobileNav>
+          </Collapse>
         </Navbar>
   );
 }

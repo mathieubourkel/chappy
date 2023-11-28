@@ -1,25 +1,99 @@
-/* Font custom */
+/*==================== CUSTOM FONT ====================*/
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap');
 
-/* Framework CSS */
+
+/*==================== FRAMEWORK CSS ====================*/
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Apply custom font */
+/*==================== APPLY CUSTOM FONT ====================*/
+
 @layer base {
     html {
         font-family: Montserrat, sans-serif;
     }
 }
 
-/* Global CSS */
-body {
-    background: rgb(240,240,240,1);
+/*==================== VARIABLES CSS ====================*/
+
+:root {
+    --bg-color: rgb(240,240,240,1);
+    --border-color: rgb(30,29,34, 0.2);
+    --gradient: linear-gradient(90deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
+    --gradient-top: linear-gradient(0deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
+
 }
 
-footer {
-    border-top : 1px solid rgb(30,29,34, 0.2);
+/*==================== GLOBAL CSS ====================*/
+
+        /* Sidebar */
+
+.sidebar {
+    position: fixed;
+    z-index: 1000000;
+    top:0;
+    bottom:0;
+    left: 0;
+    height: 100lvh;
+    border-radius: 0;
+    overflow-y:auto;
+}
+
+.l-item:active, .l-item:hover {
+    background: var(--gradient);
+    color: var(--bg-color);
+}
+
+.user-sidebar {
     position: fixed;
     bottom: 0;
 }
+
+        /* Page */
+
+body {
+    background: var(--bg-color);
+}
+
+main {
+    min-height: 70lvh;
+}
+
+        /* Typography */
+
+h1 {
+    font-size: 2.4em;
+    font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h2 {
+    font-size: 1.8em;
+    font-weight: 800;
+    margin-bottom: 0.5em;
+}
+
+h2:before {
+    content: "";
+    display: inline-block;
+    width: 0.5em;
+    height: 1.8em;
+    background: var(--gradient-top);
+    border-radius: 1em;
+    margin-right: 0.5em;
+    margin-bottom: -0.5em;
+}
+
+        /* Footer */
+
+footer {
+    border-top : 1px solid var(--border-color);
+    bottom: 0;
+}
+
+
