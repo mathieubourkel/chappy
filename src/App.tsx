@@ -22,7 +22,7 @@ import { NavbarVisitor } from "./components/Navbar/NavbarVisitor.tsx";
 import { Sidebar } from "./components/Sidebar/Sidebar.tsx";
 import { intProject } from "./services/interfaces/intProject.tsx";
 import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
-import { intProject } from "./services/interfaces/intProject.tsx";import { intUsers } from "./services/interfaces/intUser.tsx";
+import { intUsers } from "./services/interfaces/intUser.tsx";
 import { intCompagny } from "./services/interfaces/intCompagny.tsx";
 
 
