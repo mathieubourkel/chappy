@@ -7,21 +7,39 @@ import {
 } from "../../../services/interfaces/intProject";
 import { faBan } from "@fortawesome/free-solid-svg-icons";
 import "./Dash.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardStepCard from "../Cards/DashboardStepCard";
 import RejoinModal from "../Modals/RejoinModal";
 import DemandsModal from "../Modals/DemandsModal";
+import axios from "axios";
+import { Button } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 type Props = {
   projects: intProjects;
-  steps: intSteps;
 };
 
-export default function DashboardCollab({ projects, steps }: Props) {
+export default function DashboardCollab({ projects }: Props) {
   const [selected, setSelected] = useState(0);
+  const [steps, setStep] = useState<intSteps>([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(
+        "http://localhost:1337/api/project-steps?populate[0]=project&filters[project][id][$eq]=" +
+          (selected + 1)
+      )
+      .then(({ data }) => setStep(data.data))
+      .catch((error) => setError(error));
+  }, [selected]);
 
   function handleClick(index: number) {
     setSelected(index);
+  }
+
+  if (error) {
+    return <div>Erreur lors de la recupération de la tata</div>;
   }
 
   return (
@@ -56,12 +74,11 @@ export default function DashboardCollab({ projects, steps }: Props) {
             </div>
             <div className="md:flex basis-1/4 justify-end items-center">
               <DemandsModal />
-              
+
               <RejoinModal value="Rejoindre" />
             </div>
           </div>
 
-          {/* projects[selected][steps].map */}
           <ul className="mt-10">
             {steps.map((_step: intStep, index: number) => (
               <DashboardStepCard
@@ -72,6 +89,9 @@ export default function DashboardCollab({ projects, steps }: Props) {
               />
             ))}
           </ul>
+          <Link to={"/project/" + (selected + 1)}>
+            <Button>Ouvrir le projet</Button>
+          </Link>
         </div>
       ) : (
         <div>

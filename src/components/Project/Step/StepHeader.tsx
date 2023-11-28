@@ -13,19 +13,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type Props = {
   isOwner: boolean;
+  step: intStep
+  setStep: (step:intStep) => void;
 };
 
-export default function StepHeader({ isOwner }: Props) {
-  // temp
-  const [step, setStep] = useState<intStep>({
-    name: "Jalon1",
-    description: "Description du jalion lorel rkgjd",
-    budget: 500,
-    startDate: "04.23.34",
-  });
+export default function StepHeader({ isOwner, step, setStep }: Props) {
+
 
   function handleDelete() {
-    setStep({ name: "", description: "", budget: 0, startDate: "" });
+    setStep({ name: "", description: "", budget: 0, startDate: "", id:0 });
   }
 
   // Render

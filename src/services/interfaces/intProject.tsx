@@ -5,14 +5,16 @@ export interface intProject {
     description: string,
     budget: number,
     owner: string,
-    status: string
+    status: number
 }
 
 export interface intStep {
     name: string,
     description: string,
     budget: number,
-    startDate: string,
+    id: number
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    startDate: any
 }
 
 export interface intComment {
