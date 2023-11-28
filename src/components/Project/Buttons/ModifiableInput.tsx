@@ -51,6 +51,7 @@ export default function ModifiableInput(props: Props) {
               type={type}
               name={label}
               id={label}
+              defaultValue={state[label]}
               placeholder={placeHolder}
               crossOrigin={undefined}
             />

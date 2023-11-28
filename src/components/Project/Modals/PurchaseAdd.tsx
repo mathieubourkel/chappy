@@ -8,9 +8,8 @@ import {
   Typography,
   Input,
 } from "@material-tailwind/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import { FormEvent, InputEvent, intPurchase, intPurchases } from "../../../services/interfaces/intProject";
+import CreateButton from "../Buttons/CreateButton";
 
 type Props = {
   purchases: intPurchases
@@ -37,13 +36,7 @@ export default function PurchaseAdd({ purchases, setPurchase}: Props) {
 
   return (
     <div>
-      <Button
-        className="mr-5 bg-brick-300 flex items-center"
-        onClick={handleOpen}
-      >
-        <FontAwesomeIcon icon={faSquarePlus} />
-        <a className="pl-2 hidden md:flex">Ajouter</a>
-      </Button>
+      <CreateButton handleClick={handleOpen} value="Ajouter" />
       <Dialog
         size="lg"
         open={open}
@@ -53,8 +46,7 @@ export default function PurchaseAdd({ purchases, setPurchase}: Props) {
         <Card className="mx-auto w-full">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-              <Typography variant="h4" color="blue-gray">
-                <FontAwesomeIcon icon={faSquarePlus} className="mr-3" />
+            <Typography variant="h2" color="blue-gray">
                 Ajouter un achat
               </Typography>
               <Input

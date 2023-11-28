@@ -5,7 +5,6 @@ export interface intProject {
     description: string,
     budget: number,
     owner: string,
-    id: number,
     status: string
 }
 
@@ -28,6 +27,8 @@ export interface intTask {
     description: string,
     startDate: string,
     endDate: string
+    comments: Array<string>
+    users: Array<string>
 }
 export interface intPurchase {
     name: string,
@@ -45,6 +46,11 @@ export interface intMember {
     tasks: number
 }
 
+export interface intUser {
+    name: string,
+    company: string
+}
+export type intProjects = Array<intProject>
 export type intMembers = Array<intMember>
 export type intDocuments = Array<intDocument>
 export type intPurchases = Array<intPurchase>
