@@ -1,5 +1,5 @@
 
-export default function Step() {
+export default function StepPage() {
   return (
     <div>Step</div>
   )
