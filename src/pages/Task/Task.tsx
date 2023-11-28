@@ -1,5 +1,5 @@
 
-export default function TaskPage() {
+export default function Task() {
   return (
     <div>Task</div>
   )

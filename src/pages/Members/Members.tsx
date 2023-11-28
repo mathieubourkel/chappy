@@ -1,5 +1,5 @@
 
-export default function MembersPage() {
+export default function Members() {
   return (
     <div>Members</div>
   )
