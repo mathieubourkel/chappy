@@ -24,6 +24,7 @@ import { intProject } from "./services/interfaces/intProject.tsx";
 import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
 import { intUsers } from "./services/interfaces/intUser.tsx";
 import { intCompagny } from "./services/interfaces/intCompagny.tsx";
+import axios from "axios";
 
 
 export default function App() {
@@ -42,7 +43,9 @@ export default function App() {
     open ? setOpen(false) : setOpen(true)
   }
 
-
+  axios.get("http://localhost:1337/api/restaurants").then((response) => {
+  console.log(response);
+});
  
 
 
