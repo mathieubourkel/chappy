@@ -1,7 +1,7 @@
 export default function LegalMentionsPage() {
   return (
-      <main className={"mt-10 flex justify-center"}>
-        <article className={"w-2/3"}>
+      <main className={"flex justify-center"}>
+        <article className={"w-2/3 mt-10"}>
             <h1 className={"text-center"}>Mentions légales</h1>
 
             <section className={"my-5 border"}>

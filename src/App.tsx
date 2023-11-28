@@ -22,14 +22,11 @@ import { NavbarVisitor } from "./components/Navbar/NavbarVisitor.tsx";
 import { Sidebar } from "./components/Sidebar/Sidebar.tsx";
 import { intProject } from "./services/interfaces/intProject.tsx";
 import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
-import { intUsers } from "./services/interfaces/intUser.tsx";
-import { intCompagny } from "./services/interfaces/intCompagny.tsx";
-import axios from "axios";
 
 
 export default function App() {
   const [logins, setLogin] = useState<Array<string>>([]);
-  const isLogged = true;
+  const isLogged = false;
   const isOwner = true;
   const [project, setProject] = useState<intProject>({
     name: "Projet1", description: "Description du projet la j,ffdkfdksdnfjnsdjnf ndf ndsf sdnfjfn sjfsf s,f f sd fsdnf bfsd, ds,n fbdsnsbd", budget: 500, status: "En cours", owner: "Mathieu"
@@ -43,9 +40,7 @@ export default function App() {
     open ? setOpen(false) : setOpen(true)
   }
 
-  axios.get("http://localhost:1337/api/restaurants").then((response) => {
-  console.log(response);
-});
+
  
 
 

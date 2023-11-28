@@ -1,16 +1,23 @@
 import {NavLink} from "react-router-dom";
-import {Button} from "@material-tailwind/react";
+import './home.css';
+import {
+    Button,
+    Typography
+} from "@material-tailwind/react";
+import planning from "../../assets/img/planning.png";
+import blop from "../../assets/img/Blop.svg";
 
 export default function HomePage() {
   return (
 
-          <main>
-              <section>
-                  <h1>Bienvenue sur Chappy</h1>
-                  <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut autem commodi facilis magni non possimus, quibusdam repellat velit? </p>
-
-                  <article className={"flex gap-5"}>
+          <main className={"flex justify-center gap-11 items-center"}>
+              <section className={"w-1/4 flex flex-col gap-10"}>
+                  <article className={"flex flex-col gap-5"}>
+                      <Typography variant="h1" className={"font-extrabold text-center"}>Bienvenue sur Chappy</Typography>
+                      <Typography variant="h3">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Typography>
+                      <Typography variant="paragraph" className={""}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut autem commodi facilis magni non possimus, quibusdam repellat velit? </Typography>
+                  </article>
+                  <article className={"flex gap-5 justify-center"}>
                       <Button
                           size="sm"
                           className="hidden lg:inline-block bg-brick-400"
@@ -26,7 +33,9 @@ export default function HomePage() {
                   </article>
 
               </section>
-              <section>
+              <section className={"w-1/4 animation-section"}>
+                  <img src={blop} alt={"fond animé"} className={"scale-in-right"} />
+                  <img src={planning} alt={"logo de planning"} className={"planning slide-in-right"}/>
 
               </section>
           </main>
