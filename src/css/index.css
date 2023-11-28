@@ -23,33 +23,35 @@
     --bg-color: rgb(240,240,240,1);
     --border-color: rgb(30,29,34, 0.2);
     --gradient: linear-gradient(90deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
+    --alt-gradient: linear-gradient(90deg, rgba(126,55,47,1) 0%, rgba(47,44,54,1) 12%);
     --gradient-top: linear-gradient(0deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
-
 }
 
 /*==================== GLOBAL CSS ====================*/
 
-        /* Sidebar */
+        /* Scrollbar */
 
-.sidebar {
-    position: fixed;
-    z-index: 1000000;
-    top:0;
-    bottom:0;
-    left: 0;
-    height: 100lvh;
-    border-radius: 0;
-    overflow-y:auto;
+:root::-webkit-scrollbar {
+    width: 0.75em;
 }
 
-.l-item:active, .l-item:hover {
-    background: var(--gradient);
-    color: var(--bg-color);
+:root::-webkit-scrollbar-thumb {
+    background: var(--gradient-top);
+    border-radius: 2px;
 }
 
-.user-sidebar {
-    position: fixed;
-    bottom: 0;
+.custom-scroll::-webkit-scrollbar {
+    width: 0.75em;
+    border-radius: 2px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+    background: var(--gradient-top);
+    border-radius: 2px;
+}
+
+.custom-scroll {
+    overflow-x: auto;
 }
 
         /* Page */
@@ -88,12 +90,4 @@ h2:before {
     margin-right: 0.5em;
     margin-bottom: -0.5em;
 }
-
-        /* Footer */
-
-footer {
-    border-top : 1px solid var(--border-color);
-    bottom: 0;
-}
-
 
