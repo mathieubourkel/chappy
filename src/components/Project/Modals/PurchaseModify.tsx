@@ -58,8 +58,7 @@ export default function PurchaseModify({ purchases, setPurchase, index}: Props) 
         <Card className="mx-auto w-full">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-              <Typography variant="h4" color="blue-gray">
-                <FontAwesomeIcon icon={faPen} className="mr-3" />
+            <Typography variant="h2" color="blue-gray">
                 Modifier un achat
               </Typography>
               <Input

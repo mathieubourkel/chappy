@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -7,22 +7,23 @@ import {
   CardFooter,
   Typography,
   Input,
+  IconButton,
 } from "@material-tailwind/react";
-import { FormEvent, InputEvent, intDocument, intDocuments } from "../../../services/interfaces/intProject";
-import CreateButton from "../Buttons/CreateButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { FormEvent, InputEvent, intDocument, intDocuments} from "../../../services/interfaces/intProject";
 
 type Props = {
   documents: intDocuments
-  setDocument: (documents: intDocuments) => void;
+  setDocument: (purchases: intDocuments) => void;
+  index:number
 };
 
-export default function DocumentsAdd({ documents, setDocument}: Props) {
+export default function DocumentModify({ documents, setDocument, index}: Props) {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  const [form, setForm] = useState<intDocument>({
-    name: "", type: ""
-  });
+  const [form, setForm] = useState<intDocument>({...documents[index]});
 
   function handleChange(e: InputEvent) {
     const { name, value } = e.target;
@@ -31,12 +32,23 @@ export default function DocumentsAdd({ documents, setDocument}: Props) {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setDocument([...documents, form]);
+    const tempArray:intDocuments = [...documents];
+    tempArray[index] = form;
+    setDocument(tempArray);
   }
+    
+  useEffect(() => {
+    setForm({ ...documents[index] });
+  }, [index, open, documents]);
 
   return (
     <div>
-      <CreateButton handleClick={handleOpen} value="Ajouter" />
+      <IconButton
+        className="mr-5 bg-brick-300 flex items-center"
+        onClick={handleOpen}
+      >
+        <FontAwesomeIcon icon={faPen} />
+      </IconButton>
       <Dialog
         size="lg"
         open={open}
@@ -47,19 +59,21 @@ export default function DocumentsAdd({ documents, setDocument}: Props) {
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
             <Typography variant="h2" color="blue-gray">
-                Ajouter un document
+                Modifier un document
               </Typography>
               <Input
                 label="Nom du document"
                 size="lg"
                 name="name"
                 id="name"
+                value={form.name}
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />
               <Input
                 label="Type du document"
                 size="lg"
+                value={form.type}
                 name="type"
                 id="type"
                 crossOrigin={undefined}
@@ -68,7 +82,7 @@ export default function DocumentsAdd({ documents, setDocument}: Props) {
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button variant="gradient" onClick={handleOpen} type="submit">
-                Ajouter
+                Modifier
               </Button>
             </CardFooter>
           </form>

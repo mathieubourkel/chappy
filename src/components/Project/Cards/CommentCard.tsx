@@ -17,7 +17,7 @@ export default function CommentCard({ comment }: Props) {
             <Typography
               variant="h4"
               color="blue-gray"
-              className="mb-2 flex items-center gap-3"
+              className="mb-2 flex items-center gap-3 font-bold"
             >
               <Avatar variant="circular" alt="toto" src={user} />
               {comment.author}

@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import {Button,Dialog,Card,CardBody,CardFooter,Typography,Input,Textarea,} from "@material-tailwind/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import { FormEvent, InputEvent, intStep, intSteps } from "../../../services/interfaces/intProject";
+import CreateButton from "../Buttons/CreateButton";
 
 type Props = {
   steps: intSteps;
@@ -35,13 +34,7 @@ export default function ProjectCreateStep({ steps, setStep }: Props) {
 
   return (
     <div>
-      <Button
-        className="mr-5 bg-brick-300 flex items-center"
-        onClick={handleOpen}
-      >
-        <FontAwesomeIcon icon={faSquarePlus} />
-        <a className="pl-2 hidden md:flex">Créer</a>
-      </Button>
+      <CreateButton handleClick={handleOpen} value="Créer" />
       <Dialog
         size="lg"
         open={open}
@@ -51,8 +44,7 @@ export default function ProjectCreateStep({ steps, setStep }: Props) {
         <Card className="mx-auto w-full">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-              <Typography variant="h4" color="blue-gray">
-                <FontAwesomeIcon icon={faSquarePlus} className="mr-3" />
+            <Typography variant="h2" color="blue-gray">
                 Créer un jalon
               </Typography>
               <Input
@@ -70,7 +62,7 @@ export default function ProjectCreateStep({ steps, setStep }: Props) {
                 id="description"
                 onChange={(e: any) => handleChange(e)}
               />
-              <div className="md: flex gap-3">
+              <div className="sm:flex gap-3">
                 <Input
                   label="Budget"
                   size="lg"

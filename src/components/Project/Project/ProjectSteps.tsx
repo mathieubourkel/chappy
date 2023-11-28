@@ -18,7 +18,7 @@ export default function ProjectSteps({ steps, setStep, isOwner }: Props) {
         <div className="b2-header-title">
           <h2>Les jalons</h2>
         </div>
-        <div className="b2-header-buttons flex">
+        <div className="b2-header-buttons flex gap-5 items-center">
           {isOwner && 
           <div>
             <ProjectCreateStep steps={steps} setStep={setStep} />

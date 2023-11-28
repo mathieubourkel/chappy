@@ -21,7 +21,7 @@ export default function SelectInputObject(props: Props) {
     <div className="w-full">
       {isOwner ? (
         <Select
-          className="border rounded-xl p-2 bg-white"
+          className="p-2 bg-white"
           value={state[label]}
           onChange={(value: any) => handleSubmit(value)}
         >

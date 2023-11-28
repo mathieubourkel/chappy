@@ -11,7 +11,6 @@ type Props = {
 }
 
 export default function CreateComment({state, setState}:Props) {
-  
   const [form, setForm] = useState<intComment>({
     content: "", author: "Auteur Dynamique"
 })
@@ -31,6 +30,7 @@ function handleSubmit(e:FormEvent){
 function handleDelete(){
   setForm({...form, content: ""})
 }
+
   return (
     
     <div className="mt-10">

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import "./css/App.css";
 import HomePage from "./pages/Home/HomePage.tsx";
 import LoginPage from "./pages/Login/LoginPage.tsx";
@@ -8,7 +8,6 @@ import DashboardPage from "./pages/Dashboard/DashboardPage.tsx";
 import LegalMentionsPage from "./pages/LegalMentions/LegalMentionsPage.tsx";
 import UserProfilePage from "./pages/UserProfile/UserProfilePage.tsx";
 import StepPage from "./pages/Step/StepPage.tsx";
-import TaskPage from "./pages/Task/TaskPage.tsx";
 import MembersPage from "./pages/Members/MembersPage.tsx";
 import PurchasesPage from "./pages/Purchases/PurchasesPage.tsx";
 import DocumentsPage from "./pages/Documents/DocumentsPage.tsx";
@@ -22,6 +21,9 @@ import { NavbarConnected } from "./components/Navbar/NavbarConnected.tsx";
 import { NavbarVisitor } from "./components/Navbar/NavbarVisitor.tsx";
 import { Sidebar } from "./components/Sidebar/Sidebar.tsx";
 import { intProject } from "./services/interfaces/intProject.tsx";
+import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
+import { intUsers } from "./services/interfaces/intUser.tsx";
+import { intCompagny } from "./services/interfaces/intCompagny.tsx";
 
 
 export default function App() {
@@ -29,7 +31,7 @@ export default function App() {
   const isLogged = true;
   const isOwner = true;
   const [project, setProject] = useState<intProject>({
-    name: "Projet1", description: "Description du projet la j,ffdkfdksdnfjnsdjnf ndf ndsf sdnfjfn sjfsf s,f f sd fsdnf bfsd, ds,n fbdsnsbd", budget: 500, status: "En cours", owner: "Mathieu", id: 0
+    name: "Projet1", description: "Description du projet la j,ffdkfdksdnfjnsdjnf ndf ndsf sdnfjfn sjfsf s,f f sd fsdnf bfsd, ds,n fbdsnsbd", budget: 500, status: "En cours", owner: "Mathieu"
   })
   function handleSubmitLogin(login: string) {
     setLogin([...logins, login]);
@@ -39,6 +41,7 @@ export default function App() {
   function toggleSidebar() {
     open ? setOpen(false) : setOpen(true)
   }
+
 
  
 
@@ -55,14 +58,14 @@ export default function App() {
           element={<LoginPage handleSubmitLogin={handleSubmitLogin} />}
         />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/create-project" element={<CreateProjectPage />} />
         <Route element={<PrivateRoute isLogged={isLogged} />}>
-          <Route path="/dashboard/" element={<DashboardPage />} />
-          <Route path="/project" element={<ProjectPage project={project} setProject={setProject} isOwner={isOwner}/>} />
-          <Route path="/project/documents" element={<DocumentsPage project={project} isOwner={isOwner}/>} />
-          <Route path="/project/purchases" element={<PurchasesPage project={project} isOwner={isOwner}/>} />
-          <Route path="/project/members" element={<MembersPage project={project} isOwner={isOwner}/>} />
-          <Route path="/project/step/" element={<StepPage isOwner={isOwner} />} />
-          <Route path="/project/step/task/" element={<TaskPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/project/:idProject" element={<ProjectPage project={project} setProject={setProject} isOwner={isOwner}/>} />
+          <Route path="/project/:idProject/documents" element={<DocumentsPage project={project} isOwner={isOwner}/>} />
+          <Route path="/project/:idProject/purchases" element={<PurchasesPage project={project} isOwner={isOwner}/>} />
+          <Route path="/project/:idProject/members" element={<MembersPage project={project} isOwner={isOwner}/>} />
+          <Route path="/project/:idProject/step/:idStep" element={<StepPage isOwner={isOwner} />} />
           <Route path="/profile/" element={<UserProfilePage />} />
         </Route>
 
