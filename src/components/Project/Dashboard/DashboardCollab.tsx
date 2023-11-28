@@ -5,12 +5,12 @@ import {
   intStep,
   intSteps,
 } from "../../../services/interfaces/intProject";
-import { faBan, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "@material-tailwind/react";
+import { faBan } from "@fortawesome/free-solid-svg-icons";
 import "./Dash.css";
 import { useState } from "react";
 import DashboardStepCard from "../Cards/DashboardStepCard";
-import RejoinButton from "../Buttons/RejoinButton";
+import RejoinModal from "../Modals/RejoinModal";
+import DemandsModal from "../Modals/DemandsModal";
 
 type Props = {
   projects: intProjects;
@@ -32,7 +32,7 @@ export default function DashboardCollab({ projects, steps }: Props) {
       {projects.length > 0 ? (
         <div>
           <div className="flex">
-            <div className="ml-20 flex justify-center basis-3/4">
+            <div className="ml-20 lg:flex justify-center basis-3/4">
               {projects.map((project: intProject, index: number) => (
                 <div key={index}>
                   {index === selected ? (
@@ -54,15 +54,10 @@ export default function DashboardCollab({ projects, steps }: Props) {
                 </div>
               ))}
             </div>
-            <div className="flex basis-1/4 justify-end">
-              <Button
-                className="mr-5 flex items-center text-brick-300 border-brick-300"
-                variant="outlined"
-              >
-                <FontAwesomeIcon icon={faSquarePlus} />
-                <a className="pl-2 hidden md:flex">Mes demandes</a>
-              </Button>
-              <RejoinButton value="Rejoindre" />
+            <div className="md:flex basis-1/4 justify-end items-center">
+              <DemandsModal />
+              
+              <RejoinModal value="Rejoindre" />
             </div>
           </div>
 
@@ -81,7 +76,7 @@ export default function DashboardCollab({ projects, steps }: Props) {
       ) : (
         <div>
           <div className="flex justify-end">
-            <RejoinButton value="Rejoindre" />
+            <RejoinModal value="Rejoindre" />
           </div>
 
           <div className="bg-white flex items-center rounded-xl mt-10 p-5 gap-5">

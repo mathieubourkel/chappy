@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Typography } from "@material-tailwind/react";
 import { intProjects, intSteps } from "../../../services/interfaces/intProject";
 import AccederButton from "../Buttons/AccederButton";
+import { Link } from "react-router-dom";
 
 type Props = {
     steps: intSteps,
@@ -13,7 +14,7 @@ type Props = {
 export default function DashboardStepCard({steps, projects, index}:Props) {
   return (
     <li
-      className="flex justify-between mb-5 gap-5
+      className="md:flex justify-between mb-5 gap-5
               p-5 rounded-xl bg-white border-solid border-4 border-b-brick-200"
     >
       <div className="flex gap-5">
@@ -38,8 +39,11 @@ export default function DashboardStepCard({steps, projects, index}:Props) {
           </Typography>
         </div>
       </div>
-      <div className="flex items-center ">
+      <div className="flex items-center justify-end">
+      <Link to="/project/1/step/1">
         <AccederButton />
+        </Link>
+        
       </div>
     </li>
   );

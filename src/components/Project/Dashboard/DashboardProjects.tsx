@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Dash.css";
 import { useState } from "react";
 import CreateButton from "../Buttons/CreateButton";
+import { Link } from "react-router-dom";
 
 type Props = {
   projects: intProjects;
@@ -31,7 +32,7 @@ export default function DashboardProjects({ projects, steps }: Props) {
       {projects.length > 0 ? (
         <div>
           <div className="flex">
-            <div className="ml-20 flex justify-center basis-3/4 ">
+            <div className="ml-20 md:flex justify-center basis-3/4 ">
               {projects.map((project: intProject, index: number) => (
                 <div key={index}>
                   {index === selected ? (
@@ -54,8 +55,10 @@ export default function DashboardProjects({ projects, steps }: Props) {
                 </div>
               ))}
             </div>
-            <div className="flex justify-end basis-1/4">
+            <div className="md:flex justify-end basis-1/4">
+              <Link to='/create-project'>
             <CreateButton value="Créer" />
+            </Link>
             </div>
           </div>
           <div className="flex flex-wrap gap-10">
@@ -67,7 +70,9 @@ export default function DashboardProjects({ projects, steps }: Props) {
       ) : (
         <div>
           <div className="flex justify-end">
-          <CreateButton value="Créer"/>
+          <Link to='/create-project'>
+            <CreateButton value="Créer" />
+            </Link>
           </div>
           <div className="bg-white flex items-center rounded-xl mt-10 p-5 gap-5">
             <FontAwesomeIcon icon={faBan} />

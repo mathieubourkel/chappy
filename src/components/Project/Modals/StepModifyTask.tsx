@@ -19,12 +19,13 @@ type Props = {
   tasks: intTasks;
   setTask: (task: intTasks) => void;
   index: number;
+  handleOpen: any;
+  open: boolean
 };
 
-export default function StepModifyTask({ setTask, tasks, index }: Props) {
+export default function StepModifyTask({ setTask, tasks, index, handleOpen, open }: Props) {
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen((bool) => !bool);
+  
   const [form, setForm] = useState<intTask>({ ...tasks[index] });
 
   useEffect(() => {
@@ -90,7 +91,7 @@ export default function StepModifyTask({ setTask, tasks, index }: Props) {
                 id="categorie"
                 onChange={(e: any) => handleChange(e)}
               />
-              <div className="md: flex gap-3">
+              <div className="sm:flex gap-3">
                 <Input
                   label="Date de début"
                   value={form.startDate}
@@ -110,6 +111,33 @@ export default function StepModifyTask({ setTask, tasks, index }: Props) {
                   onChange={(e: InputEvent) => handleChange(e)}
                 />
               </div>
+              <p>Participants</p>
+          <div className="flex gap-10">
+            {tasks[index].users.map((user: string, index: number) => (
+              <Input
+                key={index}
+                label="Participants"
+                value={user}
+                size="lg"
+                name="participants"
+                id="participants"
+                crossOrigin={undefined}
+              />
+            ))}
+          </div>
+          <p>Commentaires</p>
+            {tasks[index].comments.map((comment: string, index: number) => (
+              <Input
+                key={index}
+                label="Participants"
+                value={comment}
+                size="lg"
+                name="participants"
+                id="participants"
+                crossOrigin={undefined}
+                onChange={(e: InputEvent) => handleChange(e)}
+              />
+            ))}
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button variant="gradient" onClick={handleOpen} type="submit">

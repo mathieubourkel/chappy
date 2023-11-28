@@ -27,6 +27,8 @@ export interface intTask {
     description: string,
     startDate: string,
     endDate: string
+    comments: Array<string>
+    users: Array<string>
 }
 export interface intPurchase {
     name: string,

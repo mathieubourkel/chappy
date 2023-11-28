@@ -5,6 +5,9 @@ import EspaceComment from "../../components/Project/Comments/EspaceComment";
 import ProjectSteps from "../../components/Project/Project/ProjectSteps";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
 import ProjectDesc from "../../components/Project/Project/ProjectDesc";
+import { Button } from "@material-tailwind/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   project: intProject,
@@ -28,12 +31,22 @@ export default function ProjectPage({project, setProject, isOwner}:Props) {
 
   ])
 
+  function handleDelete(): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <main className="project-page sm:mx-20 mx-5">
       <ProjectHeader project={project}/>
       <ProjectDesc project={project} setProject={setProject} isOwner={isOwner}/>
       <ProjectSteps steps={steps} setStep={setStep} isOwner={isOwner} />
       <EspaceComment comments={comments} setComment={setComment} />
+      <div className="flex justify-end mb-10">
+      <Button onClick={() => handleDelete()}>
+          <FontAwesomeIcon icon={faXmark} size="xl" />
+          <a className="ml-5">Supprimer le projet</a>
+        </Button>
+        </div>
     </main>
   )
 }

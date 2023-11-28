@@ -14,10 +14,10 @@ export default function MemberCard({ index, setMember, members, isOwner }: Props
   return (
     <>
       <li
-        className="flex justify-between gap-5
+        className="md:flex justify-between gap-5
           p-5 rounded-xl bg-white border-solid border-4 border-b-brick-200 mb-5"
       >
-        <div className='flex gap-10'>
+        <div className='sm:flex gap-10'>
         <Avatar variant="circular" alt="toto" src={user} />
         <Typography variant="h5" color="blue-gray" className="flex">
           <p className="border p-2 rounded-xl bg-light-200">

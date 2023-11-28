@@ -8,7 +8,6 @@ import DashboardPage from "./pages/Dashboard/DashboardPage.tsx";
 import LegalMentionsPage from "./pages/LegalMentions/LegalMentionsPage.tsx";
 import UserProfilePage from "./pages/UserProfile/UserProfilePage.tsx";
 import StepPage from "./pages/Step/StepPage.tsx";
-import TaskPage from "./pages/Task/TaskPage.tsx";
 import MembersPage from "./pages/Members/MembersPage.tsx";
 import PurchasesPage from "./pages/Purchases/PurchasesPage.tsx";
 import DocumentsPage from "./pages/Documents/DocumentsPage.tsx";
@@ -22,6 +21,7 @@ import { NavbarConnected } from "./components/Navbar/NavbarConnected.tsx";
 import { NavbarVisitor } from "./components/Navbar/NavbarVisitor.tsx";
 import { Sidebar } from "./components/Sidebar/Sidebar.tsx";
 import { intProject } from "./services/interfaces/intProject.tsx";
+import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
 
 export default function App() {
   const [logins, setLogin] = useState<Array<string>>([]);
@@ -52,6 +52,7 @@ export default function App() {
           element={<LoginPage handleSubmitLogin={handleSubmitLogin} />}
         />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/create-project" element={<CreateProjectPage />} />
         <Route element={<PrivateRoute isLogged={isLogged} />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/project/:idProject" element={<ProjectPage project={project} setProject={setProject} isOwner={isOwner}/>} />
@@ -59,7 +60,6 @@ export default function App() {
           <Route path="/project/:idProject/purchases" element={<PurchasesPage project={project} isOwner={isOwner}/>} />
           <Route path="/project/:idProject/members" element={<MembersPage project={project} isOwner={isOwner}/>} />
           <Route path="/project/:idProject/step/:idStep" element={<StepPage isOwner={isOwner} />} />
-          <Route path="/project/:idProject/step/:idStep/task/" element={<TaskPage />} />
           <Route path="/profile/" element={<UserProfilePage />} />
         </Route>
 

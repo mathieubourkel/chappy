@@ -12,7 +12,7 @@ export default function ProjectDisplayCode() {
     <div>
       <Button className="flex" onClick={handleOpen}>
         <FontAwesomeIcon icon={faCode} className="mr-2" />
-        <div className="hidden md:flex">Code projet</div>
+        <div className="hidden whitespace-nowrap md:flex">Code projet</div>
       </Button>
       <Dialog
         size="xl"

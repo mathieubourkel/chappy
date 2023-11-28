@@ -1,7 +1,8 @@
 import { intProjects, intUser } from "../../../services/interfaces/intProject";
 import calendar from "../../../assets/img/calendar.webp";
 import CreateButton from "../Buttons/CreateButton";
-import RejoinButton from "../Buttons/RejoinButton";
+import { Link } from "react-router-dom";
+import RejoinModal from "../Modals/RejoinModal";
 
 type Props = {
   user: intUser;
@@ -36,9 +37,11 @@ export default function DashboardHeader({ user, projects }: Props) {
             </div>
           </div>
         ) : (
-          <div className="flex justify-center">
+          <div className="flex justify-center gap-10">
+            <Link to='/create-project'>
             <CreateButton value="Créer un projet"/>
-            <RejoinButton value="Rejoindre un projet" />
+            </Link>
+            <RejoinModal value="Rejoindre un projet" />
           </div>
         )}
       </div>

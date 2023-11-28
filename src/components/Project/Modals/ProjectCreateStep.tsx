@@ -62,7 +62,7 @@ export default function ProjectCreateStep({ steps, setStep }: Props) {
                 id="description"
                 onChange={(e: any) => handleChange(e)}
               />
-              <div className="md: flex gap-3">
+              <div className="sm:flex gap-3">
                 <Input
                   label="Budget"
                   size="lg"
