@@ -3,43 +3,26 @@ import {
   intProject,
   intProjects,
   intStep,
-  intSteps,
 } from "../../../services/interfaces/intProject";
 import { faBan } from "@fortawesome/free-solid-svg-icons";
 import "./Dash.css";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import DashboardStepCard from "../Cards/DashboardStepCard";
 import RejoinModal from "../Modals/RejoinModal";
 import DemandsModal from "../Modals/DemandsModal";
-import axios from "axios";
 import { Button } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
 type Props = {
-  projects: intProjects;
+  collabs: intProjects;
 };
 
-export default function DashboardCollab({ projects }: Props) {
-  const [selected, setSelected] = useState(0);
-  const [steps, setStep] = useState<intSteps>([]);
-  const [error, setError] = useState(null);
+export default function DashboardCollab({ collabs }: Props) {
 
-  useEffect(() => {
-    axios
-      .get(
-        "http://localhost:1337/api/project-steps?populate[0]=project&filters[project][id][$eq]=" +
-          (selected + 1)
-      )
-      .then(({ data }) => setStep(data.data))
-      .catch((error) => setError(error));
-  }, [selected]);
+  const [selected, setSelected] = useState(0);
 
   function handleClick(index: number) {
     setSelected(index);
-  }
-
-  if (error) {
-    return <div>Erreur lors de la recupération de la tata</div>;
   }
 
   return (
@@ -47,18 +30,18 @@ export default function DashboardCollab({ projects }: Props) {
       <div className="b2-header-title">
         <h2>Mes collaborations</h2>
       </div>
-      {projects.length > 0 ? (
+      {collabs.length > 0 ? (
         <div>
           <div className="flex">
             <div className="ml-20 lg:flex justify-center basis-3/4">
-              {projects.map((project: intProject, index: number) => (
+              {collabs.map((collab: intProject, index: number) => (
                 <div key={index}>
                   {index === selected ? (
                     <button
                       key={index}
                       className="px-10 rounded-none border-0 border-b-2 border-b-black"
                     >
-                      <a className="selected">{project.name}</a>
+                      <a className="selected">{collab.name}</a>
                     </button>
                   ) : (
                     <button
@@ -66,7 +49,7 @@ export default function DashboardCollab({ projects }: Props) {
                       onClick={() => handleClick(index)}
                       className="px-10 rounded-none border-0 border-b-2 border-b-marine-100"
                     >
-                      <div>{project.name}</div>
+                      <div>{collab.name}</div>
                     </button>
                   )}
                 </div>
@@ -80,12 +63,13 @@ export default function DashboardCollab({ projects }: Props) {
           </div>
 
           <ul className="mt-10">
-            {steps.map((_step: intStep, index: number) => (
+            {collabs[selected].project_steps.map((step: intStep, index: number) => (
               <DashboardStepCard
-                steps={steps}
-                projects={projects}
+                step={step}
+                projects={collabs}
                 index={index}
                 key={index}
+                idProject={collabs[selected].id}
               />
             ))}
           </ul>

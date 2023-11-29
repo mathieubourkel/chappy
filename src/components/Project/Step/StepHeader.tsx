@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
 import {
   Button,
   Card,
@@ -18,7 +17,6 @@ type Props = {
 };
 
 export default function StepHeader({ isOwner, step, setStep }: Props) {
-
 
   function handleDelete() {
     setStep({ name: "", description: "", budget: 0, startDate: "", id:0 });

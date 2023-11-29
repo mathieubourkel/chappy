@@ -8,7 +8,8 @@ import {
   Input,
 } from "@material-tailwind/react";
 
-import { intTasks } from "../../../services/interfaces/intProject";
+import { intTasks, intUser } from "../../../services/interfaces/intProject";
+import { Status } from "../../../services/interfaces/Status";
 
 type Props = {
   tasks: intTasks;
@@ -55,7 +56,7 @@ export default function StepDisplayTask({
           <Input
             label="Catégorie"
             disabled
-            value={tasks[index].categorie}
+            value={tasks[index].category.name}
             size="lg"
             name="categorie"
             id="categorie"
@@ -64,7 +65,7 @@ export default function StepDisplayTask({
           <Input
             label="Status"
             disabled
-            value={tasks[index].status}
+            value={Status[tasks[index].status]}
             size="lg"
             name="status"
             id="status"
@@ -92,12 +93,12 @@ export default function StepDisplayTask({
           </div>
           <p>Participants</p>
           <div className="flex gap-10">
-            {tasks[index].users.map((user: string, index: number) => (
+            {tasks[index].app_users.map((user: intUser, index: number) => (
               <Input
                 key={index}
                 label="Participants"
                 disabled
-                value={user}
+                value={user.name}
                 size="lg"
                 name="participants"
                 id="participants"
@@ -106,7 +107,7 @@ export default function StepDisplayTask({
             ))}
           </div>
           <p>Commentaires</p>
-            {tasks[index].comments.map((comment: string, index: number) => (
+            {/* {tasks[index].comments.map((comment: string, index: number) => (
               <Input
                 key={index}
                 label="Participants"
@@ -117,7 +118,7 @@ export default function StepDisplayTask({
                 id="participants"
                 crossOrigin={undefined}
               />
-            ))}
+            ))} */}
         </CardBody>
       </Card>
     </Dialog>

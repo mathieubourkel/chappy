@@ -13,7 +13,8 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { FormEvent, InputEvent, intTask, intTasks } from "../../../services/interfaces/intProject";
+import { FormEvent, InputEvent, intTask, intTasks, intUser } from "../../../services/interfaces/intProject";
+import SelectCategory from "../Buttons/SelectCategory";
 
 type Props = {
   tasks: intTasks;
@@ -83,14 +84,9 @@ export default function StepModifyTask({ setTask, tasks, index, handleOpen, open
                 id="description"
                 onChange={(e:any) => handleChange(e)}
               />
-              <Textarea
-                label="Catégorie"
-                value={form.categorie}
-                size="lg"
-                name="categorie"
-                id="categorie"
-                onChange={(e: any) => handleChange(e)}
-              />
+              <SelectCategory state={tasks} isOwner={true} 
+              index={index} classState="basis-1/2"/>
+
               <div className="sm:flex gap-3">
                 <Input
                   label="Date de début"
@@ -113,12 +109,13 @@ export default function StepModifyTask({ setTask, tasks, index, handleOpen, open
               </div>
               <p>Participants</p>
           <div className="flex gap-10">
-            {tasks[index].users.map((user: string, index: number) => (
+            {tasks[index].app_users.map((user: intUser, index: number) => (
               <Input
                 key={index}
                 label="Participants"
-                value={user}
+                value={user.email}
                 size="lg"
+                disabled
                 name="participants"
                 id="participants"
                 crossOrigin={undefined}
@@ -126,7 +123,7 @@ export default function StepModifyTask({ setTask, tasks, index, handleOpen, open
             ))}
           </div>
           <p>Commentaires</p>
-            {tasks[index].comments.map((comment: string, index: number) => (
+            {/* {tasks[index].comments.map((comment: string, index: number) => (
               <Input
                 key={index}
                 label="Participants"
@@ -137,7 +134,7 @@ export default function StepModifyTask({ setTask, tasks, index, handleOpen, open
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />
-            ))}
+            ))} */}
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button variant="gradient" onClick={handleOpen} type="submit">

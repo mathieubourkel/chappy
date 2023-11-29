@@ -1,36 +1,33 @@
 import { useEffect, useState } from "react";
-
 import { Typography } from "@material-tailwind/react";
-import {
-  intPurchases,
-  intProject,
-  intPurchase,
-} from "../../services/interfaces/intProject";
+import {intPurchases,intPurchase, intProjectLight} from "../../services/interfaces/intProject";
 import PurchaseCard from "../../components/Project/Cards/PurchaseCard";
 import PurchaseAdd from "../../components/Project/Modals/PurchaseAdd";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
-import axios from "axios";
 import { useParams } from "react-router-dom";
+import { getPurchasesByProject } from "../../services/api/purchases";
+import {  getProjectNameById } from "../../services/api/projects";
+
 
 type Props = {
-  project: intProject;
   isOwner: boolean;
 };
 
-export default function MembersPage({ project, isOwner }: Props) {
+export default function PurchasesPage({ isOwner }: Props) {
   
   const { idProject } = useParams();
-  const [error, setError] = useState(null);
+  const [project, setProject] = useState<intProjectLight>({id:0, name:""})
   const [purchases, setPurchase] = useState<intPurchases>([]);
 
   useEffect(() => {
-    axios
-      .get(
-        "http://localhost:1337/api/purchases?populate[0]=project&filters[project][id][$eq]=" +
-          idProject
-      )
-      .then(({ data }) => setPurchase(data.data))
-      .catch((error) => setError(error));
+    async function getPurchases(){
+      const tmpProj = await getProjectNameById(idProject)
+      const result = await getPurchasesByProject(idProject)
+      setPurchase(result)
+      setProject(tmpProj)
+    }
+
+    getPurchases();
   }, [idProject]);
 
   const calcul = () => {
@@ -41,13 +38,9 @@ export default function MembersPage({ project, isOwner }: Props) {
     return total;
   };
 
-  if (error) {
-    return <div>Erreur lors de la recupération de la tata</div>;
-  }
-
   return (
     <main className="project-page sm:mx-20 mx-5 mb-20">
-      <ProjectHeader project={project} />
+      <ProjectHeader project={project} idProject={idProject}/>
       <section className="b2-header flex justify-between mt-20">
         <div>
           <h2>Mes achats</h2>

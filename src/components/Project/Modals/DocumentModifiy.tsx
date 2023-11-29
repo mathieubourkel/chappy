@@ -62,11 +62,11 @@ export default function DocumentModify({ documents, setDocument, index}: Props) 
                 Modifier un document
               </Typography>
               <Input
-                label="Nom du document"
+                label="Chemin d'accès du document"
                 size="lg"
-                name="name"
-                id="name"
-                value={form.name}
+                name="path"
+                id="path"
+                value={form.path}
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />

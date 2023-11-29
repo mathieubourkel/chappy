@@ -1,17 +1,17 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCartShopping,faFolderOpen,faUser} from "@fortawesome/free-solid-svg-icons";
 import ProjectDisplayCode from "../Modals/ProjectDisplayCode";
-import { intProject } from "../../../services/interfaces/intProject";
-
+import { intProjectLight } from "../../../services/interfaces/intProject";
 
 type Props = {
-  project: intProject;
-};
+  project: intProjectLight
+  idProject: string | undefined
+}
 
-export default function ProjectHeader({ project }: Props) {
-  const {idProject} = useParams();
+export default function ProjectHeader({project ,idProject} :Props) {
+
   // Render
   return (
       <section className="b1-header lg:flex justify-between">

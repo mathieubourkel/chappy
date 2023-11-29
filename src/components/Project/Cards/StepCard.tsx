@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { faChartPie } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Card,CardBody,CardFooter,Typography} from "@material-tailwind/react";
@@ -7,12 +7,10 @@ import AccederButton from "../Buttons/AccederButton";
 
 type Props = {
   step: intStep;
-  id:number
+  idProject:number | undefined
 };
 
-export default function StepCard({ step, id }: Props) {
-
-  const {idProject} = useParams();
+export default function StepCard({ step, idProject }: Props) {
 
   return (
     <Card className="mt-6 w-96 border-solid border-4 border-b-brick-200">
@@ -24,7 +22,7 @@ export default function StepCard({ step, id }: Props) {
         <Typography>{step.description}</Typography>
       </CardBody>
       <CardFooter className="pt-0 flex justify-end">
-        <Link to={"/project/" + idProject + "/step/" + id}>
+        <Link to={"/project/" + idProject + "/step/" + step.id}>
           <AccederButton />
         </Link>
       </CardFooter>

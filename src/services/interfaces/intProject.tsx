@@ -1,12 +1,17 @@
 import { ChangeEvent } from "react"
 
-export interface intProject {
-    name: string,
+export interface intProject extends intProjectLight {
     description: string,
     budget: number,
     owner: string,
-    status: number
+    status: number,
+    project_steps: intSteps
 }
+
+export interface intProjectLight {
+    id:number,
+    name:string
+  }
 
 export interface intStep {
     name: string,
@@ -24,13 +29,14 @@ export interface intComment {
 
 export interface intTask {
     name: string,
-    status: string,
-    categorie: string,
+    status: number,
+    category: intCategory,
     description: string,
     startDate: string,
-    endDate: string
-    comments: Array<string>
-    users: Array<string>
+    endDate: string,
+    comments: Array<string>,
+    app_users: intUsers,
+    id?:number
 }
 export interface intPurchase {
     name: string,
@@ -39,12 +45,13 @@ export interface intPurchase {
     commandDate: Date,
     deliveryDate: Date,
     status: number
+    id?:number
   }
 
 export interface intDocument {
     path: string,
     type: string,
-    id: number
+    id?: number
 }
 
 export interface intMember {
@@ -52,23 +59,27 @@ export interface intMember {
     company: string,
     email: string,
     lastName: string,
-    address: string,
-    status: number,
-    city: string,
-    zip: number,
-    id: number,
-    phone: string
+    id?: number,
 }
 
 export interface intUser {
     name: string,
-    company: string
+    company: string,
+    email: string
 }
+
+export interface intCategory {
+    name: string,
+    id?: number
+}
+
+export type intCategories = Array<intCategory>
+export type intStatus = Array<string>
 export type intProjects = Array<intProject>
 export type intMembers = Array<intMember>
 export type intDocuments = Array<intDocument>
 export type intPurchases = Array<intPurchase>
-export type intUsers = Array<string>
+export type intUsers = Array<intUser>
 export type intTasks = Array<intTask>
 export type intSteps = Array<intStep>
 export type intComments = Array<intComment>

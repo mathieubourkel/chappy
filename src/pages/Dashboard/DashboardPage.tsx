@@ -3,29 +3,34 @@ import DashboardCollab from "../../components/Project/Dashboard/DashboardCollab"
 import DashboardHeader from "../../components/Project/Dashboard/DashboardHeader";
 import DashboardProjects from "../../components/Project/Dashboard/DashboardProjects";
 import { intProjects, intUser } from "../../services/interfaces/intProject";
-import axios from "axios";
+import { getProjectsFromOwner, getProjectsFromUsers } from "../../services/api/projects";
 
 export default function DashboardPage() {
-  const user: intUser = { name: "Paul", company: "Compagnie créole" };
-  const [error, setError] = useState(null);
-  const [projects, setProjects] = useState<intProjects>([]);
+
+  const user: intUser = { name: "Paul", company: "Compagnie créole", email:"paulo@paulo.fr" };
+  const [collabs, setCollab] = useState<intProjects>([]);
+  const [projects, setProject] = useState<intProjects>([]);
+
+  const nbProj = collabs.length + projects.length
 
   useEffect(() => {
-    axios
-      .get("http://localhost:1337/api/projects")
-      .then(({ data }) => setProjects(data.data))
-      .catch((error) => setError(error));
-  }, []);
 
-  if (error) {
-    return <div>Erreur lors de la recupération de la tata</div>;
-  }
+    async function getProjects() {
+      const projectss = await getProjectsFromOwner(1);
+      const collabss = await getProjectsFromUsers(1);
+      setCollab(collabss)
+      setProject(projectss)
+    }
+
+    getProjects();
+    
+  }, []);
 
   return (
     <main className="dashboard-page sm:mx-20 mx-5">
-      <DashboardHeader user={user} projects={projects} />
+      <DashboardHeader user={user} nbProj={nbProj} />
       <DashboardProjects projects={projects} />
-      <DashboardCollab projects={projects} />
+      <DashboardCollab collabs={collabs} />
     </main>
   );
 }

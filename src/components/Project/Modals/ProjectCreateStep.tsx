@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import {Button,Dialog,Card,CardBody,CardFooter,Typography,Input,Textarea,} from "@material-tailwind/react";
-import { FormEvent, InputEvent, intStep, intSteps } from "../../../services/interfaces/intProject";
+import { FormEvent, InputEvent, intProject, intStep } from "../../../services/interfaces/intProject";
 import CreateButton from "../Buttons/CreateButton";
 
 type Props = {
-  steps: intSteps;
-  setStep: (steps: intSteps) => void;
+  project: intProject
+  setProject: (project: intProject) => void;
 };
 
-export default function ProjectCreateStep({ steps, setStep }: Props) {
+export default function ProjectCreateStep({ project, setProject }: Props) {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -19,6 +19,7 @@ export default function ProjectCreateStep({ steps, setStep }: Props) {
     description: "",
     budget: 0,
     startDate: "Date",
+    id:0
   });
 
   function handleChange(e: InputEvent) {
@@ -28,8 +29,10 @@ export default function ProjectCreateStep({ steps, setStep }: Props) {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setStep([...steps, form]);
-    setForm({ name: "", description: "", budget: 0, startDate: "Date" });
+    const tmpSteps = [...project.project_steps]
+    console.log(tmpSteps)
+    tmpSteps.push(form)
+    setProject({...project, project_steps: tmpSteps});
   }
 
   return (

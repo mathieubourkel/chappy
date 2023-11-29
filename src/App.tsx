@@ -20,7 +20,6 @@ import NotFoundPage from "./services/utils/NotFoundPage.tsx";
 import { NavbarConnected } from "./components/Navbar/NavbarConnected.tsx";
 import { NavbarVisitor } from "./components/Navbar/NavbarVisitor.tsx";
 import { Sidebar } from "./components/Sidebar/Sidebar.tsx";
-import { intProject } from "./services/interfaces/intProject.tsx";
 import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
 
 
@@ -28,9 +27,6 @@ export default function App() {
   const [logins, setLogin] = useState<Array<string>>([]);
   const isLogged = true;
   const isOwner = true;
-  const [project, setProject] = useState<intProject>({
-    name: "Projet1", description: "Description du projet la j,ffdkfdksdnfjnsdjnf ndf ndsf sdnfjfn sjfsf s,f f sd fsdnf bfsd, ds,n fbdsnsbd", budget: 500, status: 1, owner: "Mathieu"
-  })
   function handleSubmitLogin(login: string) {
     setLogin([...logins, login]);
   }
@@ -55,9 +51,9 @@ export default function App() {
         <Route element={<PrivateRoute isLogged={isLogged} />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/project/:idProject" element={<ProjectPage isOwner={isOwner}/>} />
-          <Route path="/project/:idProject/documents" element={<DocumentsPage project={project} isOwner={isOwner}/>} />
-          <Route path="/project/:idProject/purchases" element={<PurchasesPage project={project} isOwner={isOwner}/>} />
-          <Route path="/project/:idProject/members" element={<MembersPage project={project} isOwner={isOwner}/>} />
+          <Route path="/project/:idProject/documents" element={<DocumentsPage  isOwner={isOwner}/>} />
+          <Route path="/project/:idProject/purchases" element={<PurchasesPage  isOwner={isOwner}/>} />
+          <Route path="/project/:idProject/members" element={<MembersPage isOwner={isOwner}/>} />
           <Route path="/project/:idProject/step/:idStep" element={<StepPage isOwner={isOwner} />} />
           <Route path="/profile/" element={<UserProfilePage />} />
         </Route>

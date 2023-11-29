@@ -31,7 +31,7 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
       <div className="b1-body-budget-status md:flex gap-5 mt-5">
         <ModifiableInput
           isOwner={isOwner}
-          value={"Budget : " + project.budget.toString() + "€"}
+          value={"Budget : " + project.budget + "€"}
           state={project}
           setState={setProject}
           type="number"

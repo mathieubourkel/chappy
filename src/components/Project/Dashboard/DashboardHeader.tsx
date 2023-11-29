@@ -1,4 +1,4 @@
-import { intProjects, intUser } from "../../../services/interfaces/intProject";
+import { intUser } from "../../../services/interfaces/intProject";
 import calendar from "../../../assets/img/calendar.webp";
 import CreateButton from "../Buttons/CreateButton";
 import { Link } from "react-router-dom";
@@ -6,15 +6,15 @@ import RejoinModal from "../Modals/RejoinModal";
 
 type Props = {
   user: intUser;
-  projects: intProjects;
+  nbProj:number
 };
 
-export default function DashboardHeader({ user, projects }: Props) {
+export default function DashboardHeader({ user, nbProj}: Props) {
   
   return (
     <section className="b1-header mt-20 md:flex justify-between gap-10">
       <div className="basis-1/2">
-        {projects.length > 0 ? (
+        {nbProj > 0 ? (
           <div className="flex justify-center mb-5">
             <h1>Bienvenue {user.name}</h1>
           </div>
@@ -24,7 +24,7 @@ export default function DashboardHeader({ user, projects }: Props) {
           </div>
         )}
 
-        {projects.length > 0 ? (
+        {nbProj > 0 ? (
           <div>
             <div className="bg-white border rounded-xl p-5 mb-5">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae

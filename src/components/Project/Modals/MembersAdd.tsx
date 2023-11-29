@@ -21,7 +21,7 @@ export default function MembersAdd({ members, setMember}: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intMember>({
-    name: "", company:"", tasks:0
+    email: "", company:"", firstName: "", lastName: ""
   });
 
   function handleChange(e: InputEvent) {
@@ -50,10 +50,10 @@ export default function MembersAdd({ members, setMember}: Props) {
                 Ajouter un participant
               </Typography>
               <Input
-                label="Nom du participant"
+                label="Email du participant"
                 size="lg"
-                name="name"
-                id="name"
+                name="email"
+                id="email"
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />

@@ -1,17 +1,11 @@
-import {
-  intProject,
-  intProjects,
-  intStep,
-  intSteps,
-} from "../../../services/interfaces/intProject";
+import {intProject,intProjects,intStep} from "../../../services/interfaces/intProject";
 import StepCard from "../Cards/StepCard";
 import { faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Dash.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CreateButton from "../Buttons/CreateButton";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { Button } from "@material-tailwind/react";
 
 type Props = {
@@ -19,25 +13,11 @@ type Props = {
 };
 
 export default function DashboardProjects({ projects }: Props) {
-  const [selected, setSelected] = useState(0);
-  const [steps, setStep] = useState<intSteps>([]);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    axios
-      .get(
-        "http://localhost:1337/api/project-steps?populate[0]=project&filters[project][id][$eq]=" +
-          (selected + 1)
-      )
-      .then(({ data }) => setStep(data.data))
-      .catch((error) => setError(error));
-  }, [selected]);
+  const [selected, setSelected] = useState(0);
+
   function handleClick(index: number) {
     setSelected(index);
-  }
-
-  if (error) {
-    return <div>Erreur lors de la recupération de la tata</div>;
   }
 
   return (
@@ -79,8 +59,8 @@ export default function DashboardProjects({ projects }: Props) {
             </div>
           </div>
           <div className="flex flex-wrap gap-10">
-            {steps.map((step: intStep, index: number) => (
-              <StepCard step={step} key={index} id={index} />
+            {projects[selected].project_steps.map((step: intStep, index: number) => (
+              <StepCard step={step} key={index} idProject={projects[selected].id} />
             ))}
           </div>
           <Link to={"/project/" + (selected + 1)}>
