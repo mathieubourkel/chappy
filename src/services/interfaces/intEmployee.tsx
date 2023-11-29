@@ -1,3 +1,3 @@
 export interface intEmployee {
-    companyName: string,
+    companyNameEmployee: string,
 }

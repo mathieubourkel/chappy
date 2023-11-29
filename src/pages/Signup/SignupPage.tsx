@@ -1,7 +1,7 @@
 import FormUser from "../../components/Authentication/formUser";
 import { NavbarVisitor } from "../../components/Navbar/NavbarVisitor";
 import { Radio, Typography } from "@material-tailwind/react";
-import FormCompagny from "../../components/Authentication/formCompagny";
+import FormCompagny from "../../components/Authentication/formCompany";
 import FormEmployee from "../../components/Authentication/formEmployee";
 import React from "react";
 
@@ -18,9 +18,7 @@ export default function Signup(props: any) {
   };
   return (
     <>
-      <header>
-        <NavbarVisitor />
-      </header>
+     
       <main>
         <h1>Créer mon compte</h1>
 

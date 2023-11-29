@@ -6,8 +6,8 @@ import { Input } from "@material-tailwind/react";
 export default function FormCompagny() {
 
   const validationCompany = Yup.object({
-    companyName: Yup.string().min(2, "Le nom de votre entreprise doit contenir au minimum 2 charactère").required("Le nom de votre entreprise est requis"),
-    siret: Yup.number().min(14, "Votre SIRET doit contenir 14 chiffres").max(14, "Votre SIRET doit contenir 14 chiffres").required("Ce champ est requis"),
+    companyName: Yup.string().min(2, "Le nom de votre entreprise doit contenir au minimum 2 charactères").required("Le nom de votre entreprise est requis"),
+    siret: Yup.string().min(14, "Votre SIRET doit contenir 14 chiffres").max(14, "Votre SIRET doit contenir 14 chiffres").required("Ce champ est requis"),
     companySActivity: Yup.string().required("Vous devez décrire vos activités")
   })
 
@@ -33,8 +33,8 @@ export default function FormCompagny() {
           <Input
             label="Nom de l'entreprise"
             type="text"
-            name="compagnyName"
-            id="compagnyName"
+            name="companyName"
+            id="companyName"
             value={values.companyName}
             aria-required
             onChange={handleChange}

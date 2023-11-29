@@ -5,15 +5,15 @@ import { Input } from "@material-tailwind/react";
 
 export default function FormUser() {
   const validationUser = Yup.object({
-    lastname: Yup.string().min(2).required(),
-    firstname: Yup.string().min(2).required(),
-    email: Yup.string().required(),
-    address: Yup.string().required(),
-    postal: Yup.number().min(5).max(5).required(),
-    city: Yup.string().min(2).required(),
-    phone: Yup.number().required(),
-    password: Yup.string().min(8).required(),
-    checkPassword: Yup.string().min(8).required(),
+    lastname: Yup.string().min(2, "Votre nom doit contenir au minimum 2 charactères").required("Ce champ est requis"),
+    firstname: Yup.string().min(2).required("Ce champ est requis"),
+    email: Yup.string().email("L'adresse email doit contenir '@' et une extension '.com', '.fr' ").required("Ce champ est requis"),
+    address: Yup.string().required("Ce champ est requis"),
+    postal: Yup.string().min(5, "Le code postal doit contenir 5 charactères").max(5, "Le code postal doit contenir 5 charactères").required("Ce champ est requis"),
+    city: Yup.string().min(2, "Ce champ doit contenir au minimum 2 charactères").required("Ce champ est requis"),
+    phone: Yup.string().required("Ce champ est requis"),
+    password: Yup.string().min(8, "Le mot de passe doit contenir au minimum 8 charactères").required("Ce champ est requis"),
+    checkPassword: Yup.string().oneOf([Yup.ref('password')], 'Les mots de passe ne correspondent pas.').required("Ce champ est requis"),
   });
 
   const {handleChange, handleSubmit, values, errors} = useFormik<intUsers>({
@@ -50,9 +50,9 @@ export default function FormUser() {
               value={values.lastname}
               onChange={handleChange}
               crossOrigin={undefined}
-             
               aria-required
             />
+            {errors.lastname && <small>{errors.lastname}</small>}
 
             <Input
               label="Prénom"
@@ -62,9 +62,9 @@ export default function FormUser() {
               value={values.firstname}
               onChange={handleChange}
               crossOrigin={undefined}
-     
               aria-required
             />
+            {errors.firstname && <small>{errors.firstname}</small>}
           </div>
           <Input
             label="E-mail"
@@ -74,9 +74,9 @@ export default function FormUser() {
             value={values.email}
             onChange={handleChange}
             crossOrigin={undefined}
-       
             aria-required
           />
+          {errors.email && <small>{errors.email}</small>}
 
           <Input
             label="Adresse"
@@ -86,22 +86,22 @@ export default function FormUser() {
             value={values.address}
             onChange={handleChange}
             crossOrigin={undefined}
-           
             aria-required
           />
+          {errors.address && <small>{errors.address}</small>}
 
           <div className="flex gap-2">
             <Input
               label="Code postal"
-              type="number"
+              type="text"
               name="postal"
               id="postal"
               value={values.postal !== null ? values.postal : ''}
               onChange={handleChange}
               crossOrigin={undefined}
-         
               aria-required
             />
+            {errors.postal && <small>{errors.postal}</small>}
 
             <Input
               label="Ville"
@@ -111,9 +111,9 @@ export default function FormUser() {
               value={values.city}
               onChange={handleChange}
               crossOrigin={undefined}
-            
               aria-required
             />
+            {errors.city && <small>{errors.city}</small>}
           </div>
           <Input
             label="Téléphone"
@@ -123,9 +123,9 @@ export default function FormUser() {
             value={values.phone !== null ? values.phone : ''}
             onChange={handleChange}
             crossOrigin={undefined}
-       
             aria-required
           />
+          {errors.phone && <small>{errors.phone}</small>}
           <div className="flex gap-2">
             <Input
               label="Mot de passe"
@@ -135,9 +135,9 @@ export default function FormUser() {
               value={values.password}
               onChange={handleChange}
               crossOrigin={undefined}
-          
               aria-required
             />
+            {errors.password && <small>{errors.password}</small>}
 
             <Input
               label="Confirmer du mot de passe"
@@ -147,9 +147,9 @@ export default function FormUser() {
               value={values.checkPassword}
               onChange={handleChange}
               crossOrigin={undefined}
-         
               aria-required
             />
+            {errors.checkPassword && <small>{errors.checkPassword}</small>}
           </div>
         </form>
       </article>

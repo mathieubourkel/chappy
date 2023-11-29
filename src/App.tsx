@@ -25,15 +25,13 @@ import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
 
 
 export default function App() {
-  const [logins, setLogin] = useState<Array<string>>([]);
+  
   const isLogged = false;
   const isOwner = true;
   const [project, setProject] = useState<intProject>({
     name: "Projet1", description: "Description du projet la j,ffdkfdksdnfjnsdjnf ndf ndsf sdnfjfn sjfsf s,f f sd fsdnf bfsd, ds,n fbdsnsbd", budget: 500, status: "En cours", owner: "Mathieu"
   })
-  function handleSubmitLogin(login: string) {
-    setLogin([...logins, login]);
-  }
+ 
 
   const [open, setOpen] = useState(false);
   function toggleSidebar() {
@@ -53,7 +51,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route
           path="/login"
-          element={<LoginPage handleSubmitLogin={handleSubmitLogin} />}
+          element={<LoginPage  />}
         />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/create-project" element={<CreateProjectPage />} />

@@ -10,7 +10,7 @@ export default function FormEmployee() {
 
     const {handleChange, handleSubmit, values, errors} = useFormik<intEmployee>({
         initialValues: {
-            companyName: "",
+            companyNameEmployee: "",
         },
         onSubmit:values => {
             console.log(values)
@@ -28,11 +28,12 @@ export default function FormEmployee() {
             type="text"
             name="companyNameEmployee"
             id="companyNameEmployee"
-            value={values.companyName}
+            value={values.companyNameEmployee}
             aria-required
             onChange={handleChange}
             crossOrigin={undefined}
           />
+          {errors.companyNameEmployee && <small>{errors.companyNameEmployee}</small>}
         </form>
        </article>
         </>
