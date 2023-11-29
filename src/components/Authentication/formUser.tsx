@@ -140,7 +140,7 @@ export default function FormUser() {
             />
 
             <Input
-              label="Comfirmer du mot de passe"
+              label="Confirmer du mot de passe"
               type="password"
               name="checkPassword"
               id="checkPassword"
