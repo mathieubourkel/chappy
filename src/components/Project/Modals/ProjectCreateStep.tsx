@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import {Button,Dialog,Card,CardBody,CardFooter,Typography,Input,Textarea,} from "@material-tailwind/react";
-import { FormEvent, InputEvent, intStep, intSteps } from "../../../services/interfaces/intProject";
+import { FormEvent, InputEvent, intProject, intStep } from "../../../services/interfaces/intProject";
 import CreateButton from "../Buttons/CreateButton";
+import SelectStatus from "../Buttons/SelectStatus";
 
 type Props = {
-  steps: intSteps;
-  setStep: (steps: intSteps) => void;
+  project: intProject
+  setProject: (project: intProject) => void;
 };
 
-export default function ProjectCreateStep({ steps, setStep }: Props) {
+export default function ProjectCreateStep({ project, setProject }: Props) {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -18,7 +19,8 @@ export default function ProjectCreateStep({ steps, setStep }: Props) {
     name: "",
     description: "",
     budget: 0,
-    startDate: "Date",
+    estimEndDate: new Date(),
+    id:0
   });
 
   function handleChange(e: InputEvent) {
@@ -28,8 +30,10 @@ export default function ProjectCreateStep({ steps, setStep }: Props) {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setStep([...steps, form]);
-    setForm({ name: "", description: "", budget: 0, startDate: "Date" });
+    const tmpSteps = [...project.project_steps]
+    console.log(tmpSteps)
+    tmpSteps.push(form)
+    setProject({...project, project_steps: tmpSteps});
   }
 
   return (
@@ -73,14 +77,18 @@ export default function ProjectCreateStep({ steps, setStep }: Props) {
                   onChange={(e: InputEvent) => handleChange(e)}
                 />
                 <Input
-                  label="Date de début"
+                  label="Date de fin souhaitée"
                   size="lg"
                   crossOrigin={undefined}
-                  name="startTime"
-                  id="startTime"
+                  name="estimEndDate"
+                  id="estimEndDate"
                   onChange={(e: InputEvent) => handleChange(e)}
                 />
               </div>
+              <SelectStatus
+          isOwner={true}
+          classState="basis-1/2"
+        />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button variant="gradient" onClick={handleOpen} type="submit">

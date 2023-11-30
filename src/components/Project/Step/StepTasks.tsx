@@ -1,31 +1,31 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IconButton } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import StepCreateTask from "../Modals/StepCreateTask";
 import TaskCard from "../Cards/TaskCard";
 import {intTask,intTasks} from "../../../services/interfaces/intProject";
+import { getTasksByStep } from "../../../services/api/tasks";
+import { useParams } from "react-router-dom";
 
 
 type Props = {
   isOwner: boolean
 };
 
-export default function Steps({isOwner}: Props) {
+export default function StepTasks({isOwner}: Props) {
+  console.log('StepTasksComposant')
+  const {idStep} = useParams();
+  const [tasks, setTasks] = useState<intTasks>([])
 
-  // Temp
-  const [tasks, setTask] = useState<intTasks>([
-    {name: "Nomtache1", description: "desription tache1", status: "En cours", users: ["Pierre1", "Paul1", "Jack1"],
-    startDate:"10-12-23", endDate:"12-12-23", categorie: "Electricite", comments: ["comment1task1", "comment2task2"]},
-    {name: "Nomtache2", description: "desription tache2", status: "Terminée", users: ["Pierre2", "Paul2", "Jack2"],
-    startDate:"10-12-23", endDate:"12-12-23", categorie: "Electricite", comments: ["comment1task2", "comment2task2"]},
-    {name: "Nomtache3", description: "desription tache3", status: "En attente", users: ["Pierre3", "Paul3", "Jack3"],
-    startDate:"10-12-23", endDate:"12-12-23", categorie: "Electricite", comments: ["comment1task3", "comment2task3"]},
-    {name: "Nomtache4", description: "desription tache4", status: "En cours", users: ["Pierre4", "Paul4", "Jack4"],
-    startDate:"10-12-23", endDate:"12-12-23", categorie: "Electricite", comments: ["comment1task4", "comment2task4"]}
-  ])
+  useEffect(() => {
+    async function getTasks(){
+      const result = await getTasksByStep(idStep)
+      setTasks(result)
+    }
 
+    getTasks();
+}, [idStep]);
 
   return (
     <section className="bloc-2 mb-40">
@@ -35,7 +35,7 @@ export default function Steps({isOwner}: Props) {
         </div>
         <div className="b2-header-buttons flex gap-5 items-center">
           <div>
-            <StepCreateTask tasks={tasks} setTask={setTask} />
+            <StepCreateTask tasks={tasks} setTask={setTasks} />
           </div>
           <div>
             <IconButton>
@@ -45,13 +45,14 @@ export default function Steps({isOwner}: Props) {
         </div>
       </div>
       <ul className="b2-body mt-5">
-        {tasks.map((_task: intTask, index: number) => (
+        {tasks.map((task: intTask, index: number) => (
           <TaskCard
-            key={index}
             index={index}
-            tasks={tasks}
-            setTask={setTask}
+            key={index}
             isOwner={isOwner}
+            task={task}
+            tasks={tasks}
+            setTasks={setTasks}
           />
         ))}
       </ul>

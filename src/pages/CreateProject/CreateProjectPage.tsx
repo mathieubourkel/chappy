@@ -11,7 +11,8 @@ import {
 export default function CreateProjectPage() {
 
   const status = ["En cours", "En attente", "Terminé"];
-
+  console.log('CreateProjectPage')
+  
   return (
     <main className="project-page sm:mx-20 mx-5">
       <Card className="mx-auto w-full">

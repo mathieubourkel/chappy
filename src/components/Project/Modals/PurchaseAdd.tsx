@@ -21,7 +21,8 @@ export default function PurchaseAdd({ purchases, setPurchase}: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intPurchase>({
-    name: "", price:0
+    name: "", price:0, ref: "", commandDate: new Date(), 
+    deliveryDate: new Date(), status:0
   });
 
   function handleChange(e: InputEvent) {

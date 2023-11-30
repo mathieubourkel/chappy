@@ -1,31 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-import {
-  Button,
-  Card,
-  CardBody,
-  Typography,
-} from "@material-tailwind/react";
-import ModifyInput from "../Buttons/ModifiableInput";
+import { Button, Card, CardBody, Typography } from "@material-tailwind/react";
 import { intStep } from "../../../services/interfaces/intProject";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ModifiableInput from "../Buttons/ModifiableInput";
+import "react-date-picker/dist/DatePicker.css";
+import "react-calendar/dist/Calendar.css";
+import SelectDate from "../Buttons/SelectDate";
 
 type Props = {
   isOwner: boolean;
+  step: intStep;
+  setStep: (step: intStep) => void;
 };
 
-export default function StepHeader({ isOwner }: Props) {
-  // temp
-  const [step, setStep] = useState<intStep>({
-    name: "Jalon1",
-    description: "Description du jalion lorel rkgjd",
-    budget: 500,
-    startDate: "04.23.34",
-  });
+export default function StepHeader({ isOwner, step, setStep }: Props) {
+  console.log("StepHeaderComposant");
 
   function handleDelete() {
-    setStep({ name: "", description: "", budget: 0, startDate: "" });
+    setStep({
+      name: "",
+      description: "",
+      budget: 0,
+      estimEndDate: new Date(),
+      id: 0,
+    });
   }
 
   // Render
@@ -53,25 +52,20 @@ export default function StepHeader({ isOwner }: Props) {
           </Card>
         </div>
         <div className="b1-body-budget-status md:flex gap-5 mt-5">
-          <ModifyInput
-            value={"Budget : " + step.budget.toString() + "€"}
-            type="number"
-            label="budget"
-            placeHolder="Entrez le nouveau budget"
-            state={step}
-            setState={setStep}
-            isOwner={isOwner}
-          />
-
-          <ModifyInput
-            value={"Date de départ : " + step.startDate.toString()}
-            type="text"
-            label="startDate"
-            placeHolder="Entrez la nouvelle date"
-            state={step}
-            setState={setStep}
-            isOwner={isOwner}
-          />
+          <div className="basis-1/2">
+            <ModifiableInput
+              value={"Budget : " + step.budget.toString() + "€"}
+              type="number"
+              label="budget"
+              placeHolder="Entrez le nouveau budget"
+              state={step}
+              setState={setStep}
+              isOwner={isOwner}
+            />
+          </div>
+          <div className="basis-1/2 ">
+            <SelectDate state={step} setState={setStep} />
+          </div>
         </div>
       </div>
     </section>

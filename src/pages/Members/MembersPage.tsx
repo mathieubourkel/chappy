@@ -1,26 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
-import { intMember, intMembers, intProject } from "../../services/interfaces/intProject";
+import {intMember,intMembers, intProjectLight,} from "../../services/interfaces/intProject";
 import MembersAdd from "../../components/Project/Modals/MembersAdd";
 import MemberCard from "../../components/Project/Cards/MemberCard";
+import { useParams } from "react-router-dom";
+import { getProjectNameById } from "../../services/api/projects";
+import { getMembersByProject } from "../../services/api/users";
 
 type Props = {
-  project: intProject;
   isOwner: boolean;
 };
 
-export default function MembersPage({ project, isOwner }: Props) {
+export default function MembersPage({ isOwner }: Props) {
+  console.log('MembersPage')
+  const { idProject } = useParams();
+  const [members, setMember] = useState<intMembers>([]);
+  const [project, setProject] = useState<intProjectLight>({id:0, name:""})
 
-  const [members, setMember] = useState<intMembers>([
-    { name: "bob", company: "Elec44", tasks: 4 },
-    { name: "jean", company: "Elec43", tasks: 98 },
-    { name: "paul", company: "Elec42", tasks: 1 },
-    { name: "maurice", company: "Elec41", tasks: 0 },
-  ]);
+  useEffect(() => {
+    async function getMembers(){
+      const tmpProj = await getProjectNameById(idProject)
+      const result = await getMembersByProject(idProject)
+      setMember(result)
+      setProject(tmpProj)
+    }
+
+    getMembers();
+    
+  }, [idProject]);
 
   return (
     <main className="project-page sm:mx-20 mx-5">
-      <ProjectHeader project={project} />
+      <ProjectHeader project={project} idProject={idProject}/>
       <section className="b2-header flex justify-between mt-20">
         <div>
           <h2>Les participants</h2>
@@ -32,8 +43,14 @@ export default function MembersPage({ project, isOwner }: Props) {
         )}
       </section>
       <ul className="mt-5">
-        {members.map((_member:intMember, index:number) => (
-          <MemberCard key={index} setMember={setMember} members={members} index={index} isOwner={isOwner}/>
+        {members.map((_member: intMember, index: number) => (
+          <MemberCard
+            key={index}
+            setMember={setMember}
+            members={members}
+            index={index}
+            isOwner={isOwner}
+          />
         ))}
       </ul>
     </main>

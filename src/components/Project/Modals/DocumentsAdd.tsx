@@ -21,7 +21,7 @@ export default function DocumentsAdd({ documents, setDocument}: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intDocument>({
-    name: "", type: ""
+    path: "", type: ""
   });
 
   function handleChange(e: InputEvent) {
@@ -50,10 +50,10 @@ export default function DocumentsAdd({ documents, setDocument}: Props) {
                 Ajouter un document
               </Typography>
               <Input
-                label="Nom du document"
+                label="Chemin d'accès du document"
                 size="lg"
-                name="name"
-                id="name"
+                name="path"
+                id="path"
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />

@@ -12,7 +12,7 @@ export default function CreateButton({value, handleClick}:Props) {
     <Button className="bg-brick-300 flex items-center"
     onClick={handleClick}>
       <FontAwesomeIcon icon={faSquarePlus} />
-      <a className="pl-2 hidden md:flex">{value}</a>
+      <p className="pl-2 hidden md:flex">{value}</p>
     </Button>
   );
 }

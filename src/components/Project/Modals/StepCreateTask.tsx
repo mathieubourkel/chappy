@@ -12,6 +12,8 @@ import {
 } from "@material-tailwind/react";
 import { FormEvent, InputEvent, intTask, intTasks } from "../../../services/interfaces/intProject";
 import CreateButton from "../Buttons/CreateButton";
+import SelectStatus from "../Buttons/SelectStatus";
+import SelectDate from "../Buttons/SelectDate";
 
 type Props = {
   tasks: intTasks;
@@ -25,12 +27,12 @@ export default function StepCreateTask({ tasks, setTask }: Props) {
   const [form, setForm] = useState<intTask>({
     name: "",
     description: "",
-    categorie: "",
-    startDate: "",
-    endDate: "",
-    status: "En cours",
+    category: {name:"", id:0},
+    startDate: new Date(),
+    estimEndDate: new Date(),
+    status: 0,
     comments: [],
-    users: []
+    app_users: []
   });
 
   function handleChange(e: InputEvent) {
@@ -76,27 +78,18 @@ export default function StepCreateTask({ tasks, setTask }: Props) {
               <Textarea
                 label="Catégorie"
                 size="lg"
-                name="categorie"
-                id="categorie"
+                name="category"
+                id="category"
                 onChange={(e: any) => handleChange(e)}
               />
+              <form>
+              <SelectStatus
+                  isOwner={true}
+                  classState="basis-1/2" />
+            </form>
               <div className="sm:flex gap-3">
-                <Input
-                  label="Date de début"
-                  size="lg"
-                  crossOrigin={undefined}
-                  name="startDate"
-                  id="startDate"
-                  onChange={(e: InputEvent) => handleChange(e)}
-                />
-                <Input
-                  label="Date de fin"
-                  size="lg"
-                  crossOrigin={undefined}
-                  name="endDate"
-                  id="endDate"
-                  onChange={(e: InputEvent) => handleChange(e)}
-                />
+                <SelectDate state={tasks} setState={setTask}/>
+                <SelectDate state={tasks} setState={setTask}/>
               </div>
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">

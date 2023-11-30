@@ -7,9 +7,11 @@ import AccederButton from "../Buttons/AccederButton";
 
 type Props = {
   step: intStep;
+  idProject:number | undefined
 };
 
-export default function StepCard({ step }: Props) {
+export default function StepCard({ step, idProject }: Props) {
+  console.log('StepCardComposant')
   return (
     <Card className="mt-6 w-96 border-solid border-4 border-b-brick-200">
       <CardBody>
@@ -20,7 +22,7 @@ export default function StepCard({ step }: Props) {
         <Typography>{step.description}</Typography>
       </CardBody>
       <CardFooter className="pt-0 flex justify-end">
-        <Link to="/project/1/step/1">
+        <Link to={"/project/" + idProject + "/step/" + step.id}>
           <AccederButton />
         </Link>
       </CardFooter>

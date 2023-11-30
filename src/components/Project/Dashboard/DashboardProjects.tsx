@@ -1,9 +1,4 @@
-import {
-  intProject,
-  intProjects,
-  intStep,
-  intSteps,
-} from "../../../services/interfaces/intProject";
+import {intProject,intProjects,intStep} from "../../../services/interfaces/intProject";
 import StepCard from "../Cards/StepCard";
 import { faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,18 +6,20 @@ import "./Dash.css";
 import { useState } from "react";
 import CreateButton from "../Buttons/CreateButton";
 import { Link } from "react-router-dom";
+import { Button } from "@material-tailwind/react";
 
 type Props = {
   projects: intProjects;
-  steps: intSteps;
 };
 
-export default function DashboardProjects({ projects, steps }: Props) {
+export default function DashboardProjects({ projects }: Props) {
+  console.log("DashBoardProjectsComposant")
   const [selected, setSelected] = useState(0);
 
   function handleClick(index: number) {
     setSelected(index);
   }
+
   return (
     <section className="bloc-2 my-40">
       <div className="b2-header-title">
@@ -56,22 +53,25 @@ export default function DashboardProjects({ projects, steps }: Props) {
               ))}
             </div>
             <div className="md:flex justify-end basis-1/4">
-              <Link to='/create-project'>
-            <CreateButton value="Créer" />
-            </Link>
+              <Link to="/create-project">
+                <CreateButton value="Créer" />
+              </Link>
             </div>
           </div>
           <div className="flex flex-wrap gap-10">
-            {steps.map((step: intStep, index: number) => (
-              <StepCard step={step} key={index} />
+            {projects[selected].project_steps.map((step: intStep, index: number) => (
+              <StepCard step={step} key={index} idProject={projects[selected].id} />
             ))}
           </div>
+          <Link to={"/project/" + (selected + 1)}>
+            <Button>Ouvrir le projet</Button>
+          </Link>
         </div>
       ) : (
         <div>
           <div className="flex justify-end">
-          <Link to='/create-project'>
-            <CreateButton value="Créer" />
+            <Link to="/create-project">
+              <CreateButton value="Créer" />
             </Link>
           </div>
           <div className="bg-white flex items-center rounded-xl mt-10 p-5 gap-5">

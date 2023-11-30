@@ -3,15 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import ProjectCreateStep from "../Modals/ProjectCreateStep";
 import StepCard from "../Cards/StepCard";
-import { intStep, intSteps } from "../../../services/interfaces/intProject";
+import { intProject, intStep } from "../../../services/interfaces/intProject";
+
 
 type Props = {
-  steps: intSteps;
-  setStep: (steps: intSteps) => void;
   isOwner: boolean
+  project: intProject
+  setProject: (project: intProject) => void;
 };
 
-export default function ProjectSteps({ steps, setStep, isOwner }: Props) {
+export default function ProjectSteps({ isOwner, project, setProject}: Props) {
+  console.log('ProjectStepsComposant')
   return (
     <section className="bloc-2 mb-40">
       <div className="b2-header flex justify-between">
@@ -21,7 +23,7 @@ export default function ProjectSteps({ steps, setStep, isOwner }: Props) {
         <div className="b2-header-buttons flex gap-5 items-center">
           {isOwner && 
           <div>
-            <ProjectCreateStep steps={steps} setStep={setStep} />
+            <ProjectCreateStep project={project} setProject={setProject} />
           </div> }
           <div>
             <IconButton>
@@ -31,8 +33,8 @@ export default function ProjectSteps({ steps, setStep, isOwner }: Props) {
         </div>
       </div>
       <div className="b2-body flex flex-wrap gap-10 mt-10">
-        {steps.map((step: intStep, index: number) => (
-          <StepCard key={index} step={step} />
+        {project.project_steps.map((step: intStep, index: number) => (
+          <StepCard key={index} step={step} idProject={project.id} />
         ))}
       </div>
     </section>
