@@ -10,6 +10,8 @@ import {
 } from "@material-tailwind/react";
 import { FormEvent, InputEvent, intDocument, intDocuments } from "../../../services/interfaces/intProject";
 import CreateButton from "../Buttons/CreateButton";
+import { addDocumentToBDD } from "../../../services/api/documents";
+import { useParams } from "react-router-dom";
 
 type Props = {
   documents: intDocuments
@@ -18,20 +20,23 @@ type Props = {
 
 export default function DocumentsAdd({ documents, setDocument}: Props) {
 
+  const {idProject} = useParams();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intDocument>({
-    path: "", type: ""
+    path: "", type: "", project: {id: idProject}, id:0
   });
 
   function handleChange(e: InputEvent) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
+    
   }
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setDocument([...documents, form]);
+    addDocumentToBDD(form);
   }
 
   return (

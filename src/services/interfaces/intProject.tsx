@@ -44,22 +44,27 @@ export interface intPurchase {
     ref: string,
     commandDate: Date,
     deliveryDate: Date,
-    status: number
-    id?:number
+    status: number,
+    id:number,
+    project: {id:string | undefined}
   }
 
 export interface intDocument {
     path: string,
     type: string,
-    id?: number
+    id:number,
+    project: {id:string | undefined}
 }
 
 export interface intMember {
     firstName: string,
-    company: string,
     email: string,
     lastName: string,
-    id?: number,
+    id: number,
+    city:string,
+    address: string,
+    zip: number,
+    status:string
 }
 
 export interface intUser {

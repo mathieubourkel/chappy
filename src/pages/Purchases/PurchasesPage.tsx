@@ -52,13 +52,14 @@ export default function PurchasesPage({ isOwner }: Props) {
         )}
       </section>
       <ul className="mt-5">
-        {purchases.map((_purchase: intPurchase, index: number) => (
+        {purchases.map((purchase: intPurchase, index: number) => (
           <PurchaseCard
             key={index}
             setPurchase={setPurchase}
             purchases={purchases}
             index={index}
             isOwner={isOwner}
+            purchase={purchase}
           />
         ))}
         <li className="flex gap-5 items-center mb-10 justify-end gap-2 mr-20">

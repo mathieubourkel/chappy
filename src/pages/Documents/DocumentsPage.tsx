@@ -41,13 +41,14 @@ export default function DocumentsPage({ isOwner }: Props) {
         )}
       </section>
       <ul className="mt-5">
-        {documents.map((_document: intDocument, index: number) => (
+        {documents.map((document: intDocument, index: number) => (
           <DocumentCard
             key={index}
             setDocument={setDocument}
             documents={documents}
             index={index}
             isOwner={isOwner}
+            document={document}
           />
         ))}
       </ul>

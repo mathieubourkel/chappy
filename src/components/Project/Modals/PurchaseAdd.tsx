@@ -10,6 +10,8 @@ import {
 } from "@material-tailwind/react";
 import { FormEvent, InputEvent, intPurchase, intPurchases } from "../../../services/interfaces/intProject";
 import CreateButton from "../Buttons/CreateButton";
+import { useParams } from "react-router-dom";
+import { addPurchaseToBDD } from "../../../services/api/purchases";
 
 type Props = {
   purchases: intPurchases
@@ -18,11 +20,12 @@ type Props = {
 
 export default function PurchaseAdd({ purchases, setPurchase}: Props) {
 
+  const {idProject} = useParams();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intPurchase>({
     name: "", price:0, ref: "", commandDate: new Date(), 
-    deliveryDate: new Date(), status:0
+    deliveryDate: new Date(), status:0, project:{id: idProject}, id:0
   });
 
   function handleChange(e: InputEvent) {
@@ -33,6 +36,7 @@ export default function PurchaseAdd({ purchases, setPurchase}: Props) {
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setPurchase([...purchases, form]);
+    addPurchaseToBDD(form);
   }
 
   return (

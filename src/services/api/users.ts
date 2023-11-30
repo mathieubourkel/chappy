@@ -11,3 +11,45 @@ export async function getMembersByProject(idProject:string | undefined) {
         return error
     }
 }
+
+export async function addUserToProjectToBDD(idProject:string |undefined, idUser:number) {
+    const body = {
+        app_users: {
+            connect: [idUser]
+        }
+    }
+    try {
+        const {data} = await api.put('projects/' + idProject, body);
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
+export async function deleteUserToProjectToBDD(idProject:string |undefined, idUser:number) {
+    const body = {
+        app_users: {
+            disconnect: [idUser]
+        }
+    }
+    try {
+        const {data} = await api.put('projects/' + idProject, body);
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
+
+export async function getAllUsers() {
+    
+    try {
+        const {data} = await api.get('app-users');
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
+
+

@@ -7,14 +7,16 @@ type Props = {
   state: Array<any>,
   setState: (tab:Array<any>) => void;
   index: number
+  handleDeleteBDD?: any
 }
 
-export default function DeleteButton({state, setState, index}:Props) {
+export default function DeleteButton({state, setState, handleDeleteBDD, index}:Props) {
 
 function handleDelete(index: number) {
     const tempTasks = [...state];
     tempTasks.splice(index, 1);
     setState(tempTasks);
+    handleDeleteBDD && handleDeleteBDD();
     }
 
   return (
