@@ -1,5 +1,5 @@
 import FormUser from "../../components/Authentication/formUser";
-import { NavbarVisitor } from "../../components/Navbar/NavbarVisitor";
+import { NavbarVisitor } from "../../components/Layers/Navbar/NavbarVisitor";
 import { Radio, Typography } from "@material-tailwind/react";
 import FormCompagny from "../../components/Authentication/formCompagny";
 import FormEmployee from "../../components/Authentication/formEmployee";

@@ -6,7 +6,7 @@ import {
   Button,
   IconButton, Collapse,
 } from "@material-tailwind/react";
-import logo from "./../../assets/img/logo.png";
+import logo from "../../../assets/img/logo.png";
 import {NavLink} from "react-router-dom";
 
 export function NavbarVisitor() {
