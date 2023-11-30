@@ -19,8 +19,8 @@ import {
   faMagnifyingGlass,
   faMoon, faPlay,
 } from "@fortawesome/free-solid-svg-icons";
-import logo from "./../../assets/img/logo.png";
-import iUser from "./../../assets/img/icon user.png";
+import logo from "../../../assets/img/logo.png";
+import iUser from "../../../assets/img/icon user.png";
 import {NavLink} from "react-router-dom";
 
 export function NavbarConnected(props:any) {
@@ -46,7 +46,7 @@ export function NavbarConnected(props:any) {
 
             <NavLink
                 to={"/dashboard"}
-                className="mr-4 cursor-pointer lg:ml-[17em]"
+                className="cursor-pointer lg:ml-[17em]"
             >
               <img src={logo} alt={"logo de Chappy"} />
             </NavLink>
@@ -58,7 +58,7 @@ export function NavbarConnected(props:any) {
                 </IconButton>
                 <Menu>
                   <MenuHandler>
-                  <IconButton variant="text" className={"hover:bg-marine-100/50"}>
+                  <IconButton variant="text" className={"hover:bg-marine-100/50 mx-3"}>
                     <FontAwesomeIcon icon={faBell} className="h-4 w-4 text-marine-300" />
                   </IconButton>
                   </MenuHandler>

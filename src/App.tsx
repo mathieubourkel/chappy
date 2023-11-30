@@ -11,17 +11,19 @@ import StepPage from "./pages/Step/StepPage.tsx";
 import MembersPage from "./pages/Members/MembersPage.tsx";
 import PurchasesPage from "./pages/Purchases/PurchasesPage.tsx";
 import DocumentsPage from "./pages/Documents/DocumentsPage.tsx";
-import Footer from "./components/Footer/Footer.tsx";
+import CalendarPage from "./pages/Calendar/CalendarPage.tsx";
+import Footer from "./components/Layers/Footer/Footer.tsx";
 import { useState } from "react";
 import AboutPage from "./pages/About/AboutPage.tsx";
 import ContactUsPage from "./pages/ContactUs/ContactUsPage.tsx";
 import PrivateRoute from "./services/utils/PrivateRoute.tsx";
 import NotFoundPage from "./services/utils/NotFoundPage.tsx";
-import { NavbarConnected } from "./components/Navbar/NavbarConnected.tsx";
-import { NavbarVisitor } from "./components/Navbar/NavbarVisitor.tsx";
-import { Sidebar } from "./components/Sidebar/Sidebar.tsx";
+import { NavbarConnected } from "./components/Layers/Navbar/NavbarConnected.tsx";
+import { NavbarVisitor } from "./components/Layers/Navbar/NavbarVisitor.tsx";
+import { Sidebar } from "./components/Layers/Sidebar/Sidebar.tsx";
 import { intProject } from "./services/interfaces/intProject.tsx";
 import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
+
 
 
 export default function App() {
@@ -59,6 +61,7 @@ export default function App() {
         <Route path="/create-project" element={<CreateProjectPage />} />
         <Route element={<PrivateRoute isLogged={isLogged} />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/project/:idProject" element={<ProjectPage project={project} setProject={setProject} isOwner={isOwner}/>} />
           <Route path="/project/:idProject/documents" element={<DocumentsPage project={project} isOwner={isOwner}/>} />
           <Route path="/project/:idProject/purchases" element={<PurchasesPage project={project} isOwner={isOwner}/>} />

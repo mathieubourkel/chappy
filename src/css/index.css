@@ -22,6 +22,7 @@
 :root {
     --bg-color: rgb(240,240,240,1);
     --border-color: rgb(30,29,34, 0.2);
+    --input-color: rgba(126,55,47,1);
     --gradient: linear-gradient(90deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
     --alt-gradient: linear-gradient(90deg, rgba(126,55,47,1) 0%, rgba(47,44,54,1) 12%);
     --gradient-top: linear-gradient(0deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
@@ -54,7 +55,7 @@
     overflow-x: auto;
 }
 
-/* Sidebar */
+        /* Sidebar */
 
 .sidebar {
     height: 100lvh;
@@ -111,5 +112,8 @@ h2:before {
     margin-right: 0.5em;
     margin-bottom: -0.5em;
 }
+
+
+
 
 
