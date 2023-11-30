@@ -23,28 +23,26 @@ export default function UserProfilePage() {
             <div className="sm:flex sm:gap-x-5">
               <div className={"mb-5 w-full"}>
                 <Input label="Nom"
-                       color={"gray"}
-                       className={""}
+                       className={"bg-light-100"}
                        crossOrigin={undefined}/>
               </div>
 
               <div className={"mb-5 w-full"}>
                 <Input
                   label="Prénom"
-                  color={"gray"}
+                  className={"bg-light-100"}
                   crossOrigin={undefined} />
               </div>
             </div>
 
               <Input label="E-mail"
-                     color={"gray"}
+                     className={"bg-light-100"}
                      crossOrigin={undefined}/>
 
             <div className="flex gap-5 my-5">
               <Input label="Mot de passe"
-                     color={"gray"}
                      disabled
-                     className={"!border !border-gray-500-300"}
+                     className={"!border !border-gray-500-300 !bg-light-100"}
                      crossOrigin={undefined}/>
               <IconButton className={"bg-marine-300 text-light-200"}>
                 <FontAwesomeIcon icon={faRotateRight} />
@@ -56,25 +54,25 @@ export default function UserProfilePage() {
             <Typography variant="h2" className={"text-xl font-extrabold my-10"}>Informations Personnelles</Typography>
 
               <Input label="Adresse"
-                     color={"gray"}
+                     className={"bg-light-100"}
                      crossOrigin={undefined}/>
 
             <div className="sm:flex sm:gap-x-5 mt-5">
               <div className={"mb-5 w-full"}>
                 <Input label="Ville"
-                       color={"gray"}
+                       className={"bg-light-100"}
                        crossOrigin={undefined}/>
               </div>
 
               <div className={"mb-5 w-full"}>
                 <Input
                     label="Code postal"
-                    color={"gray"}
+                    className={"bg-light-100"}
                     crossOrigin={undefined} />
               </div>
             </div>
               <Input label="Téléphone"
-                     color={"gray"}
+                     className={"bg-light-100"}
                      crossOrigin={undefined}/>
           </article>
 

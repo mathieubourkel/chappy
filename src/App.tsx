@@ -42,10 +42,6 @@ export default function App() {
     open ? setOpen(false) : setOpen(true)
   }
 
-
- 
-
-
   return (
     <>
       <header>{isLogged ? <><NavbarConnected toggleSidebar={toggleSidebar} /><Sidebar openSidebar={open} toggleSidebar={toggleSidebar} /></> : <NavbarVisitor />}

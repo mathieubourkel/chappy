@@ -199,7 +199,7 @@ export function Sidebar(props:any) {
 
           <List className={"text-light-200"}>
             <ListItem className={"py-1.5 px-3 l-item hover:text-light-200"}>
-              <NavLink to={'/project'} className={"flex items-center"}>
+              <NavLink to={'/create-project'} className={"flex items-center"}>
                 <ListItemPrefix>
                   <FontAwesomeIcon icon={faFolderPlus} className="h-3 w-3 text-light-200 bg-marine-100 p-2 rounded-lg" />
                 </ListItemPrefix>
