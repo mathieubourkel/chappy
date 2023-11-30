@@ -35,7 +35,7 @@ export default function StepTasks({isOwner}: Props) {
         </div>
         <div className="b2-header-buttons flex gap-5 items-center">
           <div>
-            <StepCreateTask tasks={tasks} setTask={setTasks} />
+            <StepCreateTask tasks={tasks} setTasks={setTasks} />
           </div>
           <div>
             <IconButton>

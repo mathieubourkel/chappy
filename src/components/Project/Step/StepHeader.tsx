@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModifiableInput from "../Buttons/ModifiableInput";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
-import SelectDate from "../Buttons/SelectEstimDate";
+import SelectDate from "../Buttons/SelectDate";
 
 type Props = {
   isOwner: boolean;
@@ -24,6 +24,7 @@ export default function StepHeader({ isOwner, step, setStep }: Props) {
       budget: 0,
       estimEndDate: new Date(),
       id: 0,
+      status:0
     });
   }
 

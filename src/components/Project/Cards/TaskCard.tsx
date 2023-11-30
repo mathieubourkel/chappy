@@ -23,16 +23,12 @@ export default function TaskCard({ task, tasks, setTasks, isOwner, index }: Prop
   const [open, setOpen] = useState(false);
   const handleOpenM = () => setOpenM((bool) => !bool);
   const handleOpen = () => setOpen((bool) => !bool);
-
   const [oneTask, setOneTask] = useState<intTask>({...task})
-
+  
   function handleDelete(indexT: number) {
     const tempUsers = [...oneTask.app_users];
     tempUsers.splice(indexT, 1)
     const tempTask =  {...oneTask, app_users: tempUsers}
-    console.log(tempTask)
-    console.log(oneTask)
-    console.log(tempUsers)
     setOneTask(tempTask);  
     }
 

@@ -6,7 +6,7 @@ export interface intProject extends intProjectLight {
     owner: string,
     status: number,
     project_steps: intSteps
-    estimEndDate: Date
+    estimEndDate: Date | null
 }
 
 export interface intProjectLight {
@@ -19,7 +19,8 @@ export interface intStep {
     description: string,
     budget: number,
     id: number
-    estimEndDate: Date
+    estimEndDate: Date | null
+    status:number
 }
 
 export interface intComment {
@@ -32,8 +33,7 @@ export interface intTask {
     status: number,
     category: intCategory,
     description: string,
-    startDate: Date,
-    estimEndDate: Date,
+    rangeDate: intRangeDate,
     comments: Array<string>,
     app_users: intUsers,
     id?:number
@@ -71,6 +71,10 @@ export interface intUser {
 export interface intCategory {
     name: string,
     id?: number
+}
+export interface intRangeDate {
+    startDate: Date,
+    endDate: Date
 }
 
 export type intCategories = Array<intCategory>

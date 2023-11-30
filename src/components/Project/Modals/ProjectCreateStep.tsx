@@ -1,17 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import {Button,Dialog,Card,CardBody,CardFooter,Typography,Input,Textarea,} from "@material-tailwind/react";
-import { FormEvent, InputEvent, intProject, intStep } from "../../../services/interfaces/intProject";
+import {
+  Button,
+  Option,
+  Dialog,
+  Card,
+  CardBody,
+  CardFooter,
+  Typography,
+  Input,
+  Textarea,
+  Select,
+} from "@material-tailwind/react";
+import {
+  FormEvent,
+  InputEvent,
+  intProject,
+  intStep,
+} from "../../../services/interfaces/intProject";
 import CreateButton from "../Buttons/CreateButton";
-import SelectStatus from "../Buttons/SelectStatus";
+import { Status } from "../../../services/interfaces/Status";
+import Datepicker from "react-tailwindcss-datepicker";
 
 type Props = {
-  project: intProject
+  project: intProject;
   setProject: (project: intProject) => void;
 };
 
 export default function ProjectCreateStep({ project, setProject }: Props) {
-
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 
@@ -19,8 +35,9 @@ export default function ProjectCreateStep({ project, setProject }: Props) {
     name: "",
     description: "",
     budget: 0,
-    estimEndDate: new Date(),
-    id:0
+    estimEndDate: null,
+    id: 0,
+    status: 0,
   });
 
   function handleChange(e: InputEvent) {
@@ -30,11 +47,27 @@ export default function ProjectCreateStep({ project, setProject }: Props) {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const tmpSteps = [...project.project_steps]
-    console.log(tmpSteps)
-    tmpSteps.push(form)
-    setProject({...project, project_steps: tmpSteps});
+    const tmpSteps = [...project.project_steps];
+    console.log(tmpSteps);
+    tmpSteps.push(form);
+    setProject({ ...project, project_steps: tmpSteps });
+    setForm({
+      name: "",
+      description: "",
+      budget: 0,
+      estimEndDate: null,
+      id: 0,
+      status: 0,
+    });
   }
+
+  const handleStatus = (value: any) => {
+    setForm({ ...form, status: value });
+  };
+
+  const handleDate = (value: any) => {
+    setForm({ ...form, estimEndDate: value.startDate });
+  };
 
   return (
     <div>
@@ -48,7 +81,7 @@ export default function ProjectCreateStep({ project, setProject }: Props) {
         <Card className="mx-auto w-full">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-            <Typography variant="h2" color="blue-gray">
+              <Typography variant="h2" color="blue-gray">
                 Créer un jalon
               </Typography>
               <Input
@@ -76,19 +109,33 @@ export default function ProjectCreateStep({ project, setProject }: Props) {
                   id="budget"
                   onChange={(e: InputEvent) => handleChange(e)}
                 />
-                <Input
-                  label="Date de fin souhaitée"
-                  size="lg"
-                  crossOrigin={undefined}
-                  name="estimEndDate"
-                  id="estimEndDate"
-                  onChange={(e: InputEvent) => handleChange(e)}
+                <Datepicker
+                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
+                  onChange={handleDate}
+                  value={{
+                    startDate: form.estimEndDate,
+                    endDate: form.estimEndDate,
+                  }}
+                  useRange={false}
+                  asSingle={true}
+                  inputName="rangeDate"
+                  placeholder={"Choisir la durée de la tâche"}
                 />
               </div>
-              <SelectStatus
-          isOwner={true}
-          classState="basis-1/2"
-        />
+              <Select
+                className="rounded-xl p-2 bg-white"
+                value={Status[form.status]}
+                label="status"
+                name="status"
+                id="status"
+                onChange={(value: string | undefined) => handleStatus(value)}
+              >
+                {Status.map((i: string, indexS: number) => (
+                  <Option key={indexS} value={i}>
+                    {i}
+                  </Option>
+                ))}
+              </Select>
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button variant="gradient" onClick={handleOpen} type="submit">

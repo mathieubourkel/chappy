@@ -21,7 +21,6 @@ import NotFoundPage from "./services/utils/NotFoundPage.tsx";
 import { NavbarConnected } from "./components/Layers/Navbar/NavbarConnected.tsx";
 import { NavbarVisitor } from "./components/Layers/Navbar/NavbarVisitor.tsx";
 import { Sidebar } from "./components/Layers/Sidebar/Sidebar.tsx";
-import { intProject } from "./services/interfaces/intProject.tsx";
 import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
 
 export default function App() {

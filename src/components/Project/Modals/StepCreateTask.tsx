@@ -9,30 +9,38 @@ import {
   Typography,
   Input,
   Textarea,
+  Select,
+  Option
 } from "@material-tailwind/react";
-import { FormEvent, InputEvent, intTask, intTasks } from "../../../services/interfaces/intProject";
+import {
+  FormEvent,
+  InputEvent,
+  intTask,
+  intTasks,
+} from "../../../services/interfaces/intProject";
 import CreateButton from "../Buttons/CreateButton";
-import SelectStatus from "../Buttons/SelectStatus";
-import SelectDate from "../Buttons/SelectEstimDate";
+import Datepicker from "react-tailwindcss-datepicker";
+import { Status } from "../../../services/interfaces/Status";
 
 type Props = {
   tasks: intTasks;
-  setTask: (tasks: intTasks) => void;
+  setTasks: (tasks: intTasks) => void;
 };
 
-export default function StepCreateTask({ tasks, setTask }: Props) {
-
+export default function StepCreateTask({ tasks, setTasks }: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intTask>({
     name: "",
     description: "",
-    category: {name:"", id:0},
-    startDate: new Date(),
-    estimEndDate: new Date(),
+    category: { name: "", id: 0 },
+    rangeDate: {
+      startDate: new Date(),
+      endDate: new Date(),
+    },
     status: 0,
     comments: [],
-    app_users: []
+    app_users: [],
   });
 
   function handleChange(e: InputEvent) {
@@ -42,8 +50,17 @@ export default function StepCreateTask({ tasks, setTask }: Props) {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setTask([...tasks, form]);
+    console.log(form);
+    setTasks([...tasks, form]);
   }
+
+  const handleDate = (value: any) => {
+    setForm({ ...form, rangeDate: value });
+  };
+
+  const handleStatus = (value: any) => {
+    setForm({ ...form, status: value });
+  };
 
   return (
     <div>
@@ -82,14 +99,28 @@ export default function StepCreateTask({ tasks, setTask }: Props) {
                 id="category"
                 onChange={(e: any) => handleChange(e)}
               />
-              <form>
-              <SelectStatus
-                  isOwner={true}
-                  classState="basis-1/2" />
-            </form>
+              <Select
+                className="rounded-xl p-2 bg-white"
+                value={Status[form.status]}
+                label="status"
+                name="status"
+                id="status"
+                onChange={(value: string | undefined) => handleStatus(value)}
+              >
+                {Status.map((i: string, indexS: number) => (
+                  <Option key={indexS} value={i}>
+                    {i}
+                  </Option>
+                ))}
+              </Select>
               <div className="sm:flex gap-3">
-                <SelectDate state={tasks} setState={setTask}/>
-                <SelectDate state={tasks} setState={setTask}/>
+                <Datepicker
+                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
+                  onChange={handleDate}
+                  value={form.rangeDate}
+                  inputName="rangeDate"
+                  placeholder={"Choisir la durée de la tâche"}
+                />
               </div>
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
