@@ -23,25 +23,25 @@ export default function ContactUsPage() {
                       <div className="sm:flex sm:gap-x-5">
                           <div className={"mb-5 w-full"}>
                               <Input label="Nom"
-                                     className={"bg-light-100"}
+                                     className={"!bg-light-100"}
                                      crossOrigin={undefined}/>
                           </div>
 
                           <div className={"mb-5 w-full"}>
                               <Input
                                   label="Prénom"
-                                  className={"bg-light-100"}
+                                  className={"!bg-light-100"}
                                   crossOrigin={undefined} />
                           </div>
                       </div>
 
                       <Input label="E-mail"
-                             className={"bg-light-100"}
+                             className={"!bg-light-100"}
                              crossOrigin={undefined}/>
 
                       <div className="flex gap-5 my-5">
                           <Textarea label="Votre message.."
-                                    className={"bg-light-100"}/>
+                                    className={"!bg-light-100"}/>
                       </div>
                   </article>
 
