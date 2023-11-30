@@ -11,7 +11,8 @@ type Props = {
 };
 
 export default function MemberCard({index,setMember,members,isOwner,}: Props) {
-
+  console.log('MemberCardComposant')
+  
   return (
     <>
       <li

@@ -3,6 +3,7 @@ import { useState } from "react";
 import {Button,Dialog,Card,CardBody,CardFooter,Typography,Input,Textarea,} from "@material-tailwind/react";
 import { FormEvent, InputEvent, intProject, intStep } from "../../../services/interfaces/intProject";
 import CreateButton from "../Buttons/CreateButton";
+import SelectStatus from "../Buttons/SelectStatus";
 
 type Props = {
   project: intProject
@@ -18,7 +19,7 @@ export default function ProjectCreateStep({ project, setProject }: Props) {
     name: "",
     description: "",
     budget: 0,
-    startDate: "Date",
+    estimEndDate: new Date(),
     id:0
   });
 
@@ -76,14 +77,18 @@ export default function ProjectCreateStep({ project, setProject }: Props) {
                   onChange={(e: InputEvent) => handleChange(e)}
                 />
                 <Input
-                  label="Date de début"
+                  label="Date de fin souhaitée"
                   size="lg"
                   crossOrigin={undefined}
-                  name="startTime"
-                  id="startTime"
+                  name="estimEndDate"
+                  id="estimEndDate"
                   onChange={(e: InputEvent) => handleChange(e)}
                 />
               </div>
+              <SelectStatus
+          isOwner={true}
+          classState="basis-1/2"
+        />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button variant="gradient" onClick={handleOpen} type="submit">

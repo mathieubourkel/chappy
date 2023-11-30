@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function DocumentsPage({ isOwner }: Props) {
-
+  console.log('DocumentsPage')
   const {idProject} = useParams();
   const [project, setProject] = useState<intProjectLight>({id:0, name:""})
   const [documents, setDocument] = useState<intDocuments>([]);

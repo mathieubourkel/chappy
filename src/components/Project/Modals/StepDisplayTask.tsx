@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Dialog,
   Card,
@@ -8,22 +7,16 @@ import {
   Input,
 } from "@material-tailwind/react";
 
-import { intTasks, intUser } from "../../../services/interfaces/intProject";
+import { intTask, intUser } from "../../../services/interfaces/intProject";
 import { Status } from "../../../services/interfaces/Status";
 
 type Props = {
-  tasks: intTasks;
-  index: number;
-  handleOpenM: any;
+  task: intTask;
+  handleOpenM: () => void;
   openM: boolean;
 };
 
-export default function StepDisplayTask({
-  tasks,
-  index,
-  handleOpenM,
-  openM,
-}: Props) {
+export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
   return (
     <Dialog
       size="lg"
@@ -38,7 +31,7 @@ export default function StepDisplayTask({
           </Typography>
           <Input
             label="Nom de la tâche"
-            value={tasks[index].name}
+            value={task.name}
             size="lg"
             name="name"
             id="name"
@@ -47,7 +40,7 @@ export default function StepDisplayTask({
           />
           <Textarea
             label="Description"
-            value={tasks[index].description}
+            value={task.description}
             size="lg"
             disabled
             name="description"
@@ -56,7 +49,7 @@ export default function StepDisplayTask({
           <Input
             label="Catégorie"
             disabled
-            value={tasks[index].category.name}
+            value={task.category.name}
             size="lg"
             name="categorie"
             id="categorie"
@@ -65,7 +58,7 @@ export default function StepDisplayTask({
           <Input
             label="Status"
             disabled
-            value={Status[tasks[index].status]}
+            value={Status[task.status]}
             size="lg"
             name="status"
             id="status"
@@ -74,7 +67,7 @@ export default function StepDisplayTask({
           <div className="sm:flex gap-3">
             <Input
               label="Date de début"
-              value={tasks[index].startDate}
+              value={task.startDate.toString()}
               size="lg"
               disabled
               name="startDate"
@@ -84,7 +77,7 @@ export default function StepDisplayTask({
             <Input
               label="Date de fin"
               disabled
-              value={tasks[index].endDate}
+              value={task.estimEndDate.toString()}
               size="lg"
               name="endDate"
               id="endDate"
@@ -93,7 +86,7 @@ export default function StepDisplayTask({
           </div>
           <p>Participants</p>
           <div className="flex gap-10">
-            {tasks[index].app_users.map((user: intUser, index: number) => (
+            {task.app_users.map((user: intUser, index: number) => (
               <Input
                 key={index}
                 label="Participants"
@@ -107,7 +100,7 @@ export default function StepDisplayTask({
             ))}
           </div>
           <p>Commentaires</p>
-            {/* {tasks[index].comments.map((comment: string, index: number) => (
+          {/* {tasks[index].comments.map((comment: string, index: number) => (
               <Input
                 key={index}
                 label="Participants"

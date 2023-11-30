@@ -16,7 +16,7 @@ type Props = {
 };
 
 export default function ModifiableInput(props: Props) {
-  
+  console.log("ModifiableInputComposant")
   const { type, label, placeHolder, setState, state, value, isOwner } = props;
   const [display, setDisplay] = useState(true);
 
@@ -31,7 +31,7 @@ export default function ModifiableInput(props: Props) {
   }
 
   return (
-    <div className="b1-body-budget flex w-full gap-2 mb-5">
+    <div className="b1-body-budget flex basis-1/2 gap-2 mb-5">
       {display ? (
         <div className="flex w-full gap-2">
           <div className="flex w-full rounded-md bg-white">

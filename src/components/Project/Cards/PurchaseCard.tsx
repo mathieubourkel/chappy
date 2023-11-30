@@ -11,6 +11,8 @@ type Props = {
 };
 
 export default function PurchaseCard({ index, setPurchase, purchases, isOwner }: Props) {
+  
+  console.log('PurchaseCardComposant')
   return (
       <li
         className="md:flex justify-between mb-10 items-center gap-2 border-4 

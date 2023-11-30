@@ -6,7 +6,7 @@ import { intProjects, intUser } from "../../services/interfaces/intProject";
 import { getProjectsFromOwner, getProjectsFromUsers } from "../../services/api/projects";
 
 export default function DashboardPage() {
-
+  console.log("DashBoardPageComposant")
   const user: intUser = { name: "Paul", company: "Compagnie créole", email:"paulo@paulo.fr" };
   const [collabs, setCollab] = useState<intProjects>([]);
   const [projects, setProject] = useState<intProjects>([]);

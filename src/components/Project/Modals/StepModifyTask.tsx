@@ -13,25 +13,20 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { FormEvent, InputEvent, intTask, intTasks, intUser } from "../../../services/interfaces/intProject";
+import { FormEvent, InputEvent, intTask, intUser } from "../../../services/interfaces/intProject";
 import SelectCategory from "../Buttons/SelectCategory";
 
 type Props = {
-  tasks: intTasks;
-  setTask: (task: intTasks) => void;
+  task: intTask;
+  setTask: (task: intTask) => void;
   index: number;
-  handleOpen: any;
+  handleOpen: () => void;
   open: boolean
 };
 
-export default function StepModifyTask({ setTask, tasks, index, handleOpen, open }: Props) {
+export default function StepModifyTask({ setTask, task, index, handleOpen, open }: Props) {
 
-  
-  const [form, setForm] = useState<intTask>({ ...tasks[index] });
-
-  useEffect(() => {
-    setForm({ ...tasks[index] });
-  }, [index, open, tasks]);
+  const [form, setForm] = useState<intTask>({ ...task });
 
   function handleChange(e: InputEvent) {
     const { name, value } = e.target;
@@ -40,9 +35,7 @@ export default function StepModifyTask({ setTask, tasks, index, handleOpen, open
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const tempArray = [...tasks];
-    tempArray[index] = form;
-    setTask(tempArray);
+    setTask(form);
   }
 
   return (
@@ -84,32 +77,29 @@ export default function StepModifyTask({ setTask, tasks, index, handleOpen, open
                 id="description"
                 onChange={(e:any) => handleChange(e)}
               />
-              <SelectCategory state={tasks} isOwner={true} 
-              index={index} classState="basis-1/2"/>
+              <SelectCategory task={task} isOwner={true} 
+              classState="basis-1/2"/>
 
               <div className="sm:flex gap-3">
+                {/* <SelectDate state={tasks} setState={setTask}
+                /> */}
                 <Input
-                  label="Date de début"
-                  value={form.startDate}
+                  label="Date de fin estimée"
+                  // value={form.estimEndDate.toString()}
+                  value="toto"
                   size="lg"
                   crossOrigin={undefined}
-                  name="startDate"
-                  id="startDate"
-                  onChange={(e: InputEvent) => handleChange(e)}
-                />
-                <Input
-                  label="Date de fin"
-                  value={form.endDate}
-                  size="lg"
-                  crossOrigin={undefined}
-                  name="endDate"
-                  id="endDate"
+                  name="estimEndDate"
+                  id="estimEndDate"
                   onChange={(e: InputEvent) => handleChange(e)}
                 />
               </div>
+              {/* <div>
+                <SelectDate state={/>
+              </div> */}
               <p>Participants</p>
           <div className="flex gap-10">
-            {tasks[index].app_users.map((user: intUser, index: number) => (
+            {task.app_users.map((user: intUser, index: number) => (
               <Input
                 key={index}
                 label="Participants"

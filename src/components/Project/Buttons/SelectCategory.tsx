@@ -5,18 +5,19 @@ import { getCategories } from "../../../services/api/category";
 import {
   intCategories,
   intCategory,
+  intTask,
 } from "../../../services/interfaces/intProject";
 
 type Props = {
-  state: any;
+  task: intTask;
   classState: string;
   isOwner: boolean;
-  index: number;
 };
 
 export default function SelectCategory(props: Props) {
-  const { state, classState, isOwner, index } = props;
-  const [selected, setSelected] = useState<string>(state[index].category.name);
+  console.log("SelectCategoryComposant")
+  const { task, classState, isOwner} = props;
+  const [selected, setSelected] = useState<string>(task.category.name);
   const [categories, setCategorie] = useState<intCategories>([]);
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function SelectCategory(props: Props) {
         </Select>
       ) : (
         <div className="flex w-full rounded-md bg-white">
-          <Typography className="p-2">{state[index].category.name}</Typography>
+          <Typography className="p-2">{task.category.name}</Typography>
         </div>
       )}
     </div>

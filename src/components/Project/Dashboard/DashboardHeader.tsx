@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function DashboardHeader({ user, nbProj}: Props) {
-  
+  console.log("DashBoardHeaderComposant")
   return (
     <section className="b1-header mt-20 md:flex justify-between gap-10">
       <div className="basis-1/2">

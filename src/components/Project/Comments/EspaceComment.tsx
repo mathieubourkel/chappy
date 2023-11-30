@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function EspaceComment({ comments, setComment }: Props) {
-  
+  console.log('EspaceCommentComposant')
   const [display, setDisplay] = useState<boolean>(false);
   
   return (

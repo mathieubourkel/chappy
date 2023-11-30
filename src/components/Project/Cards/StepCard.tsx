@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function StepCard({ step, idProject }: Props) {
-
+  console.log('StepCardComposant')
   return (
     <Card className="mt-6 w-96 border-solid border-4 border-b-brick-200">
       <CardBody>

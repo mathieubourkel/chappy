@@ -1,31 +1,39 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Select, Option, Typography } from "@material-tailwind/react";
 import { Status } from "../../../services/interfaces/Status";
-import { useState } from "react";
 
 type Props = {
-  state: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  state?: Array<any> | any;
   classState: string;
   isOwner: boolean;
-  index: number;
+  index?: number | undefined;
 };
 
 export default function SelectStatus(props: Props) {
 
   const { state, classState, isOwner, index } = props;
-  const [selected, setSelected] = useState(Status[state[index].status])
 
-  function handleSubmit(value: any) {
-    setSelected(value);
+  let selected: string | undefined = Status[0];
+
+  if (typeof index !== "undefined") {
+    selected = Status[state[index].status];
+  }
+  if (typeof index === "undefined" && typeof state !== "undefined") {
+    selected = Status[state.status];
+  }
+
+  function handleSubmit(value: string | undefined) {
+    selected = value;
   }
 
   return (
     <div className={classState}>
       {isOwner ? (
         <Select
-          className="border border-brick-300 rounded-xl p-2 text-brick-300"
+          className="rounded-xl p-2 bg-white"
           value={selected}
-          onChange={(value: any) => handleSubmit(value)}
+          label="Status"
+          onChange={(value: string | undefined) => handleSubmit(value)}
         >
           {Status.map((i: string, indexS: number) => (
             <Option key={indexS} value={i}>
@@ -35,7 +43,7 @@ export default function SelectStatus(props: Props) {
         </Select>
       ) : (
         <div className="flex w-full rounded-md bg-white">
-          <Typography className="p-2">{state[index].status}</Typography>
+          <Typography className="p-2">{selected}</Typography>
         </div>
       )}
     </div>

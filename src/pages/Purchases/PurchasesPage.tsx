@@ -14,7 +14,7 @@ type Props = {
 };
 
 export default function PurchasesPage({ isOwner }: Props) {
-  
+  console.log('PurchasePage')
   const { idProject } = useParams();
   const [project, setProject] = useState<intProjectLight>({id:0, name:""})
   const [purchases, setPurchase] = useState<intPurchases>([]);

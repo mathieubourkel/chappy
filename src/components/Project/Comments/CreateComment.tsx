@@ -11,6 +11,7 @@ type Props = {
 }
 
 export default function CreateComment({state, setState}:Props) {
+  console.log('CreateCommentComposant')
   const [form, setForm] = useState<intComment>({
     content: "", author: "Auteur Dynamique"
 })

@@ -16,7 +16,7 @@ type Props = {
 };
 
 export default function ProjectPage({ isOwner }: Props) {
-
+  console.log('ProjectPage')
   const { idProject } = useParams();
   const [comments, setComment] = useState<intComments>([
     { content: "contenu du commentaire 1", author: "Bob" },
@@ -31,7 +31,8 @@ export default function ProjectPage({ isOwner }: Props) {
     owner: "",
     budget: 0,
     id:0,
-    project_steps: []
+    project_steps: [],
+    estimEndDate: new Date()
   });
 
   useEffect(() => {

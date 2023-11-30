@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function DashboardProjects({ projects }: Props) {
-
+  console.log("DashBoardProjectsComposant")
   const [selected, setSelected] = useState(0);
 
   function handleClick(index: number) {

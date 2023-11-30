@@ -12,6 +12,8 @@ type Props = {
 
 export default function DocumentCard({ index, setDocument, documents, isOwner }: Props) {
   
+  console.log('DocumentCardComposant')
+  
   return (
     <>
       <li

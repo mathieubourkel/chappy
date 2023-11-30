@@ -12,6 +12,7 @@ type Props = {
 };
 
 export default function MembersPage({ isOwner }: Props) {
+  console.log('MembersPage')
   const { idProject } = useParams();
   const [members, setMember] = useState<intMembers>([]);
   const [project, setProject] = useState<intProjectLight>({id:0, name:""})
@@ -22,7 +23,6 @@ export default function MembersPage({ isOwner }: Props) {
       const result = await getMembersByProject(idProject)
       setMember(result)
       setProject(tmpProj)
-      console.log(result)
     }
 
     getMembers();

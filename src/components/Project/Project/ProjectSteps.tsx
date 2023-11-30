@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function ProjectSteps({ isOwner, project, setProject}: Props) {
-  console.log(project.project_steps)
+  console.log('ProjectStepsComposant')
   return (
     <section className="bloc-2 mb-40">
       <div className="b2-header flex justify-between">

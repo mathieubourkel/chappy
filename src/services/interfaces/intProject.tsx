@@ -6,6 +6,7 @@ export interface intProject extends intProjectLight {
     owner: string,
     status: number,
     project_steps: intSteps
+    estimEndDate: Date
 }
 
 export interface intProjectLight {
@@ -18,8 +19,7 @@ export interface intStep {
     description: string,
     budget: number,
     id: number
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    startDate: any
+    estimEndDate: Date
 }
 
 export interface intComment {
@@ -32,8 +32,8 @@ export interface intTask {
     status: number,
     category: intCategory,
     description: string,
-    startDate: string,
-    endDate: string,
+    startDate: Date,
+    estimEndDate: Date,
     comments: Array<string>,
     app_users: intUsers,
     id?:number
