@@ -1,27 +1,27 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { intCompagny } from "../../services/interfaces/intCompagny";
+import { intCompany } from "../../services/interfaces/intCompany";
 import { Input } from "@material-tailwind/react";
 
 export default function FormCompagny() {
 
-  const validationCompagny = Yup.object({
-    compagnyName: Yup.string().min(2, "Le nom de votre entreprise doit contenir au minimum 2 charactère").required("Le nom de votre entreprise est requis"),
-    siret: Yup.number().min(14, "Votre SIRET doit contenir 14 chiffres").max(14, "Votre SIRET doit contenir 14 chiffres").required("Ce champ est requis"),
-    compagnySActivity: Yup.string().required("Vous devez décrire vos activités")
+  const validationCompany = Yup.object({
+    companyName: Yup.string().min(2, "Le nom de votre entreprise doit contenir au minimum 2 charactères").required("Le nom de votre entreprise est requis"),
+    siret: Yup.string().min(14, "Votre SIRET doit contenir 14 chiffres").max(14, "Votre SIRET doit contenir 14 chiffres").required("Ce champ est requis"),
+    companySActivity: Yup.string().required("Vous devez décrire vos activités")
   })
 
 
-  const {handleChange, handleSubmit, values, errors} = useFormik<intCompagny>({
+  const {handleChange, handleSubmit, values, errors} = useFormik<intCompany>({
     initialValues: {
-        compagnyName: "",
+        companyName: "",
         siret: null,
-        compagnySActivity:"",
+        companySActivity:"",
     },
    onSubmit: values =>{
     console.log(values)
    },
-   validationSchema: validationCompagny
+   validationSchema: validationCompany
   })
 
   
@@ -33,14 +33,14 @@ export default function FormCompagny() {
           <Input
             label="Nom de l'entreprise"
             type="text"
-            name="compagnyName"
-            id="compagnyName"
-            value={values.compagnyName}
+            name="companyName"
+            id="companyName"
+            value={values.companyName}
             aria-required
             onChange={handleChange}
             crossOrigin={undefined}
           />
-          {errors.compagnyName && <small>{errors.compagnyName}</small>}
+          {errors.companyName && <small>{errors.companyName}</small>}
           <Input 
           label="SIRET"
           type="text"
@@ -54,14 +54,14 @@ export default function FormCompagny() {
           {errors.siret && <small>{errors.siret}</small>}
           <Input
           label="Décrire vos activités"
-          name="compagnySActivity"
-          id="compagnySActivity"
-          value={values.compagnySActivity}
+          name="companySActivity"
+          id="companySActivity"
+          value={values.companySActivity}
           aria-required
           onChange={handleChange}
           crossOrigin={undefined}
           />
-          {errors.compagnySActivity && <small>{errors.compagnySActivity}</small>}
+          {errors.companySActivity && <small>{errors.companySActivity}</small>}
         </form>
       </article>
     </>

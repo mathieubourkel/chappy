@@ -5,16 +5,18 @@ import { intEmployee } from "../../services/interfaces/intEmployee";
 
 export default function FormEmployee() {
     const validationEmployee = Yup.object({
-        compagnyName: Yup.string().required("Ce champ est requis")
+        companyName: Yup.string().required("Ce champ est requis")
     })
 
     const {handleChange, handleSubmit, values, errors} = useFormik<intEmployee>({
         initialValues: {
-            compagnyName: "",
+            companyNameEmployee: "",
         },
         onSubmit:values => {
             console.log(values)
-        }
+        },
+        validationSchema: validationEmployee
+ 
     })
 
     return (
@@ -24,13 +26,14 @@ export default function FormEmployee() {
         <Input
             label="Nom de l'entreprise"
             type="text"
-            name="compagnyNameEmployee"
-            id="compagnyNameEmployee"
-            value={values.compagnyName}
+            name="companyNameEmployee"
+            id="companyNameEmployee"
+            value={values.companyNameEmployee}
             aria-required
             onChange={handleChange}
             crossOrigin={undefined}
           />
+          {errors.companyNameEmployee && <small>{errors.companyNameEmployee}</small>}
         </form>
        </article>
         </>
