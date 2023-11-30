@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModifiableInput from "../Buttons/ModifiableInput";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
-import SelectDate from "../Buttons/SelectDate";
+import SelectDate from "../Buttons/SelectEstimDate";
 
 type Props = {
   isOwner: boolean;

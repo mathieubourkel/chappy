@@ -13,7 +13,7 @@ import {
 import { FormEvent, InputEvent, intTask, intTasks } from "../../../services/interfaces/intProject";
 import CreateButton from "../Buttons/CreateButton";
 import SelectStatus from "../Buttons/SelectStatus";
-import SelectDate from "../Buttons/SelectDate";
+import SelectDate from "../Buttons/SelectEstimDate";
 
 type Props = {
   tasks: intTasks;

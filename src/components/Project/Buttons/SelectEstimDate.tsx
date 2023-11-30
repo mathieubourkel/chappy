@@ -6,7 +6,7 @@ type Props = {
   setState: any;
 };
 
-export default function SelectDate({ state, setState }: Props) {
+export default function SelectEstimDate({ state, setState }: Props) {
   const tmpDate = {
     startDate: state.estimEndDate,
     endDate: null,

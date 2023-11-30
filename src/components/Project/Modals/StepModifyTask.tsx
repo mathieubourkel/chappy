@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Dialog,
@@ -15,6 +15,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FormEvent, InputEvent, intTask, intUser } from "../../../services/interfaces/intProject";
 import SelectCategory from "../Buttons/SelectCategory";
+import SelectEstimDate from "../Buttons/SelectEstimDate";
+import SelectStartDate from "../Buttons/SelectStartDate";
 
 type Props = {
   task: intTask;
@@ -24,7 +26,7 @@ type Props = {
   open: boolean
 };
 
-export default function StepModifyTask({ setTask, task, index, handleOpen, open }: Props) {
+export default function StepModifyTask({ setTask, task, handleOpen, open }: Props) {
 
   const [form, setForm] = useState<intTask>({ ...task });
 
@@ -81,22 +83,11 @@ export default function StepModifyTask({ setTask, task, index, handleOpen, open 
               classState="basis-1/2"/>
 
               <div className="sm:flex gap-3">
-                {/* <SelectDate state={tasks} setState={setTask}
-                /> */}
-                <Input
-                  label="Date de fin estimée"
-                  // value={form.estimEndDate.toString()}
-                  value="toto"
-                  size="lg"
-                  crossOrigin={undefined}
-                  name="estimEndDate"
-                  id="estimEndDate"
-                  onChange={(e: InputEvent) => handleChange(e)}
+                <SelectStartDate state={task} setState={setTask}
+                />
+                <SelectEstimDate state={task} setState={setTask}
                 />
               </div>
-              {/* <div>
-                <SelectDate state={/>
-              </div> */}
               <p>Participants</p>
           <div className="flex gap-10">
             {task.app_users.map((user: intUser, index: number) => (

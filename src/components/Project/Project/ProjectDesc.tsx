@@ -3,7 +3,7 @@ import ModifiableInput from "../Buttons/ModifiableInput";
 import calendar from "../../../assets/img/calendar.webp";
 import { intProject } from "../../../services/interfaces/intProject";
 import SelectStatus from "../Buttons/SelectStatus";
-import SelectDate from "../Buttons/SelectDate";
+import SelectDate from "../Buttons/SelectEstimDate";
 
 type Props = {
     project: intProject,
