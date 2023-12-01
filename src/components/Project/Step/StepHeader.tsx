@@ -6,7 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModifiableInput from "../Buttons/ModifiableInput";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
-import SelectDate from "../Buttons/SelectEstimDate";
+import SelectDate from "../Buttons/SelectDate";
+import { useNavigate, useParams } from "react-router-dom";
+import { deleteStepFromBDD } from "../../../services/api/steps";
 
 type Props = {
   isOwner: boolean;
@@ -16,15 +18,12 @@ type Props = {
 
 export default function StepHeader({ isOwner, step, setStep }: Props) {
   console.log("StepHeaderComposant");
+  const navigate = useNavigate();
+  const {idStep, idProject} = useParams();
 
-  function handleDelete() {
-    setStep({
-      name: "",
-      description: "",
-      budget: 0,
-      estimEndDate: new Date(),
-      id: 0,
-    });
+  async function handleDeleteStep() {
+    await deleteStepFromBDD(idStep)
+    navigate('/project/' + idProject)
   }
 
   // Render
@@ -34,7 +33,7 @@ export default function StepHeader({ isOwner, step, setStep }: Props) {
         <div className="b1-header-title shrink-0">
           <h1>{step.name}</h1>
         </div>
-        <Button onClick={() => handleDelete()}>
+        <Button onClick={() => handleDeleteStep()}>
           <FontAwesomeIcon icon={faXmark} size="xl" />
           <a className="ml-5">Supprimer le jalon</a>
         </Button>

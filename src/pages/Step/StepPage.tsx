@@ -19,6 +19,7 @@ export default function StepPage({ isOwner }: Props) {
     estimEndDate: new Date(),
     budget: 0,
     id: 0,
+    status:0
   });
 
   useEffect(() => {

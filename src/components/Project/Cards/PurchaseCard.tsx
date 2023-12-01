@@ -1,18 +1,24 @@
 import { Typography } from "@material-tailwind/react";
 import DeleteButton from "../Buttons/DeleteButton";
 import PurchaseModify from "../Modals/PurchaseModify";
-import { intPurchases } from "../../../services/interfaces/intProject";
+import { intPurchase, intPurchases } from "../../../services/interfaces/intProject";
+import { deletePurchaseFromBDD } from "../../../services/api/purchases";
 
 type Props = {
   index: number;
   setPurchase: (purchase: intPurchases) => void;
   purchases: intPurchases
   isOwner: boolean
+  purchase: intPurchase
 };
 
-export default function PurchaseCard({ index, setPurchase, purchases, isOwner }: Props) {
+export default function PurchaseCard({ index, setPurchase, purchases, purchase, isOwner }: Props) {
   
   console.log('PurchaseCardComposant')
+
+  const handleDelete = () => {
+    deletePurchaseFromBDD(purchase.id)
+  }
   return (
       <li
         className="md:flex justify-between mb-10 items-center gap-2 border-4 
@@ -23,13 +29,13 @@ export default function PurchaseCard({ index, setPurchase, purchases, isOwner }:
           color="blue-gray"
           className="p-2 text-brick-300 font-bold"
         >
-          {purchases[index].name}
+          {purchase.name}
         </Typography>
 
         <div className='flex gap-10 justify-between'>
         <Typography variant="h5" color="blue-gray" className="flex">
           <p className="border p-2 rounded-xl bg-light-200">
-            Prix : {purchases[index].price}€
+            Prix : {purchase.price}€
           </p>
         </Typography>
         {isOwner && 
@@ -43,9 +49,11 @@ export default function PurchaseCard({ index, setPurchase, purchases, isOwner }:
             index={index}
             state={purchases}
             setState={setPurchase}
+            handleDeleteBDD={handleDelete}
           />
         </div>}
         </div>
         </li>
   );
 }
+

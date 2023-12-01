@@ -10,7 +10,6 @@ export default function DashboardPage() {
   const user: intUser = { name: "Paul", company: "Compagnie créole", email:"paulo@paulo.fr" };
   const [collabs, setCollab] = useState<intProjects>([]);
   const [projects, setProject] = useState<intProjects>([]);
-
   const nbProj = collabs.length + projects.length
 
   useEffect(() => {

@@ -4,12 +4,10 @@ import "../../css/Project.css";
 import EspaceComment from "../../components/Project/Comments/EspaceComment";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
 import ProjectDesc from "../../components/Project/Project/ProjectDesc";
-import { Button } from "@material-tailwind/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
-import { getProjectById } from "../../services/api/projects";
+import { deleteProjectFromBDD, getProjectById } from "../../services/api/projects";
 import ProjectSteps from "../../components/Project/Project/ProjectSteps";
+import DeleteProject from "../../components/Project/Modals/DeleteProject";
 
 type Props = {
   isOwner: boolean;
@@ -28,13 +26,14 @@ export default function ProjectPage({ isOwner }: Props) {
     name: "",
     description: "",
     status: 0,
-    owner: "",
+    app_user: {id:1},
     budget: 0,
     id:0,
     project_steps: [],
     estimEndDate: new Date()
   });
-
+  const [reload, setReload] = useState(false)
+const handleReload = () => setReload((bool) => !bool);
   useEffect(() => {
       async function getProject(){
         const result = await getProjectById(idProject)
@@ -42,27 +41,24 @@ export default function ProjectPage({ isOwner }: Props) {
       }
 
       getProject();
-  }, [idProject]);
+  }, [reload]);
 
-  function handleDelete(): void {
-    throw new Error("Function not implemented.");
+  function handleDelete(){
+    deleteProjectFromBDD(idProject)
   }
  
   return (
-    <main className="project-page sm:mx-20 mx-5">
+    <main className="project-page sm:mx-20 mx-5 mt-20">
       <ProjectHeader project={project} idProject={idProject}/>
       <ProjectDesc
         project={project}
         setProject={setProject}
         isOwner={isOwner}
       />
-      <ProjectSteps project={project} isOwner={isOwner} setProject={setProject} />
+      <ProjectSteps handleReload={handleReload} project={project} isOwner={isOwner} setProject={setProject} />
       <EspaceComment comments={comments} setComment={setComment} />
       <div className="flex justify-end mb-10">
-        <Button onClick={() => handleDelete()}>
-          <FontAwesomeIcon icon={faXmark} size="xl" />
-          <a className="ml-5">Supprimer le projet</a>
-        </Button>
+        <DeleteProject handleDelete={handleDelete} />
       </div>
     </main>
   );

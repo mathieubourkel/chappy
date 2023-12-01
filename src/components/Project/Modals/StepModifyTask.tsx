@@ -15,8 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FormEvent, InputEvent, intTask, intUser } from "../../../services/interfaces/intProject";
 import SelectCategory from "../Buttons/SelectCategory";
-import SelectEstimDate from "../Buttons/SelectEstimDate";
-import SelectStartDate from "../Buttons/SelectStartDate";
+import Datepicker from "react-tailwindcss-datepicker";
 
 type Props = {
   task: intTask;
@@ -39,6 +38,10 @@ export default function StepModifyTask({ setTask, task, handleOpen, open }: Prop
     e.preventDefault();
     setTask(form);
   }
+
+  const handleDate = (value: any) => {
+    setForm({...form, rangeDate: value})
+}
 
   return (
     <>
@@ -83,9 +86,12 @@ export default function StepModifyTask({ setTask, task, handleOpen, open }: Prop
               classState="basis-1/2"/>
 
               <div className="sm:flex gap-3">
-                <SelectStartDate state={task} setState={setTask}
-                />
-                <SelectEstimDate state={task} setState={setTask}
+              <Datepicker
+                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
+                  onChange={handleDate}
+                  value={form.rangeDate}
+                  inputName="rangeDate"
+                  placeholder={"Choisir la durée de la tâche"}
                 />
               </div>
               <p>Participants</p>

@@ -8,30 +8,35 @@ import {
   Typography,
   Input,
 } from "@material-tailwind/react";
-import { FormEvent, InputEvent, intDocument, intDocuments } from "../../../services/interfaces/intProject";
+import { FormEvent, InputEvent, intDocument } from "../../../services/interfaces/intProject";
 import CreateButton from "../Buttons/CreateButton";
+import { addDocumentToBDD } from "../../../services/api/documents";
+import { useParams } from "react-router-dom";
 
 type Props = {
-  documents: intDocuments
-  setDocument: (documents: intDocuments) => void;
+  handleReload: () => void;
 };
 
-export default function DocumentsAdd({ documents, setDocument}: Props) {
+export default function DocumentsAdd({ handleReload }: Props) {
 
+  const {idProject} = useParams();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intDocument>({
-    path: "", type: ""
+    path: "", type: "", project: {id: idProject}
   });
 
   function handleChange(e: InputEvent) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
+    
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setDocument([...documents, form]);
+    await addDocumentToBDD(form);
+    handleReload();
+    
   }
 
   return (

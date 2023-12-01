@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -6,10 +7,14 @@ import {
   CardBody,
   CardFooter,
   Typography,
-  Input,
+  Option,
+  Select,
 } from "@material-tailwind/react";
-import { FormEvent, InputEvent, intMember, intMembers } from "../../../services/interfaces/intProject";
+import { FormEvent, intMember, intMembers } from "../../../services/interfaces/intProject";
 import CreateButton from "../Buttons/CreateButton";
+import { useParams } from "react-router-dom";
+import { addUserToProjectToBDD, getAllUsers } from "../../../services/api/users";
+
 
 type Props = {
   members: intMembers
@@ -17,21 +22,32 @@ type Props = {
 };
 
 export default function MembersAdd({ members, setMember}: Props) {
+  
+  const {idProject} = useParams();
+  const [open, setOpen] = useState<boolean>(false);
+  const [users, setUsers] = useState<intMembers>([])
+  const [selected, setSelected] = useState<string | undefined>('')
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen((cur) => !cur);
-  const [form, setForm] = useState<intMember>({
-    email: "", company:"", firstName: "", lastName: ""
-  });
+  useEffect(() => {
+    async function getUsers(){
+      const result = await getAllUsers()
+      setUsers(result)
+    }
+    getUsers();
+  }, []);
 
-  function handleChange(e: InputEvent) {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+  function handleChange(value: string | undefined) {
+    setSelected(value)
   }
+
+  const handleOpen = () => setOpen((cur) => !cur);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setMember([...members, form]);
+    const user:any = users.find((element:intMember) => element.email == selected)
+    setMember([...members, user]);
+    console.log(users)
+    addUserToProjectToBDD(idProject, user.id)
   }
 
   return (
@@ -49,14 +65,16 @@ export default function MembersAdd({ members, setMember}: Props) {
             <Typography variant="h2" color="blue-gray">
                 Ajouter un participant
               </Typography>
-              <Input
-                label="Email du participant"
-                size="lg"
-                name="email"
-                id="email"
-                crossOrigin={undefined}
-                onChange={(e: InputEvent) => handleChange(e)}
-              />
+              <Select
+              value={selected}
+              onChange={(value: string | undefined) => handleChange(value)}
+              >
+              {users.map((i: intMember, index: number) => (
+            <Option key={index} value={i.email}>
+              {i.email}
+            </Option>
+          ))}
+              </Select>
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button variant="gradient" onClick={handleOpen} type="submit">
