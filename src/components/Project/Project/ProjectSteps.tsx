@@ -10,9 +10,10 @@ type Props = {
   isOwner: boolean
   project: intProject
   setProject: (project: intProject) => void;
+  handleReload : () => void;
 };
 
-export default function ProjectSteps({ isOwner, project, setProject}: Props) {
+export default function ProjectSteps({handleReload, isOwner, project, setProject}: Props) {
   console.log('ProjectStepsComposant')
   return (
     <section className="bloc-2 mb-40">
@@ -23,7 +24,7 @@ export default function ProjectSteps({ isOwner, project, setProject}: Props) {
         <div className="b2-header-buttons flex gap-5 items-center">
           {isOwner && 
           <div>
-            <ProjectCreateStep project={project} setProject={setProject} />
+            <ProjectCreateStep handleReload={handleReload} project={project} setProject={setProject} />
           </div> }
           <div>
             <IconButton>

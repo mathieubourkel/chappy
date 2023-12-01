@@ -17,7 +17,8 @@ export default function StepTasks({isOwner}: Props) {
   console.log('StepTasksComposant')
   const {idStep} = useParams();
   const [tasks, setTasks] = useState<intTasks>([])
-
+const [reload, setReload] = useState(false)
+const handleReload = () => setReload((bool) => !bool);
   useEffect(() => {
     async function getTasks(){
       const result = await getTasksByStep(idStep)
@@ -25,7 +26,7 @@ export default function StepTasks({isOwner}: Props) {
     }
 
     getTasks();
-}, [idStep]);
+}, [reload, idStep]);
 
   return (
     <section className="bloc-2 mb-40">
@@ -35,7 +36,7 @@ export default function StepTasks({isOwner}: Props) {
         </div>
         <div className="b2-header-buttons flex gap-5 items-center">
           <div>
-            <StepCreateTask tasks={tasks} setTasks={setTasks} />
+            <StepCreateTask handleReload={handleReload} />
           </div>
           <div>
             <IconButton>

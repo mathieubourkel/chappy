@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useApi } from "../../hooks/useApi";
+import { intTask } from "../interfaces/intProject";
 const api = useApi();
 
 export async function getTasksByStep(idStep:string | undefined) {
@@ -11,3 +12,23 @@ export async function getTasksByStep(idStep:string | undefined) {
         return error
     }
 }
+
+export async function addTaskToStepToBDD(data:intTask) {
+    const body = {data}
+    try {
+        const {data} = await api.post('step-tasks', body);
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
+export async function deleteTaskFromBDD(idTask:number | undefined) {
+    try {
+        const {data} = await api.delete('step-tasks/' + idTask);
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+

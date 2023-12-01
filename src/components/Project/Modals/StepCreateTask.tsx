@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -15,52 +15,100 @@ import {
 import {
   FormEvent,
   InputEvent,
+  intCategories,
+  intCategory,
+  intMember,
   intTask,
-  intTasks,
 } from "../../../services/interfaces/intProject";
 import CreateButton from "../Buttons/CreateButton";
 import Datepicker from "react-tailwindcss-datepicker";
-import { Status } from "../../../services/interfaces/Status";
+import { Status2 } from "../../../services/interfaces/Status";
+import { addTaskToStepToBDD } from "../../../services/api/tasks";
+import { useParams } from "react-router-dom";
+import { getMembersByProject } from "../../../services/api/users";
+import ReactSelect from "react-select";
+import makeAnimated from "react-select/animated";
+import { getCategories } from "../../../services/api/category";
 
 type Props = {
-  tasks: intTasks;
-  setTasks: (tasks: intTasks) => void;
+  handleReload:any
+};
+type intSelect = {
+  value: number;
+  label: string;
 };
 
-export default function StepCreateTask({ tasks, setTasks }: Props) {
+export default function StepCreateTask({ handleReload }: Props) {
+  const {idStep, idProject} = useParams()
   const [open, setOpen] = useState(false);
+  const animatedComponents = makeAnimated();
   const handleOpen = () => setOpen((cur) => !cur);
+  let tmpStatus: number = 0;
+  let tmpCat: number = 1;
+  const tmpDates: any = {startDate: new Date(), endDate: new Date()}
+  const [users, setUsers] = useState<Array<intSelect>>([]);
+  const [categories, setCategorie] = useState<intCategories>([]);
   const [form, setForm] = useState<intTask>({
     name: "",
     description: "",
-    category: { name: "", id: 0 },
-    rangeDate: {
-      startDate: new Date(),
-      endDate: new Date(),
-    },
+    category: { id: 1, name:undefined },
+    startDate: new Date(),
+    endDate: new Date(),
     status: 0,
-    comments: [],
-    app_users: [],
+    // comments: [],
+    app_users: [{id:undefined}],
+    app_user: {id:1},
+    project_step: {id:idStep}
   });
+
+  useEffect(() => {
+    async function getUsers() {
+      const result = await getMembersByProject(idProject);
+      const cats = await getCategories();
+      const emailArray: Array<intSelect> = [];
+      result.map((element: intMember) => {
+        emailArray.push({ label: element.email, value: element.id });
+      });
+      setUsers(emailArray);
+      setCategorie(cats)
+    }
+    getUsers();
+  }, []);
 
   function handleChange(e: InputEvent) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    console.log(form);
-    setTasks([...tasks, form]);
+    await addTaskToStepToBDD(form)
+    handleReload()
+  }
+
+  function handleUsers(value: Array<intSelect>) {
+    const goodArray: Array<{ id: number }> = [];
+    value.map((element: intSelect) => {
+      goodArray.push({ id: element.value });
+    });
+    setForm({ ...form, app_users: goodArray });
   }
 
   const handleDate = (value: any) => {
-    setForm({ ...form, rangeDate: value });
+    setForm({ ...form, startDate: value.startDate, endDate: value.endDate });
+    tmpDates.startDate = value.startDate
+    tmpDates.endDate = value.endDate
   };
 
-  const handleStatus = (value: any) => {
+  function handleStatus(value: number) {
+    tmpStatus = value;
     setForm({ ...form, status: value });
-  };
+  }
+
+  function handleCategorie(value: number) {
+    tmpCat = value;
+    setForm({ ...form, category: {id:value, name: categories[value - 1].name} });
+  }
 
   return (
     <div>
@@ -92,36 +140,65 @@ export default function StepCreateTask({ tasks, setTasks }: Props) {
                 id="description"
                 onChange={(e: any) => handleChange(e)}
               />
-              <Textarea
-                label="Catégorie"
-                size="lg"
-                name="category"
-                id="category"
-                onChange={(e: any) => handleChange(e)}
-              />
+              <Input
+                  label="Budget"
+                  size="lg"
+                  crossOrigin={undefined}
+                  type="number"
+                  name="budget"
+                  id="budget"
+                  onChange={(e: InputEvent) => handleChange(e)}
+                />
+
               <Select
-                className="rounded-xl p-2 bg-white"
-                value={Status[form.status]}
-                label="status"
+                className={"bg-light-100"}
                 name="status"
                 id="status"
-                onChange={(value: string | undefined) => handleStatus(value)}
+                value={tmpStatus.toString()}
+                label="Status"
+                onChange={(value: any) => handleStatus(value)}
               >
-                {Status.map((i: string, indexS: number) => (
-                  <Option key={indexS} value={i}>
-                    {i}
-                  </Option>
-                ))}
+                {Status2.map(
+                  (i: { id: number; name: string }, index: number) => (
+                    <Option key={index} value={i.id.toString()}>
+                      {i.name}
+                    </Option>
+                  )
+                )}
+              </Select>
+              <Select
+                className={"bg-light-100"}
+                name="category"
+                id="category"
+                value={tmpCat.toString()}
+                label="Catégorie"
+                onChange={(value: any) => handleCategorie(value)}
+              >
+                {categories.map(
+                  (i: intCategory, index: number) => (
+                    <Option key={index} value={i.id.toString()}>
+                      {i.name}
+                    </Option>
+                  )
+                )}
               </Select>
               <div className="sm:flex gap-3">
                 <Datepicker
                   inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
                   onChange={handleDate}
-                  value={form.rangeDate}
+                  value={tmpDates}
                   inputName="rangeDate"
                   placeholder={"Choisir la durée de la tâche"}
                 />
               </div>
+              <ReactSelect
+                options={users}
+                className="rounded-xl"
+                isMulti
+                placeholder="Inviter des membres sur votre projet"
+                components={animatedComponents}
+                onChange={(value: any) => handleUsers(value)}
+              />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button variant="gradient" onClick={handleOpen} type="submit">

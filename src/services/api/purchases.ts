@@ -23,7 +23,7 @@ export async function addPurchaseToBDD(data:intPurchase) {
     }
 }
 
-export async function deletePurchaseFromBDD(idPurchase:number) {
+export async function deletePurchaseFromBDD(idPurchase:number | undefined) {
 
     try {
         const {data} = await api.delete('purchases/' + idPurchase);

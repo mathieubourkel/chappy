@@ -2,15 +2,25 @@ import { ChangeEvent } from "react"
 
 export interface intProject extends intProjectLight {
     description: string,
-    budget: number,
-    owner: string,
+    budget?: number,
     status: number,
     project_steps: intSteps
     estimEndDate: Date | null
+    app_user: {id: string | number |undefined}
+    app_users?: Array<{id:number | undefined }>
+    companies?: Array<{id:number |undefined}>
+}
+
+export interface intCompany {
+    name: string, 
+    siret?: number,
+    description: string,
+    app_user?: {id: string | number}
+    id: number
 }
 
 export interface intProjectLight {
-    id:number,
+    id?:number,
     name:string
   }
 
@@ -18,9 +28,10 @@ export interface intStep {
     name: string,
     description: string,
     budget: number,
-    id: number
+    id?: number
     estimEndDate: Date | null
     status:number
+    project: {id:string|undefined}
 }
 
 export interface intComment {
@@ -33,26 +44,29 @@ export interface intTask {
     status: number,
     category: intCategory,
     description: string,
-    rangeDate: intRangeDate,
-    comments: Array<string>,
-    app_users: intUsers,
+    startDate: Date,
+    endDate:Date,
+    comments?: Array<string>,
+    app_user?: {id: number}
+    app_users: Array<{id:number | undefined }>
     id?:number
+    project_step?: {id:string | undefined}
 }
 export interface intPurchase {
     name: string,
     price: number,
-    ref: string,
-    commandDate: Date,
-    deliveryDate: Date,
-    status: number,
-    id:number,
+    ref?: string,
+    commandDate?: Date,
+    deliveryDate?: Date,
+    status?: number,
+    id?:number,
     project: {id:string | undefined}
   }
 
 export interface intDocument {
     path: string,
     type: string,
-    id:number,
+    id?:number,
     project: {id:string | undefined}
 }
 
@@ -74,8 +88,8 @@ export interface intUser {
 }
 
 export interface intCategory {
-    name: string,
-    id?: number
+    name: string | undefined,
+    id: number
 }
 export interface intRangeDate {
     startDate: Date,

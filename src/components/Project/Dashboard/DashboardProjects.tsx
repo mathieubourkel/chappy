@@ -63,7 +63,7 @@ export default function DashboardProjects({ projects }: Props) {
               <StepCard step={step} key={index} idProject={projects[selected].id} />
             ))}
           </div>
-          <Link to={"/project/" + (selected + 1)}>
+          <Link to={"/project/" + projects[selected].id}>
             <Button>Ouvrir le projet</Button>
           </Link>
         </div>

@@ -16,6 +16,8 @@ export default function DocumentsPage({ isOwner }: Props) {
   const {idProject} = useParams();
   const [project, setProject] = useState<intProjectLight>({id:0, name:""})
   const [documents, setDocument] = useState<intDocuments>([]);
+  const [reload, setReload] = useState(false)
+  const handleReload = () => setReload((bool) => !bool);
   
   useEffect(() => {
     async function getDocuments(){
@@ -26,7 +28,7 @@ export default function DocumentsPage({ isOwner }: Props) {
     }
 
     getDocuments();
-  }, [idProject]);
+  }, [idProject, reload]);
   return (
     <main className="project-page sm:mx-20 mx-5">
       <ProjectHeader project={project} idProject={idProject}/>
@@ -36,7 +38,7 @@ export default function DocumentsPage({ isOwner }: Props) {
         </div>
         {isOwner && (
           <div className="b2-header-buttons flex">
-            <DocumentsAdd documents={documents} setDocument={setDocument} />
+            <DocumentsAdd handleReload={handleReload} />
           </div>
         )}
       </section>

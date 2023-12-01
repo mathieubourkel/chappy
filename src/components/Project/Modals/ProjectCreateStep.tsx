@@ -19,51 +19,59 @@ import {
   intStep,
 } from "../../../services/interfaces/intProject";
 import CreateButton from "../Buttons/CreateButton";
-import { Status } from "../../../services/interfaces/Status";
+import {  Status2 } from "../../../services/interfaces/Status";
 import Datepicker from "react-tailwindcss-datepicker";
+import { useParams } from "react-router-dom";
+import { addProjectStepToBDD } from "../../../services/api/steps";
 
 type Props = {
   project: intProject;
   setProject: (project: intProject) => void;
+  handleReload : () => void;
 };
 
-export default function ProjectCreateStep({ project, setProject }: Props) {
+export default function ProjectCreateStep({ handleReload, project, setProject }: Props) {
   const [open, setOpen] = useState(false);
+  let tmpStatus: number = 0;
   const handleOpen = () => setOpen((cur) => !cur);
-
+  const {idProject} = useParams()
   const [form, setForm] = useState<intStep>({
     name: "",
     description: "",
     budget: 0,
     estimEndDate: null,
-    id: 0,
     status: 0,
+    project: {id:idProject}
   });
+
+  function handleStatus(value: number) {
+    tmpStatus = value;
+    setForm({ ...form, status: value });
+  }
 
   function handleChange(e: InputEvent) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const tmpSteps = [...project.project_steps];
     console.log(tmpSteps);
     tmpSteps.push(form);
+    await addProjectStepToBDD(form);
     setProject({ ...project, project_steps: tmpSteps });
+    
     setForm({
       name: "",
       description: "",
       budget: 0,
       estimEndDate: null,
-      id: 0,
       status: 0,
+      project: {id:idProject}
     });
+    handleReload()
   }
-
-  const handleStatus = (value: any) => {
-    setForm({ ...form, status: value });
-  };
 
   const handleDate = (value: any) => {
     setForm({ ...form, estimEndDate: value.startDate });
@@ -123,18 +131,20 @@ export default function ProjectCreateStep({ project, setProject }: Props) {
                 />
               </div>
               <Select
-                className="rounded-xl p-2 bg-white"
-                value={Status[form.status]}
-                label="status"
+                className={"bg-light-100"}
                 name="status"
                 id="status"
-                onChange={(value: string | undefined) => handleStatus(value)}
+                value={tmpStatus.toString()}
+                label="Status"
+                onChange={(value: any) => handleStatus(value)}
               >
-                {Status.map((i: string, indexS: number) => (
-                  <Option key={indexS} value={i}>
-                    {i}
-                  </Option>
-                ))}
+                {Status2.map(
+                  (i: { id: number; name: string }, index: number) => (
+                    <Option key={index} value={i.id.toString()}>
+                      {i.name}
+                    </Option>
+                  )
+                )}
               </Select>
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">

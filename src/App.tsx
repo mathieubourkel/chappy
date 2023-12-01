@@ -1,4 +1,4 @@
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./css/App.css";
 import HomePage from "./pages/Home/HomePage.tsx";
 import LoginPage from "./pages/Login/LoginPage.tsx";
@@ -28,7 +28,6 @@ export default function App() {
   const [logins, setLogin] = useState<Array<string>>([]);
   const isLogged = true;
   const isOwner = true;
-  
   function handleSubmitLogin(login: string) {
     setLogin([...logins, login]);
   }
@@ -48,7 +47,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route
           path="/login"
-          element={<LoginPage handleSubmitLogin={handleSubmitLogin} />}
+          element={<LoginPage handleSubmitLogin={handleSubmitLogin}/>}
         />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/create-project" element={<CreateProjectPage />} />

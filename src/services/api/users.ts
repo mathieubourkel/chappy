@@ -51,5 +51,17 @@ export async function getAllUsers() {
     }
 }
 
+export async function getAllCompanies() {
+    
+    try {
+        const {data} = await api.get('companies');
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
+
+
 
 

@@ -23,7 +23,7 @@ export async function addDocumentToBDD(data:intDocument) {
     }
 }
 
-export async function deleteDocumentFromBDD(idDocument:number) {
+export async function deleteDocumentFromBDD(idDocument:number | undefined) {
 
     try {
         const {data} = await api.delete('documents/' + idDocument);
