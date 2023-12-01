@@ -26,7 +26,7 @@ import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
 export default function App() {
   console.log("AppComposant")
   const [logins, setLogin] = useState<Array<string>>([]);
-  const isLogged = true;
+  const isLogged = false;
   const isOwner = true;
   
   function handleSubmitLogin(login: string) {
@@ -47,7 +47,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
-          path="/login"
+          path="/login/"
           element={<LoginPage handleSubmitLogin={handleSubmitLogin} />}
         />
         <Route path="/signup" element={<SignupPage />} />

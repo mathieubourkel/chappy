@@ -7,7 +7,9 @@ import {
   IconButton, Collapse,
 } from "@material-tailwind/react";
 import logo from "../../../assets/img/logo.png";
-import {NavLink} from "react-router-dom";
+import {
+  NavLink, useLocation,
+} from "react-router-dom";
 
 export function NavbarVisitor() {
   const [openNav, setOpenNav] = React.useState(false);
@@ -18,6 +20,8 @@ export function NavbarVisitor() {
         () => window.innerWidth >= 960 && setOpenNav(false),
     );
   }, []);
+
+  const currentURL = useLocation()
 
   return (
         <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 shadow-none border-b-text-200">
@@ -30,12 +34,16 @@ export function NavbarVisitor() {
             </Typography>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-x-1">
-                <Button
+
+                {  currentURL.pathname !== "/login" ?
+                    <Button
                     size="sm"
                     className="hidden lg:inline-block bg-marine-300"
                 >
-                  <NavLink to={"/login"}>Se connecter</NavLink>
-                </Button>
+                  <NavLink to={"/login"}>Connexion</NavLink>
+                    </Button> : ""
+                }
+
               </div>
               <IconButton
                   variant="text"

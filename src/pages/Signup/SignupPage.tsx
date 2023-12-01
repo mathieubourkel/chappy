@@ -1,9 +1,19 @@
 import FormUser from "../../components/Authentication/formUser";
-import { NavbarVisitor } from "../../components/Layers/Navbar/NavbarVisitor";
-import { Radio, Typography } from "@material-tailwind/react";
+import {
+  Button,
+  Radio,
+  Typography
+} from "@material-tailwind/react";
 import FormCompagny from "../../components/Authentication/formCompany";
 import FormEmployee from "../../components/Authentication/formEmployee";
 import React from "react";
+import {
+  FontAwesomeIcon
+} from "@fortawesome/react-fontawesome";
+import {
+  faPaperPlane,
+} from "@fortawesome/free-solid-svg-icons";
+
 
 export default function Signup(props: any) {
   const { handleSubmitUser } = props;
@@ -17,18 +27,23 @@ export default function Signup(props: any) {
     }
   };
   return (
-    <>
      
-      <main>
-        <h1>Créer mon compte</h1>
+      <main className={"m-5 flex flex-col justify-center items-center"}>
+        <section className={"flex flex-col mt-5"}>
+          <Typography
+              variant="h1"
+              className={"font-bold text-center"}
+          >
+            Créer son compte
+          </Typography>
 
         <FormUser />
 
-        <div className="w-30 flex justify-center">
+        <div className="flex justify-center my-5 mx-5">
           <div className="flex justify-center flex-col">
             <Radio
               label={
-                <Typography color="blue-gray" className="flex font-medium">
+                <Typography className="flex font-medium">
                   Ajouter mon entreprise
                 </Typography>
               }
@@ -40,7 +55,7 @@ export default function Signup(props: any) {
             />
             <Radio
               label={
-                <Typography color="blue-gray" className="flex font-medium">
+                <Typography className="flex font-medium">
                   Je suis salarié d'une entreprise enregistrée
                 </Typography>
               }
@@ -52,7 +67,7 @@ export default function Signup(props: any) {
             />
             <Radio
               label={
-                <Typography color="blue-gray" className="flex font-medium">
+                <Typography  className="flex font-medium">
                   Aucun des deux
                 </Typography>
               }
@@ -68,14 +83,12 @@ export default function Signup(props: any) {
         {selectedOption === "checkEmployee" && <FormEmployee />}
         {selectedOption === "neitherOfTheTwo" && null}
 
-        <article className="flex justify-center">
-          <div className="flex items-center ">
-            <button type="submit" className="bg-marine-300 text-white">
-              S'inscrire
-            </button>
+          <div className={"m-auto my-5"}>
+            <Button className={"bg-brick-400"}><FontAwesomeIcon icon={faPaperPlane} className={"text-sm mr-3"} type={"submit"} />
+              Envoyer
+            </Button>
           </div>
-        </article>
+        </section>
       </main>
-    </>
   );
 }

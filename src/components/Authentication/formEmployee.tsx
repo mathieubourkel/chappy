@@ -1,4 +1,7 @@
-import { Input } from "@material-tailwind/react";
+import {
+    Card,
+    Input
+} from "@material-tailwind/react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { intEmployee } from "../../services/interfaces/intEmployee";
@@ -20,9 +23,8 @@ export default function FormEmployee() {
     })
 
     return (
-        <>
-       <article className="flex justify-center">
-        <form className="w-96 flex gap-5 flex-col items-center" onSubmit={handleSubmit}>
+       <Card className="flex justify-center p-5">
+        <form className="w-full flex gap-5 flex-col items-center" onSubmit={handleSubmit}>
         <Input
             label="Nom de l'entreprise"
             type="text"
@@ -35,7 +37,6 @@ export default function FormEmployee() {
           />
           {errors.companyNameEmployee && <small>{errors.companyNameEmployee}</small>}
         </form>
-       </article>
-        </>
+       </Card>
     )
 }

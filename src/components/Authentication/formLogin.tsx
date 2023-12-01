@@ -1,7 +1,15 @@
 import { intLogin } from "../../services/interfaces/intLogin";
-import { Input } from "@material-tailwind/react";
+import {
+  Button,
+  Input
+} from "@material-tailwind/react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+  faEnvelope, faLock,
+  faRightToBracket
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function FormLogin() {
   const validationLogin = Yup.object({
@@ -27,10 +35,9 @@ export default function FormLogin() {
   });
 
   return (
-    <>
-      <article className="flex justify-center">
+      <article className="mt-5 lg:w-[25lvw] m-auto">
         <form
-          className="w-96 flex gap-5 flex-col items-center"
+          className="flex flex-col gap-y-5"
           onSubmit={handleSubmit}
         >
           <Input
@@ -38,10 +45,12 @@ export default function FormLogin() {
             type="email"
             name="email"
             id="email"
+            className={"!bg-light-100"}
             value={values.email}
             onChange={handleChange}
             aria-required
             crossOrigin={undefined}
+            icon={<FontAwesomeIcon icon={faEnvelope} className={"text-marine-300 text-xl"}/>}
           />
           {errors.email && <small>{errors.email}</small>}
           <Input
@@ -49,18 +58,22 @@ export default function FormLogin() {
             type="password"
             name="password"
             id="password"
+            className={"!bg-light-100"}
             value={values.password}
             onChange={handleChange}
             aria-required
             crossOrigin={undefined}
+            icon={<FontAwesomeIcon icon={faLock} className={"text-marine-300 text-xl"}/>}
           />
           {errors.password && <small>{errors.password}</small>}
 
-          <button type="submit" className="bg-marine-300 text-white">
-            Se connecter
-          </button>
+          <div className={"m-auto"}>
+            <Button className={"bg-brick-400"}><FontAwesomeIcon icon={faRightToBracket} className={"text-sm mr-3"} type={"submit"} />
+              Se connecter
+            </Button>
+          </div>
+
         </form>
       </article>
-    </>
   );
 }

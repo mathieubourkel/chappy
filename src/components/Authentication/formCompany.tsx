@@ -1,7 +1,10 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { intCompany } from "../../services/interfaces/intCompany";
-import { Input } from "@material-tailwind/react";
+import {
+    Card,
+    Input
+} from "@material-tailwind/react";
 
 export default function FormCompagny() {
 
@@ -27,9 +30,8 @@ export default function FormCompagny() {
   
 
   return (
-    <>
-      <article className="flex justify-center">
-        <form className="w-96 flex gap-5 flex-col items-center" onSubmit={handleSubmit}>
+      <Card className="flex justify-center p-5">
+        <form className="w-full flex gap-5 flex-col items-center" onSubmit={handleSubmit}>
           <Input
             label="Nom de l'entreprise"
             type="text"
@@ -63,7 +65,6 @@ export default function FormCompagny() {
           />
           {errors.companySActivity && <small>{errors.companySActivity}</small>}
         </form>
-      </article>
-    </>
+      </Card>
   );
 }
