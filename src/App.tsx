@@ -21,7 +21,6 @@ import NotFoundPage from "./services/utils/NotFoundPage.tsx";
 import { NavbarConnected } from "./components/Layers/Navbar/NavbarConnected.tsx";
 import { NavbarVisitor } from "./components/Layers/Navbar/NavbarVisitor.tsx";
 import { Sidebar } from "./components/Layers/Sidebar/Sidebar.tsx";
-import { intProject } from "./services/interfaces/intProject.tsx";
 import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
 
 export default function App() {
@@ -55,6 +54,7 @@ export default function App() {
         <Route path="/create-project" element={<CreateProjectPage />} />
         <Route element={<PrivateRoute isLogged={isLogged} />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/project/:idProject" element={<ProjectPage isOwner={isOwner}/>} />
           <Route path="/project/:idProject/documents" element={<DocumentsPage  isOwner={isOwner}/>} />
           <Route path="/project/:idProject/purchases" element={<PurchasesPage  isOwner={isOwner}/>} />
