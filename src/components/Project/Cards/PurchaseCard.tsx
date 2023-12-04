@@ -1,5 +1,5 @@
 import { Typography } from "@material-tailwind/react";
-import DeleteButton from "../Buttons/DeleteButton";
+import DeleteButton from "../elements/Buttons/DeleteButton";
 import PurchaseModify from "../Modals/PurchaseModify";
 import { intPurchase, intPurchases } from "../../../services/interfaces/intProject";
 import { deletePurchaseFromBDD } from "../../../services/api/purchases";

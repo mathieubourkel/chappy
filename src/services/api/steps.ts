@@ -22,4 +22,16 @@ export async function deleteStepFromBDD(idStep:string | undefined) {
     }
 }
 
+export async function modifyStepToBDD(idStep:string|undefined, data:intStep) {
+    const body = {
+        data
+    }
+    try {
+        const {data} = await api.put('project-steps/' + idStep, body);
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
 

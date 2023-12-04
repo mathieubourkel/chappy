@@ -3,12 +3,12 @@ import { Button, Card, CardBody, Typography } from "@material-tailwind/react";
 import { intStep } from "../../../services/interfaces/intProject";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ModifiableInput from "../Buttons/ModifiableInput";
+import ModifiableInput from "../elements/Input/ModifiableInput";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
-import SelectDate from "../Buttons/SelectDate";
+import SelectDate from "../elements/Select/SelectDate";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteStepFromBDD } from "../../../services/api/steps";
+import { deleteStepFromBDD, modifyStepToBDD } from "../../../services/api/steps";
 
 type Props = {
   isOwner: boolean;
@@ -24,6 +24,10 @@ export default function StepHeader({ isOwner, step, setStep }: Props) {
   async function handleDeleteStep() {
     await deleteStepFromBDD(idStep)
     navigate('/project/' + idProject)
+  }
+
+  function handleModifyStep(data:intStep){
+    modifyStepToBDD(idStep, data)
   }
 
   // Render
@@ -60,10 +64,11 @@ export default function StepHeader({ isOwner, step, setStep }: Props) {
               state={step}
               setState={setStep}
               isOwner={isOwner}
+              handleBdd={handleModifyStep}
             />
           </div>
           <div className="basis-1/2 ">
-            <SelectDate state={step} setState={setStep} />
+            <SelectDate state={step} setState={setStep} handleBdd={handleModifyStep} />
           </div>
         </div>
       </div>

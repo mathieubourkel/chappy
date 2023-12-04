@@ -1,25 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Select, Option, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { getCategories } from "../../../services/api/category";
+import { getCategories } from "../../../../services/api/category";
 import {
   intCategories,
   intCategory,
   intTask,
-} from "../../../services/interfaces/intProject";
+} from "../../../../services/interfaces/intProject";
 
 type Props = {
   task: intTask;
   classState: string;
   isOwner: boolean;
+  handleCategorie: any;
 };
 
 export default function SelectCategory(props: Props) {
   console.log("SelectCategoryComposant")
-  const { task, classState, isOwner} = props;
-  const [selected, setSelected] = useState<string>(task.category.name);
+  const { task, classState, isOwner, handleCategorie} = props;
+  const [selected, setSelected] = useState<string | undefined>(task.category.name);
   const [categories, setCategorie] = useState<intCategories>([]);
-
+  function handleCategorieEnf(value:any) {
+    value == '1' && setSelected("Electricite")
+    value == '2' && setSelected("Plomberie")
+    value == '3' && setSelected("Maçonnerie")
+    value == '4' && setSelected("Menuiserie")
+    
+    handleCategorie(value);
+    console.log(value)
+  }
   useEffect(() => {
     async function getCat() {
       const result = await getCategories();
@@ -34,10 +43,10 @@ export default function SelectCategory(props: Props) {
         <Select
           defaultValue={selected}
           label={selected}
-          onChange={(value: any) => setSelected(value)}
+          onChange={(value: any) => handleCategorieEnf(value)}
         >
           {categories.map((categorie: intCategory, indexMap: number) => (
-            <Option key={indexMap} value={categorie.name}>
+            <Option key={indexMap} value={categorie.id?.toString()}>
               {categorie.name}
             </Option>
           ))}

@@ -2,7 +2,7 @@ import { faChartPie } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Typography } from "@material-tailwind/react";
 import { intProjects, intStep } from "../../../services/interfaces/intProject";
-import AccederButton from "../Buttons/AccederButton";
+import AccederButton from "../elements/Buttons/AccederButton";
 import { Link } from "react-router-dom";
 
 type Props = {

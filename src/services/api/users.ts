@@ -12,6 +12,16 @@ export async function getMembersByProject(idProject:string | undefined) {
     }
 }
 
+export async function getMembersByTask(idTask:number|undefined) {
+    
+    try {
+        const {data} = await api.get('app-users?populate[step-tasks][fields]=id&filters[step-tasks][id][$eq]=' + idTask);
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
 export async function addUserToProjectToBDD(idProject:string |undefined, idUser:number) {
     const body = {
         app_users: {
@@ -34,6 +44,34 @@ export async function deleteUserToProjectToBDD(idProject:string |undefined, idUs
     }
     try {
         const {data} = await api.put('projects/' + idProject, body);
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
+export async function deleteUserToTaskToBDD(idTask:number|undefined, idUser:number|undefined) {
+    const body = {
+        app_users: {
+            disconnect: [idUser]
+        }
+    }
+    try {
+        const {data} = await api.put('step-tasks/' + idTask, body);
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
+export async function addUserToTaskToBDD(idTask:number|undefined, idUser:number|undefined) {
+    const body = {
+        app_users: {
+            connect: [idUser]
+        }
+    }
+    try {
+        const {data} = await api.put('step-tasks/' + idTask, body);
         return data.data;
     } catch (error) {
         return error

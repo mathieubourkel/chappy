@@ -2,7 +2,7 @@
 import { IconButton, Input, Typography } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faPen } from "@fortawesome/free-solid-svg-icons";
-import { FormEvent } from "../../../services/interfaces/intProject";
+import { FormEvent } from "../../../../services/interfaces/intProject";
 import { useState } from "react";
 
 type Props = {
@@ -13,19 +13,22 @@ type Props = {
   value: string;
   setState: (element: any) => void;
   isOwner: boolean;
+  handleBdd?: any;
 };
 
 export default function ModifiableInput(props: Props) {
   console.log("ModifiableInputComposant")
-  const { type, label, placeHolder, setState, state, value, isOwner } = props;
+  const { type, label, placeHolder, handleBdd, setState, state, value, isOwner } = props;
   const [display, setDisplay] = useState(true);
 
-  const handleSubmit = (e: FormEvent) => {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const value = e.currentTarget[label].value;
-    setState({ ...state, [label]: value });
+    const tmpData = {...state, [label]: value}
+    await handleBdd(tmpData)
+    setState(tmpData);
     setDisplay(true);
-  };
+  }
   function handleDisplay() {
     setDisplay(false);
   }

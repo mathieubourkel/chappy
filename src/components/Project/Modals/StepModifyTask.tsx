@@ -13,9 +13,10 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { FormEvent, InputEvent, intTask, intUser } from "../../../services/interfaces/intProject";
-import SelectCategory from "../Buttons/SelectCategory";
+import { FormEvent, InputEvent, intTask} from "../../../services/interfaces/intProject";
+import SelectCategory from "../elements/Select/SelectCategory";
 import Datepicker from "react-tailwindcss-datepicker";
+import { modifyTaskToBDD } from "../../../services/api/tasks";
 
 type Props = {
   task: intTask;
@@ -34,13 +35,20 @@ export default function StepModifyTask({ setTask, task, handleOpen, open }: Prop
     setForm({ ...form, [name]: value });
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    await modifyTaskToBDD(task.id, form)
     setTask(form);
   }
 
   const handleDate = (value: any) => {
-    setForm({...form, rangeDate: value})
+    
+    setForm({...form, startDate: value.startDate, endDate: value.endDate})
+    
+}
+
+const handleCategorie = (value: any) => {
+  setForm({...form, category: {id: value}})
 }
 
   return (
@@ -82,21 +90,21 @@ export default function StepModifyTask({ setTask, task, handleOpen, open }: Prop
                 id="description"
                 onChange={(e:any) => handleChange(e)}
               />
-              <SelectCategory task={task} isOwner={true} 
+              <SelectCategory task={task} isOwner={true} handleCategorie={handleCategorie} 
               classState="basis-1/2"/>
 
               <div className="sm:flex gap-3">
               <Datepicker
                   inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
                   onChange={handleDate}
-                  value={form.rangeDate}
+                  value={{startDate: form.startDate, endDate: form.endDate}}
                   inputName="rangeDate"
                   placeholder={"Choisir la durée de la tâche"}
                 />
               </div>
               <p>Participants</p>
           <div className="flex gap-10">
-            {task.app_users.map((user: intUser, index: number) => (
+            {task.app_users.map((user: any, index: number) => (
               <Input
                 key={index}
                 label="Participants"

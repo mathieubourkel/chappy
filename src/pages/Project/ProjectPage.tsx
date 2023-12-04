@@ -41,10 +41,10 @@ const handleReload = () => setReload((bool) => !bool);
       }
 
       getProject();
-  }, [reload]);
+  }, [idProject, reload]);
 
-  function handleDelete(){
-    deleteProjectFromBDD(idProject)
+  async function handleDelete(){
+    await deleteProjectFromBDD(idProject)
   }
  
   return (

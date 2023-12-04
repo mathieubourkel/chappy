@@ -88,7 +88,7 @@ export interface intUser {
 }
 
 export interface intCategory {
-    name: string | undefined,
+    name?: string | undefined,
     id: number
 }
 export interface intRangeDate {

@@ -32,3 +32,16 @@ export async function deleteTaskFromBDD(idTask:number | undefined) {
     }
 }
 
+export async function modifyTaskToBDD(idTask:number|undefined, data:intTask) {
+    const body = {
+        data
+    }
+    try {
+        const {data} = await api.put('step-tasks/' + idTask, body);
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
+

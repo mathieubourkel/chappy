@@ -19,8 +19,8 @@ export default function DeleteProject({ handleDelete }: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const navigate = useNavigate();
-  function handleSubmit() {
-    handleDelete();
+  async function handleSubmit() {
+    await handleDelete();
     navigate("/dashboard");
   }
 

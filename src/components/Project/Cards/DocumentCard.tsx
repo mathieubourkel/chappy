@@ -1,5 +1,5 @@
 import { Typography } from "@material-tailwind/react";
-import DeleteButton from "../Buttons/DeleteButton";
+import DeleteButton from "../elements/Buttons/DeleteButton";
 import { intDocument, intDocuments } from "../../../services/interfaces/intProject";
 import DocumentModify from "../Modals/DocumentModifiy";
 import { deleteDocumentFromBDD } from "../../../services/api/documents";

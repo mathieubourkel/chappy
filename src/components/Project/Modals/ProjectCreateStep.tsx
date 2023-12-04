@@ -18,7 +18,7 @@ import {
   intProject,
   intStep,
 } from "../../../services/interfaces/intProject";
-import CreateButton from "../Buttons/CreateButton";
+import CreateButton from "../elements/Buttons/CreateButton";
 import {  Status2 } from "../../../services/interfaces/Status";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useParams } from "react-router-dom";
@@ -127,7 +127,7 @@ export default function ProjectCreateStep({ handleReload, project, setProject }:
                   useRange={false}
                   asSingle={true}
                   inputName="rangeDate"
-                  placeholder={"Choisir la durée de la tâche"}
+                  placeholder={"Choisir la durée du jalon"}
                 />
               </div>
               <Select

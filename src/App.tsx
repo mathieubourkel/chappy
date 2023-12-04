@@ -26,7 +26,7 @@ import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
 export default function App() {
   console.log("AppComposant")
   const [logins, setLogin] = useState<Array<string>>([]);
-  const isLogged = false;
+  const isLogged = true;
   const isOwner = true;
   function handleSubmitLogin(login: string) {
     setLogin([...logins, login]);

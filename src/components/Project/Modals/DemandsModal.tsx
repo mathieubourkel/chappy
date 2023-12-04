@@ -10,7 +10,7 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
-import DeleteButton from "../Buttons/DeleteButton";
+import DeleteButton from "../elements/Buttons/DeleteButton";
 
 export default function DemandsModal() {
   const [open, setOpen] = useState(false);

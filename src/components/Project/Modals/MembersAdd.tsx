@@ -11,7 +11,7 @@ import {
   Select,
 } from "@material-tailwind/react";
 import { FormEvent, intMember, intMembers } from "../../../services/interfaces/intProject";
-import CreateButton from "../Buttons/CreateButton";
+import CreateButton from "../elements/Buttons/CreateButton";
 import { useParams } from "react-router-dom";
 import { addUserToProjectToBDD, getAllUsers } from "../../../services/api/users";
 

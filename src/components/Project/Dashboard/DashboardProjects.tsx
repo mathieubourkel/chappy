@@ -4,7 +4,7 @@ import { faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Dash.css";
 import { useState } from "react";
-import CreateButton from "../Buttons/CreateButton";
+import CreateButton from "../elements/Buttons/CreateButton";
 import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 

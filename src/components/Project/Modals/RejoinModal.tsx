@@ -6,7 +6,7 @@ import {
   Typography,
   Input,
 } from "@material-tailwind/react";
-import RejoinButton from "../Buttons/RejoinButton";
+import RejoinButton from "../elements/Buttons/RejoinButton";
 
 export type Props = {
   value: string;

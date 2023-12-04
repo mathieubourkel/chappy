@@ -72,6 +72,19 @@ export async function deleteProjectFromBDD(idProject: string | undefined) {
     }
 }
 
+export async function modifyProjectToBDD(idProject:string|undefined, data:intProject) {
+    const body = {
+        data
+    }
+    try {
+        const {data} = await api.put('projects/' + idProject, body);
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
+
 
 
 

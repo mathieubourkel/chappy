@@ -9,7 +9,7 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { FormEvent, InputEvent, intPurchase } from "../../../services/interfaces/intProject";
-import CreateButton from "../Buttons/CreateButton";
+import CreateButton from "../elements/Buttons/CreateButton";
 import { useParams } from "react-router-dom";
 import { addPurchaseToBDD } from "../../../services/api/purchases";
 

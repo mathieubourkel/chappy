@@ -3,7 +3,7 @@ import { faChartPie } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Card,CardBody,CardFooter,Typography} from "@material-tailwind/react";
 import { intStep } from "../../../services/interfaces/intProject";
-import AccederButton from "../Buttons/AccederButton";
+import AccederButton from "../elements/Buttons/AccederButton";
 
 type Props = {
   step: intStep;

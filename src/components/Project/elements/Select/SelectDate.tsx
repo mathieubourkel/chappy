@@ -4,9 +4,10 @@ import Datepicker from "react-tailwindcss-datepicker";
 type Props = {
   state: any;
   setState: any;
+  handleBdd: any;
 };
 
-export default function SelectDate({ state, setState }: Props) {
+export default function SelectDate({ state, setState, handleBdd }: Props) {
   const tmpDate = {
     startDate: state.estimEndDate,
     endDate: null,
@@ -15,6 +16,8 @@ export default function SelectDate({ state, setState }: Props) {
 
   const handleChange = (value: any) => {
     setState({ ...state, estimEndDate: value.startDate });
+    const tmpData = {...state, estimEndDate: value.startDate}
+    handleBdd(tmpData)
   };
 
   return (

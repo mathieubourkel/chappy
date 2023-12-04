@@ -1,5 +1,5 @@
 import { Avatar, Typography } from "@material-tailwind/react";
-import DeleteButton from "../Buttons/DeleteButton";
+import DeleteButton from "../elements/Buttons/DeleteButton";
 import { intMember, intMembers } from "../../../services/interfaces/intProject";
 import user from "../../../assets/img/icon user.png";
 import { deleteUserToProjectToBDD } from "../../../services/api/users";

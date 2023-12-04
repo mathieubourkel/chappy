@@ -1,6 +1,6 @@
 import { intUser } from "../../../services/interfaces/intProject";
 import calendar from "../../../assets/img/calendar.webp";
-import CreateButton from "../Buttons/CreateButton";
+import CreateButton from "../elements/Buttons/CreateButton";
 import { Link } from "react-router-dom";
 import RejoinModal from "../Modals/RejoinModal";
 

@@ -94,9 +94,9 @@ export default function CreateProjectPage() {
     setForm({ ...form, [name]: value });
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    addProjectToBDD(form);
+    await addProjectToBDD(form);
     navigate("/dashboard");
   }
 
