@@ -34,6 +34,11 @@ export interface intStep {
     project: {id:string|undefined}
 }
 
+export type intSelect = {
+    value: number;
+    label: string;
+  };
+
 export interface intComment {
     content: string,
     author: string
@@ -49,7 +54,7 @@ export interface intTask {
     comments?: Array<string>,
     user?: {id: number | null | string | undefined}
     users: Array<{id:number | undefined }>
-    id?:number
+    id?:number | undefined
     project_step?: {id:string | undefined}
 }
 export interface intPurchase {
@@ -88,7 +93,7 @@ export interface intUser {
 }
 
 export interface intCategory {
-    name?: string | undefined,
+    name: string
     id: number
 }
 export interface intRangeDate {

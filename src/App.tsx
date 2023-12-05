@@ -64,14 +64,11 @@ export default function App() {
           <Route path="/project/:idProject/step/:idStep" element={<StepPage isOwner={isOwner} />} />
           <Route path="/profile/" element={<UserProfilePage />} />
         </Route>
-
         <Route path="/legal-mentions" element={<LegalMentionsPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-
-
       <footer>
         <Footer />
       </footer>

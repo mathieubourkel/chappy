@@ -2,7 +2,6 @@
 import { useState } from "react";
 import {
   Button,
-  Option,
   Dialog,
   Card,
   CardBody,
@@ -10,7 +9,6 @@ import {
   Typography,
   Input,
   Textarea,
-  Select,
 } from "@material-tailwind/react";
 import {
   FormEvent,
@@ -19,10 +17,12 @@ import {
   intStep,
 } from "../../../services/interfaces/intProject";
 import CreateButton from "../elements/Buttons/CreateButton";
-import {  Status2 } from "../../../services/interfaces/Status";
+import { enumStatus } from "../../../services/interfaces/Status";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useParams } from "react-router-dom";
 import { addProjectStepToBDD } from "../../../services/api/steps";
+import ReactSelect from "react-select";
+import makeAnimated from "react-select/animated";
 
 type Props = {
   project: intProject;
@@ -32,7 +32,7 @@ type Props = {
 
 export default function ProjectCreateStep({ handleReload, project, setProject }: Props) {
   const [open, setOpen] = useState(false);
-  let tmpStatus: number = 0;
+  const animatedComponents = makeAnimated();
   const handleOpen = () => setOpen((cur) => !cur);
   const {idProject} = useParams()
   const [form, setForm] = useState<intStep>({
@@ -45,7 +45,6 @@ export default function ProjectCreateStep({ handleReload, project, setProject }:
   });
 
   function handleStatus(value: number) {
-    tmpStatus = value;
     setForm({ ...form, status: value });
   }
 
@@ -130,22 +129,14 @@ export default function ProjectCreateStep({ handleReload, project, setProject }:
                   placeholder={"Choisir la durée du jalon"}
                 />
               </div>
-              <Select
-                className={"bg-light-100"}
-                name="status"
-                id="status"
-                value={tmpStatus.toString()}
-                label="Status"
+              <ReactSelect
+                options={enumStatus}
+                className="rounded-xl"
+                placeholder="Status"
+                defaultValue={enumStatus[0]}
+                components={animatedComponents}
                 onChange={(value: any) => handleStatus(value)}
-              >
-                {Status2.map(
-                  (i: { id: number; name: string }, index: number) => (
-                    <Option key={index} value={i.id.toString()}>
-                      {i.name}
-                    </Option>
-                  )
-                )}
-              </Select>
+              />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button variant="gradient" onClick={handleOpen} type="submit">

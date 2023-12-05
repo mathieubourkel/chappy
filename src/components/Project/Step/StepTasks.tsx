@@ -4,30 +4,43 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import StepCreateTask from "../Modals/StepCreateTask";
 import TaskCard from "../Cards/TaskCard";
-import {intTask,intTasks} from "../../../services/interfaces/intProject";
-import { getTasksByStep } from "../../../services/api/tasks";
+import {
+  intCategory,
+  intSelect,
+  intTask,
+  intTasks,
+} from "../../../services/interfaces/intProject";
 import { useParams } from "react-router-dom";
+import { getTasksByStepId } from "../../../services/api/steps";
+import { getCategories } from "../../../services/api/category";
 
+let count = 1;
+export default function StepTasks() {
+  console.log("StepTasksComposant " + count++);
+  const { idStep } = useParams();
+  const [tasks, setTasks] = useState<intTasks>([]);
+  const [categories, setCategories] = useState<Array<intSelect>>([]);
+  const [reload, setReload] = useState(false);
 
-type Props = {
-  isOwner: boolean
-};
-
-export default function StepTasks({isOwner}: Props) {
-  console.log('StepTasksComposant')
-  const {idStep} = useParams();
-  const [tasks, setTasks] = useState<intTasks>([])
-const [reload, setReload] = useState(false)
-const handleReload = () => setReload((bool) => !bool);
   useEffect(() => {
-    async function getTasks(){
-      const result = await getTasksByStep(idStep)
-      setTasks(result)
+    async function getTasks() {
+      const result = await getTasksByStepId(idStep);
+      const dataCategories = await getCategories();
+      const dataCategoriesReformat: Array<intSelect> = [];
+      dataCategories.map((element: intCategory) => {
+        dataCategoriesReformat.push({ label: element.name, value: element.id });
+      });
+      setCategories(dataCategoriesReformat);
+      setTasks(result.step_tasks);
     }
 
     getTasks();
-}, [reload, idStep]);
+  }, [idStep, reload]);
 
+  const handleReload = () => {
+    setReload((cur) => !cur);
+  };
+  console.log(categories)
   return (
     <section className="bloc-2 mb-40">
       <div className="b2-header flex justify-between items-center">
@@ -36,7 +49,10 @@ const handleReload = () => setReload((bool) => !bool);
         </div>
         <div className="b2-header-buttons flex gap-5 items-center">
           <div>
-            <StepCreateTask handleReload={handleReload} />
+            <StepCreateTask
+              handleReload={handleReload}
+              categories={categories}
+            />
           </div>
           <div>
             <IconButton>
@@ -46,14 +62,12 @@ const handleReload = () => setReload((bool) => !bool);
         </div>
       </div>
       <ul className="b2-body mt-5">
-        {tasks.map((task: intTask, index: number) => (
+        {tasks.map((task: intTask) => (
           <TaskCard
-            index={index}
-            key={index}
-            isOwner={isOwner}
-            task={task}
-            tasks={tasks}
-            setTasks={setTasks}
+            key={task.id}
+            id={task.id}
+            handleReload={handleReload}
+            categories={categories}
           />
         ))}
       </ul>

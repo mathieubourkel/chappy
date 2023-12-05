@@ -13,43 +13,60 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { FormEvent, InputEvent, intTask} from "../../../services/interfaces/intProject";
-import SelectCategory from "../elements/Select/SelectCategory";
+import {
+  FormEvent,
+  InputEvent,
+  intSelect,
+  intTask,
+} from "../../../services/interfaces/intProject";
 import Datepicker from "react-tailwindcss-datepicker";
 import { modifyTaskToBDD } from "../../../services/api/tasks";
+import SelectCategory from "../elements/Select/SelectCategory";
+import { enumStatus } from "../../../services/interfaces/Status";
+import SelectStatus from "../elements/Select/SelectStatus";
 
 type Props = {
   task: intTask;
-  setTask: (task: intTask) => void;
-  index: number;
-  handleOpen: () => void;
-  open: boolean
+  categories: Array<intSelect>;
+  selected: intSelect | undefined
+  setSelected: (elem:intSelect) => void;
 };
 
-export default function StepModifyTask({ setTask, task, handleOpen, open }: Props) {
+let count = 1;
+export default function StepModifyTask({
+  task,
+  categories,
+  selected,
+  setSelected,
+}: Props) {
+  console.log("StepModifyTask" + count++);
+  const [form, setForm] = useState<intTask>(task);
+  console.log(task);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen((cur) => !cur);
 
-  const [form, setForm] = useState<intTask>({ ...task });
-
-  function handleChange(e: InputEvent) {
+  const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
-  }
-
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    await modifyTaskToBDD(task.id, form)
-    setTask(form);
-  }
+  };
 
   const handleDate = (value: any) => {
-    
-    setForm({...form, startDate: value.startDate, endDate: value.endDate})
-    
-}
+    setForm({ ...form, startDate: value.startDate, endDate: value.endDate });
+  };
 
-const handleCategorie = (value: any) => {
-  setForm({...form, category: {id: value}})
-}
+  const handleCategory = (value: intSelect) => {
+    setForm({ ...form, category: { id: value.value, name: value.label } });
+  };
+  const handleStatus = (value: intSelect) => {
+    setForm({ ...form, status: value.value });
+    setSelected(value)
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    await modifyTaskToBDD(task.id, form);
+    setSelected(enumStatus[form.status]);
+  };
 
   return (
     <>
@@ -69,7 +86,7 @@ const handleCategorie = (value: any) => {
         <Card className="mx-auto w-full">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-            <Typography variant="h2" color="blue-gray">
+              <Typography variant="h2" color="blue-gray">
                 Modifier la tâche
               </Typography>
               <Input
@@ -88,37 +105,45 @@ const handleCategorie = (value: any) => {
                 size="lg"
                 name="description"
                 id="description"
-                onChange={(e:any) => handleChange(e)}
+                onChange={(e: any) => handleChange(e)}
               />
-              <SelectCategory task={task} isOwner={true} handleCategorie={handleCategorie} 
-              classState="basis-1/2"/>
+
+              <SelectCategory
+                categories={categories}
+                handleCategory={handleCategory}
+                defaultValue={categories[task.category.id - 1]}
+              />
+              <SelectStatus
+                handleStatus={handleStatus}
+                defaultValue={selected}
+              />
 
               <div className="sm:flex gap-3">
-              <Datepicker
+                <Datepicker
                   inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
                   onChange={handleDate}
-                  value={{startDate: form.startDate, endDate: form.endDate}}
+                  value={{ startDate: form.startDate, endDate: form.endDate }}
                   inputName="rangeDate"
                   placeholder={"Choisir la durée de la tâche"}
                 />
               </div>
               <p>Participants</p>
-          <div className="flex gap-10">
-            {task.users.map((user: any, index: number) => (
-              <Input
-                key={index}
-                label="Participants"
-                value={user.email}
-                size="lg"
-                disabled
-                name="participants"
-                id="participants"
-                crossOrigin={undefined}
-              />
-            ))}
-          </div>
-          <p>Commentaires</p>
-            {/* {tasks[index].comments.map((comment: string, index: number) => (
+              <div className="flex gap-10">
+                {task.users.map((user: any, index: number) => (
+                  <Input
+                    key={index}
+                    label="Participants"
+                    value={user.email}
+                    size="lg"
+                    disabled
+                    name="participants"
+                    id="participants"
+                    crossOrigin={undefined}
+                  />
+                ))}
+              </div>
+              <p>Commentaires</p>
+              {/* {tasks[index].comments.map((comment: string, index: number) => (
               <Input
                 key={index}
                 label="Participants"

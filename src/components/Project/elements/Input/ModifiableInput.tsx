@@ -15,9 +15,9 @@ type Props = {
   isOwner: boolean;
   handleBdd?: any;
 };
-
+let count = 1;
 export default function ModifiableInput(props: Props) {
-  console.log("ModifiableInputComposant")
+  console.log("ModifiableInputComposant" + count++)
   const { type, label, placeHolder, handleBdd, setState, state, value, isOwner } = props;
   const [display, setDisplay] = useState(true);
 

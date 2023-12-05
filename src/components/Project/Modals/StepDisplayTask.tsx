@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Dialog,
   Card,
@@ -7,8 +8,8 @@ import {
   Input,
 } from "@material-tailwind/react";
 
-import { intTask, intUser } from "../../../services/interfaces/intProject";
-import { Status } from "../../../services/interfaces/Status";
+import { intTask} from "../../../services/interfaces/intProject";
+import { enumStatus } from "../../../services/interfaces/Status";
 
 type Props = {
   task: intTask;
@@ -58,7 +59,7 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
           <Input
             label="Status"
             disabled
-            value={Status[task.status]}
+            value={enumStatus[task.status].label}
             size="lg"
             name="status"
             id="status"
@@ -67,7 +68,7 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
           <div className="sm:flex gap-3">
             <Input
               label="Date de début"
-              value={task.rangeDate.startDate.toString()}
+              value={task.startDate.toString()}
               size="lg"
               disabled
               name="startDate"
@@ -77,7 +78,7 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
             <Input
               label="Date de fin"
               disabled
-              value={task.rangeDate.endDate.toString()}
+              value={task.endDate.toString()}
               size="lg"
               name="endDate"
               id="endDate"
@@ -86,9 +87,9 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
           </div>
           <p>Participants</p>
           <div className="flex gap-10">
-            {task.app_users.map((user: intUser, index: number) => (
+            {task.users.map((user: any) => (
               <Input
-                key={index}
+                key={user.id}
                 label="Participants"
                 disabled
                 value={user.name}

@@ -44,4 +44,15 @@ export async function getStepById(idStep:string | undefined) {
     }
 }
 
+export async function getTasksByStepId(idStep:string | undefined) {
+    
+    try {
+        const {data} = await api.get('project-steps/' + idStep + '?[fields]=id&populate[step_tasks][fields]=id');
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
+
 
