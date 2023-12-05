@@ -32,7 +32,7 @@ type intSelect = {
 
 export default function CreateProjectPage() {
   console.log("CreateProjectPage");
-
+  const userId = localStorage.getItem('id')
   const animatedComponents = makeAnimated();
   let tmpStatus: number = 0;
   const navigate = useNavigate();
@@ -44,16 +44,16 @@ export default function CreateProjectPage() {
     status: 0,
     estimEndDate: null,
     project_steps: [],
-    app_user: { id: 1 },
-    app_users: [{ id: undefined }],
+    user: { id: userId },
+    users: [{ id: undefined }],
     companies: [{ id: undefined }],
     name: "",
   });
 
   useEffect(() => {
-    async function getUsers() {
-      const result = await getAllUsers();
+    async function getUsers() {  
       const result2 = await getAllCompanies();
+      const result = await getAllUsers();
       const emailArray: Array<intSelect> = [];
       const nameArray: Array<intSelect> = [];
       result.map((element: intMember) => {
@@ -64,6 +64,7 @@ export default function CreateProjectPage() {
       });
       setUsers(emailArray);
       setCompanies(nameArray);
+      
     }
     getUsers();
   }, []);
@@ -73,7 +74,7 @@ export default function CreateProjectPage() {
     value.map((element: intSelect) => {
       goodArray.push({ id: element.value });
     });
-    setForm({ ...form, app_users: goodArray });
+    setForm({ ...form, users: goodArray });
   }
 
   function handleCompanies(value: Array<intSelect>) {

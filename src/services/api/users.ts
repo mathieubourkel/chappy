@@ -5,18 +5,18 @@ const api = useApi();
 export async function getMembersByProject(idProject:string | undefined) {
     
     try {
-        const {data} = await api.get('users?populate[projects][fields]=id&filters[projects][id][$eq]=' + idProject);
-        return data.data;
+        const {data} = await api.get('projects/' + idProject + '?[fields]=id&populate[0]=users');
+        return data.data.users;
     } catch (error) {
         return error
     }
 }
 
-export async function getMembersByTask(idTask:number|undefined) {
+export async function getMembersByTask(idTask:number | undefined) {
     
     try {
-        const {data} = await api.get('users?populate[step-tasks][fields]=id&filters[step-tasks][id][$eq]=' + idTask);
-        return data.data;
+        const {data} = await api.get('step-tasks/' + idTask + '?[fields]=id&populate[0]=users');
+        return data.data.users;
     } catch (error) {
         return error
     }
@@ -82,7 +82,7 @@ export async function addUserToTaskToBDD(idTask:number|undefined, idUser:number|
 export async function getAllUsers() {
     
     try {
-        const {data} = await api.get('users');
+        const data = await api.get('Users');
         return data.data;
     } catch (error) {
         return error
@@ -93,6 +93,7 @@ export async function getAllCompanies() {
     
     try {
         const {data} = await api.get('companies');
+        console.log(data)
         return data.data;
     } catch (error) {
         return error

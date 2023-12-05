@@ -13,6 +13,16 @@ export async function getTasksByStep(idStep:string | undefined) {
     }
 }
 
+export async function getTaskById(idTask:number | undefined) {
+    
+    try {
+        const {data} = await api.get('step-tasks/' + idTask + '?populate[0]=users');
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
 export async function addTaskToStepToBDD(data:intTask) {
     const body = {data}
     try {

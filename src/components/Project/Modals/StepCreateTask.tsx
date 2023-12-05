@@ -41,12 +41,13 @@ type intSelect = {
 export default function StepCreateTask({ handleReload }: Props) {
   const {idStep, idProject} = useParams()
   const [open, setOpen] = useState(false);
+  const userId = localStorage.getItem('id')
   const animatedComponents = makeAnimated();
   const handleOpen = () => setOpen((cur) => !cur);
   let tmpStatus: number = 0;
   let tmpCat: number = 1;
   const tmpDates: any = {startDate: new Date(), endDate: new Date()}
-  const [users, setUsers] = useState<Array<intSelect>>([]);
+  const [usersState, setUsers] = useState<Array<intSelect>>([]);
   const [categories, setCategorie] = useState<intCategories>([]);
   const [form, setForm] = useState<intTask>({
     name: "",
@@ -56,14 +57,15 @@ export default function StepCreateTask({ handleReload }: Props) {
     endDate: new Date(),
     status: 0,
     // comments: [],
-    app_users: [{id:undefined}],
-    app_user: {id:1},
+    users: [{id:undefined}],
+    user: {id: userId},
     project_step: {id:idStep}
   });
 
   useEffect(() => {
     async function getUsers() {
       const result = await getMembersByProject(idProject);
+      console.log(result)
       const cats = await getCategories();
       const emailArray: Array<intSelect> = [];
       result.map((element: intMember) => {
@@ -91,7 +93,7 @@ export default function StepCreateTask({ handleReload }: Props) {
     value.map((element: intSelect) => {
       goodArray.push({ id: element.value });
     });
-    setForm({ ...form, app_users: goodArray });
+    setForm({ ...form, users: goodArray });
   }
 
   const handleDate = (value: any) => {
@@ -192,7 +194,7 @@ export default function StepCreateTask({ handleReload }: Props) {
                 />
               </div>
               <ReactSelect
-                options={users}
+                options={usersState}
                 className="rounded-xl"
                 isMulti
                 placeholder="Inviter des membres sur votre projet"

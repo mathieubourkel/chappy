@@ -34,4 +34,14 @@ export async function modifyStepToBDD(idStep:string|undefined, data:intStep) {
     }
 }
 
+export async function getStepById(idStep:string | undefined) {
+    
+    try {
+        const {data} = await api.get('project-steps/'+ idStep);
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
 

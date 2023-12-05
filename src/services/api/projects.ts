@@ -44,15 +44,7 @@ export async function getProjectNameById(idProject:string | undefined) {
     }
 }
 
-export async function getStepById(idStep:string | undefined) {
-    
-    try {
-        const {data} = await api.get('project-steps/'+ idStep);
-        return data.data;
-    } catch (error) {
-        return error
-    }
-}
+
 
 export async function addProjectToBDD(data:intProject) {
     const body = {data}

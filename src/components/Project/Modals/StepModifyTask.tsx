@@ -104,7 +104,7 @@ const handleCategorie = (value: any) => {
               </div>
               <p>Participants</p>
           <div className="flex gap-10">
-            {task.app_users.map((user: any, index: number) => (
+            {task.users.map((user: any, index: number) => (
               <Input
                 key={index}
                 label="Participants"

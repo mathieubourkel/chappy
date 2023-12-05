@@ -30,11 +30,11 @@ export default function TaskCard({ task, tasks, setTasks, isOwner, index }: Prop
   const [oneTask, setOneTask] = useState<intTask>({...task})
   
   async function handleDelete(indexT: number) {
-    const tempUsers = [...oneTask.app_users];
+    const tempUsers = [...oneTask.users];
     tempUsers.splice(indexT, 1)
     console.log(oneTask)
     const tempTask =  {...oneTask, app_users: tempUsers}
-    await deleteUserToTaskToBDD(oneTask.id, oneTask.app_users[indexT].id )
+    await deleteUserToTaskToBDD(oneTask.id, oneTask.users[indexT].id )
     setOneTask(tempTask);  
     
     }
@@ -148,7 +148,7 @@ export default function TaskCard({ task, tasks, setTasks, isOwner, index }: Prop
         </li>
       )}
       <div className="flex sm:gap-10" onClick={handleOpenM}>
-        {oneTask.app_users.map((user: any, indexT: number) => (
+        {oneTask.users.map((user: any, indexT: number) => (
           <div className="flex gap-2" key={indexT}>
             <p className="bg-white p-2 rounded-lg">{user.email}</p>
             {isOwner && (

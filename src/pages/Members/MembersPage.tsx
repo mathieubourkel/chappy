@@ -24,11 +24,10 @@ export default function MembersPage({ isOwner }: Props) {
       setMember(result)
       setProject(tmpProj)
     }
-
     getMembers();
     
   }, [idProject]);
-
+  console.log(members)
   return (
     <main className="project-page sm:mx-20 mx-5">
       <ProjectHeader project={project} idProject={idProject}/>

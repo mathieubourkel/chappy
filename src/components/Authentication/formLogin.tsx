@@ -13,7 +13,11 @@ import {
 import { login } from "../../services/api/auth";
 import { useNavigate } from "react-router-dom";
 
-export default function FormLogin() {
+type Props = {
+  setIsLogged: (bool:boolean) => void;
+}
+
+export default function FormLogin({setIsLogged}:Props) {
   const navigate  = useNavigate()
   const validationLogin = Yup.object({
     email: Yup.string()
@@ -34,7 +38,8 @@ export default function FormLogin() {
    onSubmit: async (values) => {
       await login(values)
       const token = localStorage.getItem('token')
-      token ? navigate('/dashboard') : alert('Rentre les bons logins !!!')
+      token && setIsLogged(true)
+      token ? navigate('/dashboard') : alert('Rentre les bons logins !!!')  
     },
     validationSchema: validationLogin,
   });
