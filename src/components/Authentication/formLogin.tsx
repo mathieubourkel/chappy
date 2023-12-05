@@ -10,8 +10,11 @@ import {
   faEnvelope, faLock,
   faRightToBracket
 } from "@fortawesome/free-solid-svg-icons";
+import { login } from "../../services/api/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function FormLogin() {
+  const navigate  = useNavigate()
   const validationLogin = Yup.object({
     email: Yup.string()
       .email(
@@ -28,11 +31,14 @@ export default function FormLogin() {
       email: "",
       password: "",
     },
-    onSubmit: (values) => {
-      console.log(values);
+   onSubmit: async (values) => {
+      await login(values)
+      const token = localStorage.getItem('token')
+      token ? navigate('/dashboard') : alert('Rentre les bons logins !!!')
     },
     validationSchema: validationLogin,
   });
+
 
   return (
       <article className="mt-5 lg:w-[25lvw] m-auto">
@@ -68,7 +74,7 @@ export default function FormLogin() {
           {errors.password && <small>{errors.password}</small>}
 
           <div className={"m-auto"}>
-            <Button className={"bg-brick-400"}><FontAwesomeIcon icon={faRightToBracket} className={"text-sm mr-3"} type={"submit"} />
+            <Button className={"bg-brick-400"} type="submit"><FontAwesomeIcon icon={faRightToBracket} className={"text-sm mr-3"}  />
               Se connecter
             </Button>
           </div>

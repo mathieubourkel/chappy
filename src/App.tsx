@@ -26,8 +26,8 @@ import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
 export default function App() {
   console.log("AppComposant")
   const [logins, setLogin] = useState<Array<string>>([]);
-  const isLogged = true;
   const isOwner = true;
+  const [isLogged, setLogged] = useState(false)
   function handleSubmitLogin(login: string) {
     setLogin([...logins, login]);
   }
@@ -51,7 +51,7 @@ export default function App() {
         />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/create-project" element={<CreateProjectPage />} />
-        <Route element={<PrivateRoute isLogged={isLogged} />}>
+        <Route element={<PrivateRoute setLogged={setLogged}/>}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/project/:idProject" element={<ProjectPage isOwner={isOwner}/>} />

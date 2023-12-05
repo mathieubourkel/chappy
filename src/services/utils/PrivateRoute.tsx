@@ -1,14 +1,13 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 type Props = {
-  isLogged: boolean
+  setLogged: (bool:boolean) => void;
 }
+export default function PrivateRoute({setLogged}:Props) {
 
-export default function PrivateRoute({isLogged}:Props) {
-
-
-  
-  return isLogged ? 
+  const token = localStorage.getItem('token')
+  token && setLogged(true)
+  return token ? 
   <>
     <Outlet /> 
   </>

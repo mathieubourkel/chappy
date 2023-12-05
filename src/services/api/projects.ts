@@ -6,7 +6,8 @@ const api = useApi();
 export async function getProjectsFromOwner(idUser:number) {
     
     try {
-        const {data} = await api.get('projects?populate[app_user][fields]=id&filters[app_user][id][$eq]='+ idUser +'&populate[project_steps]=*');
+        const {data} = await api.get('projects?populate[user][fields]=id&filters[user][id][$eq]='+ idUser +'&populate[project_steps]=*');
+        console.log(data)
         return data.data;
     } catch (error) {
         return error
@@ -16,7 +17,7 @@ export async function getProjectsFromOwner(idUser:number) {
 export async function getProjectsFromUsers(idUser:number) {
     
     try {
-        const {data} = await api.get('projects?populate[app_users][fields]=id&filters[app_users][id][$eq]='+ idUser +'&populate[project_steps]=*');
+        const {data} = await api.get('projects?populate[users][fields]=id&filters[users][id][$eq]='+ idUser +'&populate[project_steps]=*');
         return data.data;
     } catch (error) {
         return error

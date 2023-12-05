@@ -6,8 +6,8 @@ export interface intProject extends intProjectLight {
     status: number,
     project_steps: intSteps
     estimEndDate: Date | null
-    app_user: {id: string | number |undefined}
-    app_users?: Array<{id:number | undefined }>
+    user: {id: string | number |undefined}
+    users?: Array<{id:number | undefined }>
     companies?: Array<{id:number |undefined}>
 }
 
@@ -15,7 +15,7 @@ export interface intCompany {
     name: string, 
     siret?: number,
     description: string,
-    app_user?: {id: string | number}
+    user?: {id: string | number}
     id: number
 }
 
@@ -47,8 +47,8 @@ export interface intTask {
     startDate: Date,
     endDate:Date,
     comments?: Array<string>,
-    app_user?: {id: number}
-    app_users: Array<{id:number | undefined }>
+    user?: {id: number}
+    users: Array<{id:number | undefined }>
     id?:number
     project_step?: {id:string | undefined}
 }

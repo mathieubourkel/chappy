@@ -26,7 +26,7 @@ export default function ProjectPage({ isOwner }: Props) {
     name: "",
     description: "",
     status: 0,
-    app_user: {id:1},
+    user: {id:2},
     budget: 0,
     id:0,
     project_steps: [],

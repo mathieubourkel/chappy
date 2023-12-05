@@ -15,8 +15,8 @@ export default function DashboardPage() {
   useEffect(() => {
 
     async function getProjects() {
-      const projectss = await getProjectsFromOwner(1);
-      const collabss = await getProjectsFromUsers(1);
+      const projectss = await getProjectsFromOwner(2);
+      const collabss = await getProjectsFromUsers(2);
       setCollab(collabss)
       setProject(projectss)
     }

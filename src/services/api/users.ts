@@ -5,7 +5,7 @@ const api = useApi();
 export async function getMembersByProject(idProject:string | undefined) {
     
     try {
-        const {data} = await api.get('app-users?populate[projects][fields]=id&filters[projects][id][$eq]=' + idProject);
+        const {data} = await api.get('users?populate[projects][fields]=id&filters[projects][id][$eq]=' + idProject);
         return data.data;
     } catch (error) {
         return error
@@ -15,7 +15,7 @@ export async function getMembersByProject(idProject:string | undefined) {
 export async function getMembersByTask(idTask:number|undefined) {
     
     try {
-        const {data} = await api.get('app-users?populate[step-tasks][fields]=id&filters[step-tasks][id][$eq]=' + idTask);
+        const {data} = await api.get('users?populate[step-tasks][fields]=id&filters[step-tasks][id][$eq]=' + idTask);
         return data.data;
     } catch (error) {
         return error
@@ -24,7 +24,7 @@ export async function getMembersByTask(idTask:number|undefined) {
 
 export async function addUserToProjectToBDD(idProject:string |undefined, idUser:number) {
     const body = {
-        app_users: {
+        users: {
             connect: [idUser]
         }
     }
@@ -38,7 +38,7 @@ export async function addUserToProjectToBDD(idProject:string |undefined, idUser:
 
 export async function deleteUserToProjectToBDD(idProject:string |undefined, idUser:number) {
     const body = {
-        app_users: {
+        users: {
             disconnect: [idUser]
         }
     }
@@ -52,7 +52,7 @@ export async function deleteUserToProjectToBDD(idProject:string |undefined, idUs
 
 export async function deleteUserToTaskToBDD(idTask:number|undefined, idUser:number|undefined) {
     const body = {
-        app_users: {
+        users: {
             disconnect: [idUser]
         }
     }
@@ -82,7 +82,7 @@ export async function addUserToTaskToBDD(idTask:number|undefined, idUser:number|
 export async function getAllUsers() {
     
     try {
-        const {data} = await api.get('app-users');
+        const {data} = await api.get('users');
         return data.data;
     } catch (error) {
         return error

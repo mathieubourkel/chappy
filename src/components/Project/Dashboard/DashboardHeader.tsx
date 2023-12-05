@@ -1,26 +1,25 @@
-import { intUser } from "../../../services/interfaces/intProject";
 import calendar from "../../../assets/img/calendar.webp";
 import CreateButton from "../elements/Buttons/CreateButton";
 import { Link } from "react-router-dom";
 import RejoinModal from "../Modals/RejoinModal";
 
 type Props = {
-  user: intUser;
   nbProj:number
 };
 
-export default function DashboardHeader({ user, nbProj}: Props) {
+export default function DashboardHeader({ nbProj}: Props) {
   console.log("DashBoardHeaderComposant")
+  const userName = localStorage.getItem('name')
   return (
     <section className="b1-header mt-20 md:flex justify-between gap-10">
       <div className="basis-1/2">
         {nbProj > 0 ? (
           <div className="flex justify-center mb-5">
-            <h1>Bienvenue {user.name}</h1>
+            <h1>Bienvenue {userName}</h1>
           </div>
         ) : (
           <div className="flex justify-center mb-5 mt-40">
-            <h1>Bienvenue {user.name}</h1>
+            <h1>Bienvenue {userName}</h1>
           </div>
         )}
 
