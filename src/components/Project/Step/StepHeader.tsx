@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Card, CardBody, Typography } from "@material-tailwind/react";
+import { Button, Card, CardBody, Spinner, Typography } from "@material-tailwind/react";
 import { intStep } from "../../../services/interfaces/intProject";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,15 +10,16 @@ import SelectDate from "../elements/Select/SelectDate";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteStepFromBDD, getStepById, modifyStepToBDD } from "../../../services/api/steps";
 import { useEffect, useState } from "react";
+import { getProjectById } from "../../../services/api/projects";
 
-type Props = {
-  isOwner: boolean;
-};
 let count = 1;
-export default function StepHeader({ isOwner }: Props) {
+export default function StepHeader() {
   console.log("StepHeaderComposant" + count++);
   const navigate = useNavigate();
+  const idUser = localStorage.getItem("id");
   const {idStep, idProject} = useParams();
+  const [busy, setBusy] = useState<boolean>(true);
+  const [isOwner, setIsOwner] = useState<boolean>(false);
 
   const [step, setStep] = useState<intStep>({
     name: "",
@@ -32,11 +33,14 @@ export default function StepHeader({ isOwner }: Props) {
   useEffect(() => {
     async function getInfoStep() {
       const tmpStep = await getStepById(idStep);
+      const tmpProject = await getProjectById(idProject);
+      setBusy(false);
       setStep(tmpStep);
+      tmpProject.user.id.toString() === idUser && setIsOwner(true);
     }
     getInfoStep();
 
-  }, [idStep]);
+  }, [idProject, idStep, idUser]);
 
   const handleDeleteStep = async () => {
     await deleteStepFromBDD(idStep)
@@ -50,6 +54,12 @@ export default function StepHeader({ isOwner }: Props) {
   // Render
   return (
     <section className="bloc-1 mb-40">
+      {busy ? (
+        <div className="flex justify-center mt-20">
+          <Spinner className="h-16 w-16 text-gray-900/50" />
+        </div>
+      ) : (
+        <>
       <div className="b1-header md:flex justify-between">
         <div className="b1-header-title shrink-0">
           <h1>{step.name}</h1>
@@ -89,6 +99,7 @@ export default function StepHeader({ isOwner }: Props) {
           </div>
         </div>
       </div>
+      </> )}
     </section>
   );
 }

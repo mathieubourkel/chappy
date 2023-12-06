@@ -13,26 +13,22 @@ import {
 import {
   FormEvent,
   InputEvent,
-  intProject,
+  intSelect,
   intStep,
 } from "../../../services/interfaces/intProject";
 import CreateButton from "../elements/Buttons/CreateButton";
-import { enumStatus } from "../../../services/interfaces/Status";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useParams } from "react-router-dom";
 import { addProjectStepToBDD } from "../../../services/api/steps";
-import ReactSelect from "react-select";
-import makeAnimated from "react-select/animated";
+import SelectStatus from "../elements/Select/SelectStatus";
+
 
 type Props = {
-  project: intProject;
-  setProject: (project: intProject) => void;
-  handleReload : () => void;
+  setReload: (bool: boolean) => void;
 };
 
-export default function ProjectCreateStep({ handleReload, project, setProject }: Props) {
+export default function ProjectCreateStep({ setReload }: Props) {
   const [open, setOpen] = useState(false);
-  const animatedComponents = makeAnimated();
   const handleOpen = () => setOpen((cur) => !cur);
   const {idProject} = useParams()
   const [form, setForm] = useState<intStep>({
@@ -44,36 +40,23 @@ export default function ProjectCreateStep({ handleReload, project, setProject }:
     project: {id:idProject}
   });
 
-  function handleStatus(value: number) {
-    setForm({ ...form, status: value });
-  }
-
-  function handleChange(e: InputEvent) {
+  const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
 
-  async function handleSubmit(e: FormEvent) {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const tmpSteps = [...project.project_steps];
-    console.log(tmpSteps);
-    tmpSteps.push(form);
     await addProjectStepToBDD(form);
-    setProject({ ...project, project_steps: tmpSteps });
-    
-    setForm({
-      name: "",
-      description: "",
-      budget: 0,
-      estimEndDate: null,
-      status: 0,
-      project: {id:idProject}
-    });
-    handleReload()
+    setReload(true)
   }
 
   const handleDate = (value: any) => {
     setForm({ ...form, estimEndDate: value.startDate });
+  };
+
+  const handleStatus = (value: intSelect) => {
+    setForm({ ...form, status: value.value });
   };
 
   return (
@@ -129,14 +112,7 @@ export default function ProjectCreateStep({ handleReload, project, setProject }:
                   placeholder={"Choisir la durée du jalon"}
                 />
               </div>
-              <ReactSelect
-                options={enumStatus}
-                className="rounded-xl"
-                placeholder="Status"
-                defaultValue={enumStatus[0]}
-                components={animatedComponents}
-                onChange={(value: any) => handleStatus(value)}
-              />
+              <SelectStatus handleStatus={handleStatus} />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button variant="gradient" onClick={handleOpen} type="submit">

@@ -54,5 +54,15 @@ export async function getTasksByStepId(idStep:string | undefined) {
     }
 }
 
+export async function getStepsByIdProject(idProject:string | undefined) {
+    
+    try {
+        const {data} = await api.get('project-steps?populate[project][fields]=id&filters[project][id][$eq]=' + idProject);
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
 
 

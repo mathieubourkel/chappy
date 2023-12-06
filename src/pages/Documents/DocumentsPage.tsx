@@ -4,33 +4,36 @@ import { intDocument, intDocuments, intProjectLight} from "../../services/interf
 import DocumentCard from "../../components/Project/Cards/DocumentCard";
 import DocumentsAdd from "../../components/Project/Modals/DocumentsAdd";
 import { useParams } from "react-router-dom";
-import { getProjectNameById } from "../../services/api/projects";
+import { getProjectById } from "../../services/api/projects";
 import { getDocumentsByProject } from "../../services/api/documents";
+import { Spinner } from "@material-tailwind/react";
 
-type Props = {
-  isOwner: boolean;
-};
-
-export default function DocumentsPage({ isOwner }: Props) {
+export default function DocumentsPage() {
   console.log('DocumentsPage')
   const {idProject} = useParams();
-  const [project, setProject] = useState<intProjectLight>({id:0, name:""})
+  const [project, setProject] = useState<intProjectLight>({id:undefined, name:""})
   const [documents, setDocument] = useState<intDocuments>([]);
   const [reload, setReload] = useState(false)
+  const idUser = localStorage.getItem("id");
+  const [busy, setBusy] = useState<boolean>(true);
+  const [isOwner, setIsOwner] = useState<boolean>(false);
   const handleReload = () => setReload((bool) => !bool);
   
   useEffect(() => {
     async function getDocuments(){
-      const tmpProj = await getProjectNameById(idProject)
+      const tmpProj = await getProjectById(idProject)
       const result = await getDocumentsByProject(idProject)
+      setBusy(false);
       setDocument(result)
       setProject(tmpProj)
+      tmpProj.user.id.toString() === idUser && setIsOwner(true);
     }
 
     getDocuments();
-  }, [idProject, reload]);
+  }, [idProject, reload, idUser]);
+
   return (
-    <main className="project-page sm:mx-20 mx-5">
+    <main className="project-page sm:mx-20 mx-5 mt-10">
       <ProjectHeader project={project} idProject={idProject}/>
       <section className="b2-header flex justify-between mt-20">
         <div>
@@ -42,6 +45,11 @@ export default function DocumentsPage({ isOwner }: Props) {
           </div>
         )}
       </section>
+      {busy ? (
+        <div className="flex justify-center mt-20">
+          <Spinner className="h-16 w-16 text-gray-900/50" />
+        </div>
+      ) : (
       <ul className="mt-5">
         {documents.map((document: intDocument, index: number) => (
           <DocumentCard
@@ -54,6 +62,7 @@ export default function DocumentsPage({ isOwner }: Props) {
           />
         ))}
       </ul>
+      )}
     </main>
   );
 }

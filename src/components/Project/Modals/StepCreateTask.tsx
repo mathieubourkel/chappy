@@ -67,7 +67,7 @@ export default function StepCreateTask({ handleReload, categories }: Props) {
       setUsers(dataUsersReformat);
     }
     getUsers();
-  }, []);
+  }, [idProject]);
 
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
@@ -140,14 +140,7 @@ export default function StepCreateTask({ handleReload, categories }: Props) {
                 id="budget"
                 onChange={(e: InputEvent) => handleChange(e)}
               />
-              {/* <ReactSelect
-                options={enumStatus}
-                className="rounded-xl"
-                placeholder="Status"
-                defaultValue={enumStatus[0]}
-                components={animatedComponents}
-                onChange={(value: any) => handleStatus(value)}
-              /> */}
+
               <SelectStatus handleStatus={handleStatus} />
 
               <SelectCategory
