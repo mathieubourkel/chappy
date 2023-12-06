@@ -8,21 +8,22 @@ import {
   Typography,
   Input,
 } from "@material-tailwind/react";
-import { FormEvent, InputEvent, intPurchase, intPurchases } from "../../../services/interfaces/intProject";
-import CreateButton from "../Buttons/CreateButton";
+import { FormEvent, InputEvent, intPurchase } from "../../../services/interfaces/intProject";
+import CreateButton from "../elements/Buttons/CreateButton";
+import { useParams } from "react-router-dom";
+import { addPurchaseToBDD } from "../../../services/api/purchases";
 
 type Props = {
-  purchases: intPurchases
-  setPurchase: (purchases: intPurchases) => void;
+  handleReload: () => void;
 };
 
-export default function PurchaseAdd({ purchases, setPurchase}: Props) {
+export default function PurchaseAdd({ handleReload }: Props) {
 
+  const {idProject} = useParams();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intPurchase>({
-    name: "", price:0, ref: "", commandDate: new Date(), 
-    deliveryDate: new Date(), status:0
+    name: "", price:0, project:{id: idProject}
   });
 
   function handleChange(e: InputEvent) {
@@ -30,9 +31,10 @@ export default function PurchaseAdd({ purchases, setPurchase}: Props) {
     setForm({ ...form, [name]: value });
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setPurchase([...purchases, form]);
+    await addPurchaseToBDD(form);
+    handleReload();
   }
 
   return (

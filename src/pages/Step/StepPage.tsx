@@ -4,7 +4,7 @@ import { intComments, intStep } from "../../services/interfaces/intProject";
 import EspaceComment from "../../components/Project/Comments/EspaceComment";
 import StepHeader from "../../components/Project/Step/StepHeader";
 import { useParams } from "react-router-dom";
-import { getStepById } from "../../services/api/projects";
+import { getStepById } from "../../services/api/steps";
 
 type Props = {
   isOwner: boolean;
@@ -18,7 +18,8 @@ export default function StepPage({ isOwner }: Props) {
     description: "",
     estimEndDate: new Date(),
     budget: 0,
-    id: 0,
+    status:0,
+    project: {id:undefined}
   });
 
   useEffect(() => {

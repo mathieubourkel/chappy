@@ -4,7 +4,13 @@ import {
 } from "@material-tailwind/react";
 import {NavLink} from "react-router-dom";
 
-export default function LoginPage() {
+
+type Props = {
+  handleSubmitLogin: (element:string) => void;
+  setIsLogged: (bool: boolean) => void;
+}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function LoginPage({handleSubmitLogin, setIsLogged}:Props) {
   return (
     <main className={"sm:mx-20 mx-5 flex flex-col justify-center items-center"}>
         <section className={"flex flex-col gap-y-3"}>
@@ -15,7 +21,7 @@ export default function LoginPage() {
                 Se connecter
             </Typography>
 
-                <FormLogin />
+                <FormLogin setIsLogged={setIsLogged}/>
 
             <div className={"flex gap-x-2 mt-2 m-auto"}>
                 <Typography

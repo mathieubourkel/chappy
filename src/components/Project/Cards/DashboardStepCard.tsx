@@ -2,7 +2,7 @@ import { faChartPie } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Typography } from "@material-tailwind/react";
 import { intProjects, intStep } from "../../../services/interfaces/intProject";
-import AccederButton from "../Buttons/AccederButton";
+import AccederButton from "../elements/Buttons/AccederButton";
 import { Link } from "react-router-dom";
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
     idProject: number | undefined
 }
 
-export default function DashboardStepCard({step, projects, index, idProject}:Props) {
+export default function DashboardStepCard({step, idProject}:Props) {
   return (
     <li
       className="md:flex justify-between mb-5 gap-5
@@ -35,7 +35,9 @@ export default function DashboardStepCard({step, projects, index, idProject}:Pro
             <p className="p-2 font-bold">{step.name}</p>
           </Typography>
           <Typography className="p-2">
-            Dernière mise à jour par : <a className="font-bold">{projects[index].owner}</a>, il reste <a className="font-bold">3 sur 10
+            Dernière mise à jour par : 
+            {/* <a className="font-bold">{projects[index].app_user.id}</a> */}
+            , il reste <a className="font-bold">3 sur 10
             tâches à faire</a>
           </Typography>
         </div>

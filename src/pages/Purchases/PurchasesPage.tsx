@@ -18,7 +18,8 @@ export default function PurchasesPage({ isOwner }: Props) {
   const { idProject } = useParams();
   const [project, setProject] = useState<intProjectLight>({id:0, name:""})
   const [purchases, setPurchase] = useState<intPurchases>([]);
-
+  const [reload, setReload] = useState(false)
+  const handleReload = () => setReload((bool) => !bool);
   useEffect(() => {
     async function getPurchases(){
       const tmpProj = await getProjectNameById(idProject)
@@ -28,7 +29,7 @@ export default function PurchasesPage({ isOwner }: Props) {
     }
 
     getPurchases();
-  }, [idProject]);
+  }, [idProject, reload]);
 
   const calcul = () => {
     let total: number = 0;
@@ -47,18 +48,19 @@ export default function PurchasesPage({ isOwner }: Props) {
         </div>
         {isOwner && (
           <div className="b2-header-buttons flex">
-            <PurchaseAdd purchases={purchases} setPurchase={setPurchase} />
+            <PurchaseAdd handleReload={handleReload} />
           </div>
         )}
       </section>
       <ul className="mt-5">
-        {purchases.map((_purchase: intPurchase, index: number) => (
+        {purchases.map((purchase: intPurchase, index: number) => (
           <PurchaseCard
             key={index}
             setPurchase={setPurchase}
             purchases={purchases}
             index={index}
             isOwner={isOwner}
+            purchase={purchase}
           />
         ))}
         <li className="flex gap-5 items-center mb-10 justify-end gap-2 mr-20">

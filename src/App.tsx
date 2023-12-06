@@ -1,4 +1,4 @@
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./css/App.css";
 import HomePage from "./pages/Home/HomePage.tsx";
 import LoginPage from "./pages/Login/LoginPage.tsx";
@@ -26,9 +26,11 @@ import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
 export default function App() {
   console.log("AppComposant")
   const [logins, setLogin] = useState<Array<string>>([]);
-  const isLogged = false;
   const isOwner = true;
-  
+  const token = localStorage.getItem('token')
+  let trueOrFalse;
+  token ? trueOrFalse = true : trueOrFalse = false;
+  const [isLogged, setIsLogged] = useState(trueOrFalse)
   function handleSubmitLogin(login: string) {
     setLogin([...logins, login]);
   }
@@ -47,12 +49,12 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
-          path="/login/"
-          element={<LoginPage handleSubmitLogin={handleSubmitLogin} />}
+          path="/login"
+          element={<LoginPage setIsLogged={setIsLogged} handleSubmitLogin={handleSubmitLogin}/>}
         />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/create-project" element={<CreateProjectPage />} />
-        <Route element={<PrivateRoute isLogged={isLogged} />}>
+        <Route element={<PrivateRoute/>}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/project/:idProject" element={<ProjectPage isOwner={isOwner}/>} />

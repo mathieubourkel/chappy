@@ -2,15 +2,25 @@ import { ChangeEvent } from "react"
 
 export interface intProject extends intProjectLight {
     description: string,
-    budget: number,
-    owner: string,
+    budget?: number,
     status: number,
     project_steps: intSteps
-    estimEndDate: Date
+    estimEndDate: Date | null
+    user: {id: string | number |undefined | null}
+    users?: Array<{id:number | undefined }>
+    companies?: Array<{id:number |undefined}>
+}
+
+export interface intCompany {
+    name: string, 
+    siret?: number,
+    description: string,
+    user?: {id: string | number}
+    id: number
 }
 
 export interface intProjectLight {
-    id:number,
+    id?:number,
     name:string
   }
 
@@ -18,8 +28,10 @@ export interface intStep {
     name: string,
     description: string,
     budget: number,
-    id: number
-    estimEndDate: Date
+    id?: number
+    estimEndDate: Date | null
+    status:number
+    project: {id:string|undefined}
 }
 
 export interface intComment {
@@ -33,33 +45,40 @@ export interface intTask {
     category: intCategory,
     description: string,
     startDate: Date,
-    estimEndDate: Date,
-    comments: Array<string>,
-    app_users: intUsers,
+    endDate:Date,
+    comments?: Array<string>,
+    user?: {id: number | null | string | undefined}
+    users: Array<{id:number | undefined }>
     id?:number
+    project_step?: {id:string | undefined}
 }
 export interface intPurchase {
     name: string,
     price: number,
-    ref: string,
-    commandDate: Date,
-    deliveryDate: Date,
-    status: number
-    id?:number
+    ref?: string,
+    commandDate?: Date,
+    deliveryDate?: Date,
+    status?: number,
+    id?:number,
+    project: {id:string | undefined}
   }
 
 export interface intDocument {
     path: string,
     type: string,
-    id?: number
+    id?:number,
+    project: {id:string | undefined}
 }
 
 export interface intMember {
     firstName: string,
-    company: string,
     email: string,
     lastName: string,
-    id?: number,
+    id: number,
+    city:string,
+    address: string,
+    zip: number,
+    status:string
 }
 
 export interface intUser {
@@ -69,8 +88,12 @@ export interface intUser {
 }
 
 export interface intCategory {
-    name: string,
-    id?: number
+    name?: string | undefined,
+    id: number
+}
+export interface intRangeDate {
+    startDate: Date,
+    endDate: Date
 }
 
 export type intCategories = Array<intCategory>

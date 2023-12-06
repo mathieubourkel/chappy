@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useApi } from "../../hooks/useApi";
+import { intProject } from "../interfaces/intProject";
 const api = useApi();
 
 export async function getProjectsFromOwner(idUser:number) {
     
     try {
-        const {data} = await api.get('projects?populate[app_user][fields]=id&filters[app_user][id][$eq]='+ idUser +'&populate[project_steps]=*');
+        const {data} = await api.get('projects?populate[user][fields]=id&filters[user][id][$eq]='+ idUser +'&populate[project_steps]=*');
+        console.log(data)
         return data.data;
     } catch (error) {
         return error
@@ -15,7 +17,7 @@ export async function getProjectsFromOwner(idUser:number) {
 export async function getProjectsFromUsers(idUser:number) {
     
     try {
-        const {data} = await api.get('projects?populate[app_users][fields]=id&filters[app_users][id][$eq]='+ idUser +'&populate[project_steps]=*');
+        const {data} = await api.get('projects?populate[users][fields]=id&filters[users][id][$eq]='+ idUser +'&populate[project_steps]=*');
         return data.data;
     } catch (error) {
         return error
@@ -42,15 +44,39 @@ export async function getProjectNameById(idProject:string | undefined) {
     }
 }
 
-export async function getStepById(idStep:string | undefined) {
-    
+
+
+export async function addProjectToBDD(data:intProject) {
+    const body = {data}
     try {
-        const {data} = await api.get('project-steps/'+ idStep);
+        const {data} = await api.post('projects', body);
         return data.data;
     } catch (error) {
         return error
     }
 }
+
+export async function deleteProjectFromBDD(idProject: string | undefined) {
+    try {
+        const {data} = await api.delete('projects/' + idProject);
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
+export async function modifyProjectToBDD(idProject:string|undefined, data:intProject) {
+    const body = {
+        data
+    }
+    try {
+        const {data} = await api.put('projects/' + idProject, body);
+        return data.data;
+    } catch (error) {
+        return error
+    }
+}
+
 
 
 

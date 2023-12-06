@@ -67,7 +67,7 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
           <div className="sm:flex gap-3">
             <Input
               label="Date de début"
-              value={task.startDate.toString()}
+              value={task.rangeDate.startDate.toString()}
               size="lg"
               disabled
               name="startDate"
@@ -77,7 +77,7 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
             <Input
               label="Date de fin"
               disabled
-              value={task.estimEndDate.toString()}
+              value={task.rangeDate.endDate.toString()}
               size="lg"
               name="endDate"
               id="endDate"

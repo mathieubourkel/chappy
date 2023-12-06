@@ -1,12 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { IconButton, Typography } from "@material-tailwind/react";
-import { intTask, intTasks, intUser } from "../../../services/interfaces/intProject";
+import { intTask, intTasks} from "../../../services/interfaces/intProject";
 import StepModifyTask from "../Modals/StepModifyTask";
-import DeleteButton from "../Buttons/DeleteButton";
+import DeleteButton from "../elements/Buttons/DeleteButton";
 import StepDisplayTask from "../Modals/StepDisplayTask";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import SelectStatus from "../Buttons/SelectStatus";
+import SelectStatus from "../elements/Select/SelectStatus";
+import { Status2 } from "../../../services/interfaces/Status";
+import { deleteTaskFromBDD, modifyTaskToBDD } from "../../../services/api/tasks";
+import { deleteUserToTaskToBDD } from "../../../services/api/users";
 
 type Props = {
   task: intTask;
@@ -23,17 +27,24 @@ export default function TaskCard({ task, tasks, setTasks, isOwner, index }: Prop
   const [open, setOpen] = useState(false);
   const handleOpenM = () => setOpenM((bool) => !bool);
   const handleOpen = () => setOpen((bool) => !bool);
-
   const [oneTask, setOneTask] = useState<intTask>({...task})
-
-  function handleDelete(indexT: number) {
-    const tempUsers = [...oneTask.app_users];
+  
+  async function handleDelete(indexT: number) {
+    const tempUsers = [...oneTask.users];
     tempUsers.splice(indexT, 1)
-    const tempTask =  {...oneTask, app_users: tempUsers}
-    console.log(tempTask)
     console.log(oneTask)
-    console.log(tempUsers)
+    const tempTask =  {...oneTask, app_users: tempUsers}
+    await deleteUserToTaskToBDD(oneTask.id, oneTask.users[indexT].id )
     setOneTask(tempTask);  
+    
+    }
+
+    const handleDeleteTask = () => {
+      deleteTaskFromBDD(task.id)
+    }
+
+    function handleModifyTask(data:intTask){
+      modifyTaskToBDD(task.id, data)
     }
 
   return (
@@ -50,7 +61,9 @@ export default function TaskCard({ task, tasks, setTasks, isOwner, index }: Prop
             onClick={handleOpen}
           >
             <p className="border p-2 rounded-xl bg-light-200">
+              
               {oneTask.category.name}
+
             </p>
           </Typography>
           <Typography
@@ -73,6 +86,7 @@ export default function TaskCard({ task, tasks, setTasks, isOwner, index }: Prop
                 isOwner={isOwner}
                 state={task}
                 classState="basis-1/2"
+                handleBdd={handleModifyTask}
               />
             </form>
 
@@ -84,7 +98,7 @@ export default function TaskCard({ task, tasks, setTasks, isOwner, index }: Prop
                 handleOpen={handleOpen}
                 open={open}
               />
-              <DeleteButton index={index} state={tasks} setState={setTasks} />
+              <DeleteButton handleDeleteBDD={handleDeleteTask} index={index} state={tasks} setState={setTasks} />
             </div>
           </div>
         </li>
@@ -123,7 +137,7 @@ export default function TaskCard({ task, tasks, setTasks, isOwner, index }: Prop
               className="p-2 text-brick-300"
               onClick={handleOpenM}
             >
-              {oneTask.status}
+              {Status2[oneTask.status].name}
             </Typography>
             <StepDisplayTask
               task={oneTask}
@@ -134,7 +148,7 @@ export default function TaskCard({ task, tasks, setTasks, isOwner, index }: Prop
         </li>
       )}
       <div className="flex sm:gap-10" onClick={handleOpenM}>
-        {oneTask.app_users.map((user: intUser, indexT: number) => (
+        {oneTask.users.map((user: any, indexT: number) => (
           <div className="flex gap-2" key={indexT}>
             <p className="bg-white p-2 rounded-lg">{user.email}</p>
             {isOwner && (

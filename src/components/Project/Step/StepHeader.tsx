@@ -3,10 +3,12 @@ import { Button, Card, CardBody, Typography } from "@material-tailwind/react";
 import { intStep } from "../../../services/interfaces/intProject";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ModifiableInput from "../Buttons/ModifiableInput";
+import ModifiableInput from "../elements/Input/ModifiableInput";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
-import SelectDate from "../Buttons/SelectEstimDate";
+import SelectDate from "../elements/Select/SelectDate";
+import { useNavigate, useParams } from "react-router-dom";
+import { deleteStepFromBDD, modifyStepToBDD } from "../../../services/api/steps";
 
 type Props = {
   isOwner: boolean;
@@ -16,15 +18,16 @@ type Props = {
 
 export default function StepHeader({ isOwner, step, setStep }: Props) {
   console.log("StepHeaderComposant");
+  const navigate = useNavigate();
+  const {idStep, idProject} = useParams();
 
-  function handleDelete() {
-    setStep({
-      name: "",
-      description: "",
-      budget: 0,
-      estimEndDate: new Date(),
-      id: 0,
-    });
+  async function handleDeleteStep() {
+    await deleteStepFromBDD(idStep)
+    navigate('/project/' + idProject)
+  }
+
+  function handleModifyStep(data:intStep){
+    modifyStepToBDD(idStep, data)
   }
 
   // Render
@@ -34,7 +37,7 @@ export default function StepHeader({ isOwner, step, setStep }: Props) {
         <div className="b1-header-title shrink-0">
           <h1>{step.name}</h1>
         </div>
-        <Button onClick={() => handleDelete()}>
+        <Button onClick={() => handleDeleteStep()}>
           <FontAwesomeIcon icon={faXmark} size="xl" />
           <a className="ml-5">Supprimer le jalon</a>
         </Button>
@@ -61,10 +64,11 @@ export default function StepHeader({ isOwner, step, setStep }: Props) {
               state={step}
               setState={setStep}
               isOwner={isOwner}
+              handleBdd={handleModifyStep}
             />
           </div>
           <div className="basis-1/2 ">
-            <SelectDate state={step} setState={setStep} />
+            <SelectDate state={step} setState={setStep} handleBdd={handleModifyStep} />
           </div>
         </div>
       </div>

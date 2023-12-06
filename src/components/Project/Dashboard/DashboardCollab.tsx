@@ -73,7 +73,7 @@ export default function DashboardCollab({ collabs }: Props) {
               />
             ))}
           </ul>
-          <Link to={"/project/" + (selected + 1)}>
+          <Link to={"/project/" + collabs[selected].id}>
             <Button>Ouvrir le projet</Button>
           </Link>
         </div>

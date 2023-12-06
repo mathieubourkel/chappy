@@ -24,11 +24,10 @@ export default function MembersPage({ isOwner }: Props) {
       setMember(result)
       setProject(tmpProj)
     }
-
     getMembers();
     
   }, [idProject]);
-
+  console.log(members)
   return (
     <main className="project-page sm:mx-20 mx-5">
       <ProjectHeader project={project} idProject={idProject}/>
@@ -43,13 +42,14 @@ export default function MembersPage({ isOwner }: Props) {
         )}
       </section>
       <ul className="mt-5">
-        {members.map((_member: intMember, index: number) => (
+        {members.map((member: intMember, index: number) => (
           <MemberCard
             key={index}
-            setMember={setMember}
-            members={members}
-            index={index}
             isOwner={isOwner}
+            member={member}
+            members={members}
+            setMember={setMember}
+            index={index}
           />
         ))}
       </ul>
