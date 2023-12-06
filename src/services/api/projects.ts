@@ -27,7 +27,7 @@ export async function getProjectsFromUsers(idUser:string |null) {
 export async function getProjectById(idProject:string | undefined) {
     
     try {
-        const {data} = await api.get('projects/'+ idProject + '?populate[0]=project_steps');
+        const {data} = await api.get('projects/'+ idProject + '?populate[0]=project_steps&populate[1]=user');
         return data.data;
     } catch (error) {
         return error

@@ -1,18 +1,16 @@
 import { faChartPie } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Typography } from "@material-tailwind/react";
-import { intProjects, intStep } from "../../../services/interfaces/intProject";
+import { intStep } from "../../../services/interfaces/intProject";
 import AccederButton from "../elements/Buttons/AccederButton";
 import { Link } from "react-router-dom";
 
 type Props = {
     step: intStep,
-    projects: intProjects,
-    index:number
     idProject: number | undefined
 }
 
-export default function DashboardStepCard({step, idProject}:Props) {
+export default function DashboardCollabStepCard({step, idProject}:Props) {
   return (
     <li
       className="md:flex justify-between mb-5 gap-5
