@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { intLogin } from "../../services/interfaces/intLogin";
 import {
   Button,
@@ -12,12 +13,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { login } from "../../services/api/auth";
 import { useNavigate } from "react-router-dom";
+import ContextIsLogged from "../../context/ContextIsLogged";
+import { useContext } from "react";
 
-type Props = {
-  setIsLogged: (bool:boolean) => void;
-}
-
-export default function FormLogin({setIsLogged}:Props) {
+export default function FormLogin() {
+  const {setIsLogged}:any = useContext(ContextIsLogged)
   const navigate  = useNavigate()
   const validationLogin = Yup.object({
     email: Yup.string()

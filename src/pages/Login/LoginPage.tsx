@@ -7,10 +7,9 @@ import {NavLink} from "react-router-dom";
 
 type Props = {
   handleSubmitLogin: (element:string) => void;
-  setIsLogged: (bool: boolean) => void;
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function LoginPage({handleSubmitLogin, setIsLogged}:Props) {
+export default function LoginPage({handleSubmitLogin}:Props) {
   return (
     <main className={"sm:mx-20 mx-5 flex flex-col justify-center items-center"}>
         <section className={"flex flex-col gap-y-3"}>
@@ -21,7 +20,7 @@ export default function LoginPage({handleSubmitLogin, setIsLogged}:Props) {
                 Se connecter
             </Typography>
 
-                <FormLogin setIsLogged={setIsLogged}/>
+                <FormLogin />
 
             <div className={"flex gap-x-2 mt-2 m-auto"}>
                 <Typography

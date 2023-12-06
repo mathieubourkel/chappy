@@ -22,15 +22,18 @@ import { NavbarConnected } from "./components/Layers/Navbar/NavbarConnected.tsx"
 import { NavbarVisitor } from "./components/Layers/Navbar/NavbarVisitor.tsx";
 import { Sidebar } from "./components/Layers/Sidebar/Sidebar.tsx";
 import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
+import ScrollToTop from "./services/utils/ScrollToTop.tsx";
+import PublicRoute from "./services/utils/PublicRoute.tsx";
+import ContextIsLogged from "./context/ContextIsLogged.tsx";
 
 export default function App() {
-  console.log("AppComposant")
+  console.log("AppComposant");
   const [logins, setLogin] = useState<Array<string>>([]);
-  const isOwner = true;
-  const token = localStorage.getItem('token')
-  let trueOrFalse;
-  token ? trueOrFalse = true : trueOrFalse = false;
-  const [isLogged, setIsLogged] = useState(trueOrFalse)
+  const token = localStorage.getItem("token");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [isLogged, setIsLogged] = useState<any>(false)
+  token && !isLogged && setIsLogged(true)
+
   function handleSubmitLogin(login: string) {
     setLogin([...logins, login]);
   }
@@ -38,40 +41,69 @@ export default function App() {
   const [open, setOpen] = useState(false);
 
   function toggleSidebar() {
-    open ? setOpen(false) : setOpen(true)
+    open ? setOpen(false) : setOpen(true);
   }
 
   return (
-    <>
-      <header>{isLogged ? <><NavbarConnected toggleSidebar={toggleSidebar} /><Sidebar openSidebar={open} toggleSidebar={toggleSidebar} /></> : <NavbarVisitor />}
+    <ContextIsLogged.Provider value={{isLogged, setIsLogged}}>
+      <header>
+        {isLogged ? (
+          <>
+            <NavbarConnected toggleSidebar={toggleSidebar} />
+            <Sidebar openSidebar={open} toggleSidebar={toggleSidebar} />
+          </>
+        ) : (
+          <NavbarVisitor />
+        )}
       </header>
+      <ScrollToTop>
+        <Routes>
+          <Route element={<PublicRoute />}>
+            <Route path="/" element={<HomePage />} />
+            <Route
+              path="/login"
+              element={
+                <LoginPage
+                  handleSubmitLogin={handleSubmitLogin}
+                />
+              }
+            />
+            <Route path="/signup" element={<SignupPage />} />
+          </Route>
 
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/login"
-          element={<LoginPage setIsLogged={setIsLogged} handleSubmitLogin={handleSubmitLogin}/>}
-        />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/create-project" element={<CreateProjectPage />} />
-        <Route element={<PrivateRoute/>}>
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/calendar" element={<CalendarPage />} />
-          <Route path="/project/:idProject" element={<ProjectPage isOwner={isOwner}/>} />
-          <Route path="/project/:idProject/documents" element={<DocumentsPage  isOwner={isOwner}/>} />
-          <Route path="/project/:idProject/purchases" element={<PurchasesPage  isOwner={isOwner}/>} />
-          <Route path="/project/:idProject/members" element={<MembersPage isOwner={isOwner}/>} />
-          <Route path="/project/:idProject/step/:idStep" element={<StepPage isOwner={isOwner} />} />
-          <Route path="/profile/" element={<UserProfilePage />} />
-        </Route>
-        <Route path="/legal-mentions" element={<LegalMentionsPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact-us" element={<ContactUsPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+          <Route element={<PrivateRoute />}>
+            <Route path="/create-project" element={<CreateProjectPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/project/:idProject" element={<ProjectPage />} />
+            <Route
+              path="/project/:idProject/documents"
+              element={<DocumentsPage />}
+            />
+            <Route
+              path="/project/:idProject/purchases"
+              element={<PurchasesPage />}
+            />
+            <Route
+              path="/project/:idProject/members"
+              element={<MembersPage />}
+            />
+            <Route
+              path="/project/:idProject/step/:idStep"
+              element={<StepPage />}
+            />
+            <Route path="/profile/" element={<UserProfilePage />} />
+          </Route>
+
+          <Route path="/legal-mentions" element={<LegalMentionsPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact-us" element={<ContactUsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </ScrollToTop>
       <footer>
         <Footer />
       </footer>
-    </>
+      </ContextIsLogged.Provider>
   );
 }
