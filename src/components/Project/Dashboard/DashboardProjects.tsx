@@ -4,13 +4,18 @@ import {
   intStep,
 } from "../../../services/interfaces/intProject";
 import StepCard from "../Cards/StepCard";
-import { faBan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBan, faCircleExclamation
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Dash.css";
 import { useState } from "react";
 import CreateButton from "../elements/Buttons/CreateButton";
-import { Link } from "react-router-dom";
-import { Button } from "@material-tailwind/react";
+import OpenButton from "../elements/Buttons/OpenButton";
+import {Link} from "react-router-dom";
+import {
+  Alert, Typography
+} from "@material-tailwind/react";
 
 type Props = {
   projects: intProjects;
@@ -25,10 +30,8 @@ export default function DashboardProjects({ projects }: Props) {
   }
 
   return (
-    <section className="bloc-2 my-40">
-      <div className="b2-header-title">
+    <section className="my-40">
         <h2>Mes projets</h2>
-      </div>
 
       {projects.length > 0 ? (
         <div>
@@ -46,9 +49,12 @@ export default function DashboardProjects({ projects }: Props) {
                 </button>
               ))}
             </div>
-            <div className="md:flex justify-end basis-1/4">
+            <div className="flex justify-end basis-1/4 gap-5">
+              <Link to={"/project/" + projects[selected].id}>
+                <OpenButton value="Ouvrir le projet" />
+              </Link>
               <Link to="/create-project">
-                <CreateButton value="Créer" />
+                <CreateButton value="Nouveau projet" />
               </Link>
             </div>
           </div>
@@ -60,22 +66,38 @@ export default function DashboardProjects({ projects }: Props) {
                 idProject={projects[selected].id}
               />
             ))}
+            {projects[selected].project_steps.length == 0 &&
+                <Alert
+                icon={<FontAwesomeIcon icon={faCircleExclamation} className={"text-brick-400 text-xl"}/>}
+                className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5"
+            >
+              Vous n'avez aucun jalon,
+
+                  <Typography
+                    variant="paragraph"
+                    className={"inline-block font-semibold text-brick-400 hover:text-marine-300 underline underline-offset-4 decoration-marine-300 hover:decoration-brick-300 cursor-pointer"}
+                >
+                  <Link to={"/project/" + projects[selected].id}>
+                    créer votre premier jalon.
+                  </Link>
+                </Typography>
+            </Alert> }
           </div>
-          <Link to={"/project/" + projects[selected].id}>
-            <Button>Ouvrir le projet</Button>
-          </Link>
+
         </div>
       ) : (
         <div>
           <div className="flex justify-end">
             <Link to="/create-project">
-              <CreateButton value="Créer" />
+              <CreateButton value="Nouveau projet" />
             </Link>
           </div>
-          <div className="bg-white flex items-center rounded-xl mt-10 p-5 gap-5">
-            <FontAwesomeIcon icon={faBan} />
-            <p>Aucun projet en cours</p>
-          </div>
+          <Alert
+              icon={<FontAwesomeIcon icon={faBan} className={"text-marine-300 text-xl"}/>}
+              className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5"
+          >
+            Aucun projet en cours.
+          </Alert>
         </div>
       )}
     </section>

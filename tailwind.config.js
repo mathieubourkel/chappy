@@ -16,6 +16,11 @@ module.exports = withMT({
             sans: ["Montserrat", "sans-serif"],
         },
 
+        dropShadow: {
+            100: "1px 0.5px 1px" +
+                " rgb(30,29,34, 0.2)",
+        },
+
         colors: {
             light: {
                 100: "rgb(255,255,255, 1)",
@@ -26,7 +31,6 @@ module.exports = withMT({
                 200: "rgb(30,29,34, 0.2)",
             },
             brick: {
-                DEFAULT: "rgba(126,55,47,0.4)",
                 100: "rgb(126,55,47, 0.2)",
                 200: "rgba(126,55,47,0.4)",
                 300: "rgb(126,55,47, 1)", // Couleur primaire

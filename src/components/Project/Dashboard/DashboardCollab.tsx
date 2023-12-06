@@ -4,12 +4,17 @@ import {
   intProjects,
   intStep,
 } from "../../../services/interfaces/intProject";
-import { faBan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBan,
+} from "@fortawesome/free-solid-svg-icons";
 import "./Dash.css";
 import { useState } from "react";
 import RejoinModal from "../Modals/RejoinModal";
 import DemandsModal from "../Modals/DemandsModal";
-import { Button } from "@material-tailwind/react";
+import {
+  Alert,
+  Button
+} from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import DashboardCollabStepCard from "../Cards/DashboardCollabStepCard";
 
@@ -73,10 +78,12 @@ export default function DashboardCollab({ collabs }: Props) {
             <RejoinModal value="Rejoindre" />
           </div>
 
-          <div className="bg-white flex items-center rounded-xl mt-10 p-5 gap-5">
-            <FontAwesomeIcon icon={faBan} />
-            <p>Aucun projet rejoint</p>
-          </div>
+          <Alert
+              icon={<FontAwesomeIcon icon={faBan} className={"text-marine-300 text-xl"}/>}
+              className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5"
+          >
+            Aucun projet rejoint.
+          </Alert>
         </div>
       )}
     </section>
