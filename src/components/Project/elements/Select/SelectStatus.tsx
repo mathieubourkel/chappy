@@ -1,67 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Select, Option, Typography } from "@material-tailwind/react";
-import { Status } from "../../../../services/interfaces/Status";
+import { enumStatus } from "../../../../services/interfaces/Status";
+import ReactSelect from "react-select";
+import makeAnimated from "react-select/animated";
+import { intSelect } from "../../../../services/interfaces/intProject";
+import { useEffect, useState } from "react";
 
 type Props = {
-  state?: Array<any> | any;
-  classState: string;
-  isOwner: boolean;
-  index?: number | undefined;
-  handleBdd: (element:any) => void;
+  classState?: string;
+  handleStatus: (status: intSelect) => void;
+  value?: intSelect;
 };
 
-export default function SelectStatus(props: Props) {
-  const { state, classState, isOwner, index, handleBdd } = props;
-
-  let selected: string | undefined = Status[0];
-
-  if (typeof index !== "undefined" && typeof state.status == "number") {
-    selected = Status[state[index].status];
+export default function SelectStatus({
+  handleStatus,
+  classState,
+  value,
+}: Props) {
+  console.log("SelectStatusCOmponent");
+  const animatedComponents = makeAnimated();
+  const [selected, setSelected] = useState<any>(value);
+  function handleStatusEnfant(value: intSelect) {
+    setSelected(value);
+    handleStatus(value);
   }
-  if (typeof index === "undefined" && typeof state.status == "string") {
-    selected = state.status;
-  } else if (typeof index === "undefined" && typeof state !== "undefined") {
-    selected = Status[state.status];
-  }
 
-  function handleSubmit(value: string | undefined) {
-    selected = value;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let tmpStatus:number = 0;
-    function handleCpabo(arg:number){
-       tmpStatus = arg;
-    }
-    
-    
-    selected == "En cours" && handleCpabo(0)
-    selected == "En attente" && handleCpabo(1)
-    selected == "Terminé" && handleCpabo(2)
-    const tmpData = {...state, status: tmpStatus}
-    handleBdd(tmpData)
-  }
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
 
   return (
     <div className={classState}>
-      {isOwner ? (
-        <Select
-          className="rounded-xl p-2 bg-white"
-          value={selected}
-          label="status"
-          name="status"
-          id="status"
-          onChange={(value: string | undefined) => handleSubmit(value)}
-        >
-          {Status.map((i: string, indexS: number) => (
-            <Option key={indexS} value={i}>
-              {i}
-            </Option>
-          ))}
-        </Select>
-      ) : (
-        <div className="flex w-full rounded-md bg-white">
-          <Typography className="p-2">{selected}</Typography>
-        </div>
-      )}
+      <ReactSelect
+        options={enumStatus}
+        className="rounded-xl"
+        placeholder="Status"
+        value={selected}
+        defaultValue={enumStatus[0]}
+        components={animatedComponents}
+        onChange={(value: any) => handleStatusEnfant(value)}
+      />
     </div>
   );
 }

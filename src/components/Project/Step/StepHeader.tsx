@@ -8,25 +8,42 @@ import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
 import SelectDate from "../elements/Select/SelectDate";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteStepFromBDD, modifyStepToBDD } from "../../../services/api/steps";
+import { deleteStepFromBDD, getStepById, modifyStepToBDD } from "../../../services/api/steps";
+import { useEffect, useState } from "react";
 
 type Props = {
   isOwner: boolean;
-  step: intStep;
-  setStep: (step: intStep) => void;
 };
-
-export default function StepHeader({ isOwner, step, setStep }: Props) {
-  console.log("StepHeaderComposant");
+let count = 1;
+export default function StepHeader({ isOwner }: Props) {
+  console.log("StepHeaderComposant" + count++);
   const navigate = useNavigate();
   const {idStep, idProject} = useParams();
 
-  async function handleDeleteStep() {
+  const [step, setStep] = useState<intStep>({
+    name: "",
+    description: "",
+    estimEndDate: new Date(),
+    budget: 0,
+    status:0,
+    project: {id:idProject}
+  });
+
+  useEffect(() => {
+    async function getInfoStep() {
+      const tmpStep = await getStepById(idStep);
+      setStep(tmpStep);
+    }
+    getInfoStep();
+
+  }, [idStep]);
+
+  const handleDeleteStep = async () => {
     await deleteStepFromBDD(idStep)
     navigate('/project/' + idProject)
   }
 
-  function handleModifyStep(data:intStep){
+  const handleModifyStep = (data:intStep) => {
     modifyStepToBDD(idStep, data)
   }
 

@@ -9,108 +9,97 @@ import {
   Typography,
   Input,
   Textarea,
-  Select,
-  Option
 } from "@material-tailwind/react";
 import {
   FormEvent,
   InputEvent,
-  intCategories,
-  intCategory,
   intMember,
+  intSelect,
   intTask,
 } from "../../../services/interfaces/intProject";
-import CreateButton from "../elements/Buttons/CreateButton";
 import Datepicker from "react-tailwindcss-datepicker";
-import { Status2 } from "../../../services/interfaces/Status";
 import { addTaskToStepToBDD } from "../../../services/api/tasks";
 import { useParams } from "react-router-dom";
 import { getMembersByProject } from "../../../services/api/users";
 import ReactSelect from "react-select";
 import makeAnimated from "react-select/animated";
-import { getCategories } from "../../../services/api/category";
+import CreateButton from "../elements/Buttons/CreateButton";
+import SelectCategory from "../elements/Select/SelectCategory";
+import SelectStatus from "../elements/Select/SelectStatus";
 
 type Props = {
-  handleReload:any
+  handleReload: () => void;
+  categories: Array<intSelect>;
 };
-type intSelect = {
-  value: number;
-  label: string;
-};
-
-export default function StepCreateTask({ handleReload }: Props) {
-  const {idStep, idProject} = useParams()
-  const [open, setOpen] = useState(false);
-  const userId = localStorage.getItem('id')
+let count = 1;
+export default function StepCreateTask({ handleReload, categories }: Props) {
+  console.log("StepCreateTaskComponent" + count++);
+  const { idStep, idProject } = useParams();
+  const userId = localStorage.getItem("id");
   const animatedComponents = makeAnimated();
+
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  let tmpStatus: number = 0;
-  let tmpCat: number = 1;
-  const tmpDates: any = {startDate: new Date(), endDate: new Date()}
-  const [usersState, setUsers] = useState<Array<intSelect>>([]);
-  const [categories, setCategorie] = useState<intCategories>([]);
+
+  const [users, setUsers] = useState<Array<intSelect>>([]);
+
   const [form, setForm] = useState<intTask>({
     name: "",
     description: "",
-    category: { id: 1, name:undefined },
+    category: { id: 1, name: "" },
     startDate: new Date(),
     endDate: new Date(),
     status: 0,
     // comments: [],
-    users: [{id:undefined}],
-    user: {id: userId},
-    project_step: {id:idStep}
+    users: [],
+    user: { id: userId },
+    project_step: { id: idStep },
   });
 
   useEffect(() => {
     async function getUsers() {
-      const result = await getMembersByProject(idProject);
-      console.log(result)
-      const cats = await getCategories();
-      const emailArray: Array<intSelect> = [];
-      result.map((element: intMember) => {
-        emailArray.push({ label: element.email, value: element.id });
+      const dataUsers = await getMembersByProject(idProject);
+      // Reformatage pour le React Select {value: , label: }
+      const dataUsersReformat: Array<intSelect> = [];
+      dataUsers.map((element: intMember) => {
+        dataUsersReformat.push({ label: element.email, value: element.id });
       });
-      setUsers(emailArray);
-      setCategorie(cats)
+      setUsers(dataUsersReformat);
     }
     getUsers();
   }, []);
 
-  function handleChange(e: InputEvent) {
+  const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
-  }
+  };
 
-  async function handleSubmit(e: FormEvent) {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await addTaskToStepToBDD(form)
-    handleReload()
-  }
+    await addTaskToStepToBDD(form);
+    handleOpen();
+    handleReload();
+  };
 
-  function handleUsers(value: Array<intSelect>) {
+  const handleUsers = (value: Array<intSelect>) => {
     const goodArray: Array<{ id: number }> = [];
     value.map((element: intSelect) => {
       goodArray.push({ id: element.value });
     });
     setForm({ ...form, users: goodArray });
-  }
+  };
 
   const handleDate = (value: any) => {
     setForm({ ...form, startDate: value.startDate, endDate: value.endDate });
-    tmpDates.startDate = value.startDate
-    tmpDates.endDate = value.endDate
   };
 
-  function handleStatus(value: number) {
-    tmpStatus = value;
-    setForm({ ...form, status: value });
-  }
+  const handleStatus = (value: intSelect) => {
+    setForm({ ...form, status: value.value });
+  };
 
-  function handleCategorie(value: number) {
-    tmpCat = value;
-    setForm({ ...form, category: {id:value, name: categories[value - 1].name} });
-  }
+  const handleCategory = (value: intSelect) => {
+    setForm({ ...form, category: { id: value.value, name: value.label } });
+  };
 
   return (
     <div>
@@ -143,58 +132,40 @@ export default function StepCreateTask({ handleReload }: Props) {
                 onChange={(e: any) => handleChange(e)}
               />
               <Input
-                  label="Budget"
-                  size="lg"
-                  crossOrigin={undefined}
-                  type="number"
-                  name="budget"
-                  id="budget"
-                  onChange={(e: InputEvent) => handleChange(e)}
-                />
-
-              <Select
-                className={"bg-light-100"}
-                name="status"
-                id="status"
-                value={tmpStatus.toString()}
-                label="Status"
+                label="Budget"
+                size="lg"
+                crossOrigin={undefined}
+                type="number"
+                name="budget"
+                id="budget"
+                onChange={(e: InputEvent) => handleChange(e)}
+              />
+              {/* <ReactSelect
+                options={enumStatus}
+                className="rounded-xl"
+                placeholder="Status"
+                defaultValue={enumStatus[0]}
+                components={animatedComponents}
                 onChange={(value: any) => handleStatus(value)}
-              >
-                {Status2.map(
-                  (i: { id: number; name: string }, index: number) => (
-                    <Option key={index} value={i.id.toString()}>
-                      {i.name}
-                    </Option>
-                  )
-                )}
-              </Select>
-              <Select
-                className={"bg-light-100"}
-                name="category"
-                id="category"
-                value={tmpCat.toString()}
-                label="Catégorie"
-                onChange={(value: any) => handleCategorie(value)}
-              >
-                {categories.map(
-                  (i: intCategory, index: number) => (
-                    <Option key={index} value={i.id.toString()}>
-                      {i.name}
-                    </Option>
-                  )
-                )}
-              </Select>
+              /> */}
+              <SelectStatus handleStatus={handleStatus} />
+
+              <SelectCategory
+                categories={categories}
+                handleCategory={handleCategory}
+              />
+
               <div className="sm:flex gap-3">
                 <Datepicker
                   inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
                   onChange={handleDate}
-                  value={tmpDates}
+                  value={{ startDate: form.startDate, endDate: form.endDate }}
                   inputName="rangeDate"
                   placeholder={"Choisir la durée de la tâche"}
                 />
               </div>
               <ReactSelect
-                options={usersState}
+                options={users}
                 className="rounded-xl"
                 isMulti
                 placeholder="Inviter des membres sur votre projet"
@@ -203,7 +174,7 @@ export default function StepCreateTask({ handleReload }: Props) {
               />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
-              <Button variant="gradient" onClick={handleOpen} type="submit">
+              <Button variant="gradient" type="submit">
                 Créer
               </Button>
             </CardFooter>

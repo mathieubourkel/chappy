@@ -16,7 +16,7 @@ export async function getTasksByStep(idStep:string | undefined) {
 export async function getTaskById(idTask:number | undefined) {
     
     try {
-        const {data} = await api.get('step-tasks/' + idTask + '?populate[0]=users');
+        const {data} = await api.get('step-tasks/' + idTask +'?populate[0]=category&populate[1]=users&populate[2]=user');
         return data.data;
     } catch (error) {
         return error

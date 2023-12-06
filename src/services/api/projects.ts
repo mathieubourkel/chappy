@@ -3,7 +3,7 @@ import { useApi } from "../../hooks/useApi";
 import { intProject } from "../interfaces/intProject";
 const api = useApi();
 
-export async function getProjectsFromOwner(idUser:number) {
+export async function getProjectsFromOwner(idUser:string |null) {
     
     try {
         const {data} = await api.get('projects?populate[user][fields]=id&filters[user][id][$eq]='+ idUser +'&populate[project_steps]=*');
@@ -14,7 +14,7 @@ export async function getProjectsFromOwner(idUser:number) {
     }
 }
 
-export async function getProjectsFromUsers(idUser:number) {
+export async function getProjectsFromUsers(idUser:string |null) {
     
     try {
         const {data} = await api.get('projects?populate[users][fields]=id&filters[users][id][$eq]='+ idUser +'&populate[project_steps]=*');

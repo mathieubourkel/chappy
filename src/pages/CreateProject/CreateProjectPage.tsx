@@ -4,8 +4,6 @@ import {
   Textarea,
   Typography,
   Button,
-  Select,
-  Option,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -23,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { getAllCompanies, getAllUsers } from "../../services/api/users";
 import ReactSelect from "react-select";
 import makeAnimated from "react-select/animated";
-import { Status2 } from "../../services/interfaces/Status";
+import { enumStatus } from "../../services/interfaces/Status";
 
 type intSelect = {
   value: number;
@@ -34,7 +32,6 @@ export default function CreateProjectPage() {
   console.log("CreateProjectPage");
   const userId = localStorage.getItem('id')
   const animatedComponents = makeAnimated();
-  let tmpStatus: number = 0;
   const navigate = useNavigate();
   const [users, setUsers] = useState<Array<intSelect>>([]);
   const [companies, setCompanies] = useState<Array<intSelect>>([]);
@@ -85,10 +82,9 @@ export default function CreateProjectPage() {
     setForm({ ...form, companies: goodArray });
   }
 
-  function handleStatus(value: number) {
-    tmpStatus = value;
-    setForm({ ...form, status: value });
-  }
+  const handleStatus = (value: intSelect) => {
+    setForm({ ...form, status: value.value });
+  };
 
   function handleChange(e: InputEvent) {
     const { name, value } = e.target;
@@ -155,22 +151,14 @@ export default function CreateProjectPage() {
               />
             </div>
             <div className="sm:flex gap-5 mb-5">
-              <Select
-                className={"bg-light-100"}
-                name="status"
-                id="status"
-                value={tmpStatus.toString()}
-                label="Status"
+            <ReactSelect
+                options={enumStatus}
+                className="rounded-xl"
+                placeholder="Status"
+                defaultValue={enumStatus[0]}
+                components={animatedComponents}
                 onChange={(value: any) => handleStatus(value)}
-              >
-                {Status2.map(
-                  (i: { id: number; name: string }, index: number) => (
-                    <Option key={index} value={i.id.toString()}>
-                      {i.name}
-                    </Option>
-                  )
-                )}
-              </Select>
+              />
               <Datepicker
                 inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
                 onChange={handleDate}
