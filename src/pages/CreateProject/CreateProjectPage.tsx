@@ -102,7 +102,7 @@ export default function CreateProjectPage() {
   };
 
   return (
-    <main className="project-page sm:mx-20 mx-5">
+    <main className="project-page sm:mx-20 mx-5 mt-10">
       <Typography variant="h1" className={"font-bold text-center"}>
         Créer un projet
       </Typography>
@@ -151,6 +151,7 @@ export default function CreateProjectPage() {
               />
             </div>
             <div className="sm:flex gap-5 mb-5">
+              <div className='w-full'>
             <ReactSelect
                 options={enumStatus}
                 className="rounded-xl"
@@ -159,6 +160,8 @@ export default function CreateProjectPage() {
                 components={animatedComponents}
                 onChange={(value: any) => handleStatus(value)}
               />
+              </div>
+              <div className="w-full">
               <Datepicker
                 inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
                 onChange={handleDate}
@@ -171,6 +174,7 @@ export default function CreateProjectPage() {
                 inputName="rangeDate"
                 placeholder={"Choisir la date de fin estimée du projet"}
               />
+              </div>
             </div>
             <div className="my-5">
               <ReactSelect

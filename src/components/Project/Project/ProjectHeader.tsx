@@ -12,7 +12,6 @@ type Props = {
 
 export default function ProjectHeader({project ,idProject} :Props) {
   console.log("ProjectHeaderComposant")
-  // Render
   return (
       <section className="b1-header lg:flex justify-between">
         <div className="b1-header-title shrink-0">
