@@ -1,4 +1,8 @@
-import {intProject,intProjects,intStep} from "../../../services/interfaces/intProject";
+import {
+  intProject,
+  intProjects,
+  intStep,
+} from "../../../services/interfaces/intProject";
 import StepCard from "../Cards/StepCard";
 import { faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,7 +17,7 @@ type Props = {
 };
 
 export default function DashboardProjects({ projects }: Props) {
-  console.log("DashBoardProjectsComposant")
+  console.log("DashBoardProjectsComposant");
   const [selected, setSelected] = useState(0);
 
   function handleClick(index: number) {
@@ -31,25 +35,15 @@ export default function DashboardProjects({ projects }: Props) {
           <div className="flex">
             <div className="ml-20 md:flex justify-center basis-3/4 ">
               {projects.map((project: intProject, index: number) => (
-                <div key={index}>
-                  {index === selected ? (
-                    <button
-                      key={index}
-                      onClick={() => handleClick(index)}
-                      className="text-brick-300 px-10 rounded-none border-0 border-b-2 border-b-brick-300"
+                <button
+                  key={index}
+                  onClick={() => handleClick(index)}
+                  className={
+                    "text-brick-300 px-10 rounded-none border-0 border-b-2 border-b-brick-200 " +
+                    (index === selected && "border-b-brick-300 selected")}
                     >
-                      <div className="selected ">{project.name}</div>
-                    </button>
-                  ) : (
-                    <button
-                      key={index}
-                      onClick={() => handleClick(index)}
-                      className="text-brick-300 px-10 rounded-none border-0 border-b-2 border-b-brick-200"
-                    >
-                      <div>{project.name}</div>
-                    </button>
-                  )}
-                </div>
+                  {project.name}
+                </button>
               ))}
             </div>
             <div className="md:flex justify-end basis-1/4">
@@ -59,8 +53,12 @@ export default function DashboardProjects({ projects }: Props) {
             </div>
           </div>
           <div className="flex flex-wrap gap-10">
-            {projects[selected].project_steps.map((step: intStep, index: number) => (
-              <StepCard step={step} key={index} idProject={projects[selected].id} />
+            {projects[selected].project_steps.map((step: intStep) => (
+              <StepCard
+                step={step}
+                key={step.id}
+                idProject={projects[selected].id}
+              />
             ))}
           </div>
           <Link to={"/project/" + projects[selected].id}>

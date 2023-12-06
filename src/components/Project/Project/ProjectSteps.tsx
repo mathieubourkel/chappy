@@ -34,8 +34,8 @@ export default function ProjectSteps({handleReload, isOwner, project, setProject
         </div>
       </div>
       <div className="b2-body flex flex-wrap gap-10 mt-10">
-        {project.project_steps.map((step: intStep, index: number) => (
-          <StepCard key={index} step={step} idProject={project.id} />
+        {project.project_steps.map((step: intStep) => (
+          <StepCard key={step.id} step={step} idProject={project.id} />
         ))}
       </div>
     </section>
