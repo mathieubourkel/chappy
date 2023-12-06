@@ -4,11 +4,7 @@ import { intComments } from "../../services/interfaces/intProject";
 import EspaceComment from "../../components/Project/Comments/EspaceComment";
 import StepHeader from "../../components/Project/Step/StepHeader";
 
-type Props = {
-  isOwner: boolean;
-};
-
-export default function StepPage({ isOwner }: Props) {
+export default function StepPage() {
   console.log("StepPage");
 
   //temp
@@ -20,8 +16,8 @@ export default function StepPage({ isOwner }: Props) {
 
   return (
     <main className="project-page sm:mx-20 mx-5">
-      <StepHeader isOwner={isOwner} />
-      <StepTasks isOwner={isOwner} />
+      <StepHeader />
+      <StepTasks />
       <EspaceComment comments={comments} setComment={setComment} />
     </main>
   );

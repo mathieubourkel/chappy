@@ -7,7 +7,7 @@ import AccederButton from "../elements/Buttons/AccederButton";
 
 type Props = {
   step: intStep;
-  idProject:number | undefined
+  idProject:number | undefined | string
 };
 
 export default function StepCard({ step, idProject }: Props) {

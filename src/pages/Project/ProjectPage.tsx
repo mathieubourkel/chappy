@@ -36,9 +36,6 @@ export default function ProjectPage() {
     estimEndDate: new Date(),
   });
 
-  const [reload, setReload] = useState(false);
-  const handleReload = () => setReload((bool) => !bool);
-
   useEffect(() => {
     async function getProject() {
       const result = await getProjectById(idProject);
@@ -48,31 +45,29 @@ export default function ProjectPage() {
     }
 
     getProject();
-  }, [idProject, reload, idUser]);
+  }, [idProject, idUser]);
 
   async function handleDelete() {
     await deleteProjectFromBDD(idProject);
   }
 
   return (
-    <main className="project-page sm:mx-20 mx-5 mt-20">
+    <main className="project-page sm:mx-20 mx-5 mt-10">
       {busy ? (
         <div className="flex justify-center mt-20">
           <Spinner className="h-16 w-16 text-gray-900/50" />
         </div>
       ) : (
         <>
-          <ProjectHeader project={project} idProject={idProject} />
+          <ProjectHeader isOwner={isOwner} project={project} idProject={idProject} />
           <ProjectDesc
             project={project}
             setProject={setProject}
             isOwner={isOwner}
           />
           <ProjectSteps
-            handleReload={handleReload}
-            project={project}
+            idProject={idProject}
             isOwner={isOwner}
-            setProject={setProject}
           />
           <EspaceComment comments={comments} setComment={setComment} />
           <div className="flex justify-end mb-10">

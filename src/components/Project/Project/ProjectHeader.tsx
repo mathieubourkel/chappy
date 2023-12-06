@@ -8,15 +8,17 @@ import { intProjectLight } from "../../../services/interfaces/intProject";
 type Props = {
   project: intProjectLight
   idProject: string | undefined
+  isOwner: boolean
 }
 
-export default function ProjectHeader({project ,idProject} :Props) {
+export default function ProjectHeader({project ,idProject, isOwner} :Props) {
   console.log("ProjectHeaderComposant")
   return (
       <section className="b1-header lg:flex justify-between">
         <div className="b1-header-title shrink-0">
           <h1>{project.name}</h1>
         </div>
+        {isOwner && 
         <div className="b1-header-buttons flex gap-5 items-center">
           <ProjectDisplayCode />
           <Link to={"/project/"+ idProject + "/members"}>
@@ -40,7 +42,7 @@ export default function ProjectHeader({project ,idProject} :Props) {
               <div className="hidden whitespace-nowrap md:flex">Mes achats</div>
             </Button>
           </Link>
-        </div>
+        </div>}
       </section>
 
   );
