@@ -22,26 +22,19 @@ import {
 import Datepicker from "react-tailwindcss-datepicker";
 import { modifyTaskToBDD } from "../../../services/api/tasks";
 import SelectCategory from "../elements/Select/SelectCategory";
-import { enumStatus } from "../../../services/interfaces/Status";
 import SelectStatus from "../elements/Select/SelectStatus";
+import { enumStatus } from "../../../services/interfaces/Status";
 
 type Props = {
   task: intTask;
   categories: Array<intSelect>;
-  selected: intSelect | undefined
-  setSelected: (elem:intSelect) => void;
+  setTask: (task: intTask) => void;
 };
 
 let count = 1;
-export default function StepModifyTask({
-  task,
-  categories,
-  selected,
-  setSelected,
-}: Props) {
+export default function StepModifyTask({ task, categories, setTask }: Props) {
   console.log("StepModifyTask" + count++);
   const [form, setForm] = useState<intTask>(task);
-  console.log(task);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 
@@ -59,13 +52,13 @@ export default function StepModifyTask({
   };
   const handleStatus = (value: intSelect) => {
     setForm({ ...form, status: value.value });
-    setSelected(value)
+    // setSelected(value)
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     await modifyTaskToBDD(task.id, form);
-    setSelected(enumStatus[form.status]);
+    setTask(form);
   };
 
   return (
@@ -115,7 +108,7 @@ export default function StepModifyTask({
               />
               <SelectStatus
                 handleStatus={handleStatus}
-                defaultValue={selected}
+                value={enumStatus[task.status]}
               />
 
               <div className="sm:flex gap-3">

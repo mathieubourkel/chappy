@@ -11,11 +11,13 @@ export default function DashboardPage() {
   const [projects, setProject] = useState<intProjects>([]);
   const nbProj = collabs.length + projects.length
 
+  const idUser = localStorage.getItem('id');
+
   useEffect(() => {
 
     async function getProjects() {
-      const projectss = await getProjectsFromOwner(2);
-      const collabss = await getProjectsFromUsers(2);
+      const projectss = await getProjectsFromOwner(idUser);
+      const collabss = await getProjectsFromUsers(idUser);
       setCollab(collabss)
       setProject(projectss)
     }

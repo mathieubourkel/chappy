@@ -40,8 +40,7 @@ export default function TaskCard({ id, handleReload, categories }: Props) {
     users: [],
     user: { id: 0 },
   });
-  console.log(task);
-  const [selected, setSelected] = useState<intSelect>();
+
   const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
@@ -49,7 +48,6 @@ export default function TaskCard({ id, handleReload, categories }: Props) {
       const result = await getTaskById(id);
       result.user.id == userId && setIsOwner(true);
       setTask(result);
-      setSelected(enumStatus[result.status]);
     }
     getTask();
   }, [id, userId]);
@@ -70,7 +68,7 @@ export default function TaskCard({ id, handleReload, categories }: Props) {
   const handleStatus = async (values: intSelect) => {
     const data = { ...task, status: values.value };
     await modifyTaskToBDD(task.id, data);
-    setSelected(values);
+    setTask(data)
   };
 
   return (
@@ -95,7 +93,7 @@ export default function TaskCard({ id, handleReload, categories }: Props) {
             <form>
               <SelectStatus
                 handleStatus={handleStatus}
-                defaultValue={selected}
+                value={enumStatus[task.status]}
               />
             </form>
 
@@ -103,8 +101,7 @@ export default function TaskCard({ id, handleReload, categories }: Props) {
               <StepModifyTask
                 task={task}
                 categories={categories}
-                selected={selected}
-                setSelected={setSelected}
+                setTask={setTask}
               />
               <DeleteButton handleDeleteBDD={handleDeleteTask} />
             </div>

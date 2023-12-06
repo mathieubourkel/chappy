@@ -18,7 +18,6 @@ import {
   intTask,
 } from "../../../services/interfaces/intProject";
 import Datepicker from "react-tailwindcss-datepicker";
-import { enumStatus } from "../../../services/interfaces/Status";
 import { addTaskToStepToBDD } from "../../../services/api/tasks";
 import { useParams } from "react-router-dom";
 import { getMembersByProject } from "../../../services/api/users";
@@ -26,6 +25,7 @@ import ReactSelect from "react-select";
 import makeAnimated from "react-select/animated";
 import CreateButton from "../elements/Buttons/CreateButton";
 import SelectCategory from "../elements/Select/SelectCategory";
+import SelectStatus from "../elements/Select/SelectStatus";
 
 type Props = {
   handleReload: () => void;
@@ -140,14 +140,15 @@ export default function StepCreateTask({ handleReload, categories }: Props) {
                 id="budget"
                 onChange={(e: InputEvent) => handleChange(e)}
               />
-              <ReactSelect
+              {/* <ReactSelect
                 options={enumStatus}
                 className="rounded-xl"
                 placeholder="Status"
                 defaultValue={enumStatus[0]}
                 components={animatedComponents}
                 onChange={(value: any) => handleStatus(value)}
-              />
+              /> */}
+              <SelectStatus handleStatus={handleStatus} />
 
               <SelectCategory
                 categories={categories}

@@ -40,7 +40,7 @@ export default function StepTasks() {
   const handleReload = () => {
     setReload((cur) => !cur);
   };
-  console.log(categories)
+
   return (
     <section className="bloc-2 mb-40">
       <div className="b2-header flex justify-between items-center">
