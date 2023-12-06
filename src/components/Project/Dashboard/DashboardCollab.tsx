@@ -31,7 +31,7 @@ export default function DashboardCollab({ collabs }: Props) {
   }
 
   return (
-    <section className="bloc-2 my-40">
+    <section className="mt-10 mb-28">
       <div className="b2-header-title">
         <h2>Mes collaborations</h2>
       </div>

@@ -30,7 +30,7 @@ export default function DashboardProjects({ projects }: Props) {
   }
 
   return (
-    <section className="my-40">
+    <section className="md:mt-5 mt-10 mb-28">
         <h2>Mes projets</h2>
 
       {projects.length > 0 ? (
