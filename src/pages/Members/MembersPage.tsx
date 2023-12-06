@@ -37,7 +37,7 @@ export default function MembersPage() {
 
   return (
     <main className="project-page sm:mx-20 mx-5 mt-10">
-      <ProjectHeader project={project} idProject={idProject} />
+      <ProjectHeader isOwner={isOwner} project={project} idProject={idProject} />
       <section className="b2-header flex justify-between mt-20">
         <div>
           <h2>Les participants</h2>
