@@ -3,7 +3,12 @@ import * as Yup from "yup";
 import { intUsers } from "../../services/interfaces/intUser";
 import { Input } from "@material-tailwind/react";
 
-export default function FormUser() {
+  interface FormUserProps{
+    handleChange: (e: React.ChangeEvent<any>) => void;
+    values: intUsers;
+  }
+
+export default function FormUser(props: FormUserProps) {
   const validationUser = Yup.object({
     lastname: Yup.string().min(2, "Votre nom doit contenir au minimum 2 charactères").required("Ce champ est requis"),
     firstname: Yup.string().min(2).required("Ce champ est requis"),
@@ -16,7 +21,7 @@ export default function FormUser() {
     checkPassword: Yup.string().oneOf([Yup.ref('password')], 'Les mots de passe ne correspondent pas.').required("Ce champ est requis"),
   });
 
-  const {handleChange, handleSubmit, values, errors} = useFormik<intUsers>({
+  const {handleChange, values, errors} = useFormik<intUsers>({
     initialValues: {
       lastname: "",
       firstname: "",
@@ -36,9 +41,7 @@ export default function FormUser() {
 
   return (
       <article className="mt-5 m-auto">
-        <form
-          onSubmit={handleSubmit}
-        >
+        
           <div className="sm:flex sm:gap-x-5">
             <div className={"mb-5 w-full"}>
             <Input
@@ -173,7 +176,7 @@ export default function FormUser() {
             {errors.checkPassword && <small className={"text-brick-400 font-bold"}>{errors.checkPassword}</small>}
             </div>
           </div>
-        </form>
+    
       </article>
   );
 }
