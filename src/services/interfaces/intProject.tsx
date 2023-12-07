@@ -6,7 +6,7 @@ export interface intProject extends intProjectLight {
     status: number,
     project_steps: intSteps
     estimEndDate: Date | null
-    user: {id: string | number |undefined | null}
+    user: {id: string | number |undefined | null, firstName?: string, lastName?:string}
     users?: Array<{id:number | undefined }>
     companies?: Array<{id:number |undefined}>
 }

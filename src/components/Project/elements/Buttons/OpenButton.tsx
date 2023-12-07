@@ -26,7 +26,7 @@ export default function RejoinButton({value, onClick}: Props) {
             <Button className="flex items-center"
                     onClick={onClick}>
                 <FontAwesomeIcon icon={faFolderOpen} className={"text-sm"} />
-                <a className="pl-2 hidden md:flex">{value}</a>
+                <div className="pl-2 hidden md:flex">{value}</div>
             </Button>
         </Tooltip>
     );

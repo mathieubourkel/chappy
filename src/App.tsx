@@ -26,12 +26,12 @@ import ScrollToTop from "./services/utils/ScrollToTop.tsx";
 import PublicRoute from "./services/utils/PublicRoute.tsx";
 import ContextIsLogged from "./context/ContextIsLogged.tsx";
 
+
 export default function App() {
   console.log("AppComposant");
   const [logins, setLogin] = useState<Array<string>>([]);
   const token = localStorage.getItem("token");
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [isLogged, setIsLogged] = useState<any>(false)
+  const [isLogged, setIsLogged] = useState<boolean>(false)
   token && !isLogged && setIsLogged(true)
 
   function handleSubmitLogin(login: string) {

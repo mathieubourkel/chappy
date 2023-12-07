@@ -64,7 +64,7 @@ export default function DashboardCollab({ collabs }: Props) {
               <DashboardCollabStepCard
                 step={step}
                 key={step.id}
-                idProject={collabs[selected].id}
+                collab={collabs[selected]}
               />
             ))}
           </ul>
