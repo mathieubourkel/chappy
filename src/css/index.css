@@ -21,8 +21,10 @@
 
 :root {
     --bg-color: rgb(240,240,240,1);
-    --border-color: rgb(30,29,34, 0.2);
+    --border-color: rgba(30, 29, 34, 0.15);
+    --alt-border-color: rgba(30, 29, 34, 0.3);
     --input-color: rgba(126,55,47,1);
+    --border-card: rgba(119,125,149,0.8);
     --gradient: linear-gradient(90deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
     --alt-gradient: linear-gradient(90deg, rgba(126,55,47,1) 0%, rgba(47,44,54,1) 12%);
     --gradient-top: linear-gradient(0deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
@@ -112,6 +114,44 @@ h2:before {
     margin-right: 0.5em;
     margin-bottom: -0.5em;
 }
+
+h3 {
+    font-size : 1.4em !important;
+}
+
+p {
+    font-size: 0.9em!important;
+    line-height: 0.99 !important;
+}
+
+        /* Card */
+
+.custom-card {
+    border: 1px solid var(--border-color);
+    border-radius: 0.5em;
+    box-shadow: 1px 0.5px 1px rgb(30,29,34, 0.1);
+    border-bottom : 5px solid var(--border-card)
+}
+
+.custom-card-body {
+    height: 15lvh;
+}
+
+.custom-subt {
+    font-variant: all-small-caps;
+    color: var(--border-card);
+    opacity: 0.7;
+    font-weight: bolder;
+    font-size: 1.1em!important;
+
+}
+
+.custom-modal {
+    border: 1px solid var(--alt-border-color);
+    border-radius: 0.5em;
+    box-shadow: 1px 0.5px 1px rgb(30,29,34, 0.1);
+}
+
 
 
 

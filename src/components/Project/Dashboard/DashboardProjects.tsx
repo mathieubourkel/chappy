@@ -75,10 +75,10 @@ export default function DashboardProjects({ projects }: Props) {
 
                   <Typography
                     variant="paragraph"
-                    className={"inline-block font-semibold text-brick-400 hover:text-marine-300 underline underline-offset-4 decoration-marine-300 hover:decoration-brick-300 cursor-pointer"}
+                    className={"inline-block font-semibold text-brick-400 hover:text-marine-300 underline underline-offset-4 decoration-marine-300 hover:decoration-brick-300 cursor-pointer ml-1"}
                 >
                   <Link to={"/project/" + projects[selected].id}>
-                    créer votre premier jalon.
+                     créer votre premier jalon.
                   </Link>
                 </Typography>
             </Alert> }
@@ -100,6 +100,8 @@ export default function DashboardProjects({ projects }: Props) {
           </Alert>
         </div>
       )}
+
+
     </section>
   );
 }

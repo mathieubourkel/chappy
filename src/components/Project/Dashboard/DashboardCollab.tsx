@@ -10,13 +10,13 @@ import {
 import "./Dash.css";
 import { useState } from "react";
 import RejoinModal from "../Modals/RejoinModal";
-import DemandsModal from "../Modals/DemandsModal";
 import {
   Alert,
-  Button
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
 import DashboardCollabStepCard from "../Cards/DashboardCollabStepCard";
+import {
+  SelectMenu
+} from "../elements/Select/SelectMenu.tsx";
 
 type Props = {
   collabs: intProjects;
@@ -31,10 +31,10 @@ export default function DashboardCollab({ collabs }: Props) {
   }
 
   return (
-    <section className="mt-10 mb-28">
-      <div className="b2-header-title">
+    <section className="my-10 mb-28">
+
         <h2>Mes collaborations</h2>
-      </div>
+
       {collabs.length > 0 ? (
         <div>
           <div className="flex">
@@ -52,10 +52,8 @@ export default function DashboardCollab({ collabs }: Props) {
                 </button>
               ))}
             </div>
-            <div className="md:flex basis-1/4 justify-end items-center">
-              <DemandsModal />
-
-              <RejoinModal value="Rejoindre" />
+            <div className="flex basis-1/4 justify-end items-center gap-2">
+              <SelectMenu see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} idProject={collabs[selected].id}/>
             </div>
           </div>
 
@@ -68,14 +66,11 @@ export default function DashboardCollab({ collabs }: Props) {
               />
             ))}
           </ul>
-          <Link to={"/project/" + collabs[selected].id}>
-            <Button>Ouvrir le projet</Button>
-          </Link>
         </div>
       ) : (
         <div>
           <div className="flex justify-end">
-            <RejoinModal value="Rejoindre" />
+            <RejoinModal join="Rejoindre" />
           </div>
 
           <Alert

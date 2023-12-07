@@ -1,18 +1,23 @@
 import { useState } from "react";
 import {
-  Dialog,
-  Card,
-  CardBody,
-  Typography,
-  Input,
-  Button,
-  IconButton,
+    Dialog,
+    Card,
+    CardBody,
+    Typography,
+    Input,
+    IconButton, MenuItem
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
+import {
+    faCheck, faEnvelopesBulk,
+} from "@fortawesome/free-solid-svg-icons";
 import DeleteButton from "../elements/Buttons/DeleteButton";
 
-export default function DemandsModal() {
+type Props = {
+    request: string,
+}
+
+export default function DemandsModal({request}:Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((bool) => !bool);
 
@@ -30,15 +35,14 @@ export default function DemandsModal() {
   }
 
   return (
-    <div>
-      <Button
-        className="md:mx-5 flex items-center text-brick-300 border-brick-300"
-        variant="outlined"
-        onClick={handleOpen}
-      >
-        <FontAwesomeIcon icon={faSquarePlus} />
-        <a className="pl-2 hidden md:flex whitespace-nowrap">Mes demandes</a>
-      </Button>
+    <>
+        <MenuItem className="flex items-center gap-2">
+            <FontAwesomeIcon icon={faEnvelopesBulk} className={"text-sm"} />
+
+            <Typography variant="small" className="font-medium" onClick={handleOpen}>
+                {request}
+            </Typography>
+        </MenuItem>
       <Dialog
         size="xl"
         open={open}
@@ -46,9 +50,9 @@ export default function DemandsModal() {
         className="bg-transparent shadow-none"
       >
         <Card className="mx-auto w-full">
-          <CardBody className="flex flex-col gap-4">
-            <Typography variant="h2" color="blue-gray">
-              Vous avez {demands.length} demandes en cours
+          <CardBody className="custom-modal flex flex-col gap-4">
+            <Typography variant="h2" className={"text-marine-300"}>
+              Vous avez {demands.length} {demands.length > 1 ? "demandes" : "demande" }  en cours
             </Typography>
             {demands.map((demand, index: number) => (
               <div key={index} className="flex justify-between gap-5">
@@ -61,22 +65,18 @@ export default function DemandsModal() {
                 <div className="flex gap-5">
                   <IconButton
                     onClick={() => handleValidate(index)}
-                    className="text-white bg-brick-300"
+                    className="text-white bg-brick-300 text-sm"
                     variant="outlined"
                   >
-                    <FontAwesomeIcon icon={faCheck} size="xl" />
+                    <FontAwesomeIcon icon={faCheck} className={"text-sm"} />
                   </IconButton>
-                  <DeleteButton
-                    state={demands}
-                    setState={setDemand}
-                    index={index}
-                  />
+                  <DeleteButton/>
                 </div>
               </div>
             ))}
           </CardBody>
         </Card>
       </Dialog>
-    </div>
+    </>
   );
 }

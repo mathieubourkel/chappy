@@ -3,17 +3,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconButton } from "@material-tailwind/react";
 
 type Props = {
-  handleDeleteBDD: () => void;
+  handleDeleteBDD?: () => void;
 };
 
 export default function DeleteButton({ handleDeleteBDD }: Props) {
   function handleDelete() {
-    handleDeleteBDD();
+    if (handleDeleteBDD) {
+      handleDeleteBDD();
+    }
   }
 
   return (
     <IconButton onClick={() => handleDelete()}>
-      <FontAwesomeIcon icon={faXmark} size="xl" />
+      <FontAwesomeIcon icon={faXmark} className={"text-sm"} />
     </IconButton>
   );
 }
