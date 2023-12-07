@@ -1,16 +1,17 @@
 import { faChartPie } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Typography } from "@material-tailwind/react";
-import { intStep } from "../../../services/interfaces/intProject";
+import { intProject, intStep } from "../../../services/interfaces/intProject";
 import AccederButton from "../elements/Buttons/AccederButton";
 import { Link } from "react-router-dom";
 
 type Props = {
     step: intStep,
-    idProject: number | undefined
+    collab: intProject
 }
 
-export default function DashboardCollabStepCard({step, idProject}:Props) {
+export default function DashboardCollabStepCard({step, collab}:Props) {
+  console.log('DashBoardCOllabStepCard')
   return (
     <li
       className="md:flex justify-between mb-5 gap-5
@@ -33,15 +34,15 @@ export default function DashboardCollabStepCard({step, idProject}:Props) {
             <p className="p-2 font-bold">{step.name}</p>
           </Typography>
           <Typography className="p-2">
-            Dernière mise à jour par : 
-            {/* <a className="font-bold">{projects[index].app_user.id}</a> */}
+            Propriétaire : 
+            <a className="font-bold">{collab.user.firstName +' ' + collab.user.lastName}</a>
             , il reste <a className="font-bold">3 sur 10
             tâches à faire</a>
           </Typography>
         </div>
       </div>
       <div className="flex items-center justify-end">
-      <Link to={"/project/"+ idProject +"/step/" + step.id}>
+      <Link to={"/project/"+ collab.id +"/step/" + step.id}>
         <AccederButton />
         </Link>
         
