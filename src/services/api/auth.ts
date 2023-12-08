@@ -14,13 +14,13 @@ export async function login(data: Login) {
     password: data.password,
   };
 
-  const options = {
-    credentials: "include",
-    withCredentials: true,
-  };
+  // const options = {
+  //   credentials: "include",
+  //   withCredentials: true,
+  // };
 
   try {
-    const { data } = await api.post("auth/local", body, options);
+    const { data } = await api.post("auth/local", body);
     localStorage.setItem("token", data.jwt);
     localStorage.setItem(
       "name",
