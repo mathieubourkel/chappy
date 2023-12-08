@@ -90,7 +90,7 @@ export default function DashboardHeader({ nbProj}: Props) {
                 <Link to='/create-project'>
                 <CreateButton value="Créer un projet"/>
                 </Link>
-                <RejoinModal value="Rejoindre un projet" />
+                <RejoinModal join="Rejoindre un projet" />
               </div>
             </>
         )}

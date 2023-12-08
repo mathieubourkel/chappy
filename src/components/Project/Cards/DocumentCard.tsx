@@ -45,7 +45,7 @@ export default function DocumentCard({ index, setDocument,document, documents, i
             setDocument={setDocument}
             index={index}
           />
-        <DeleteButton index={index} handleDeleteBDD={handleDelete} state={documents} setState={setDocument} />
+        <DeleteButton handleDeleteBDD={handleDelete} />
         </div>}
       </li>
     </>

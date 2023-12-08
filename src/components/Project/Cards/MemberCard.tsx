@@ -13,7 +13,7 @@ type Props = {
   index:number
 };
 
-export default function MemberCard({member,isOwner,index, members, setMember}: Props) {
+export default function MemberCard({member,isOwner}: Props) {
   console.log('MemberCardComposant')
   const {idProject} = useParams();
 
@@ -50,7 +50,7 @@ export default function MemberCard({member,isOwner,index, members, setMember}: P
             7 tâches en cours
           </Typography>
           {isOwner && (
-            <DeleteButton index={index} state={members} handleDeleteBDD={handleDelete} setState={setMember} />
+            <DeleteButton  handleDeleteBDD={handleDelete} />
           )}
         </div>
       </li>

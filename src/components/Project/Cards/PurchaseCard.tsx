@@ -46,9 +46,6 @@ export default function PurchaseCard({ index, setPurchase, purchases, purchase, 
             index={index}
           />
           <DeleteButton
-            index={index}
-            state={purchases}
-            setState={setPurchase}
             handleDeleteBDD={handleDelete}
           />
         </div>}
