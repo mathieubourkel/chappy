@@ -1,10 +1,10 @@
 import calendar from "../../../assets/img/calendar.webp";
 import CreateButton from "../elements/Buttons/CreateButton";
-import {Link, NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 import RejoinModal from "../Modals/RejoinModal";
 import {
     Alert,
-    Breadcrumbs, Chip,
+    Chip,
     Typography
 } from "@material-tailwind/react";
 import {
@@ -12,8 +12,10 @@ import {
 } from "@fortawesome/react-fontawesome";
 import {
     faCircleInfo,
-    faHouse, faNewspaper,
+    faNewspaper,
 } from "@fortawesome/free-solid-svg-icons";
+import Breadcrumb
+    from "../../Layers/Breadcrumb/Breadcrumb.tsx";
 
 type Props = {
   nbProj:number
@@ -45,19 +47,11 @@ export default function DashboardHeader({ nbProj}: Props) {
             </div>
         )}
 
-          <Breadcrumbs className={"p-0 my-5"}>
-              <NavLink to={"/"} className="text-marine-100 hover:!text-marine-300">
-                  <FontAwesomeIcon icon={faHouse} />
-              </NavLink>
-              <NavLink to={"/"} className="text-marine-100 hover:!text-marine-300">
-                  Dashboard
-              </NavLink>
-
-          </Breadcrumbs>
+        <Breadcrumb/>
 
         {nbProj > 0 ? (
           <div className={"flex flex-col gap-4"}>
-            <div className="bg-white border border-gray-500/30 rounded-lg p-5 drop-shadow-100">
+            <div className="custom-block p-4">
                 <div className={"flex gap-2 items-center"}>
                     <FontAwesomeIcon icon={faNewspaper} className={"text-brick-400 text-xl"}/>
                     <Chip variant="ghost" value="Actualités" className={"w-full bg-marine-100/10 text-marine-300"}/>

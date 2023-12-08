@@ -7,7 +7,6 @@ import {
 import {
   faBan,
 } from "@fortawesome/free-solid-svg-icons";
-import "./Dash.css";
 import { useState } from "react";
 import RejoinModal from "../Modals/RejoinModal";
 import {
@@ -36,8 +35,8 @@ export default function DashboardCollab({ collabs }: Props) {
         <h2>Mes collaborations</h2>
 
       {collabs.length > 0 ? (
-        <div>
-          <div className="flex">
+        <article>
+          <nav className="flex">
             <div className="ml-20 lg:flex justify-center basis-3/4">
               {collabs.map((collab: intProject, index: number) => (
                 <button
@@ -45,7 +44,7 @@ export default function DashboardCollab({ collabs }: Props) {
                   onClick={() => handleClick(index)}
                   className={
                     "px-10 rounded-none border-0 border-b-2 border-b-marine-100 " +
-                    (index === selected && "border-b-marine-300 selected")
+                    (index === selected && "border-b-marine-300 font-extrabold")
                   }
                 >
                   {collab.name}
@@ -55,9 +54,9 @@ export default function DashboardCollab({ collabs }: Props) {
             <div className="flex basis-1/4 justify-end items-center gap-2">
               <SelectMenu see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} idProject={collabs[selected].id}/>
             </div>
-          </div>
+          </nav>
 
-          <ul className="mt-10">
+          <div className="mt-5 flex gap-5 flex-wrap justify-center">
             {collabs[selected].project_steps.map((step: intStep) => (
               <DashboardCollabStepCard
                 step={step}
@@ -65,13 +64,13 @@ export default function DashboardCollab({ collabs }: Props) {
                 collab={collabs[selected]}
               />
             ))}
-          </ul>
-        </div>
-      ) : (
-        <div>
-          <div className="flex justify-end">
-            <RejoinModal join="Rejoindre" />
           </div>
+        </article>
+      ) : (
+        <article>
+          <nav className="flex justify-end">
+            <RejoinModal join="Rejoindre" />
+          </nav>
 
           <Alert
               icon={<FontAwesomeIcon icon={faBan} className={"text-marine-300 text-xl"}/>}
@@ -79,7 +78,7 @@ export default function DashboardCollab({ collabs }: Props) {
           >
             Aucun projet rejoint.
           </Alert>
-        </div>
+        </article>
       )}
     </section>
   );

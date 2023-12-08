@@ -17,7 +17,7 @@ export default function RejoinButton({value, onClick}: Props) {
     return (
         <Tooltip
             content={value}
-            className="md:hidden bg-marine-300 px-4"
+            className="lg:hidden bg-marine-300 px-4"
             animate={{
                 mount: { scale: 1, y: 0 },
                 unmount: { scale: 0, y: 25 },
@@ -26,7 +26,7 @@ export default function RejoinButton({value, onClick}: Props) {
             <Button className="flex items-center"
                     onClick={onClick}>
                 <FontAwesomeIcon icon={faFolderOpen} className={"text-sm"} />
-                <div className="pl-2 hidden md:flex">{value}</div>
+                <span className="pl-2 hidden lg:flex whitespace-nowrap">{value}</span>
             </Button>
         </Tooltip>
     );

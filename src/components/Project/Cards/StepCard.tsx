@@ -23,7 +23,7 @@ type Props = {
 export default function StepCard({ step, idProject }: Props) {
   console.log('StepCardComposant')
   return (
-    <Card className="mt-6 w-96 custom-card">
+    <Card className="mt-3 w-96 custom-card">
 
       <CardBody className={"custom-card-body"}>
           <Typography className="custom-subt mb-2" textGradient>

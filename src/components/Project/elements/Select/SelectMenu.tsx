@@ -3,7 +3,7 @@ import {
     MenuHandler,
     MenuList,
     MenuItem,
-    Button, Typography,
+    Button, Typography, Tooltip,
 } from "@material-tailwind/react";
 import {
     FontAwesomeIcon
@@ -27,18 +27,28 @@ type Props = {
 export function SelectMenu({see, request, join, idProject}:Props) {
 
     return (
+        <Tooltip
+        content={"Actions"}
+        className="lg:hidden bg-marine-300 px-4"
+        animate={{
+            mount: { scale: 1, y: 0 },
+            unmount: { scale: 0, y: 25 },
+        }}
+    >
         <Menu>
             <MenuHandler>
+
                 <Button
                     className="flex items-center justify-center text-marine-300 border-marine-300"
                     variant="outlined"
                 >
-                    <FontAwesomeIcon icon={faList} className={"text-sm md:mr-3"}/>
-                    <Typography className={"hidden md:inline font-extrabold text-xl mt-0.5"}>
+                    <FontAwesomeIcon icon={faList} className={"text-sm lg:mr-3"}/>
+                    <Typography className={"hidden lg:inline font-extrabold text-xl mt-0.5"}>
                         Actions
                     </Typography>
 
                 </Button>
+
             </MenuHandler>
             <MenuList className={"text-marine-300"}>
                 <MenuItem className="flex items-center gap-2">
@@ -51,5 +61,6 @@ export function SelectMenu({see, request, join, idProject}:Props) {
                 <RejoinModal join={join}/>
             </MenuList>
         </Menu>
+        </Tooltip>
     );
 }
