@@ -40,8 +40,8 @@ export async function refreshToken() {
       withCredentials: true,
     };
 
-    const res = await axios.get(
-      "http://localhost:1337/api/token/refresh",
+    const res = await axios.get(import.meta.env.VITE_URL_API +
+      "token/refresh",
       options
     );
 
