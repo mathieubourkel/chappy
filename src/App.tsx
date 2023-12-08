@@ -29,14 +29,14 @@ import ContextIsLogged from "./context/ContextIsLogged.tsx";
 
 export default function App() {
   console.log("AppComposant");
-  const [logins, setLogin] = useState<Array<string>>([]);
+  // const [logins, setLogin] = useState<Array<string>>([]);
   const token = localStorage.getItem("token");
   const [isLogged, setIsLogged] = useState<boolean>(false)
   token && !isLogged && setIsLogged(true)
 
-  function handleSubmitLogin(login: string) {
-    setLogin([...logins, login]);
-  }
+  // function handleSubmitLogin(login: string) {
+  //   setLogin([...logins, login]);
+  // }
 
   const [open, setOpen] = useState(false);
 
@@ -64,7 +64,7 @@ export default function App() {
               path="/login"
               element={
                 <LoginPage
-                  handleSubmitLogin={handleSubmitLogin}
+               
                 />
               }
             />

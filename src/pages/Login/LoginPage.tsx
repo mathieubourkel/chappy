@@ -5,11 +5,8 @@ import {
 import {NavLink} from "react-router-dom";
 
 
-type Props = {
-  handleSubmitLogin: (element:string) => void;
-}
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function LoginPage({handleSubmitLogin}:Props) {
+export default function LoginPage() {
   return (
     <main className={"sm:mx-20 mx-5 flex flex-col justify-center items-center"}>
         <section className={"flex flex-col gap-y-3"}>

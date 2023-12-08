@@ -15,8 +15,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 
-export default function Signup(props: any) {
-  const { handleSubmitUser } = props;
+export default function Signup() {
+  // const { handleSubmitUser } = props;
   const [selectedOption, setSelectedOption] = React.useState("");
 
   const handleRadioChange = (value: string) => {
