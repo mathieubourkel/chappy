@@ -14,16 +14,16 @@ export default function DisplayMore({ state, setState }: Props) {
   }
 
   return (
-    <Button onClick={handleDisplay} className="bg-brick-300">
+    <Button onClick={handleDisplay} className="bg-brick-300" size={"sm"}>
       {state ? (
         <div className="flex items-center">
-          <FontAwesomeIcon icon={faMinus} className="mr-3" />
-          <Typography>Réduire</Typography>
+          <FontAwesomeIcon icon={faMinus} className="mr-3 text-xl" />
+          <Typography className={"font-bold"}>Réduire</Typography>
         </div>
       ) : (
         <div className="flex items-center">
-          <FontAwesomeIcon icon={faPlus} className="mr-3" />
-          <Typography>Afficher plus</Typography>
+          <FontAwesomeIcon icon={faPlus} className="mr-3 text-xl" />
+          <Typography className={"font-bold"}>Afficher plus</Typography>
         </div>
       )}
     </Button>

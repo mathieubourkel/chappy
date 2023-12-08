@@ -32,12 +32,21 @@ export default function SelectStatus({
     <div className={classState}>
       <ReactSelect
         options={enumStatus}
-        className="rounded-xl"
         placeholder="Status"
         value={selected}
         defaultValue={enumStatus[0]}
         components={animatedComponents}
         onChange={(value: any) => handleStatusEnfant(value)}
+        theme={(theme) => ({
+          ...theme,
+          borderRadius: 5,
+          colors: {
+            ...theme.colors,
+            primary25: 'rgba(119,125,149,0.2)',
+            primary: 'rgba(119,125,149,0.3)',
+            primary50: 'rgba(119,125,149,0.3)',
+          },
+        })}
       />
     </div>
   );

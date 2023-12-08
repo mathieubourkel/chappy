@@ -1,6 +1,14 @@
-import { IconButton, Spinner } from "@material-tailwind/react";
+import {
+  Alert,
+  IconButton,
+  Spinner,
+  Typography
+} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleExclamation,
+  faFilter
+} from "@fortawesome/free-solid-svg-icons";
 import ProjectCreateStep from "../Modals/ProjectCreateStep";
 import StepCard from "../Cards/StepCard";
 import { intStep, intSteps } from "../../../services/interfaces/intProject";
@@ -28,12 +36,10 @@ export default function ProjectSteps({ idProject, isOwner }: Props) {
   }, [idProject, reload]);
 
   return (
-    <section className="bloc-2 mb-40">
-      <div className="b2-header flex justify-between">
-        <div className="b2-header-title">
+    <section className="mb-20">
+      <article className="flex justify-between">
           <h2>Les jalons</h2>
-        </div>
-        <div className="b2-header-buttons flex gap-5 items-center">
+        <nav className="flex gap-5 items-center">
           {isOwner && (
             <div>
               <ProjectCreateStep setReload={setReload} />
@@ -44,19 +50,33 @@ export default function ProjectSteps({ idProject, isOwner }: Props) {
               <FontAwesomeIcon icon={faFilter} />
             </IconButton>
           </div>
-        </div>
-      </div>
+        </nav>
+      </article>
       {busy ? (
         <div className="flex justify-center mt-20">
           <Spinner className="h-16 w-16 text-gray-900/50" />
         </div>
       ) : (
-        <div className="b2-body flex flex-wrap gap-10 mt-10">
+        <div className="flex flex-wrap gap-10 mt-10">
           {steps.map((step: intStep) => (
             <StepCard key={step.id} step={step} idProject={idProject} />
           ))}
         </div>
       )}
+
+      {steps.length == 0 && <Alert
+          icon={<FontAwesomeIcon icon={faCircleExclamation} className={"text-brick-400 text-xl"}/>}
+          className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5"
+      >
+        Vous n'avez aucun jalon,
+
+        <Typography
+            variant="paragraph"
+            className={"inline-block font-semibold text-brick-400 hover:text-marine-300 underline underline-offset-4 decoration-marine-300 hover:decoration-brick-300 ml-1"}
+        >
+            créer votre premier jalon.
+        </Typography>
+      </Alert>}
     </section>
   );
 }

@@ -20,11 +20,20 @@
 /*==================== VARIABLES CSS ====================*/
 
 :root {
+    --bg-white: rgb(255,255,255, 1);
     --bg-color: rgb(240,240,240,1);
+
+    --brick: rgb(126,55,47,1);
+    --marine: rgb(47,44,54,1);
+
     --border-color: rgba(30, 29, 34, 0.15);
     --alt-border-color: rgba(30, 29, 34, 0.3);
-    --input-color: rgba(126,55,47,1);
     --border-card: rgba(119,125,149,0.8);
+    --border-task: rgba(126,55,47,0.8);
+
+    --input-color: rgba(126,55,47,1);
+    --input-gray: rgba(119,125,149,0.4);
+
     --gradient: linear-gradient(90deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
     --alt-gradient: linear-gradient(90deg, rgba(126,55,47,1) 0%, rgba(47,44,54,1) 12%);
     --gradient-top: linear-gradient(0deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
@@ -119,6 +128,24 @@ h3 {
     font-size : 1.4em !important;
 }
 
+h4 {
+    font-size: 1.1em;
+    font-weight: 800;
+    margin-bottom: 0.5em;
+    text-align: end;
+}
+
+h4:after {
+    content: "";
+    display: inline-block;
+    width: 0.2em;
+    height: 1.8em;
+    background: var(--gradient-top);
+    border-radius: 1em;
+    margin-left: 0.5em;
+    margin-bottom: -0.5em;
+}
+
 p {
     font-size: 0.9em!important;
     line-height: 0.99 !important;
@@ -137,6 +164,17 @@ p {
     height: 15lvh;
 }
 
+.custom-task {
+    border: 1px solid var(--border-color);
+    border-radius: 0.5em;
+    box-shadow: 1px 0.5px 1px rgb(30,29,34, 0.1);
+    border-left : 5px solid var(--border-task)
+}
+
+.custom-task-body {
+    height: 10lvh;
+}
+
 .custom-subt {
     font-variant: all-small-caps;
     color: var(--border-card);
@@ -146,10 +184,52 @@ p {
 
 }
 
+        /* Modal */
+
 .custom-modal {
-    border: 1px solid var(--alt-border-color);
     border-radius: 0.5em;
     box-shadow: 1px 0.5px 1px rgb(30,29,34, 0.1);
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(to top, #2F2C36FF, #7E372FFF) border-box;
+    border-left: 5px solid transparent;
+}
+
+        /* Block */
+
+.custom-block {
+    background: var(--bg-white);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5em;
+    box-shadow: 1px 0.5px 1px rgb(30,29,34, 0.1);
+}
+
+.custom-project-body {
+    height: 20lvh;
+    overflow: auto;
+}
+
+        /* Block */
+
+.false-input {
+    background: var(--bg-white);
+    border: 1px solid var(--input-gray);
+    border-radius: 0.5em;
+    box-shadow: 1px 0.5px 1px rgb(30,29,34, 0.1);
+}
+
+        /* Comment section */
+
+.comment-bar {
+    display: block;
+    border-left: 3px solid;
+    padding-left: 1rem;
+    margin-left: 3rem;
+    border-image:
+            linear-gradient(
+                    to bottom,
+                    rgb(47,44,54,1),
+                    rgb(126,55,47,1)
+            ) 1 100%;
 }
 
 

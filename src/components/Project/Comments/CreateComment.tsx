@@ -45,10 +45,15 @@ function handleDelete(){
         />
         <div className="flex w-full justify-end py-1.5">
           <div className="flex gap-2">
-            <Button variant="outlined"
-            onClick={handleDelete}
+            <Button
+                variant="outlined"
+                onClick={handleDelete}
+                size={"sm"}
+                className={"font-extrabold"}
             >Annuler</Button>
-            <Button type="submit">
+            <Button type="submit"
+                    size={"sm"}
+                    className={"font-extrabold"}>
               Envoyer
               <FontAwesomeIcon className="ml-3" icon={faPaperPlane} />
             </Button>

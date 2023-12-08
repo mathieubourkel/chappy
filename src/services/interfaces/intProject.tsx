@@ -31,7 +31,7 @@ export interface intStep {
     id?: number
     estimEndDate: Date | null
     status:number
-    project: {id:string|undefined}
+    project: {id:string|undefined, name:string|undefined}
 }
 
 export type intSelect = {

@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
-import { Button } from "@material-tailwind/react";
+import {
+    Button,
+    Typography
+} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCartShopping,faFolderOpen,faUser} from "@fortawesome/free-solid-svg-icons";
 import ProjectDisplayCode from "../Modals/ProjectDisplayCode";
 import { intProjectLight } from "../../../services/interfaces/intProject";
+import Breadcrumb
+    from "../../Layers/Breadcrumb/Breadcrumb.tsx";
 
 type Props = {
   project: intProjectLight
@@ -14,35 +19,43 @@ type Props = {
 export default function ProjectHeader({project ,idProject, isOwner} :Props) {
   console.log("ProjectHeaderComposant")
   return (
-      <section className="b1-header lg:flex justify-between">
-        <div className="b1-header-title shrink-0">
-          <h1>{project.name}</h1>
+      <section className="lg:flex justify-between">
+        <div>
+            <Typography
+                variant="h1"
+                className={"font-bold text-4xl"}
+            >
+                {project.name}
+            </Typography>
+
+            <Breadcrumb nameProject={project.name} idProject={project.id}/>
+
         </div>
         {isOwner && 
-        <div className="b1-header-buttons flex gap-5 items-center">
+        <nav className="flex gap-2 items-center justify-center lg:justify-end">
           <ProjectDisplayCode />
           <Link to={"/project/"+ idProject + "/members"}>
-            <Button variant="outlined" className="flex">
-              <FontAwesomeIcon icon={faUser} className="mr-2" />
-              <div className="hidden md:flex">Participants</div>
+            <Button variant="outlined" size={"sm"} className="flex">
+              <FontAwesomeIcon icon={faUser} className="lg:mr-2" />
+              <span className="hidden lg:inline whitespace-nowrap">Participants</span>
             </Button>
           </Link>
           <Link to={"/project/"+ idProject + "/documents"}>
-            <Button className="bg-brick-300 flex">
-              <FontAwesomeIcon icon={faFolderOpen} className="mr-2" />
-              <div className="hidden whitespace-nowrap md:flex">Mes documents</div>
+            <Button className="bg-brick-300 flex" size={"sm"}>
+              <FontAwesomeIcon icon={faFolderOpen} className="lg:mr-2" />
+              <span className="hidden whitespace-nowrap lg:inline">Mes documents</span>
             </Button>
           </Link>
           <Link to={"/project/"+ idProject + "/purchases"}>
             <Button
               className="button-project flex text-brick-300 border-brick-300"
-              variant="outlined"
+              variant="outlined" size={"sm"}
             >
-              <FontAwesomeIcon icon={faCartShopping} className="mr-2" />
-              <div className="hidden whitespace-nowrap md:flex">Mes achats</div>
+              <FontAwesomeIcon icon={faCartShopping} className="lg:mr-2" />
+              <div className="hidden whitespace-nowrap lg:inline">Mes achats</div>
             </Button>
           </Link>
-        </div>}
+        </nav>}
       </section>
 
   );

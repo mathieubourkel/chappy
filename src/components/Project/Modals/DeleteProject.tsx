@@ -4,7 +4,6 @@ import {
   Dialog,
   Card,
   CardBody,
-  CardFooter,
   Typography,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,31 +24,42 @@ export default function DeleteProject({ handleDelete }: Props) {
   }
 
   return (
-    <div>
-      <Button onClick={handleOpen}>
+    <div className={"flex justify-center"}>
+      <Button onClick={handleOpen} size={"sm"} className={"bg-brick-300"}>
         <FontAwesomeIcon icon={faXmark} size="xl" />
-        <a className="ml-5">Supprimer le projet</a>
+        <span className="ml-5">Supprimer le projet</span>
       </Button>
       <Dialog
-        size="lg"
+        size="sm"
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"
       >
-        <Card className="mx-auto w-full">
-            <CardBody className="flex flex-col gap-4">
-              <Typography variant="h2" color="blue-gray">
-                Voulez vous vraiment supprimer le projet ?
-              </Typography>
+        <Card className="custom-modal">
+            <CardBody
+                className="flex flex-col gap-4">
+                <Typography variant="h3"
+                            className={"text-marine-300 text-xl font-extrabold text-center"}>
+                    Voulez-vous vraiment supprimer
+                    le projet ?
+                </Typography>
+                <div
+                    className="gap-5 flex justify-center">
+                    <Button size={"sm"}
+                            onClick={handleSubmit}
+                            className={"bg-brick-300"}
+                            type="submit">
+                        Confirmer
+                    </Button>
+                    <Button size={"sm"}
+                            onClick={handleOpen}
+                            className={"border-marine-300"}
+                            type="submit">
+                        Annuler
+                    </Button>
+                </div>
             </CardBody>
-            <CardFooter className="pt-0 flex justify-center">
-              <Button variant="gradient" onClick={handleSubmit} type="submit">
-                Confirmer
-              </Button>
-              <Button variant="gradient" onClick={handleOpen} type="submit">
-                Annuler
-              </Button>
-            </CardFooter>
+
         </Card>
       </Dialog>
     </div>
