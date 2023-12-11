@@ -47,10 +47,10 @@ export default function StepModifyTask({ task, categories, setTask }: Props) {
     setForm({ ...form, startDate: value.startDate, endDate: value.endDate });
   };
 
-  const handleCategory = (value: intSelect) => {
+  const handleCategory = (value: any) => {
     setForm({ ...form, category: { id: value.value, name: value.label } });
   };
-  const handleStatus = (value: intSelect) => {
+  const handleStatus = (value: any) => {
     setForm({ ...form, status: value.value });
     // setSelected(value)
   };

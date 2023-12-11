@@ -3,40 +3,43 @@ import { ChangeEvent } from "react"
 export interface intProject extends intProjectLight {
     description: string,
     budget?: number,
-    status: number,
+    status: number
     project_steps: intSteps
     estimEndDate: Date | null
-    user: {id: string | number |undefined | null, firstName?: string, lastName?:string}
-    users?: Array<{id:number | undefined }>
-    companies?: Array<{id:number |undefined}>
+    user: intUserLight
+    users?: intUsersLight
+    companies?: intCompanies
 }
 
 export interface intCompany {
-    name: string, 
+    name?: string
     siret?: number,
-    description: string,
-    user?: {id: string | number}
-    id: number
+    description?: string,
+    user?: intUserLight
+    id: number | null | string
 }
 
 export interface intProjectLight {
-    id?:number,
-    name:string
+    id?:number | string | string | undefined
+    name?:string
   }
 
-export interface intStep {
-    name: string,
+  export interface intStepLight {
+    id?:number | string | string | undefined
+    name?:string
+  }
+
+export interface intStep extends intStepLight{
     description: string,
     budget: number,
-    id?: number
     estimEndDate: Date | null
     status:number
-    project: {id:string|undefined}
+    project: intProjectLight
 }
 
 export type intSelect = {
-    value: number;
-    label: string;
+    value: number | null | string
+    label: string | undefined
   };
 
 export interface intComment {
@@ -46,16 +49,16 @@ export interface intComment {
 
 export interface intTask {
     name: string,
-    status: number,
+    status: number
     category: intCategory,
     description: string,
     startDate: Date,
     endDate:Date,
-    comments?: Array<string>,
-    user?: {id: number | null | string | undefined}
-    users: Array<{id:number | undefined }>
-    id?:number | undefined
-    project_step?: {id:string | undefined}
+    comments?: intComments
+    user?: intUserLight
+    users: intUsersLight
+    id?:number
+    project_step?: intStepLight
 }
 export interface intPurchase {
     name: string,
@@ -65,51 +68,53 @@ export interface intPurchase {
     deliveryDate?: Date,
     status?: number,
     id?:number,
-    project: {id:string | undefined}
+    project: intProjectLight
   }
 
 export interface intDocument {
     path: string,
     type: string,
     id?:number,
-    project: {id:string | undefined}
+    project: intProjectLight
 }
 
-export interface intMember {
-    firstName: string,
-    email: string,
-    lastName: string,
-    id: number,
+export interface intUser extends intUserLight {
     city:string,
     address: string,
     zip: number,
-    status:string
+    status:number
 }
 
-export interface intUser {
-    name: string,
-    company: string,
-    email: string
+export interface intUserLight {
+    firstName?: string,
+    lastName?: string,
+    company?: string,
+    email?: string,
+    id: number | null | string
 }
 
 export interface intCategory {
-    name: string
-    id: number
+    name: string | undefined
+    id: number 
 }
 export interface intRangeDate {
     startDate: Date,
     endDate: Date
 }
 
-export type intCategories = Array<intCategory>
-export type intStatus = Array<string>
-export type intProjects = Array<intProject>
-export type intMembers = Array<intMember>
-export type intDocuments = Array<intDocument>
-export type intPurchases = Array<intPurchase>
-export type intUsers = Array<intUser>
-export type intTasks = Array<intTask>
-export type intSteps = Array<intStep>
-export type intComments = Array<intComment>
+export type intCategories = intCategory[]
+export type intStatus = string[]
+export type intProjects = intProject[]
+export type intProjectsLight = intProjectLight[]
+export type intStepsLight = intStepLight[]
+export type intUsers = intUser[]
+export type intUsersLight = intUserLight[]
+export type intDocuments = intDocument[]
+export type intPurchases = intPurchase[]
+export type intTasks = intTask[]
+export type intSteps = intStep[]
+export type intComments = intComment[]
+export type intCompanies = intCompany[]
+
 export type InputEvent = ChangeEvent<HTMLInputElement>
 export type FormEvent = React.FormEvent<HTMLFormElement>;

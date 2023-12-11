@@ -22,7 +22,7 @@ type Props = {
     see: string,
     request: string,
     join:string,
-    idProject: any;
+    idProject: string | number | undefined
 }
 export function SelectMenu({see, request, join, idProject}:Props) {
 

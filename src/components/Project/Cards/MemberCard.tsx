@@ -1,25 +1,25 @@
+import { useParams } from "react-router-dom";
 import { Avatar, Typography } from "@material-tailwind/react";
 import DeleteButton from "../elements/Buttons/DeleteButton";
-import { intMember, intMembers } from "../../../services/interfaces/intProject";
+import { intUser, intUsers } from "../../../services/interfaces/intProject";
 import user from "../../../assets/img/icon user.png";
 import { deleteUserToProjectToBDD } from "../../../services/api/users";
-import { useParams } from "react-router-dom";
 
 type Props = {
   isOwner: boolean;
-  member:intMember
-  members: intMembers,
-  setMember: (members:intMembers) => void;
-  index:number
+  member: intUser;
+  members: intUsers;
+  setMember: (members: intUsers) => void;
+  index: number;
 };
 
-export default function MemberCard({member,isOwner}: Props) {
-  console.log('MemberCardComposant')
-  const {idProject} = useParams();
+export default function MemberCard({ member, isOwner }: Props) {
+  console.log("MemberCardComposant");
+  const { idProject } = useParams();
 
   const handleDelete = () => {
-    deleteUserToProjectToBDD(idProject, member.id)
-  }
+    deleteUserToProjectToBDD(idProject, member.id);
+  };
   return (
     <>
       <li
@@ -29,9 +29,7 @@ export default function MemberCard({member,isOwner}: Props) {
         <div className="sm:flex gap-10">
           <Avatar variant="circular" alt="toto" src={user} />
           <Typography variant="h5" color="blue-gray" className="flex">
-            <p className="border p-2 rounded-xl bg-light-200">
-              {member.email}
-            </p>
+            <p className="border p-2 rounded-xl bg-light-200">{member.email}</p>
           </Typography>
           <Typography
             variant="h5"
@@ -49,9 +47,7 @@ export default function MemberCard({member,isOwner}: Props) {
           >
             7 tâches en cours
           </Typography>
-          {isOwner && (
-            <DeleteButton  handleDeleteBDD={handleDelete} />
-          )}
+          {isOwner && <DeleteButton handleDeleteBDD={handleDelete} />}
         </div>
       </li>
     </>

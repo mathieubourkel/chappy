@@ -1,5 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance } from "axios";
 import { refreshToken } from "../services/api/auth";
+export async function handleApiCall(apiCall:any) {
+  try {
+    const { data } = await apiCall();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+}
 
 export function useApi() {
   const headers = {

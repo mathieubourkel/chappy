@@ -1,22 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBan } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import RejoinModal from "../Modals/RejoinModal";
+import { Alert } from "@material-tailwind/react";
+import DashboardCollabStepCard from "../Cards/DashboardCollabStepCard";
+import { SelectMenu } from "../elements/Select/SelectMenu.tsx";
 import {
   intProject,
   intProjects,
   intStep,
 } from "../../../services/interfaces/intProject";
-import {
-  faBan,
-} from "@fortawesome/free-solid-svg-icons";
 import "./Dash.css";
-import { useState } from "react";
-import RejoinModal from "../Modals/RejoinModal";
-import {
-  Alert,
-} from "@material-tailwind/react";
-import DashboardCollabStepCard from "../Cards/DashboardCollabStepCard";
-import {
-  SelectMenu
-} from "../elements/Select/SelectMenu.tsx";
 
 type Props = {
   collabs: intProjects;
@@ -26,14 +20,13 @@ export default function DashboardCollab({ collabs }: Props) {
   console.log("DashBoardCollabComposant");
   const [selected, setSelected] = useState(0);
 
-  function handleClick(index: number) {
+  const handleClick = (index: number) => {
     setSelected(index);
-  }
+  };
 
   return (
     <section className="my-10 mb-28">
-
-        <h2>Mes collaborations</h2>
+      <h2>Mes collaborations</h2>
 
       {collabs.length > 0 ? (
         <div>
@@ -53,7 +46,12 @@ export default function DashboardCollab({ collabs }: Props) {
               ))}
             </div>
             <div className="flex basis-1/4 justify-end items-center gap-2">
-              <SelectMenu see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} idProject={collabs[selected].id}/>
+              <SelectMenu
+                see={"Voir le projet"}
+                request={"Voir les demandes"}
+                join={"Rejoindre un projet"}
+                idProject={collabs[selected].id}
+              />
             </div>
           </div>
 
@@ -74,8 +72,13 @@ export default function DashboardCollab({ collabs }: Props) {
           </div>
 
           <Alert
-              icon={<FontAwesomeIcon icon={faBan} className={"text-marine-300 text-xl"}/>}
-              className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5"
+            icon={
+              <FontAwesomeIcon
+                icon={faBan}
+                className={"text-marine-300 text-xl"}
+              />
+            }
+            className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5"
           >
             Aucun projet rejoint.
           </Alert>

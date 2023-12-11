@@ -19,22 +19,29 @@ export default function DashboardPage() {
   const idUser = localStorage.getItem("id");
 
   useEffect(() => {
-    const getProjects = async () => {
-      const projectss = await getProjectsFromOwner(idUser);
-      const collabss = await getProjectsFromUsers(idUser);
-      setBusy(false);
-      setCollab(collabss);
-      setProject(projectss);
+    const fetchProjects = async () => {
+      try {
+        const [tmpCollabs, tmpProjects] = await Promise.all([
+          getProjectsFromUsers(idUser),
+          getProjectsFromOwner(idUser),
+        ]);
+        setCollab(tmpCollabs);
+        setProject(tmpProjects);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      } finally {
+        setBusy(false);
+      }
     };
 
-    getProjects();
+    fetchProjects();
   }, [idUser]);
 
   return (
     <main className="dashboard-page sm:mx-20 mx-5">
       {busy ? (
-        <div className='flex justify-center mt-20'>
-        <Spinner className="h-16 w-16 text-gray-900/50"/>
+        <div className="flex justify-center mt-20">
+          <Spinner className="h-16 w-16 text-gray-900/50" />
         </div>
       ) : (
         <>

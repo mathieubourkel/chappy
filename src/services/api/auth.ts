@@ -20,15 +20,13 @@ export async function login(data: Login) {
   // };
 
   try {
-    const { data } = await api.post("auth/local", body);
-    localStorage.setItem("token", data.jwt);
-    localStorage.setItem(
-      "name",
-      data.user.firstName + " " + data.user.lastName
-    );
-    localStorage.setItem("id", data.user.id);
+    const { data: responseData } = await api.post("auth/local", body);
+    const { jwt, user } = responseData;
+    localStorage.setItem("token", jwt);
+    localStorage.setItem("name", `${user.firstName} ${user.lastName}`);
+    localStorage.setItem("id", user.id);
 
-    return data;
+    return responseData;
   } catch (error) {
     console.log(error);
   }
@@ -50,6 +48,5 @@ export async function refreshToken() {
     return res;
   } catch (err) {
     console.log(err);
-    console.log("Ma fonction refresh token na pas marcher");
   }
 }

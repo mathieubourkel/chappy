@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
 import {
-  intMember,
-  intMembers,
+  intUser,
+  intUsers,
   intProjectLight,
 } from "../../services/interfaces/intProject";
 import MembersAdd from "../../components/Project/Modals/MembersAdd";
@@ -15,7 +15,7 @@ import { Spinner } from "@material-tailwind/react";
 export default function MembersPage() {
   console.log("MembersPage");
   const { idProject } = useParams();
-  const [members, setMember] = useState<intMembers>([]);
+  const [members, setMember] = useState<intUsers>([]);
   const [project, setProject] = useState<intProjectLight>({
     id: undefined,
     name: "",
@@ -28,13 +28,13 @@ export default function MembersPage() {
       const tmpProj = await getProjectById(idProject);
       const result = await getMembersByProject(idProject);
       setBusy(false);
-      setMember(result);
+      setMember(result.users);
       setProject(tmpProj);
       tmpProj.user.id.toString() === idUser && setIsOwner(true);
     }
     getMembers();
   }, [idProject, idUser]);
-
+  console.log(members)
   return (
     <main className="project-page sm:mx-20 mx-5 mt-10">
       <ProjectHeader isOwner={isOwner} project={project} idProject={idProject} />
@@ -54,7 +54,7 @@ export default function MembersPage() {
         </div>
       ) : (
         <ul className="mt-5">
-          {members.map((member: intMember, index: number) => (
+          {members.map((member: intUser, index: number) => (
             <MemberCard
               key={index}
               isOwner={isOwner}

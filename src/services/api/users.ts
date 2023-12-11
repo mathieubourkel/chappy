@@ -1,104 +1,63 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useApi } from "../../hooks/useApi";
+import { handleApiCall, useApi } from "../../hooks/useApi";
+import { intUser } from "../interfaces/intProject";
 const api = useApi();
 
-export async function getMembersByProject(idProject:string | undefined) {
-    
-    try {
-        const {data} = await api.get('projects/' + idProject + '?[fields]=id&populate[0]=users');
-        return data.data.users;
-    } catch (error) {
-        return error
-    }
-}
-
-export async function getMembersByTask(idTask:number | undefined) {
-    
-    try {
-        const {data} = await api.get('step-tasks/' + idTask + '?[fields]=id&populate[0]=users');
-        return data.data.users;
-    } catch (error) {
-        return error
-    }
-}
-
-export async function addUserToProjectToBDD(idProject:string |undefined, idUser:number) {
+export async function getMembersByProject(idProject: string | undefined) {
+    return handleApiCall(() => api.get(`projects/${idProject}?[fields]=id&populate[0]=users`));
+  }
+  
+  export async function getMembersByTask(idTask: number | undefined) {
+    return handleApiCall(() => api.get(`step-tasks/${idTask}?[fields]=id&populate[0]=users`));
+  }
+  
+  export async function addUserToProjectToBDD(idProject: string | undefined, idUser: number) {
     const body = {
-        users: {
-            connect: [idUser]
-        }
-    }
-    try {
-        const {data} = await api.put('projects/' + idProject, body);
-        return data.data;
-    } catch (error) {
-        return error
-    }
-}
-
-export async function deleteUserToProjectToBDD(idProject:string |undefined, idUser:number) {
+      users: {
+        connect: [idUser],
+      },
+    };
+    return handleApiCall(() => api.put(`projects/${idProject}`, body));
+  }
+  
+  export async function deleteUserToProjectToBDD(idProject: string | undefined, idUser: number|string|null) {
     const body = {
-        users: {
-            disconnect: [idUser]
-        }
-    }
-    try {
-        const {data} = await api.put('projects/' + idProject, body);
-        return data.data;
-    } catch (error) {
-        return error
-    }
-}
-
-export async function deleteUserToTaskToBDD(idTask:number|undefined, idUser:number|undefined) {
+      users: {
+        disconnect: [idUser],
+      },
+    };
+    return handleApiCall(() => api.put(`projects/${idProject}`, body));
+  }
+  
+  export async function addUserToTaskToBDD(idTask: number | undefined, idUser: number | undefined) {
     const body = {
-        users: {
-            disconnect: [idUser]
-        }
-    }
-    try {
-        const {data} = await api.put('step-tasks/' + idTask, body);
-        return data.data;
-    } catch (error) {
-        return error
-    }
-}
+      app_users: {
+        connect: [idUser],
+      },
+    };
+    return handleApiCall(() => api.put(`step-tasks/${idTask}`, body));
+  }
 
-export async function addUserToTaskToBDD(idTask:number|undefined, idUser:number|undefined) {
-    const body = {
-        app_users: {
-            connect: [idUser]
-        }
-    }
-    try {
-        const {data} = await api.put('step-tasks/' + idTask, body);
-        return data.data;
-    } catch (error) {
-        return error
-    }
-}
-
+  
+  export async function getAllCompanies() {
+    return handleApiCall(() => api.get("companies"));
+  }
+  
+  export async function addUserToBDD(data: intUser) {
+    const body = { data };
+    return handleApiCall(() => api.post("users", body));
+  }
 
 export async function getAllUsers() {
     
     try {
-        const data = await api.get('Users');
-        return data.data;
+        const data = await api.get('users');
+        return data.data
     } catch (error) {
         return error
     }
 }
 
-export async function getAllCompanies() {
-    
-    try {
-        const {data} = await api.get('companies');
-        console.log(data)
-        return data.data;
-    } catch (error) {
-        return error
-    }
-}
 
 
 

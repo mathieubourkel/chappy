@@ -21,29 +21,33 @@ export default function PurchasesPage() {
     id: undefined,
     name: "",
   });
-  const [purchases, setPurchase] = useState<intPurchases>([]);
+  const [purchases, setPurchases] = useState<intPurchases>([]);
   const [reload, setReload] = useState(false);
   const [isOwner, setIsOwner] = useState<boolean>(false);
-  const handleReload = () => setReload((bool) => !bool);
+
+
   useEffect(() => {
-    async function getPurchases() {
-      const tmpProj = await getProjectById(idProject);
-      const result = await getPurchasesByProject(idProject);
-      setBusy(false);
-      setPurchase(result);
-      setProject(tmpProj);
-      tmpProj.user.id.toString() === idUser && setIsOwner(true);
+    async function fetchData() {
+      try {
+        const [projectData, purchasesData] = await Promise.all([
+          getProjectById(idProject),
+          getPurchasesByProject(idProject),
+        ]);
+
+        setProject(projectData);
+        setPurchases(purchasesData);
+        setIsOwner(projectData.user.id.toString() === idUser);
+        setBusy(false);
+      } catch (error) {
+        console.error(error);
+      }
     }
 
-    getPurchases();
+    fetchData();
   }, [idProject, reload, idUser]);
 
-  const calcul = () => {
-    let total: number = 0;
-    purchases.map((purchase) => {
-      total += Math.floor(purchase.price);
-    });
-    return total;
+  const calculateTotal = () => {
+    return purchases.reduce((total, purchase) => total + Math.floor(purchase.price), 0);
   };
 
   return (
@@ -55,7 +59,7 @@ export default function PurchasesPage() {
         </div>
         {isOwner && (
           <div className="b2-header-buttons flex">
-            <PurchaseAdd handleReload={handleReload} />
+             <PurchaseAdd handleReload={() => setReload((bool) => !bool)} />
           </div>
         )}
       </section>
@@ -68,7 +72,7 @@ export default function PurchasesPage() {
           {purchases.map((purchase: intPurchase, index: number) => (
             <PurchaseCard
               key={index}
-              setPurchase={setPurchase}
+              setPurchase={setPurchases}
               purchases={purchases}
               index={index}
               isOwner={isOwner}
@@ -84,7 +88,7 @@ export default function PurchasesPage() {
                 variant="h5"
                 className="border p-2 rounded-xl text-brick-300 bg-brick-200"
               >
-                {calcul()} €
+                {calculateTotal()} €
               </Typography>
             </div>
           </li>
