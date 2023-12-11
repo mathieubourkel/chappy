@@ -58,13 +58,13 @@ export default function App() {
       <ScrollToTop>
         <Routes>
           <Route element={<PublicRoute />}>
-            <Route index path="/" element={<HomePage />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
           </Route>
 
           <Route element={<PrivateRoute />}>
-            <Route index path="/dashboard" element={<DashboardPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/create-project" element={<CreateProjectPage />} />
 
             <Route path="/calendar" element={<CalendarPage />} />
