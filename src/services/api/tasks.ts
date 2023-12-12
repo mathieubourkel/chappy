@@ -11,6 +11,30 @@ export async function getTasksByStep(idStep: string | undefined) {
       )
     );
   }
+
+  export async function getTasksByUser(idUser: string | undefined |null) {
+    return handleApiCall(() =>
+      api.get(
+        `step-tasks?populate[user][fields]=id&filters[user][id][$eq]=${idUser}`
+      )
+    );
+  }
+
+  export async function getTasksByUsers(idUser: string | undefined|null) {
+    return handleApiCall(() =>
+      api.get(
+        `step-tasks?populate[users][fields]=id&filters[users][id][$eq]=${idUser}`
+      )
+    );
+  }
+
+  export async function getTasksByProjectId(idProject: string | undefined|null) {
+    return handleApiCall(() =>
+      api.get(
+        `project-steps?populate[project][fields]=id&filters[project][id][$eq]=${idProject}&populate[step_tasks][fields]=*`
+      )
+    );
+  }
   
   export async function getTaskById(idTask: number | undefined) {
     return handleApiCall(() =>

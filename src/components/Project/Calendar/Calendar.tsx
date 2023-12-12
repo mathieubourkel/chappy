@@ -1,0 +1,100 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import Paper from "@mui/material/Paper";
+import {
+  ViewState,
+} from "@devexpress/dx-react-scheduler";
+import { blue, orange } from "@mui/material/colors";
+import {
+  Scheduler,
+  MonthView,
+  Appointments,
+  DateNavigator,
+  Toolbar,
+  AppointmentTooltip,
+  Resources,
+
+} from "@devexpress/dx-react-scheduler-material-ui";
+import { useState, useEffect } from "react";
+import { getTasksByUser, getTasksByUsers } from "../../../services/api/tasks";
+import { Spinner } from "@material-tailwind/react";
+
+type Task = {
+  title: string;
+  startDate: Date;
+  endDate: Date;
+};
+
+const resources = [
+  {
+    fieldName: "owner",
+    title: "owner",
+    instances: [
+      { text: "Suivi de mes projets", id: 1, color: blue },
+      { text: "Tâches qui me sont affectés", id: 2, color: orange },
+    ],
+  },
+];
+
+// const grouping = [{resourceName: "owner"}]
+type Props = {
+    className: string
+}
+export default function Calendar({className}:Props) {
+  const idUser = localStorage.getItem("id");
+  const [busy, setBusy] = useState<boolean>(true);
+  const [tasks, setTasks] = useState<Array<Task>>([
+    { startDate: new Date(), endDate: new Date(), title: "" },
+  ]);
+  const currentDate = new Date();
+  useEffect(() => {
+    async function getFetchData() {
+      const dataOwner = await getTasksByUser(idUser);
+      const dataCollab = await getTasksByUsers(idUser);
+      const tmpTasks:Array<Task> = []
+      dataOwner.map((_elem: any, index: number) => {
+        dataOwner[index].title = dataOwner[index].name;
+        dataOwner[index].owner = 1;
+        tmpTasks.push(dataOwner[index])
+      });
+      dataCollab.map((_elem: any, index: number) => {
+        dataCollab[index].title = dataCollab[index].name;
+        dataCollab[index].owner = 2;
+        dataCollab[index].id = dataCollab[index].id * 4589647524
+        tmpTasks.push(dataCollab[index])
+      });
+
+      setTasks(tmpTasks);
+      setBusy(false)
+    }
+    getFetchData();
+  }, [idUser]);
+
+  return (
+    <>
+    {busy ? (
+        <div className="flex justify-center mt-20">
+          <Spinner className="h-16 w-16 text-gray-900/50" />
+        </div>
+      ) : (
+    <Paper className={className}>
+      <Scheduler
+        data={tasks}
+      >
+        <ViewState defaultCurrentDate={currentDate} />
+        {/* <GroupingState
+          grouping={grouping}
+          // groupOrientation={() => "Vertical"}
+        /> */}
+        <MonthView />
+        <Toolbar />
+        <DateNavigator />
+        <Appointments />
+        <Resources data={resources} mainResourceName="owner" />
+        {/* <IntegratedGrouping /> */}
+        <AppointmentTooltip showCloseButton showOpenButton />
+        {/* <GroupingPanel /> */}
+      </Scheduler>
+    </Paper>)}
+    </>
+  );
+}
