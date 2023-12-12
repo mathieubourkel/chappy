@@ -41,6 +41,10 @@ const resources = [
     },
   ];
 
+  // Documentation
+// https://devexpress.github.io/devextreme-reactive/react/scheduler/docs/guides/grouping/
+
+
 export default function CalendarProject({ className }: Props) {
   const { idProject } = useParams();
   const [busy, setBusy] = useState<boolean>(true);

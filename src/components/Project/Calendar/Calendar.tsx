@@ -39,6 +39,11 @@ const resources = [
 type Props = {
     className: string
 }
+
+// Documentation
+// https://devexpress.github.io/devextreme-reactive/react/scheduler/docs/guides/grouping/
+
+
 export default function Calendar({className}:Props) {
   const idUser = localStorage.getItem("id");
   const [busy, setBusy] = useState<boolean>(true);
