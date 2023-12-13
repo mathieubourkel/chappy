@@ -8,7 +8,6 @@ import {
   faBan, faCircleExclamation
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./Dash.css";
 import { useState } from "react";
 import CreateButton from "../elements/Buttons/CreateButton";
 import OpenButton from "../elements/Buttons/OpenButton";
@@ -34,22 +33,22 @@ export default function DashboardProjects({ projects }: Props) {
         <h2>Mes projets</h2>
 
       {projects.length > 0 ? (
-        <div>
-          <div className="flex">
-            <div className="ml-20 md:flex justify-center basis-3/4 ">
+        <article>
+          <nav className="md:flex md:mb-3">
+            <div className="ml-20 mb-3 md:flex justify-center basis-3/4 ">
               {projects.map((project: intProject, index: number) => (
                 <button
                   key={index}
                   onClick={() => handleClick(index)}
                   className={
                     "text-brick-300 px-10 rounded-none border-0 border-b-2 border-b-brick-200 " +
-                    (index === selected && "border-b-brick-300 selected")}
+                    (index === selected && "border-b-brick-300 font-extrabold")}
                     >
                   {project.name}
                 </button>
               ))}
             </div>
-            <div className="flex justify-end basis-1/4 gap-5">
+            <div className="flex md:justify-end justify-center basis-1/4 gap-5">
               <Link to={"/project/" + projects[selected].id}>
                 <OpenButton value="Ouvrir le projet" />
               </Link>
@@ -57,8 +56,8 @@ export default function DashboardProjects({ projects }: Props) {
                 <CreateButton value="Nouveau projet" />
               </Link>
             </div>
-          </div>
-          <div className="flex flex-wrap gap-10">
+          </nav>
+          <div className="flex flex-wrap gap-5 justify-center">
             {projects[selected].project_steps.map((step: intStep) => (
               <StepCard
                 step={step}
@@ -84,21 +83,21 @@ export default function DashboardProjects({ projects }: Props) {
             </Alert> }
           </div>
 
-        </div>
+        </article>
       ) : (
-        <div>
-          <div className="flex justify-end">
+        <article>
+          <nav className="flex justify-end">
             <Link to="/create-project">
               <CreateButton value="Nouveau projet" />
             </Link>
-          </div>
+          </nav>
           <Alert
               icon={<FontAwesomeIcon icon={faBan} className={"text-marine-300 text-xl"}/>}
               className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5"
           >
             Aucun projet en cours.
           </Alert>
-        </div>
+        </article>
       )}
 
 

@@ -14,11 +14,9 @@ export default function EspaceComment({ comments, setComment }: Props) {
   const [display, setDisplay] = useState<boolean>(false);
   
   return (
-    <section className="bloc-3 mb-40">
-      <div className="b3-header">
+    <section className="mb-20">
         <h2>Espace commentaire</h2>
-      </div>
-      <div className="b3-comments flex flex-col mt-10">
+      <div className="flex flex-col mt-10">
         {display ? (
           comments.map((comment: intComment, index: number) => (
             <CommentCard comment={comment} key={index} />

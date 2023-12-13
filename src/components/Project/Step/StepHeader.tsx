@@ -11,6 +11,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { deleteStepFromBDD, getStepById, modifyStepToBDD } from "../../../services/api/steps";
 import { useEffect, useState } from "react";
 import { getProjectById } from "../../../services/api/projects";
+import Breadcrumb
+  from "../../Layers/Breadcrumb/Breadcrumb.tsx";
 
 let count = 1;
 export default function StepHeader() {
@@ -27,7 +29,7 @@ export default function StepHeader() {
     estimEndDate: new Date(),
     budget: 0,
     status:0,
-    project: {id:idProject}
+    project: {id:idProject, name: ''}
   });
 
   useEffect(() => {
@@ -63,6 +65,7 @@ export default function StepHeader() {
       <div className="b1-header md:flex justify-between">
         <div className="b1-header-title shrink-0">
           <h1>{step.name}</h1>
+          <Breadcrumb step={step}/>
         </div>
         <Button onClick={() => handleDeleteStep()}>
           <FontAwesomeIcon icon={faXmark} size="xl" />

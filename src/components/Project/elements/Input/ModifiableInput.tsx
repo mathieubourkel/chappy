@@ -37,8 +37,8 @@ export default function ModifiableInput(props: Props) {
     <div className="b1-body-budget flex basis-1/2 gap-2 mb-5">
       {display ? (
         <div className="flex w-full gap-2">
-          <div className="flex w-full rounded-md bg-white">
-            <Typography className="p-2">{value}</Typography>
+          <div className="flex items-center w-full false-input">
+            <Typography className="p-2 text-text-100">{value}</Typography>
           </div>
           {isOwner && (
             <IconButton onClick={handleDisplay} ripple={true}>
@@ -48,9 +48,9 @@ export default function ModifiableInput(props: Props) {
         </div>
       ) : (
         <form className="flex w-full gap-2" onSubmit={handleSubmit}>
-          <div className="flex w-full bg-white rounded-md">
+          <div className="flex w-full !bg-white">
             <Input
-              className="p-2"
+                className={"!border-gray-700/50 !text-text-100 focus:!border-gray-700/50"}
               type={type}
               name={label}
               id={label}
@@ -64,7 +64,7 @@ export default function ModifiableInput(props: Props) {
             ripple={true}
             type="submit"
           >
-            <FontAwesomeIcon icon={faCheck} />
+            <FontAwesomeIcon icon={faCheck} size={"lg"}/>
           </IconButton>
         </form>
       )}

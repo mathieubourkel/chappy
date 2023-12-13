@@ -36,7 +36,10 @@ export default function ProjectCreateStep({ setReload }: Props) {
     budget: 0,
     estimEndDate: null,
     status: 0,
-    project: {id:idProject}
+    project: {
+      id: idProject,
+      name: undefined
+    }
   });
 
   const handleChange = (e: InputEvent) => {
@@ -62,7 +65,7 @@ export default function ProjectCreateStep({ setReload }: Props) {
     <div>
       <CreateButton handleClick={handleOpen} value="Créer" />
       <Dialog
-        size="lg"
+        size="sm"
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"

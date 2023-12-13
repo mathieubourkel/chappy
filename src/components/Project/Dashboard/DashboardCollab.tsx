@@ -1,16 +1,21 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBan } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import RejoinModal from "../Modals/RejoinModal";
-import { Alert } from "@material-tailwind/react";
-import DashboardCollabStepCard from "../Cards/DashboardCollabStepCard";
-import { SelectMenu } from "../elements/Select/SelectMenu.tsx";
 import {
   intProject,
   intProjects,
   intStep,
 } from "../../../services/interfaces/intProject";
-import "./Dash.css";
+import {
+  faBan,
+} from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import RejoinModal from "../Modals/RejoinModal";
+import {
+  Alert,
+} from "@material-tailwind/react";
+import DashboardCollabStepCard from "../Cards/DashboardCollabStepCard";
+import {
+  SelectMenu
+} from "../elements/Select/SelectMenu.tsx";
 
 type Props = {
   collabs: intProjects;
@@ -20,17 +25,18 @@ export default function DashboardCollab({ collabs }: Props) {
   console.log("DashBoardCollabComposant");
   const [selected, setSelected] = useState(0);
 
-  const handleClick = (index: number) => {
+  function handleClick(index: number) {
     setSelected(index);
-  };
+  }
 
   return (
     <section className="my-10 mb-28">
-      <h2>Mes collaborations</h2>
+
+        <h2>Mes collaborations</h2>
 
       {collabs.length > 0 ? (
-        <div>
-          <div className="flex">
+        <article>
+          <nav className="flex">
             <div className="ml-20 lg:flex justify-center basis-3/4">
               {collabs.map((collab: intProject, index: number) => (
                 <button
@@ -38,7 +44,7 @@ export default function DashboardCollab({ collabs }: Props) {
                   onClick={() => handleClick(index)}
                   className={
                     "px-10 rounded-none border-0 border-b-2 border-b-marine-100 " +
-                    (index === selected && "border-b-marine-300 selected")
+                    (index === selected && "border-b-marine-300 font-extrabold")
                   }
                 >
                   {collab.name}
@@ -46,16 +52,11 @@ export default function DashboardCollab({ collabs }: Props) {
               ))}
             </div>
             <div className="flex basis-1/4 justify-end items-center gap-2">
-              <SelectMenu
-                see={"Voir le projet"}
-                request={"Voir les demandes"}
-                join={"Rejoindre un projet"}
-                idProject={collabs[selected].id}
-              />
+              <SelectMenu see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} idProject={collabs[selected].id}/>
             </div>
-          </div>
+          </nav>
 
-          <ul className="mt-10">
+          <div className="mt-5 flex gap-5 flex-wrap justify-center">
             {collabs[selected].project_steps.map((step: intStep) => (
               <DashboardCollabStepCard
                 step={step}
@@ -63,26 +64,21 @@ export default function DashboardCollab({ collabs }: Props) {
                 collab={collabs[selected]}
               />
             ))}
-          </ul>
-        </div>
-      ) : (
-        <div>
-          <div className="flex justify-end">
-            <RejoinModal join="Rejoindre" />
           </div>
+        </article>
+      ) : (
+        <article>
+          <nav className="flex justify-end">
+            <RejoinModal join="Rejoindre" />
+          </nav>
 
           <Alert
-            icon={
-              <FontAwesomeIcon
-                icon={faBan}
-                className={"text-marine-300 text-xl"}
-              />
-            }
-            className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5"
+              icon={<FontAwesomeIcon icon={faBan} className={"text-marine-300 text-xl"}/>}
+              className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5"
           >
             Aucun projet rejoint.
           </Alert>
-        </div>
+        </article>
       )}
     </section>
   );

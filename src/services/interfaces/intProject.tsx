@@ -34,7 +34,7 @@ export interface intStep extends intStepLight{
     budget: number,
     estimEndDate: Date | null
     status:number
-    project: intProjectLight
+    project: {id:string|undefined, name:string|undefined}
 }
 
 export type intSelect = {
@@ -95,7 +95,7 @@ export interface intUserLight {
 
 export interface intCategory {
     name: string | undefined
-    id: number 
+    id: number
 }
 export interface intRangeDate {
     startDate: Date,

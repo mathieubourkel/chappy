@@ -6,11 +6,9 @@ import ProjectHeader from "../../components/Project/Project/ProjectHeader";
 import ProjectDesc from "../../components/Project/Project/ProjectDesc";
 import { useParams } from "react-router-dom";
 import {
-  deleteProjectFromBDD,
   getProjectById,
 } from "../../services/api/projects";
 import ProjectSteps from "../../components/Project/Project/ProjectSteps";
-import DeleteProject from "../../components/Project/Modals/DeleteProject";
 import { Spinner } from "@material-tailwind/react";
 
 export default function ProjectPage() {
@@ -47,10 +45,6 @@ export default function ProjectPage() {
     getProject();
   }, [idProject, idUser]);
 
-  async function handleDelete() {
-    await deleteProjectFromBDD(idProject);
-  }
-
   return (
     <main className="project-page sm:mx-20 mx-5 mt-10">
       {busy ? (
@@ -70,9 +64,6 @@ export default function ProjectPage() {
             isOwner={isOwner}
           />
           <EspaceComment comments={comments} setComment={setComment} />
-          <div className="flex justify-end mb-10">
-            <DeleteProject handleDelete={handleDelete} />
-          </div>
         </>
       )}
     </main>

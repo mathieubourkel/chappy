@@ -25,6 +25,7 @@ export default function SelectDate({ state, setState, handleBdd }: Props) {
     {state.estimEndDate == null ? 
         <Datepicker
         inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
+        primaryColor={"red"}
         asSingle={true}
         useRange={false}
         onChange={handleChange}
@@ -32,7 +33,8 @@ export default function SelectDate({ state, setState, handleBdd }: Props) {
         placeholder={"Choisir une date de fin estimée"}
       /> :
     <Datepicker
-      inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
+      inputClassName="w-full px-2 py-1.5 rounded-md font-normal focus:ring-0 placeholder:text-black text-black border border-gray-500/50"
+      primaryColor={"indigo"}
       asSingle={true}
       useRange={false}
       onChange={handleChange}

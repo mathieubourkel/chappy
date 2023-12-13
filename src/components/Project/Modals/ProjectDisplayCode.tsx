@@ -10,9 +10,9 @@ export default function ProjectDisplayCode() {
 
   return (
     <div>
-      <Button className="flex" onClick={handleOpen}>
-        <FontAwesomeIcon icon={faCode} className="mr-2" />
-        <div className="hidden whitespace-nowrap md:flex">Code projet</div>
+      <Button size={"sm"} className="flex" onClick={handleOpen}>
+        <FontAwesomeIcon icon={faCode} className="lg:mr-2" />
+        <span className="hidden whitespace-nowrap lg:flex">Code projet</span>
       </Button>
       <Dialog
         size="xl"

@@ -16,14 +16,17 @@ export default function StepCard({ step, idProject }: Props) {
   const truncatedDescription = step.description.substring(0, 75) + (step.description.length >= 75 ? '...' : '');
 
   return (
-    <Card className="mt-6 w-96 custom-card">
-      <CardBody className="custom-card-body">
-        <Typography className="custom-subt mb-2" textGradient>
-          <div className="flex gap-2 items-start">
-            <FontAwesomeIcon icon={faBarsProgress} />
-            Jalon {enumStatus[step.status].label}
-          </div>
-        </Typography>
+    <Card className="mt-3 w-96 custom-card">
+
+      <CardBody className={"custom-card-body"}>
+          <Typography className="custom-subt mb-2" textGradient>
+
+              <div className={"flex gap-2 items-start"}>
+                  <FontAwesomeIcon icon={faBarsProgress} />
+                  Jalon {enumStatus[step.status].label}
+              </div>
+
+          </Typography>
         <Typography variant="h3" className="mb-2 font-bold text-marine-300">
           {step.name}
         </Typography>
