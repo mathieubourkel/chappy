@@ -85,7 +85,7 @@ export default function DashboardHeader({ nbProj}: Props) {
                 <Link to='/create-project'>
                 <CreateButton value="Créer un projet"/>
                 </Link>
-                <RejoinModal join="Rejoindre un projet" />
+                <RejoinModal join="Rejoindre un projet"/>
               </div>
             </>
         )}
@@ -94,7 +94,7 @@ export default function DashboardHeader({ nbProj}: Props) {
       <Link to="/calendar">
         <Button>Ouvrir</Button>
       </Link>
-        <Calendar className='h-[32rem]'/>
+        <Calendar className='md:h-[32rem]'/>
 
       </div>
 

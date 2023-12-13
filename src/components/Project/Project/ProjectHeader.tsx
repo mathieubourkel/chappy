@@ -12,7 +12,7 @@ import Breadcrumb
 
 type Props = {
   project: intProjectLight
-  idProject: string | undefined
+  idProject: string | undefined | number
   isOwner: boolean
 }
 

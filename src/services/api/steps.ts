@@ -19,7 +19,7 @@ export async function addProjectStepToBDD(data: intStep) {
   }
 
   export async function getStepById(idStep: string | undefined) {
-    return handleApiCall(() => api.get(`${PROJECT_STEPS_ENDPOINT}/${idStep}`));
+    return handleApiCall(() => api.get(`${PROJECT_STEPS_ENDPOINT}/${idStep}?populate[0]=project`));
   }
 
   export async function getTasksByStepId(idStep: string | undefined) {
