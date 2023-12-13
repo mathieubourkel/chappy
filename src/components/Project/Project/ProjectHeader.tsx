@@ -5,12 +5,12 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCartShopping,faFolderOpen,faUser} from "@fortawesome/free-solid-svg-icons";
-import { intProject } from "../../../services/interfaces/intProject";
+import { intProjectLight } from "../../../services/interfaces/intProject";
 import Breadcrumb from "../../Layers/Breadcrumb/Breadcrumb.tsx";
 import {MenuProject} from "../elements/Menu/MenuProject.tsx";
 
 type Props = {
-  project: intProject
+  project: intProjectLight
   idProject: string | undefined | number
   isOwner: boolean
 }

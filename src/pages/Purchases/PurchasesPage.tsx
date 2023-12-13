@@ -19,7 +19,7 @@ export default function PurchasesPage() {
   const [busy, setBusy] = useState<boolean>(true);
   const [project, setProject] = useState<intProjectLight>({
     id: undefined,
-    name: "",
+    name: "", code:''
   });
   const [purchases, setPurchases] = useState<intPurchases>([]);
   const [reload, setReload] = useState(false);

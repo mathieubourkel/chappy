@@ -52,10 +52,10 @@ export default function StepCreateTask({ handleReload, categories }: Props) {
     startDate: new Date(),
     endDate: new Date(),
     status: 0,
-    // comments: [],
     users: [],
     user: { id: userId },
     project_step: { id: idStep },
+    id:0,
   });
 
   useEffect(() => {

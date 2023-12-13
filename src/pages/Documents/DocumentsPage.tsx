@@ -11,7 +11,7 @@ import { Spinner } from "@material-tailwind/react";
 export default function DocumentsPage() {
   console.log('DocumentsPage')
   const {idProject} = useParams();
-  const [project, setProject] = useState<intProjectLight>({id:undefined, name:""})
+  const [project, setProject] = useState<intProjectLight>({id:undefined, name:"", code:''})
   const [documents, setDocument] = useState<intDocuments>([]);
   const [reload, setReload] = useState(false)
   const idUser = localStorage.getItem("id");

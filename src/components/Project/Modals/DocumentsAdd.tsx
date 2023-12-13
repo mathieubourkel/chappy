@@ -24,7 +24,7 @@ export default function DocumentsAdd({ handleReload }: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intDocument>({
-    path: "", type: "", project: {id: idProject}
+    path: "", type: "", project: {id: idProject, code:''}
   });
 
   function handleChange(e: InputEvent) {

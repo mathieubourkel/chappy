@@ -40,6 +40,7 @@ export default function CreateProjectPage() {
     users: [{ id: null }],
     companies: [{ id: null }],
     name: "",
+    code:''
   });
 
   useEffect(() => {

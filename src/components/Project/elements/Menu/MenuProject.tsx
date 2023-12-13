@@ -12,12 +12,12 @@ import { faCode, faList, faXmark } from "@fortawesome/free-solid-svg-icons";
 import ProjectDisplayCode from "../../Modals/ProjectDisplayCode.tsx";
 import DeleteProject from "../../Modals/DeleteProject.tsx";
 import { deleteProjectFromBDD } from "../../../../services/api/projects.ts";
-import { intProject } from "../../../../services/interfaces/intProject.tsx";
+import { intProjectLight } from "../../../../services/interfaces/intProject.tsx";
 import { useState } from "react";
 
 type Props = {
   idProject: string | undefined | number;
-  project: intProject;
+  project: intProjectLight;
 };
 
 export function MenuProject({ project, idProject }: Props) {

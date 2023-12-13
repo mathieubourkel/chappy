@@ -18,7 +18,7 @@ export default function MembersPage() {
   const [members, setMember] = useState<intUsers>([]);
   const [project, setProject] = useState<intProjectLight>({
     id: undefined,
-    name: "",
+    name: "", code:''
   });
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [busy, setBusy] = useState<boolean>(true);

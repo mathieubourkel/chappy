@@ -24,7 +24,7 @@ export default function PurchaseAdd({ handleReload }: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intPurchase>({
-    name: "", price:0, project:{id: idProject}
+    name: "", price:0, project:{id: idProject, code:''}
   });
 
   function handleChange(e: InputEvent) {

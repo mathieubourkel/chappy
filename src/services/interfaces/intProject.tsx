@@ -9,7 +9,6 @@ export interface intProject extends intProjectLight {
     user: intUserLight
     users?: intUsersLight
     companies?: intCompanies
-    code: string
 }
 
 export interface intCompany {
@@ -23,6 +22,7 @@ export interface intCompany {
 export interface intProjectLight {
     id?:number | string | string | undefined
     name?:string
+    code:string
   }
 
   export interface intStepLight {
