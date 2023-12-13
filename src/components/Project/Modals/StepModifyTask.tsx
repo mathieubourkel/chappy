@@ -12,33 +12,37 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faXmark } from "@fortawesome/free-solid-svg-icons";
 import {
   FormEvent,
   InputEvent,
   intSelect,
-  intTask,
+  intTask
 } from "../../../services/interfaces/intProject";
 import Datepicker from "react-tailwindcss-datepicker";
 import { modifyTaskToBDD } from "../../../services/api/tasks";
 import SelectCategory from "../elements/Select/SelectCategory";
+import makeAnimated from "react-select/animated";
 import SelectStatus from "../elements/Select/SelectStatus";
 import { enumStatus } from "../../../services/interfaces/Status";
+import ReactSelect from "react-select";
+const animatedComponents = makeAnimated();
 import './modal.css'
 
 type Props = {
   task: intTask;
   categories: Array<intSelect>;
   setTask: (task: intTask) => void;
+  allUsers: Array<intSelect>;
 };
 
 let count = 1;
-export default function StepModifyTask({ task, categories, setTask }: Props) {
+export default function StepModifyTask({ task, categories, setTask, allUsers }: Props) {
   console.log("StepModifyTask" + count++);
   const [form, setForm] = useState<intTask>(task);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-
+  console.log(task)
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -56,10 +60,29 @@ export default function StepModifyTask({ task, categories, setTask }: Props) {
     // setSelected(value)
   };
 
+  const handleDeleteUser = (index:number) => {
+    const tempUsers = [...task.users];
+    tempUsers.splice(index, 1);
+    setForm({...form, users: tempUsers })
+  }
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     await modifyTaskToBDD(task.id, form);
     setTask(form);
+  };
+
+  const handleUsers = (value: Array<intSelect>) => {
+    const tempUsers = [...task.users];
+    value.forEach((element: intSelect) => {
+      const userExists = tempUsers.some((tmpUser) => tmpUser.id === element.value);
+      if (userExists) {
+        alert("L'utilisateur est déjà présent");
+      } else {
+        tempUsers.push({ id: element.value, email: element.label });
+      }
+    });
+    setForm({ ...form, users: tempUsers });
   };
 
   return (
@@ -121,34 +144,25 @@ export default function StepModifyTask({ task, categories, setTask }: Props) {
                   placeholder={"Choisir la durée de la tâche"}
                 />
               </div>
-              <p>Participants</p>
+              <h3>Participants</h3>
               <div className="flex gap-10">
-                {task.users.map((user: any, index: number) => (
-                  <Input
-                    key={index}
-                    label="Participants"
-                    value={user.email}
-                    size="lg"
-                    disabled
-                    name="participants"
-                    id="participants"
-                    crossOrigin={undefined}
-                  />
+                {task.users.map((user: any, indexT: number) => (
+                  <div className="flex gap-2" key={indexT}>
+                    <p className="bg-white p-2 rounded-lg">{user.email}</p>
+                      <IconButton onClick={() => handleDeleteUser(indexT)}>
+                        <FontAwesomeIcon icon={faXmark} size="xl" />
+                      </IconButton>
+                  </div>
                 ))}
               </div>
-              <p>Commentaires</p>
-              {/* {tasks[index].comments.map((comment: string, index: number) => (
-              <Input
-                key={index}
-                label="Participants"
-                value={comment}
-                size="lg"
-                name="participants"
-                id="participants"
-                crossOrigin={undefined}
-                onChange={(e: InputEvent) => handleChange(e)}
+              <ReactSelect
+                options={allUsers}
+                className="rounded-xl"
+                isMulti
+                placeholder="Inviter des membres sur votre projet"
+                components={animatedComponents}
+                onChange={(value: any) => handleUsers(value)}
               />
-            ))} */}
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button variant="gradient" onClick={handleOpen} type="submit">

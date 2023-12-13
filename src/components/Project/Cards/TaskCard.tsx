@@ -7,7 +7,7 @@ import SelectStatus from "../elements/Select/SelectStatus";
 import StepModifyTask from "../Modals/StepModifyTask";
 import StepDisplayTask from "../Modals/StepDisplayTask";
 import DeleteButton from "../elements/Buttons/DeleteButton";
-import {intSelect,intTask,} from "../../../services/interfaces/intProject";
+import { intSelect,intTask} from "../../../services/interfaces/intProject";
 
 import {
   deleteTaskFromBDD,
@@ -16,22 +16,21 @@ import {
   deleteUserToTaskToBDD,
 } from "../../../services/api/tasks";
 import { enumStatus } from "../../../services/interfaces/Status";
-import { getComments } from "../../../services/api/comments";
 
 type Props = {
-  id: number | undefined;
+  id: number
   handleReload: () => void;
   categories: Array<intSelect>;
+  allUsers: Array<intSelect>;
 };
 
 let count = 1;
-export default function TaskCard({ id, handleReload, categories }: Props) {
+export default function TaskCard({ id, handleReload, categories, allUsers }: Props) {
   console.log("TaskCardComposant " + count++);
   const userId: string | undefined | null = localStorage.getItem("id");
 
   const [openM, setOpenM] = useState(false);
   const handleOpenM = () => setOpenM((bool) => !bool);
-
   const [task, setTask] = useState<intTask>({
     name: "",
     status: 0,
@@ -41,6 +40,7 @@ export default function TaskCard({ id, handleReload, categories }: Props) {
     endDate: new Date(),
     users: [],
     user: { id: 0 },
+    id:0
   });
 
   const [isOwner, setIsOwner] = useState(false);
@@ -48,7 +48,6 @@ export default function TaskCard({ id, handleReload, categories }: Props) {
   useEffect(() => {
     const getTask = async () => {
       const result = await getTaskById(id);
-      const dataComments = await getComments()
       result.user.id == userId && setIsOwner(true);
       setTask(result);
     }
@@ -73,7 +72,7 @@ export default function TaskCard({ id, handleReload, categories }: Props) {
     await modifyTaskToBDD(task.id, data);
     setTask(data)
   };
-
+console.log(task)
   const renderTaskOwner = () => (
     <>
       <Typography variant="h5" color="blue-gray" className="flex">
@@ -90,7 +89,8 @@ export default function TaskCard({ id, handleReload, categories }: Props) {
           <SelectStatus handleStatus={handleStatus} value={enumStatus[task.status]} />
         </form>
         <div className="flex gap-2">
-          <StepModifyTask task={task} categories={categories} setTask={setTask} />
+          <StepModifyTask task={task} categories={categories} 
+          setTask={setTask} allUsers={allUsers} />
           <DeleteButton handleDeleteBDD={handleDeleteTask} />
         </div>
       </div>
