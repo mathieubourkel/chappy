@@ -19,9 +19,10 @@ import Calendar from "../Calendar/Calendar";
 
 type Props = {
   nbProj: number;
+  setReload: (bool:boolean) => void;
 };
 
-export default function DashboardHeader({ nbProj}: Props) {
+export default function DashboardHeader({ nbProj, setReload}: Props) {
   console.log("DashBoardHeaderComposant")
   const userName = localStorage.getItem('name')
   return (
@@ -84,7 +85,7 @@ export default function DashboardHeader({ nbProj}: Props) {
                 <Link to='/create-project'>
                 <CreateButton value="Créer un projet"/>
                 </Link>
-                <RejoinModal join="Rejoindre un projet"/>
+                <RejoinModal join="Rejoindre un projet" setReload={setReload}/>
               </div>
             </>
         )}
