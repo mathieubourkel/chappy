@@ -11,12 +11,17 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCode,faCopy} from "@fortawesome/free-solid-svg-icons";
 import './modal.css'
+import { CopyToClipboard } from "react-copy-to-clipboard"
 
-export default function ProjectDisplayCode() {
+type Props = {
+  code: string
+}
+
+export default function ProjectDisplayCode({code}:Props) {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((bool) => !bool);
-
+  
   return (
     <>
       <MenuItem className={"flex items-center gap-2"}>
@@ -43,14 +48,16 @@ export default function ProjectDisplayCode() {
             </p>
             <div className="flex gap-2">
               <Input
-                label="XXXX-XXXX-XXXX-XXXX"
+                label={code}
                 disabled
                 size="lg"
                 crossOrigin={undefined}
               />
+              <CopyToClipboard text={code}>
               <IconButton>
                 <FontAwesomeIcon icon={faCopy} />
               </IconButton>
+              </CopyToClipboard>
             </div>
           </CardBody>
         </Card>

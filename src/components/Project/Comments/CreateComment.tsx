@@ -31,6 +31,7 @@ function handleSubmit(e:FormEvent){
   e.preventDefault();
   console.log(form)
   addCommentToBDD(form)
+  setForm({...form, content:""})
   handleReload();
 }
 
