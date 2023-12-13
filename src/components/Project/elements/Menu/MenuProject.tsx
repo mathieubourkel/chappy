@@ -2,7 +2,6 @@ import {
     Menu,
     MenuHandler,
     MenuList,
-    MenuItem,
     Button, Typography, Tooltip,
 } from "@material-tailwind/react";
 import {
@@ -13,8 +12,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ProjectDisplayCode
     from "../../Modals/ProjectDisplayCode.tsx";
+import DeleteProject
+    from "../../Modals/DeleteProject.tsx";
+import {
+    deleteProjectFromBDD
+} from "../../../../services/api/projects.ts";
 
-export function MenuProject() {
+type Props = {
+    idProject: string | undefined | number
+}
+
+export function MenuProject({idProject}:Props) {
+
+    async function handleDelete() {
+        await deleteProjectFromBDD(idProject);
+    }
 
     return (
         <Tooltip
@@ -42,9 +54,8 @@ export function MenuProject() {
             </MenuHandler>
             <MenuList className={"text-marine-300"}>
                     <ProjectDisplayCode />
-                <MenuItem>
+                    <DeleteProject handleDelete={handleDelete}/>
 
-                </MenuItem>
 
             </MenuList>
         </Menu>

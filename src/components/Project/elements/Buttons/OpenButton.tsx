@@ -24,6 +24,7 @@ export default function RejoinButton({value, onClick}: Props) {
             }}
         >
             <Button className="flex items-center"
+                    size={"sm"}
                     onClick={onClick}>
                 <FontAwesomeIcon icon={faFolderOpen} className={"text-sm"} />
                 <span className="pl-2 hidden lg:flex whitespace-nowrap">{value}</span>

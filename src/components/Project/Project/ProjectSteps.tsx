@@ -46,7 +46,7 @@ export default function ProjectSteps({ idProject, isOwner }: Props) {
             </div>
           )}
           <div>
-            <IconButton>
+            <IconButton size={"sm"}>
               <FontAwesomeIcon icon={faFilter} />
             </IconButton>
           </div>
@@ -57,7 +57,7 @@ export default function ProjectSteps({ idProject, isOwner }: Props) {
           <Spinner className="h-16 w-16 text-gray-900/50" />
         </div>
       ) : (
-        <div className="flex flex-wrap gap-10 mt-10">
+        <div className="flex flex-wrap justify-center gap-10 mt-10">
           {steps.map((step: intStep) => (
             <StepCard key={step.id} step={step} idProject={idProject} />
           ))}

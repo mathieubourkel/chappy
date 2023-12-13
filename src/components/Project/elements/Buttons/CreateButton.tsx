@@ -22,7 +22,7 @@ export default function CreateButton({value, handleClick}:Props) {
               unmount: { scale: 0, y: 25 },
           }}
       >
-    <Button className="bg-brick-300 flex items-center"
+    <Button size={"sm"} className="bg-brick-300 flex items-center"
     onClick={handleClick}>
       <FontAwesomeIcon icon={faFolderPlus} className={"text-sm"} />
       <span className="pl-2 hidden lg:inline whitespace-nowrap">{value}</span>

@@ -35,7 +35,7 @@ export async function getProjectsFromOwner(idUser: string | null) {
     return handleApiCall(() => api.post(PROJECTS_ENDPOINT, body));
   }
   
-  export async function deleteProjectFromBDD(idProject: string | undefined) {
+  export async function deleteProjectFromBDD(idProject: string | number | undefined) {
     return handleApiCall(() => api.delete(`${PROJECTS_ENDPOINT}/${idProject}`));
   }
   

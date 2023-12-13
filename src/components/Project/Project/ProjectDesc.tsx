@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  Alert,
   Card,
   CardBody,
   Chip,
@@ -11,7 +12,6 @@ import SelectStatus from "../elements/Select/SelectStatus";
 import SelectDate from "../elements/Select/SelectDate";
 import { useParams } from "react-router-dom";
 import {
-  deleteProjectFromBDD,
   modifyProjectToBDD
 } from "../../../services/api/projects";
 import { enumStatus } from "../../../services/interfaces/Status";
@@ -19,10 +19,8 @@ import {
   FontAwesomeIcon
 } from "@fortawesome/react-fontawesome";
 import {
-  faBookOpen
+  faBookOpen, faSitemap
 } from "@fortawesome/free-solid-svg-icons";
-import DeleteProject
-  from "../Modals/DeleteProject.tsx";
 import CalendarProject from "../Calendar/CalendarProject";
 
 type Props = {
@@ -46,16 +44,18 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
     setProject(data);
   };
 
-  async function handleDelete() {
-    await deleteProjectFromBDD(idProject);
-  }
-
   return (
     <section className="mt-5 mb-20">
       <div className="lg:flex gap-5">
         <div>
+          <Alert className={"mb-5 bg-marine-300 p-5"}>
+            <FontAwesomeIcon icon={faSitemap} className={"mr-5 text-marine-100"} />
+
+          <span>Vous avez actuellement {project.project_steps.length} jalons ouvert sur ce projet.</span>
+        </Alert>
           <Card
               className="custom-block lg:w-[45lvw]">
+
             <CardBody
                 className={"custom-project-body custom-scroll"}>
               <div
@@ -73,12 +73,6 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
           </Card>
 
           <div className="mt-5">
-            <Typography
-                variant="h4"
-                className={"font-bold my-10"}
-            >
-              Mise en oeuvre
-            </Typography>
             <ModifiableInput
                 isOwner={isOwner}
                 value={"Budget : " +
@@ -93,14 +87,14 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
           </div>
           {isOwner ? (
               <>
-                <div className="md:flex gap-5">
+                <div className="md:flex gap-5 md:mb-5">
                   <div className="w-full">
                     <SelectStatus
                         handleStatus={handleStatus}
                         value={enumStatus[project.status]}
                     />
                   </div>
-                  <div className="w-full">
+                  <div className="w-full my-5 md:my-0">
                     <SelectDate
                         state={project}
                         setState={setProject}
@@ -108,15 +102,6 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
                     />
                   </div>
                 </div>
-                <Typography
-                    variant="h4"
-                    className={"font-bold my-10"}
-                >
-                  Supprimer le projet
-                </Typography>
-
-                <DeleteProject
-                    handleDelete={handleDelete}/>
               </>
           ) : (
               <div className="md:flex gap-5">
