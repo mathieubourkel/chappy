@@ -16,6 +16,7 @@ import {
   deleteUserToTaskToBDD,
 } from "../../../services/api/tasks";
 import { enumStatus } from "../../../services/interfaces/Status";
+import { getComments } from "../../../services/api/comments";
 
 type Props = {
   id: number | undefined;
@@ -47,6 +48,7 @@ export default function TaskCard({ id, handleReload, categories }: Props) {
   useEffect(() => {
     const getTask = async () => {
       const result = await getTaskById(id);
+      const dataComments = await getComments()
       result.user.id == userId && setIsOwner(true);
       setTask(result);
     }
