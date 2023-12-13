@@ -52,8 +52,10 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
     <section className="mt-5 mb-20">
       <div className="lg:flex gap-5">
         <div>
-          <Card className="custom-block lg:w-[45lvw]">
-            <CardBody className={"custom-project-body custom-scroll"}>
+          <Card
+              className="custom-block lg:w-[45lvw]">
+            <CardBody
+                className={"custom-project-body custom-scroll"}>
               <div
                   className={"flex gap-2 items-center"}>
                 <FontAwesomeIcon icon={faBookOpen}
@@ -62,7 +64,8 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
                       value="Description"
                       className={"w-full bg-marine-100/10 text-marine-300"}/>
               </div>
-              <Typography type={"p"} className={"pt-3"}>{project.description}</Typography>
+              <Typography type={"p"}
+                          className={"pt-3"}>{project.description}</Typography>
 
             </CardBody>
           </Card>
@@ -76,7 +79,8 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
             </Typography>
             <ModifiableInput
                 isOwner={isOwner}
-                value={"Budget : " + project.budget + "€"}
+                value={"Budget : " +
+                    project.budget + "€"}
                 state={project}
                 setState={setProject}
                 type="number"
@@ -86,37 +90,40 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
             />
           </div>
           {isOwner ? (
-             <>
-               <div className="md:flex gap-5">
-                <div className="w-full">
-                  <SelectStatus
-                      handleStatus={handleStatus}
-                      value={enumStatus[project.status]}
-                  />
+              <>
+                <div className="md:flex gap-5">
+                  <div className="w-full">
+                    <SelectStatus
+                        handleStatus={handleStatus}
+                        value={enumStatus[project.status]}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <SelectDate
+                        state={project}
+                        setState={setProject}
+                        handleBdd={handleModifyProject}
+                    />
+                  </div>
                 </div>
-                <div className="w-full">
-                  <SelectDate
-                      state={project}
-                      setState={setProject}
-                      handleBdd={handleModifyProject}
-                  />
-                </div>
-              </div>
-              <Typography
-                  variant="h4"
-                  className={"font-bold my-10"}
-              >
-                Supprimer le projet
-              </Typography>
+                <Typography
+                    variant="h4"
+                    className={"font-bold my-10"}
+                >
+                  Supprimer le projet
+                </Typography>
 
-               <DeleteProject handleDelete={handleDelete} />
-             </>
+                <DeleteProject
+                    handleDelete={handleDelete}/>
+              </>
           ) : (
               <div className="md:flex gap-5">
-                <div className="w-full bg-white p-2 rounded-xl">
+                <div
+                    className="w-full bg-white p-2 rounded-xl">
                   {enumStatus[project.status].label}
                 </div>
-                <div className="w-full bg-white p-2 rounded-xl">
+                <div
+                    className="w-full bg-white p-2 rounded-xl">
                   {project.estimEndDate?.toString()}
                 </div>
               </div>
@@ -124,9 +131,10 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
         </div>
 
 
-          <div className="b1-body-calendar basis-1/2">
-              <CalendarProject className='h-[32rem]' />
-          </div>
+        <div
+            className="b1-body-calendar basis-1/2">
+          <CalendarProject className='h-[32rem]'/>
+        </div>
       </div>
 
     </section>
