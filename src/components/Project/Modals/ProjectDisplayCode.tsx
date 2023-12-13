@@ -2,12 +2,17 @@ import { useState } from "react";
 import {Button,Dialog,Card,CardBody,Typography,Input,IconButton,} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCode,faCopy} from "@fortawesome/free-solid-svg-icons";
+import { CopyToClipboard } from "react-copy-to-clipboard"
 
-export default function ProjectDisplayCode() {
+type Props = {
+  code: string
+}
+
+export default function ProjectDisplayCode({code}:Props) {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((bool) => !bool);
-
+  
   return (
     <div>
       <Button size={"sm"} className="flex" onClick={handleOpen}>
@@ -31,14 +36,16 @@ export default function ProjectDisplayCode() {
             </p>
             <div className="flex gap-2">
               <Input
-                label="XXXX-XXXX-XXXX-XXXX"
+                label={code}
                 disabled
                 size="lg"
                 crossOrigin={undefined}
               />
+              <CopyToClipboard text={code}>
               <IconButton>
                 <FontAwesomeIcon icon={faCopy} />
               </IconButton>
+              </CopyToClipboard>
             </div>
           </CardBody>
         </Card>

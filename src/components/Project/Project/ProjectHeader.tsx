@@ -6,12 +6,12 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCartShopping,faFolderOpen,faUser} from "@fortawesome/free-solid-svg-icons";
 import ProjectDisplayCode from "../Modals/ProjectDisplayCode";
-import { intProjectLight } from "../../../services/interfaces/intProject";
+import { intProject } from "../../../services/interfaces/intProject";
 import Breadcrumb
     from "../../Layers/Breadcrumb/Breadcrumb.tsx";
 
 type Props = {
-  project: intProjectLight
+  project: intProject
   idProject: string | undefined | number
   isOwner: boolean
 }
@@ -33,7 +33,7 @@ export default function ProjectHeader({project ,idProject, isOwner} :Props) {
         </div>
         {isOwner && 
         <nav className="flex gap-2 items-center justify-center lg:justify-end">
-          <ProjectDisplayCode />
+          <ProjectDisplayCode code={project.code}/>
           <Link to={"/project/"+ idProject + "/members"}>
             <Button variant="outlined" size={"sm"} className="flex">
               <FontAwesomeIcon icon={faUser} className="lg:mr-2" />

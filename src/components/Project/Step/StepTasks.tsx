@@ -9,10 +9,12 @@ import {
   intSelect,
   intTask,
   intTasks,
+  intUser,
 } from "../../../services/interfaces/intProject";
 import { useParams } from "react-router-dom";
 import { getTasksByStepId } from "../../../services/api/steps";
 import { getCategories } from "../../../services/api/category";
+import { getAllUsers } from "../../../services/api/users";
 
 let count = 1;
 export default function StepTasks() {
@@ -22,18 +24,26 @@ export default function StepTasks() {
   const [categories, setCategories] = useState<Array<intSelect>>([]);
   const [reload, setReload] = useState(false);
   const [busy, setBusy] = useState<boolean>(true);
+  const [allUsers, setAllUsers] = useState<Array<intSelect>>([])
 
   useEffect(() => {
     async function getTasks() {
       const result = await getTasksByStepId(idStep);
+      const tmpAllUsers = await getAllUsers();
       const dataCategories = await getCategories();
       setBusy(false);
       const dataCategoriesReformat: Array<intSelect> = [];
       dataCategories.map((element: intCategory) => {
         dataCategoriesReformat.push({ label: element.name, value: element.id });
       });
+
+      const emailArray: Array<intSelect> = tmpAllUsers.map((element: intUser) => ({
+        label: element.email,
+        value: element.id,
+      }));
       setCategories(dataCategoriesReformat);
       setTasks(result.step_tasks);
+      setAllUsers(emailArray)
     }
 
     getTasks();
@@ -75,6 +85,7 @@ export default function StepTasks() {
               id={task.id}
               handleReload={handleReload}
               categories={categories}
+              allUsers={allUsers}
             />
           ))}
         </ul>

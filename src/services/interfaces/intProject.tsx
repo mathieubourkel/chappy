@@ -60,7 +60,7 @@ export interface intTask {
     comments?: intComments
     user?: intUserLight
     users: intUsersLight
-    id?:number
+    id:number
     project_step?: intStepLight
 }
 export interface intPurchase {
