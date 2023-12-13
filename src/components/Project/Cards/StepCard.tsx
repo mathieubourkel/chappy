@@ -1,19 +1,10 @@
 import { Link } from "react-router-dom";
-import {
-    faBarsProgress,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBarsProgress } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    Card,
-    CardBody,
-    CardFooter,
-    Typography
-} from "@material-tailwind/react";
-import { intStep } from "../../../services/interfaces/intProject";
+import { Card, CardBody, CardFooter, Typography } from "@material-tailwind/react";
 import AccederButton from "../elements/Buttons/AccederButton";
-import {
-    enumStatus
-} from "../../../services/interfaces/Status.tsx";
+import { intStep } from "../../../services/interfaces/intProject";
+import { enumStatus } from "../../../services/interfaces/Status";
 
 type Props = {
   step: intStep;
@@ -22,6 +13,8 @@ type Props = {
 
 export default function StepCard({ step, idProject }: Props) {
   console.log('StepCardComposant')
+  const truncatedDescription = step.description.substring(0, 75) + (step.description.length >= 75 ? '...' : '');
+
   return (
     <Card className="mt-3 w-96 custom-card">
 
@@ -37,10 +30,12 @@ export default function StepCard({ step, idProject }: Props) {
         <Typography variant="h3" className="mb-2 font-bold text-marine-300">
           {step.name}
         </Typography>
-        <Typography variant={"paragraph"} className={"text-text-100"}>{step.description.substring(0, 75)} {step.description.length >= 75 && '...'}</Typography>
+        <Typography variant="paragraph" className="text-text-100">
+          {truncatedDescription}
+        </Typography>
       </CardBody>
       <CardFooter className="pt-0 flex justify-end">
-        <Link to={"/project/" + idProject + "/step/" + step.id}>
+        <Link to={`/project/${idProject}/step/${step.id}`}>
           <AccederButton />
         </Link>
       </CardFooter>

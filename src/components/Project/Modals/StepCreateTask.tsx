@@ -13,9 +13,10 @@ import {
 import {
   FormEvent,
   InputEvent,
-  intMember,
+  intUser,
   intSelect,
   intTask,
+  intUsersLight,
 } from "../../../services/interfaces/intProject";
 import Datepicker from "react-tailwindcss-datepicker";
 import { addTaskToStepToBDD } from "../../../services/api/tasks";
@@ -61,7 +62,7 @@ export default function StepCreateTask({ handleReload, categories }: Props) {
       const dataUsers = await getMembersByProject(idProject);
       // Reformatage pour le React Select {value: , label: }
       const dataUsersReformat: Array<intSelect> = [];
-      dataUsers.map((element: intMember) => {
+      dataUsers.users.map((element: intUser) => {
         dataUsersReformat.push({ label: element.email, value: element.id });
       });
       setUsers(dataUsersReformat);
@@ -82,10 +83,7 @@ export default function StepCreateTask({ handleReload, categories }: Props) {
   };
 
   const handleUsers = (value: Array<intSelect>) => {
-    const goodArray: Array<{ id: number }> = [];
-    value.map((element: intSelect) => {
-      goodArray.push({ id: element.value });
-    });
+    const goodArray: intUsersLight = value.map((element: intSelect) => ({ id: element.value }));
     setForm({ ...form, users: goodArray });
   };
 
@@ -93,11 +91,11 @@ export default function StepCreateTask({ handleReload, categories }: Props) {
     setForm({ ...form, startDate: value.startDate, endDate: value.endDate });
   };
 
-  const handleStatus = (value: intSelect) => {
+  const handleStatus = (value: any) => {
     setForm({ ...form, status: value.value });
   };
 
-  const handleCategory = (value: intSelect) => {
+  const handleCategory = (value: any) => {
     setForm({ ...form, category: { id: value.value, name: value.label } });
   };
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import {
   Typography,
@@ -28,9 +29,16 @@ import avatar from "../../../assets/img/icon user.png";
 import {NavLink} from "react-router-dom";
 
 export function Sidebar(props:any) {
-
   const {openSidebar, toggleSidebar} = props;
   const [open, setOpen] = React.useState(0);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('name')
+    localStorage.removeItem('id')
+    window.location.reload()
+
+  }
 
   const handleOpen = (value:any) => {
     setOpen(open === value ? 0 : value);
@@ -380,12 +388,14 @@ export function Sidebar(props:any) {
               </Button>
             </NavLink>
 
-            <NavLink to={"/signup"} >
-              <Button className="flex items-center justify-between h-3 bg-brick-300 w-full mb-3">
+
+              <Button 
+              onClick={handleLogout}
+              className="flex items-center justify-between h-3 bg-brick-300 w-full mb-3">
                 <FontAwesomeIcon icon={faRightFromBracket} className={"h-4 w-4"} />
                 Se déconnecter
               </Button>
-            </NavLink>
+      
           </div>
       </Drawer>
   );

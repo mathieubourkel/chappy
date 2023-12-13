@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 
-const ScrollToTop = (props:any) => {
+const ScrollToTop = ({ children }: any) => {
   const location = useLocation();
+
   useEffect(() => {
     if (!location.hash) {
       window.scrollTo(0, 0);
     }
   }, [location]);
 
-  return <>{props.children}</>
+  return <>{children}</>;
 };
 
 export default ScrollToTop;

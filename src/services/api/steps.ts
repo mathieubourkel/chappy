@@ -1,68 +1,40 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useApi } from "../../hooks/useApi";
+import { handleApiCall, useApi } from "../../hooks/useApi";
 import { intStep } from "../interfaces/intProject";
 const api = useApi();
+const PROJECT_STEPS_ENDPOINT = "project-steps";
 
-export async function addProjectStepToBDD(data:intStep) {
-    const body = {data}
-    try {
-        const {data} = await api.post('project-steps', body);
-        return data.data;
-    } catch (error) {
-        return error
-    }
-}
+export async function addProjectStepToBDD(data: intStep) {
+    const body = { data };
+    return handleApiCall(() => api.post(PROJECT_STEPS_ENDPOINT, body));
+  }
 
-export async function deleteStepFromBDD(idStep:string | undefined) {
-    try {
-        const {data} = await api.delete('project-steps/' + idStep);
-        return data.data;
-    } catch (error) {
-        return error
-    }
-}
+  export async function deleteStepFromBDD(idStep: string | undefined) {
+    return handleApiCall(() => api.delete(`${PROJECT_STEPS_ENDPOINT}/${idStep}`));
+  }
 
-export async function modifyStepToBDD(idStep:string|undefined, data:intStep) {
-    const body = {
-        data
-    }
-    try {
-        const {data} = await api.put('project-steps/' + idStep, body);
-        return data.data;
-    } catch (error) {
-        return error
-    }
-}
+  export async function modifyStepToBDD(idStep: string | undefined, data: intStep) {
+    const body = { data };
+    return handleApiCall(() => api.put(`${PROJECT_STEPS_ENDPOINT}/${idStep}`, body));
+  }
 
-export async function getStepById(idStep:string | undefined) {
-    
-    try {
-        const {data} = await api.get('project-steps/'+ idStep + '?populate[0]=project');
-        return data.data;
-    } catch (error) {
-        return error
-    }
-}
+  export async function getStepById(idStep: string | undefined) {
+    return handleApiCall(() => api.get(`${PROJECT_STEPS_ENDPOINT}/${idStep}`));
+  }
 
-export async function getTasksByStepId(idStep:string | undefined) {
-    
-    try {
-        const {data} = await api.get('project-steps/' + idStep + '?[fields]=id&populate[step_tasks][fields]=id');
-        return data.data;
-    } catch (error) {
-        return error
-    }
-}
+  export async function getTasksByStepId(idStep: string | undefined) {
+    return handleApiCall(() =>
+      api.get(`${PROJECT_STEPS_ENDPOINT}/${idStep}?[fields]=id&populate[step_tasks][fields]=id`)
+    );
+  }
 
-export async function getStepsByIdProject(idProject:string | undefined) {
-    
-    try {
-        const {data} = await api.get('project-steps?populate[project][fields]=id&filters[project][id][$eq]=' + idProject);
-        return data.data;
-    } catch (error) {
-        return error
-    }
-}
+  export async function getStepsByIdProject(idProject: string | undefined) {
+    return handleApiCall(() =>
+      api.get(
+        `${PROJECT_STEPS_ENDPOINT}?populate[project][fields]=id&filters[project][id][$eq]=${idProject}`
+      )
+    );
+  }
 
 
 

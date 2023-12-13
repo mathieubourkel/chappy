@@ -1,11 +1,11 @@
-import calendar from "../../../assets/img/calendar.webp";
 import CreateButton from "../elements/Buttons/CreateButton";
 import {Link} from "react-router-dom";
 import RejoinModal from "../Modals/RejoinModal";
 import {
     Alert,
     Chip,
-    Typography
+    Typography,
+    Button,
 } from "@material-tailwind/react";
 import {
     FontAwesomeIcon
@@ -16,9 +16,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Breadcrumb
     from "../../Layers/Breadcrumb/Breadcrumb.tsx";
+import Calendar from "../Calendar/Calendar";
 
 type Props = {
-  nbProj:number
+  nbProj: number;
 };
 
 export default function DashboardHeader({ nbProj}: Props) {
@@ -57,12 +58,12 @@ export default function DashboardHeader({ nbProj}: Props) {
                     <Chip variant="ghost" value="Actualités" className={"w-full bg-marine-100/10 text-marine-300"}/>
                 </div>
 
-                <p className={"p-2"}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Eius obcaecati, perferendis dignissimos quae veritatis vitae
-                  fugiat ratione dolorum similique aspernatur deserunt suscipit
-                  quaerat porro iure cumque maiores quibusdam est aliquam?
-                </p>
+              <p className="p-2">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
+                obcaecati, perferendis dignissimos quae veritatis vitae fugiat
+                ratione dolorum similique aspernatur deserunt suscipit quaerat
+                porro iure cumque maiores quibusdam est aliquam?
+              </p>
             </div>
               <Alert
                   icon={<FontAwesomeIcon icon={faCircleInfo} className={"text-marine-300 text-xl"}/>}
@@ -89,9 +90,14 @@ export default function DashboardHeader({ nbProj}: Props) {
             </>
         )}
       </div>
-      <div className="basis-1/2">
-        <img src={calendar} />
+      <div className='w-1/2'>
+      <Link to="/calendar">
+        <Button>Ouvrir</Button>
+      </Link>
+        <Calendar className='h-[32rem]'/>
+
       </div>
+
     </section>
   );
 }

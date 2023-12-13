@@ -5,8 +5,7 @@ import {
   Typography
 } from "@material-tailwind/react";
 import ModifiableInput from "../elements/Input/ModifiableInput";
-import calendar from "../../../assets/img/calendar.webp";
-import { intProject, intSelect } from "../../../services/interfaces/intProject";
+import { intProject } from "../../../services/interfaces/intProject";
 import SelectStatus from "../elements/Select/SelectStatus";
 import SelectDate from "../elements/Select/SelectDate";
 import { useParams } from "react-router-dom";
@@ -23,6 +22,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import DeleteProject
   from "../Modals/DeleteProject.tsx";
+import CalendarProject from "../Calendar/CalendarProject";
 
 type Props = {
   project: intProject;
@@ -38,7 +38,7 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
     modifyProjectToBDD(idProject, data);
   }
 
-  const handleStatus = async (values: intSelect) => {
+  const handleStatus = async (values: any) => {
     const data = { ...project, status: values.value };
     await modifyProjectToBDD(idProject, data);
     setProject(data);
@@ -124,11 +124,9 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
         </div>
 
 
-        <div
-            className="basis-1/2">
-          <img className="hidden lg:flex"
-               src={calendar}/>
-        </div>
+          <div className="b1-body-calendar basis-1/2">
+              <CalendarProject className='h-[32rem]' />
+          </div>
       </div>
 
     </section>

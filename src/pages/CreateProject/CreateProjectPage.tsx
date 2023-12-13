@@ -1,18 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Input,
-  Textarea,
-  Typography,
-  Button,
-} from "@material-tailwind/react";
+import { Input, Textarea, Typography, Button } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import {
   FormEvent,
   InputEvent,
   intCompany,
-  intMember,
+  intUser,
   intProject,
+  intSelect,
+  intUsersLight,
+  intCompanies,
 } from "../../services/interfaces/intProject";
 import { useEffect, useState } from "react";
 import { addProjectToBDD } from "../../services/api/projects";
@@ -23,15 +21,12 @@ import ReactSelect from "react-select";
 import makeAnimated from "react-select/animated";
 import { enumStatus } from "../../services/interfaces/Status";
 
-type intSelect = {
-  value: number;
-  label: string;
-};
+const animatedComponents = makeAnimated();
 
 export default function CreateProjectPage() {
   console.log("CreateProjectPage");
-  const userId = localStorage.getItem('id')
-  const animatedComponents = makeAnimated();
+  const userId = localStorage.getItem("id");
+
   const navigate = useNavigate();
   const [users, setUsers] = useState<Array<intSelect>>([]);
   const [companies, setCompanies] = useState<Array<intSelect>>([]);
@@ -42,56 +37,50 @@ export default function CreateProjectPage() {
     estimEndDate: null,
     project_steps: [],
     user: { id: userId },
-    users: [{ id: undefined }],
-    companies: [{ id: undefined }],
+    users: [{ id: null }],
+    companies: [{ id: null }],
     name: "",
   });
 
   useEffect(() => {
-    async function getUsers() {  
+    async function getUsers() {
       const result2 = await getAllCompanies();
       const result = await getAllUsers();
-      const emailArray: Array<intSelect> = [];
-      const nameArray: Array<intSelect> = [];
-      result.map((element: intMember) => {
-        emailArray.push({ label: element.email, value: element.id });
-      });
-      result2.map((element: intCompany) => {
-        nameArray.push({ label: element.name, value: element.id });
-      });
-      setUsers(emailArray);
+      const nameArray: Array<intSelect> = result2.map(
+        (element: intCompany) => ({ label: element.name, value: element.id })
+      );
       setCompanies(nameArray);
+      
+      const emailArray: Array<intSelect> = result.map((element: intUser) => ({
+        label: element.email,
+        value: element.id,
+      }));
+      setUsers(emailArray);
       
     }
     getUsers();
   }, []);
 
-  function handleUsers(value: Array<intSelect>) {
-    const goodArray: Array<{ id: number }> = [];
-    value.map((element: intSelect) => {
-      goodArray.push({ id: element.value });
-    });
+  const handleUsers = (value: Array<intSelect>) => {
+    const goodArray: intUsersLight = value.map((element: intSelect) => ({ id: element.value }));
     setForm({ ...form, users: goodArray });
-  }
+  };
 
-  function handleCompanies(value: Array<intSelect>) {
-    const goodArray: Array<{ id: number }> = [];
-    value.map((element: intSelect) => {
-      goodArray.push({ id: element.value });
-    });
+  const handleCompanies = (value: Array<intSelect>) => {
+    const goodArray: intCompanies = value.map((element: intSelect) => ({ id: element.value }));
     setForm({ ...form, companies: goodArray });
-  }
+  };
 
-  const handleStatus = (value: intSelect) => {
+  const handleStatus = (value: any) => {
     setForm({ ...form, status: value.value });
   };
 
-  function handleChange(e: InputEvent) {
+  const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
 
-  async function handleSubmit(e: FormEvent) {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     await addProjectToBDD(form);
     navigate("/dashboard");
@@ -151,29 +140,29 @@ export default function CreateProjectPage() {
               />
             </div>
             <div className="sm:flex gap-5 mb-5">
-              <div className='w-full'>
-            <ReactSelect
-                options={enumStatus}
-                className="rounded-xl"
-                placeholder="Status"
-                defaultValue={enumStatus[0]}
-                components={animatedComponents}
-                onChange={(value: any) => handleStatus(value)}
-              />
+              <div className="w-full">
+                <ReactSelect
+                  options={enumStatus}
+                  className="rounded-xl"
+                  placeholder="Status"
+                  defaultValue={enumStatus[0]}
+                  components={animatedComponents}
+                  onChange={(value: any) => handleStatus(value)}
+                />
               </div>
               <div className="w-full">
-              <Datepicker
-                inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
-                onChange={handleDate}
-                value={{
-                  startDate: form.estimEndDate,
-                  endDate: form.estimEndDate,
-                }}
-                useRange={false}
-                asSingle={true}
-                inputName="rangeDate"
-                placeholder={"Choisir la date de fin estimée du projet"}
-              />
+                <Datepicker
+                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
+                  onChange={handleDate}
+                  value={{
+                    startDate: form.estimEndDate,
+                    endDate: form.estimEndDate,
+                  }}
+                  useRange={false}
+                  asSingle={true}
+                  inputName="rangeDate"
+                  placeholder={"Choisir la date de fin estimée du projet"}
+                />
               </div>
             </div>
             <div className="my-5">

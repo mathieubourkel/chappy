@@ -13,7 +13,6 @@ import {
 import {
   FormEvent,
   InputEvent,
-  intSelect,
   intStep,
 } from "../../../services/interfaces/intProject";
 import CreateButton from "../elements/Buttons/CreateButton";
@@ -58,7 +57,7 @@ export default function ProjectCreateStep({ setReload }: Props) {
     setForm({ ...form, estimEndDate: value.startDate });
   };
 
-  const handleStatus = (value: intSelect) => {
+  const handleStatus = (value: any) => {
     setForm({ ...form, status: value.value });
   };
 

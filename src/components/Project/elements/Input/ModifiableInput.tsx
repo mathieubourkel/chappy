@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import { IconButton, Input, Typography } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faPen } from "@fortawesome/free-solid-svg-icons";
 import { FormEvent } from "../../../../services/interfaces/intProject";
-import { useState } from "react";
 
 type Props = {
   type: string;
@@ -21,15 +21,15 @@ export default function ModifiableInput(props: Props) {
   const { type, label, placeHolder, handleBdd, setState, state, value, isOwner } = props;
   const [display, setDisplay] = useState(true);
 
-  async function handleSubmit(e: FormEvent) {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const value = e.currentTarget[label].value;
-    const tmpData = {...state, [label]: value}
+    const tmpValue = e.currentTarget[label].value;
+    const tmpData = {...state, [label]: tmpValue}
     await handleBdd(tmpData)
     setState(tmpData);
     setDisplay(true);
   }
-  function handleDisplay() {
+  const handleDisplay = () => {
     setDisplay(false);
   }
 

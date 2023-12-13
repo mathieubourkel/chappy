@@ -26,13 +26,12 @@ import ScrollToTop from "./services/utils/ScrollToTop.tsx";
 import PublicRoute from "./services/utils/PublicRoute.tsx";
 import ContextIsLogged from "./context/ContextIsLogged.tsx";
 
-
 export default function App() {
   console.log("AppComposant");
   // const [logins, setLogin] = useState<Array<string>>([]);
   const token = localStorage.getItem("token");
-  const [isLogged, setIsLogged] = useState<boolean>(false)
-  token && !isLogged && setIsLogged(true)
+  const [isLogged, setIsLogged] = useState<boolean>(!!token);
+  token && !isLogged && setIsLogged(true);
 
   // function handleSubmitLogin(login: string) {
   //   setLogin([...logins, login]);
@@ -40,12 +39,12 @@ export default function App() {
 
   const [open, setOpen] = useState(false);
 
-  function toggleSidebar() {
-    open ? setOpen(false) : setOpen(true);
-  }
+  const toggleSidebar = () => {
+    setOpen(!open);
+  };
 
   return (
-    <ContextIsLogged.Provider value={{isLogged, setIsLogged}}>
+    <ContextIsLogged.Provider value={{ isLogged, setIsLogged }}>
       <header>
         {isLogged ? (
           <>
@@ -60,20 +59,14 @@ export default function App() {
         <Routes>
           <Route element={<PublicRoute />}>
             <Route path="/" element={<HomePage />} />
-            <Route
-              path="/login"
-              element={
-                <LoginPage
-               
-                />
-              }
-            />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
           </Route>
 
           <Route element={<PrivateRoute />}>
-            <Route path="/create-project" element={<CreateProjectPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/create-project" element={<CreateProjectPage />} />
+
             <Route path="/calendar" element={<CalendarPage />} />
             <Route path="/project/:idProject" element={<ProjectPage />} />
             <Route
@@ -104,6 +97,6 @@ export default function App() {
       <footer>
         <Footer />
       </footer>
-      </ContextIsLogged.Provider>
+    </ContextIsLogged.Provider>
   );
 }

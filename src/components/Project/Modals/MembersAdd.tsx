@@ -10,28 +10,28 @@ import {
   Option,
   Select,
 } from "@material-tailwind/react";
-import { FormEvent, intMember, intMembers } from "../../../services/interfaces/intProject";
+import { FormEvent, intUser, intUserLight, intUsers } from "../../../services/interfaces/intProject";
 import CreateButton from "../elements/Buttons/CreateButton";
 import { useParams } from "react-router-dom";
 import { addUserToProjectToBDD, getAllUsers } from "../../../services/api/users";
 
 
 type Props = {
-  members: intMembers
-  setMember: (members: intMembers) => void;
+  members: intUsers
+  setMember: (members: intUsers) => void;
 };
 
 export default function MembersAdd({ members, setMember}: Props) {
   
   const {idProject} = useParams();
   const [open, setOpen] = useState<boolean>(false);
-  const [users, setUsers] = useState<intMembers>([])
+  const [users, setUsers] = useState<intUsers>([])
   const [selected, setSelected] = useState<string | undefined>('')
 
   useEffect(() => {
     async function getUsers(){
-      const result = await getAllUsers()
-      setUsers(result)
+      const result = await getAllUsers();
+      result && setUsers(result)
     }
     getUsers();
   }, []);
@@ -44,7 +44,7 @@ export default function MembersAdd({ members, setMember}: Props) {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const user:any = users.find((element:intMember) => element.email == selected)
+    const user:any = users.find((element:intUser) => element.email == selected)
     setMember([...members, user]);
     console.log(users)
     addUserToProjectToBDD(idProject, user.id)
@@ -67,11 +67,11 @@ export default function MembersAdd({ members, setMember}: Props) {
               </Typography>
               <Select
               value={selected}
-              onChange={(value: string | undefined) => handleChange(value)}
+              onChange={(value: any) => handleChange(value as string | undefined)}
               >
-              {users.map((i: intMember, index: number) => (
-            <Option key={index} value={i.email}>
-              {i.email}
+              {users.map((user: intUserLight, index: number) => (
+            <Option key={index} value={user.email}>
+              {user.email}
             </Option>
           ))}
               </Select>
