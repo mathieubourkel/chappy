@@ -25,6 +25,21 @@ export async function getProjectsFromOwner(idUser: string | null) {
       api.get(`${PROJECTS_ENDPOINT}/${idProject}?populate[0]=project_steps&populate[1]=user`)
     );
   }
+
+  export async function userRejoinProject(idUser: string | null, code:string) {
+
+    const body = {
+      users: {
+        connect: [idUser],
+      },
+    };
+    const res = await api.get(`${PROJECTS_ENDPOINT}?filters[code][$eq]=${code}`)
+    const idProject = res.data.data[0].id
+
+    return handleApiCall(() =>
+      api.put(`${PROJECTS_ENDPOINT}/${idProject}`, body)
+    );
+  }
   
   export async function getProjectNameById(idProject: string | undefined) {
     return handleApiCall(() => api.get(`${PROJECTS_ENDPOINT}/${idProject}?fields[0]=name`));

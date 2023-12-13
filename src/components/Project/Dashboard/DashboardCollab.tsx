@@ -19,9 +19,10 @@ import {
 
 type Props = {
   collabs: intProjects;
+  setReload: (bool:boolean) => void
 };
 
-export default function DashboardCollab({ collabs }: Props) {
+export default function DashboardCollab({ collabs, setReload }: Props) {
   console.log("DashBoardCollabComposant");
   const [selected, setSelected] = useState(0);
 
@@ -52,7 +53,7 @@ export default function DashboardCollab({ collabs }: Props) {
               ))}
             </div>
             <div className="flex basis-1/4 justify-end items-center gap-2">
-              <MenuCollab see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} idProject={collabs[selected].id} menu />
+              <MenuCollab see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} setReload={setReload} idProject={collabs[selected].id} menu />
             </div>
           </nav>
 
@@ -69,7 +70,7 @@ export default function DashboardCollab({ collabs }: Props) {
       ) : (
         <article>
           <nav className="flex justify-end">
-            <RejoinModal join="Rejoindre"/>
+            <RejoinModal join="Rejoindre" setReload={setReload}/>
           </nav>
 
           <Alert

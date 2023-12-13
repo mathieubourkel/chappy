@@ -26,6 +26,7 @@ export default function ProjectPage() {
     id: 0,
     project_steps: [],
     estimEndDate: new Date(),
+    code:''
   });
 
   useEffect(() => {

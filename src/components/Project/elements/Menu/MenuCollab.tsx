@@ -24,8 +24,9 @@ type Props = {
     join:string,
     menu: boolean,
     idProject: string | number | undefined
+    setReload: (bool:boolean) => void |undefined
 }
-export function MenuCollab({see, request, join, menu, idProject}:Props) {
+export function MenuCollab({see, request, setReload, join, menu, idProject}:Props) {
 
     return (
         <Tooltip
@@ -59,7 +60,7 @@ export function MenuCollab({see, request, join, menu, idProject}:Props) {
                     </Link>
                 </MenuItem>
                 <DemandsModal request={request}/>
-                <RejoinModal join={join} menu={menu}/>
+                <RejoinModal join={join} menu={menu} setReload={setReload}/>
             </MenuList>
         </Menu>
         </Tooltip>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import {
   Dialog,
@@ -6,36 +7,59 @@ import {
   Typography,
   Input,
   MenuItem,
+  Button,
 } from "@material-tailwind/react";
-import {
-  FontAwesomeIcon
-} from "@fortawesome/react-fontawesome";
-import {
-  faHandHoldingHand
-} from "@fortawesome/free-solid-svg-icons";
-import RejoinButton
-  from "../elements/Buttons/OpenButton.tsx";
-import './modal.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHandHoldingHand } from "@fortawesome/free-solid-svg-icons";
+import RejoinButton from "../elements/Buttons/OpenButton.tsx";
+import "./modal.css";
+import { userRejoinProject } from "../../../services/api/projects.ts";
 
-export type Props = {
+type Props = {
   join: string;
-  menu?: boolean;
+  menu?: boolean,
+  setReload: (bool:boolean) => void;
 };
 
-export default function RejoinModal({ join, menu }: Props) {
+export default function RejoinModal({ join, menu, setReload }: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((bool) => !bool);
+  const [code, setCode] = useState<string>("");
+  const idUser = localStorage.getItem("id");
+  const handleCode = (e: any) => {
+    setCode(e.target.value);
+  };
+
+  const handleClick = async () => {
+    let reload = false;
+    try {
+      await userRejoinProject(idUser, code);
+      reload = true;
+      handleOpen()
+    } catch {
+      alert("Le code n'est pas valide");
+    } finally {
+      reload && setReload(true)
+    } 
+  };
 
   return (
-    <> {menu ?
-          <MenuItem className="flex items-center gap-2">
-        <FontAwesomeIcon icon={faHandHoldingHand} className={"text-sm"} />
-        <Typography variant="small" className="font-medium" onClick={handleOpen}>
-          {join}
-        </Typography>
-      </MenuItem>
-        :
-      <RejoinButton value={"Rejoindre un projet"} onClick={handleOpen}/>}
+    <>
+      {" "}
+      {menu ? (
+        <MenuItem className="flex items-center gap-2">
+          <FontAwesomeIcon icon={faHandHoldingHand} className={"text-sm"} />
+          <Typography
+            variant="small"
+            className="font-medium"
+            onClick={handleOpen}
+          >
+            {join}
+          </Typography>
+        </MenuItem>
+      ) : (
+        <RejoinButton value={"Rejoindre un projet"} onClick={handleOpen} />
+      )}
       <Dialog
         size="xl"
         open={open}
@@ -49,10 +73,15 @@ export default function RejoinModal({ join, menu }: Props) {
             </Typography>
             <div className="flex gap-2">
               <Input
-                label="XXXX-XXXX-XXXX-XXXX"
+                label="Code à 16 caractères"
+                id="code"
+                name="code"
                 size="lg"
+                value={code}
                 crossOrigin={undefined}
+                onChange={(e: any) => handleCode(e)}
               />
+              <Button onClick={handleClick}>Rejoindre</Button>
             </div>
           </CardBody>
         </Card>

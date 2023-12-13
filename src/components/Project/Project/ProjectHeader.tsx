@@ -32,7 +32,7 @@ export default function ProjectHeader({project ,idProject, isOwner} :Props) {
         </div>
         {isOwner && 
         <nav className="flex gap-2 items-center justify-center lg:justify-end">
-          <MenuProject idProject={idProject} />
+          <MenuProject idProject={idProject} project={project} />
 
             <Tooltip
                 content={"Participants"}

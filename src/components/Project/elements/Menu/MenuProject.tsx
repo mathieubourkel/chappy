@@ -17,12 +17,16 @@ import DeleteProject
 import {
     deleteProjectFromBDD
 } from "../../../../services/api/projects.ts";
+import { intProject } from "../../../../services/interfaces/intProject.tsx";
 
 type Props = {
     idProject: string | undefined | number
+    project:intProject
 }
 
-export function MenuProject({idProject}:Props) {
+
+
+export function MenuProject({project, idProject}:Props) {
 
     async function handleDelete() {
         await deleteProjectFromBDD(idProject);
@@ -53,7 +57,9 @@ export function MenuProject({idProject}:Props) {
 
             </MenuHandler>
             <MenuList className={"text-marine-300"}>
-                    <ProjectDisplayCode />
+                    
+ 
+                <ProjectDisplayCode code={project.code}/>
                     <DeleteProject handleDelete={handleDelete}/>
 
 
