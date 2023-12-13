@@ -10,6 +10,7 @@ import {
 
 import { intTask} from "../../../services/interfaces/intProject";
 import { enumStatus } from "../../../services/interfaces/Status";
+import './modal.css'
 
 type Props = {
   task: intTask;

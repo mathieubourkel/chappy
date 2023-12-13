@@ -14,6 +14,7 @@ import { FormEvent, intUser, intUserLight, intUsers } from "../../../services/in
 import CreateButton from "../elements/Buttons/CreateButton";
 import { useParams } from "react-router-dom";
 import { addUserToProjectToBDD, getAllUsers } from "../../../services/api/users";
+import './modal.css'
 
 
 type Props = {

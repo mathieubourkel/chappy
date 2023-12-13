@@ -27,6 +27,7 @@ import {
 import logo from "../../../assets/img/icon_sidebar.png";
 import avatar from "../../../assets/img/icon user.png";
 import {NavLink} from "react-router-dom";
+import './sidebar.css'
 
 export function Sidebar(props:any) {
   const {openSidebar, toggleSidebar} = props;

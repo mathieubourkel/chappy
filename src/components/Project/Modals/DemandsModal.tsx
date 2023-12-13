@@ -12,6 +12,7 @@ import {
     faCheck, faEnvelopesBulk,
 } from "@fortawesome/free-solid-svg-icons";
 import DeleteButton from "../elements/Buttons/DeleteButton";
+import './modal.css'
 
 type Props = {
     request: string,

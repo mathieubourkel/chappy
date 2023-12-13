@@ -24,6 +24,7 @@ import { modifyTaskToBDD } from "../../../services/api/tasks";
 import SelectCategory from "../elements/Select/SelectCategory";
 import SelectStatus from "../elements/Select/SelectStatus";
 import { enumStatus } from "../../../services/interfaces/Status";
+import './modal.css'
 
 type Props = {
   task: intTask;

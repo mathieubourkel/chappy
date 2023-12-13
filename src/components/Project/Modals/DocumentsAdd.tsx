@@ -12,6 +12,7 @@ import { FormEvent, InputEvent, intDocument } from "../../../services/interfaces
 import CreateButton from "../elements/Buttons/CreateButton";
 import { addDocumentToBDD } from "../../../services/api/documents";
 import { useParams } from "react-router-dom";
+import './modal.css'
 
 type Props = {
   handleReload: () => void;

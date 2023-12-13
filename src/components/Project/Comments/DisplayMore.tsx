@@ -1,6 +1,7 @@
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Typography } from "@material-tailwind/react";
+import './comment.css'
 
 type Props = {
   state: boolean;

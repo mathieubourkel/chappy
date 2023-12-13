@@ -4,6 +4,7 @@ import { Button, Textarea } from '@material-tailwind/react'
 import { FormEvent, useState } from 'react';
 import { InputEvent, intComment, intComments } from '../../../services/interfaces/intProject';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import './comment.css'
 
 type Props = {
   state: intComments,

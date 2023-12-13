@@ -12,6 +12,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FormEvent, InputEvent, intDocument, intDocuments} from "../../../services/interfaces/intProject";
+import './modal.css'
 
 type Props = {
   documents: intDocuments

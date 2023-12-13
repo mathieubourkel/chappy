@@ -1,7 +1,16 @@
 import { useState } from "react";
-import {Button,Dialog,Card,CardBody,Typography,Input,IconButton,} from "@material-tailwind/react";
+import {
+    Dialog,
+    Card,
+    CardBody,
+    Typography,
+    Input,
+    IconButton,
+    MenuItem,
+} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCode,faCopy} from "@fortawesome/free-solid-svg-icons";
+import './modal.css'
 
 export default function ProjectDisplayCode() {
 
@@ -9,11 +18,14 @@ export default function ProjectDisplayCode() {
   const handleOpen = () => setOpen((bool) => !bool);
 
   return (
-    <div>
-      <Button size={"sm"} className="flex" onClick={handleOpen}>
-        <FontAwesomeIcon icon={faCode} className="lg:mr-2" />
-        <span className="hidden whitespace-nowrap lg:flex">Code projet</span>
-      </Button>
+    <>
+      <MenuItem className={"flex items-center gap-2"}>
+          <FontAwesomeIcon icon={faCode} className="text-sm" />
+          <Typography variant={"small"} className="font-medium" onClick={handleOpen}>
+              Code projet
+          </Typography>
+      </MenuItem>
+
       <Dialog
         size="xl"
         open={open}
@@ -43,6 +55,6 @@ export default function ProjectDisplayCode() {
           </CardBody>
         </Card>
       </Dialog>
-    </div>
+    </>
   );
 }

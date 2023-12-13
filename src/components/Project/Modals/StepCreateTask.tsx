@@ -27,6 +27,7 @@ import makeAnimated from "react-select/animated";
 import CreateButton from "../elements/Buttons/CreateButton";
 import SelectCategory from "../elements/Select/SelectCategory";
 import SelectStatus from "../elements/Select/SelectStatus";
+import './modal.css'
 
 type Props = {
   handleReload: () => void;

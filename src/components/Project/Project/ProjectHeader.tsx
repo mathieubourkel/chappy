@@ -5,10 +5,9 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCartShopping,faFolderOpen,faUser} from "@fortawesome/free-solid-svg-icons";
-import ProjectDisplayCode from "../Modals/ProjectDisplayCode";
 import { intProjectLight } from "../../../services/interfaces/intProject";
-import Breadcrumb
-    from "../../Layers/Breadcrumb/Breadcrumb.tsx";
+import Breadcrumb from "../../Layers/Breadcrumb/Breadcrumb.tsx";
+import {MenuProject} from "../elements/Menu/MenuProject.tsx";
 
 type Props = {
   project: intProjectLight
@@ -33,7 +32,7 @@ export default function ProjectHeader({project ,idProject, isOwner} :Props) {
         </div>
         {isOwner && 
         <nav className="flex gap-2 items-center justify-center lg:justify-end">
-          <ProjectDisplayCode />
+          <MenuProject />
           <Link to={"/project/"+ idProject + "/members"}>
             <Button variant="outlined" size={"sm"} className="flex">
               <FontAwesomeIcon icon={faUser} className="lg:mr-2" />

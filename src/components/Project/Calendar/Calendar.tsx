@@ -24,7 +24,7 @@ type Task = {
   endDate: Date;
 };
 
-const primary = "rgba(126,55,47,0.8)";
+const primary = "rgb(126,55,47,0.8)";
 const secondary = "rgb(47,44,54, 0.8)";
 
 const resources = [
@@ -80,7 +80,7 @@ export default function Calendar({className}:Props) {
   return (
     <>
     {busy ? (
-        <div className="flex justify-center mt-20">
+        <div className="flex justify-center items-center mt-20">
           <Spinner className="h-16 w-16 text-brick-300/50" />
         </div>
       ) : (

@@ -15,6 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import RejoinButton
   from "../elements/Buttons/OpenButton.tsx";
+import './modal.css'
 
 export type Props = {
   join: string;

@@ -20,6 +20,7 @@ import Datepicker from "react-tailwindcss-datepicker";
 import { useParams } from "react-router-dom";
 import { addProjectStepToBDD } from "../../../services/api/steps";
 import SelectStatus from "../elements/Select/SelectStatus";
+import './modal.css'
 
 
 type Props = {

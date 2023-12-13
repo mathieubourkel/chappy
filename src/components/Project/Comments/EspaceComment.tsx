@@ -3,6 +3,7 @@ import { intComment, intComments } from "../../../services/interfaces/intProject
 import DisplayMore from "./DisplayMore";
 import CreateComment from "./CreateComment";
 import CommentCard from "../Cards/CommentCard";
+import './comment.css'
 
 type Props = {
   comments: intComments;

@@ -14,8 +14,8 @@ import {
 } from "@material-tailwind/react";
 import DashboardCollabStepCard from "../Cards/DashboardCollabStepCard";
 import {
-  SelectMenu
-} from "../elements/Select/SelectMenu.tsx";
+  MenuCollab
+} from "../elements/Menu/MenuCollab.tsx";
 
 type Props = {
   collabs: intProjects;
@@ -52,7 +52,7 @@ export default function DashboardCollab({ collabs }: Props) {
               ))}
             </div>
             <div className="flex basis-1/4 justify-end items-center gap-2">
-              <SelectMenu see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} idProject={collabs[selected].id} menu />
+              <MenuCollab see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} idProject={collabs[selected].id} menu />
             </div>
           </nav>
 

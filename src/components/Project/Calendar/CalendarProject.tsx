@@ -14,7 +14,6 @@ import { useState, useEffect } from "react";
 import { Spinner } from "@material-tailwind/react";
 import { getTasksByProjectId } from "../../../services/api/tasks";
 import { useParams } from "react-router-dom";
-import { blue, orange, red, yellow, green, purple} from "@mui/material/colors";
 
 type Task = {
   title: string;
@@ -25,6 +24,13 @@ type Task = {
 type Props = {
   className: string;
 };
+
+const blue = "rgba(57,81,159,0.3)";
+const orange = "rgba(117,40,10,0.3)";
+const red = "rgba(255,0,0,0.3)";
+const yellow = "rgba(255,153,0,0.3)";
+const green = "rgba(107,138,69,0.3)";
+const purple = "rgba(56,34,84,0.3)";
 
 const resources = [
     {
@@ -73,7 +79,7 @@ export default function CalendarProject({ className }: Props) {
     <>
       {busy ? (
         <div className="flex justify-center mt-20">
-          <Spinner className="h-16 w-16 text-gray-900/50" />
+          <Spinner className="h-16 w-16 text-brick-300" />
         </div>
       ) : (
         <Paper className={className}>

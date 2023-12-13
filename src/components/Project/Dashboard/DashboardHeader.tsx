@@ -5,7 +5,6 @@ import {
     Alert,
     Chip,
     Typography,
-    Button,
 } from "@material-tailwind/react";
 import {
     FontAwesomeIcon
@@ -90,12 +89,8 @@ export default function DashboardHeader({ nbProj}: Props) {
             </>
         )}
       </div>
-      <div className='w-1/2'>
-      <Link to="/calendar">
-        <Button>Ouvrir</Button>
-      </Link>
-        <Calendar className='md:h-[32rem]'/>
-
+      <div className='lg:w-1/2'>
+        <Calendar className='lg:w-[49.4lvw] lg:h-[50lvh]'/>
       </div>
 
     </section>
