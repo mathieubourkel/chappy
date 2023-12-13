@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Card,
   CardBody,
@@ -33,6 +34,7 @@ type Props = {
 export default function ProjectDesc({ project, setProject, isOwner }: Props) {
   console.log("ProjectDescComposant");
   const { idProject } = useParams();
+ 
 
   function handleModifyProject(data: intProject) {
     modifyProjectToBDD(idProject, data);

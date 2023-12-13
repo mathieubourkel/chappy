@@ -2,18 +2,22 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Textarea } from '@material-tailwind/react'
 import { FormEvent, useState } from 'react';
-import { InputEvent, intComment, intComments } from '../../../services/interfaces/intProject';
+import { InputEvent, intComment } from '../../../services/interfaces/intProject';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { addCommentToBDD } from '../../../services/api/comments';
 
 type Props = {
-  state: intComments,
-  setState: (comments:intComments) => void;
+  table: string
+  idParent: string  | undefined
+  handleReload: () => void;
 }
 
-export default function CreateComment({state, setState}:Props) {
+export default function CreateComment({ idParent, table, handleReload}:Props) {
   console.log('CreateCommentComposant')
+  const idUser = localStorage.getItem('id')
   const [form, setForm] = useState<intComment>({
-    content: "", author: "Auteur Dynamique"
+    content: "", author: {id: idUser}, table:table,
+     idParent:idParent
 })
 
 function handleChange(e:InputEvent){
@@ -23,9 +27,10 @@ function handleChange(e:InputEvent){
 }
 
 function handleSubmit(e:FormEvent){
-  e.preventDefault(); 
-  setState([...state, form])
-  setForm({content: "", author:"Autre auteur dynamique"})
+  e.preventDefault();
+  console.log(form)
+  addCommentToBDD(form)
+  handleReload();
 }
 
 function handleDelete(){

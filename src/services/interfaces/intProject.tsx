@@ -44,7 +44,10 @@ export type intSelect = {
 
 export interface intComment {
     content: string,
-    author: string
+    table: string,
+    idParent: string | undefined
+    id?: number
+    author: intUserLight
 }
 
 export interface intTask {
@@ -90,12 +93,13 @@ export interface intUser extends intUserLight {
 export interface intProfileUser extends intUser {
     projects: intProjects
     projects_collab: intProjects
+    companies: intCompanies
 }
 
 export interface intUserLight {
     firstName?: string,
     lastName?: string,
-    company?: string,
+    company?: intCompany,
     email?: string,
     id: number | null | string
 }
