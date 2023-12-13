@@ -19,7 +19,7 @@ export default function CommentCard({ comment }: Props) {
               className="mb-2 flex items-center gap-3 font-bold text-marine-300"
             >
               <Avatar variant="circular" alt="toto" src={user} />
-              {comment.author}
+              {comment.author.firstName}
             </Typography>
           </div>
           <div>

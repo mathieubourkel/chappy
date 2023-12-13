@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { handleApiCall, useApi } from "../../hooks/useApi";
-import { intUser } from "../interfaces/intProject";
+import { intProfileUser, intUser } from "../interfaces/intProject";
 const api = useApi();
 
 export async function getMembersByProject(idProject: string | undefined) {
@@ -19,6 +19,13 @@ export async function getMembersByProject(idProject: string | undefined) {
     };
     return handleApiCall(() => api.put(`projects/${idProject}`, body));
   }
+
+  export async function modifyUserToBDD(idUser: string | null, data: intProfileUser) {
+    const body = data
+    console.log(body)
+    return handleApiCall(() => api.put(`users/${idUser}`, body));
+  }
+
   
   export async function deleteUserToProjectToBDD(idProject: string | undefined, idUser: number|string|null) {
     const body = {
@@ -65,7 +72,7 @@ export async function getAllUsers() {
 export async function getUserInfo(idUser: string|number|null) {
     
   try {
-      const data = await api.get(`users/${idUser}?populate[0]=projects&populate[1]=projects_collab`);
+      const data = await api.get(`users/${idUser}?populate[0]=projects&populate[1]=projects_collab&populate[2]=company&populate[3]=companies`);
       return data.data
   } catch (error) {
       return error
