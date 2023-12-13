@@ -83,6 +83,13 @@ export interface intUser extends intUserLight {
     address: string,
     zip: number,
     status:number
+    phone:string
+
+}
+
+export interface intProfileUser extends intUser {
+    projects: intProjects
+    projects_collab: intProjects
 }
 
 export interface intUserLight {

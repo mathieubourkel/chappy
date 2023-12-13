@@ -3,7 +3,6 @@ import Paper from "@mui/material/Paper";
 import {
   ViewState,
 } from "@devexpress/dx-react-scheduler";
-import { blue, orange } from "@mui/material/colors";
 import {
   Scheduler,
   MonthView,
@@ -17,7 +16,6 @@ import {
 import { useState, useEffect } from "react";
 import { getTasksByUser, getTasksByUsers } from "../../../services/api/tasks";
 import { Spinner } from "@material-tailwind/react";
-
 type Task = {
   title: string;
   startDate: Date;
@@ -29,8 +27,8 @@ const resources = [
     fieldName: "owner",
     title: "owner",
     instances: [
-      { text: "Suivi de mes projets", id: 1, color: blue },
-      { text: "Tâches qui me sont affectés", id: 2, color: orange },
+      { text: "Suivi de mes projets", id: 1, color: "rgb(126,55,47, 1)" },
+      { text: "Tâches qui me sont affectés", id: 2, color:"rgb(47,44,54, 1)" },
     ],
   },
 ];

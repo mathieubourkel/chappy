@@ -48,6 +48,10 @@ export async function getMembersByProject(idProject: string | undefined) {
     return handleApiCall(() => api.post("users", body));
   }
 
+  // export async function getUserInfo(idUser: string|number|null) {
+  //   return handleApiCall(() => api.get(`users/${idUser}?populate[0]=projects&populate[1]=projects_collab`));
+  // }
+
 export async function getAllUsers() {
     
     try {
@@ -56,6 +60,16 @@ export async function getAllUsers() {
     } catch (error) {
         return error
     }
+}
+
+export async function getUserInfo(idUser: string|number|null) {
+    
+  try {
+      const data = await api.get(`users/${idUser}?populate[0]=projects&populate[1]=projects_collab`);
+      return data.data
+  } catch (error) {
+      return error
+  }
 }
 
 
