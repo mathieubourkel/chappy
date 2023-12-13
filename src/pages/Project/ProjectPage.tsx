@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { intComments, intProject } from "../../services/interfaces/intProject";
+import { intProject } from "../../services/interfaces/intProject";
 import "../../css/Project.css";
 import EspaceComment from "../../components/Project/Comments/EspaceComment";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
