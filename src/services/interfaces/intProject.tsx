@@ -9,6 +9,7 @@ export interface intProject extends intProjectLight {
     user: intUserLight
     users?: intUsersLight
     companies?: intCompanies
+    code: string
 }
 
 export interface intCompany {

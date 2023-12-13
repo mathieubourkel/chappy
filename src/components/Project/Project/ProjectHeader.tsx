@@ -32,7 +32,7 @@ export default function ProjectHeader({project ,idProject, isOwner} :Props) {
         </div>
         {isOwner && 
         <nav className="flex gap-2 items-center justify-center lg:justify-end">
-          <MenuProject />
+          <MenuProject project={project}/>
           <Link to={"/project/"+ idProject + "/members"}>
             <Button variant="outlined" size={"sm"} className="flex">
               <FontAwesomeIcon icon={faUser} className="lg:mr-2" />

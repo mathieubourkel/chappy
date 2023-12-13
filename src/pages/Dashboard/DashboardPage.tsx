@@ -14,6 +14,8 @@ export default function DashboardPage() {
   const [collabs, setCollab] = useState<intProjects>([]);
   const [projects, setProject] = useState<intProjects>([]);
   const [busy, setBusy] = useState<boolean>(true);
+  const [reload, setReload] = useState<boolean>(false)
+
   const nbProj = collabs.length + projects.length;
 
   const idUser = localStorage.getItem("id");
@@ -35,7 +37,7 @@ export default function DashboardPage() {
     };
 
     fetchProjects();
-  }, [idUser]);
+  }, [idUser, reload]);
 
   return (
     <main className="dashboard-page sm:mx-20 mx-5">
@@ -47,7 +49,7 @@ export default function DashboardPage() {
         <>
           <DashboardHeader nbProj={nbProj} />
           <DashboardProjects projects={projects} />
-          <DashboardCollab collabs={collabs} />
+          <DashboardCollab collabs={collabs} setReload={setReload} />
         </>
       )}
     </main>

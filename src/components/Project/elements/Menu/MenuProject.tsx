@@ -13,8 +13,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ProjectDisplayCode
     from "../../Modals/ProjectDisplayCode.tsx";
+import { intProject } from "../../../../services/interfaces/intProject.tsx";
 
-export function MenuProject() {
+type Props = {
+    project:intProject
+}
+
+export function MenuProject({project}:Props) {
 
     return (
         <Tooltip
@@ -41,7 +46,7 @@ export function MenuProject() {
 
             </MenuHandler>
             <MenuList className={"text-marine-300"}>
-                    <ProjectDisplayCode />
+                    <ProjectDisplayCode code={project.code}/>
                 <MenuItem>
 
                 </MenuItem>
