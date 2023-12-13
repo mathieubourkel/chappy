@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { intComments, intProject } from "../../services/interfaces/intProject";
+import { intProject } from "../../services/interfaces/intProject";
 import "../../css/Project.css";
 import EspaceComment from "../../components/Project/Comments/EspaceComment";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
@@ -17,12 +17,6 @@ export default function ProjectPage() {
   const idUser = localStorage.getItem("id");
   const [busy, setBusy] = useState<boolean>(true);
   const [isOwner, setIsOwner] = useState<boolean>(false);
-  const [comments, setComment] = useState<intComments>([
-    { content: "contenu du commentaire 1", author: "Bob" },
-    { content: "contenu du commentaire 2", author: "Jean" },
-    { content: "contenu du commentaire 3", author: "Michel" },
-  ]);
-
   const [project, setProject] = useState<intProject>({
     name: "",
     description: "",
@@ -63,7 +57,7 @@ export default function ProjectPage() {
             idProject={idProject}
             isOwner={isOwner}
           />
-          <EspaceComment comments={comments} setComment={setComment} />
+          <EspaceComment table="project" idParent={idProject} />
         </>
       )}
     </main>

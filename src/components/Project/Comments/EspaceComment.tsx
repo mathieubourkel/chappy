@@ -1,35 +1,53 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { intComment, intComments } from "../../../services/interfaces/intProject";
 import DisplayMore from "./DisplayMore";
 import CreateComment from "./CreateComment";
 import CommentCard from "../Cards/CommentCard";
+import { getComments } from "../../../services/api/comments";
 
 type Props = {
-  comments: intComments;
-  setComment: (comments:intComments) => void;
+  table: string
+  idParent: string  | undefined
 };
 
-export default function EspaceComment({ comments, setComment }: Props) {
+export default function EspaceComment({ table, idParent }: Props) {
   console.log('EspaceCommentComposant')
   const [display, setDisplay] = useState<boolean>(false);
-  
-  return (
+  const [comments, setComments] = useState<intComments>([])
+  const [reload, setReload] = useState(false);
+
+  const handleReload = () => reload ? setReload(false) : setReload(true)
+
+  useEffect(() => {
+    async function fetchData() {
+      console.log(table)
+      console.log(idParent)
+      const result = await getComments(table, idParent);
+      setComments(result);
+      console.log(result)
+    }
+
+    fetchData();
+  }, [reload, idParent, table]);
+
+
+  if(comments.length > 0) return (
     <section className="mb-20">
         <h2>Espace commentaire</h2>
       <div className="flex flex-col mt-10">
         {display ? (
-          comments.map((comment: intComment, index: number) => (
-            <CommentCard comment={comment} key={index} />
+          comments.map((comment: intComment) => (
+            <CommentCard comment={comment} key={comment.id} />
           ))
         ) : (
-          <CommentCard comment={comments[0]} key={0} />
+          <CommentCard comment={comments[0]} key={comments[0].id} />
         )}
       </div>
       <div className="flex justify-center">
         <DisplayMore state={display} setState={setDisplay}/>
       </div>
-      <CreateComment state={comments} setState={setComment}/>
+      <CreateComment idParent={idParent} table={table} handleReload={handleReload}/>
       
     </section>
-  );
+  )
 }
