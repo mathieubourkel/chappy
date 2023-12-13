@@ -4,7 +4,8 @@ import {
   Card,
   CardBody,
   Typography,
-  Input, MenuItem,
+  Input,
+  MenuItem,
 } from "@material-tailwind/react";
 import {
   FontAwesomeIcon
@@ -12,23 +13,28 @@ import {
 import {
   faHandHoldingHand
 } from "@fortawesome/free-solid-svg-icons";
+import RejoinButton
+  from "../elements/Buttons/OpenButton.tsx";
 
 export type Props = {
   join: string;
+  menu?: boolean;
 };
 
-export default function RejoinModal({ join }: Props) {
+export default function RejoinModal({ join, menu }: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((bool) => !bool);
 
   return (
-    <>
-      <MenuItem className="flex items-center gap-2">
+    <> {menu ?
+          <MenuItem className="flex items-center gap-2">
         <FontAwesomeIcon icon={faHandHoldingHand} className={"text-sm"} />
         <Typography variant="small" className="font-medium" onClick={handleOpen}>
           {join}
         </Typography>
       </MenuItem>
+        :
+      <RejoinButton value={"Rejoindre un projet"} onClick={handleOpen}/>}
       <Dialog
         size="xl"
         open={open}

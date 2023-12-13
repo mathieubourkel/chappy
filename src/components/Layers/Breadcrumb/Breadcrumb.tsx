@@ -14,7 +14,7 @@ import {
 
 type Props = {
     nameProject?:string,
-    idProject?: number | undefined
+    idProject?: string | number | undefined
     step?:intStep
 }
 

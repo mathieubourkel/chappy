@@ -52,7 +52,7 @@ export default function DashboardCollab({ collabs }: Props) {
               ))}
             </div>
             <div className="flex basis-1/4 justify-end items-center gap-2">
-              <SelectMenu see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} idProject={collabs[selected].id}/>
+              <SelectMenu see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} idProject={collabs[selected].id} menu />
             </div>
           </nav>
 
@@ -69,7 +69,7 @@ export default function DashboardCollab({ collabs }: Props) {
       ) : (
         <article>
           <nav className="flex justify-end">
-            <RejoinModal join="Rejoindre" />
+            <RejoinModal join="Rejoindre"/>
           </nav>
 
           <Alert

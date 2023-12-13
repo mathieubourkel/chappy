@@ -16,19 +16,24 @@ import {
 import { useState, useEffect } from "react";
 import { getTasksByUser, getTasksByUsers } from "../../../services/api/tasks";
 import { Spinner } from "@material-tailwind/react";
+import './calendar.css'
+
 type Task = {
   title: string;
   startDate: Date;
   endDate: Date;
 };
 
+const primary = "rgba(126,55,47,0.8)";
+const secondary = "rgb(47,44,54, 0.8)";
+
 const resources = [
   {
     fieldName: "owner",
     title: "owner",
     instances: [
-      { text: "Suivi de mes projets", id: 1, color: "rgb(126,55,47, 1)" },
-      { text: "Tâches qui me sont affectés", id: 2, color:"rgb(47,44,54, 1)" },
+      { text: "Suivi de mes projets", id: 1, color: primary },
+      { text: "Tâches qui me sont affectées", id: 2, color: secondary },
     ],
   },
 ];
@@ -76,7 +81,7 @@ export default function Calendar({className}:Props) {
     <>
     {busy ? (
         <div className="flex justify-center mt-20">
-          <Spinner className="h-16 w-16 text-gray-900/50" />
+          <Spinner className="h-16 w-16 text-brick-300/50" />
         </div>
       ) : (
     <Paper className={className}>

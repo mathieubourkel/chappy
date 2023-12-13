@@ -22,9 +22,10 @@ type Props = {
     see: string,
     request: string,
     join:string,
+    menu: boolean,
     idProject: string | number | undefined
 }
-export function SelectMenu({see, request, join, idProject}:Props) {
+export function SelectMenu({see, request, join, menu, idProject}:Props) {
 
     return (
         <Tooltip
@@ -58,7 +59,7 @@ export function SelectMenu({see, request, join, idProject}:Props) {
                     </Link>
                 </MenuItem>
                 <DemandsModal request={request}/>
-                <RejoinModal join={join}/>
+                <RejoinModal join={join} menu={menu}/>
             </MenuList>
         </Menu>
         </Tooltip>
