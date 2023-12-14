@@ -44,6 +44,7 @@ export async function getTasksByStep(idStep: string | undefined) {
   
   export async function addTaskToStepToBDD(data: intTask) {
     const body = { data };
+    console.log(body)
     return handleApiCall(() => api.post(STEP_TASKS_ENDPOINT, body));
   }
   

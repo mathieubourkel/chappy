@@ -19,6 +19,16 @@ export interface intCompany {
     id: number | null | string
 }
 
+export interface intNotification {
+    content: string
+    id: number | null | string
+    sender: intUserLight
+    receivers: intUsers
+    isView:boolean
+    timestamp: number
+    path: string
+}
+
 export interface intProjectLight {
     id?:number | string | string | undefined
     name?:string
@@ -61,9 +71,10 @@ export interface intTask {
     comments?: intComments
     user?: intUserLight
     users: intUsersLight
-    id:number
+    id?:number
     project_step?: intStepLight
 }
+
 export interface intPurchase {
     name: string,
     price: number,
@@ -126,6 +137,7 @@ export type intTasks = intTask[]
 export type intSteps = intStep[]
 export type intComments = intComment[]
 export type intCompanies = intCompany[]
+export type intNotifications = intNotification[]
 
 export type InputEvent = ChangeEvent<HTMLInputElement>
 export type FormEvent = React.FormEvent<HTMLFormElement>;

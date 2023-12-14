@@ -18,7 +18,7 @@ import {
 import { enumStatus } from "../../../services/interfaces/Status";
 
 type Props = {
-  id: number
+  id: number |undefined
   handleReload: () => void;
   categories: Array<intSelect>;
   allUsers: Array<intSelect>;
@@ -39,8 +39,7 @@ export default function TaskCard({ id, handleReload, categories, allUsers }: Pro
     startDate: new Date(),
     endDate: new Date(),
     users: [],
-    user: { id: 0 },
-    id:0
+    user: { id: 0 }
   });
 
   const [isOwner, setIsOwner] = useState(false);

@@ -7,6 +7,7 @@ import TaskCard from "../Cards/TaskCard";
 import {
   intCategory,
   intSelect,
+  intStep,
   intTask,
   intTasks,
   intUser,
@@ -16,8 +17,13 @@ import { getTasksByStepId } from "../../../services/api/steps";
 import { getCategories } from "../../../services/api/category";
 import { getAllUsers } from "../../../services/api/users";
 
+type Props = {
+  step:intStep
+}
+
 let count = 1;
-export default function StepTasks() {
+export default function StepTasks({step}:Props) {
+
   console.log("StepTasksComposant " + count++);
   const { idStep } = useParams();
   const [tasks, setTasks] = useState<intTasks>([]);
@@ -64,6 +70,7 @@ export default function StepTasks() {
             <StepCreateTask
               handleReload={handleReload}
               categories={categories}
+              step={step}
             />
           </div>
           <div>

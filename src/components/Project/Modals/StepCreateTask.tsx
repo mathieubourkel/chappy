@@ -17,6 +17,7 @@ import {
   intSelect,
   intTask,
   intUsersLight,
+  intStep,
 } from "../../../services/interfaces/intProject";
 import Datepicker from "react-tailwindcss-datepicker";
 import { addTaskToStepToBDD } from "../../../services/api/tasks";
@@ -28,13 +29,16 @@ import CreateButton from "../elements/Buttons/CreateButton";
 import SelectCategory from "../elements/Select/SelectCategory";
 import SelectStatus from "../elements/Select/SelectStatus";
 import './modal.css'
+import { addNotificationToBDD } from "../../../services/api/notifications";
 
 type Props = {
   handleReload: () => void;
-  categories: Array<intSelect>;
+  categories: Array<intSelect>
+  step:intStep
 };
+
 let count = 1;
-export default function StepCreateTask({ handleReload, categories }: Props) {
+export default function StepCreateTask({ handleReload, categories ,step }: Props) {
   console.log("StepCreateTaskComponent" + count++);
   const { idStep, idProject } = useParams();
   const userId = localStorage.getItem("id");
@@ -54,8 +58,7 @@ export default function StepCreateTask({ handleReload, categories }: Props) {
     status: 0,
     users: [],
     user: { id: userId },
-    project_step: { id: idStep },
-    id:0,
+    project_step: { id: idStep }
   });
 
   useEffect(() => {
@@ -78,7 +81,17 @@ export default function StepCreateTask({ handleReload, categories }: Props) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    const tmpIdUsers:any = [];
+    users.map((user:any) => {tmpIdUsers.push(user.value)})
+    const notif = {
+      content:`a créé la tâche ${form.name} dans ${step.name} sur le projet ${step.project.name}`, 
+      sender:Number(userId), 
+      receivers:tmpIdUsers, timestamp: Date.now(), 
+      path:`/project/${idProject}/step/${idStep}`
+    }
+    console.log(form)
     await addTaskToStepToBDD(form);
+    await addNotificationToBDD(notif)
     handleOpen();
     handleReload();
   };
