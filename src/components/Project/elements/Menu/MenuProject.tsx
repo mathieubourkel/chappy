@@ -55,17 +55,17 @@ export function MenuProject({ project, idProject }: Props) {
             </Button>
           </MenuHandler>
           <MenuList className={"text-marine-300"}>
-            <MenuItem className={"flex items-center gap-2"}>
+            <MenuItem className={"flex items-center gap-2"} onClick={handleOpen}>
               <FontAwesomeIcon icon={faCode} className="text-sm" />
               <Typography
                 variant={"small"}
                 className="font-medium"
-                onClick={handleOpen}
+                
               >
                 Code projet
               </Typography>
             </MenuItem>
-            <MenuItem className={"flex justify-between items-center gap-2"}>
+            <MenuItem className={"flex justify-between items-center gap-2"} onClick={handleOpenD}>
               <FontAwesomeIcon
                 icon={faXmark}
                 className="text-sm text-brick-300"
@@ -73,7 +73,7 @@ export function MenuProject({ project, idProject }: Props) {
               <Typography
                 variant={"small"}
                 className="font-medium text-brick-300"
-                onClick={handleOpenD}
+                
               >
                 Supprimer le projet
               </Typography>

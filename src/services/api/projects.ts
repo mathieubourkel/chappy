@@ -22,7 +22,7 @@ export async function getProjectsFromOwner(idUser: string | null) {
   
   export async function getProjectById(idProject: string | undefined) {
     return handleApiCall(() =>
-      api.get(`${PROJECTS_ENDPOINT}/${idProject}?populate[0]=project_steps&populate[1]=user`)
+      api.get(`${PROJECTS_ENDPOINT}/${idProject}?populate[0]=project_steps&populate[1]=owner`)
     );
   }
 

@@ -34,7 +34,7 @@ export default function ProjectPage() {
       const result = await getProjectById(idProject);
       setBusy(false);
       setProject(result);
-      result.user.id.toString() === idUser && setIsOwner(true);
+      result.owner.id.toString() === idUser && setIsOwner(true);
     }
 
     getProject();

@@ -42,7 +42,6 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
   const [form, setForm] = useState<intTask>(task);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  console.log(task)
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });

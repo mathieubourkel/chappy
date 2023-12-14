@@ -21,21 +21,20 @@ export default function CreateComment({ idParent, table, handleReload}:Props) {
      idParent:idParent
 })
 
-function handleChange(e:InputEvent){
+const handleChange = (e:InputEvent) => {
   const { name, value } = e.target;
   setForm({...form, [name] : value})
 
 }
 
-function handleSubmit(e:FormEvent){
+const handleSubmit = (e:FormEvent) => {
   e.preventDefault();
-  console.log(form)
   addCommentToBDD(form)
   setForm({...form, content:""})
   handleReload();
 }
 
-function handleDelete(){
+const handleDelete = () => {
   setForm({...form, content: ""})
 }
 

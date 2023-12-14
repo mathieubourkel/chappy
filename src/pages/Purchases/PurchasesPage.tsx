@@ -36,7 +36,7 @@ export default function PurchasesPage() {
 
         setProject(projectData);
         setPurchases(purchasesData);
-        setIsOwner(projectData.user.id.toString() === idUser);
+        setIsOwner(projectData.owner.id.toString() === idUser);
         setBusy(false);
       } catch (error) {
         console.error(error);

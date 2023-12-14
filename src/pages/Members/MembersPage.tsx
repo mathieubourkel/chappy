@@ -30,11 +30,11 @@ export default function MembersPage() {
       setBusy(false);
       setMember(result.users);
       setProject(tmpProj);
-      tmpProj.user.id.toString() === idUser && setIsOwner(true);
+      tmpProj.owner.id.toString() === idUser && setIsOwner(true);
     }
     getMembers();
   }, [idProject, idUser]);
-  console.log(members)
+
   return (
     <main className="project-page sm:mx-20 mx-5 mt-10">
       <ProjectHeader isOwner={isOwner} project={project} idProject={idProject} />

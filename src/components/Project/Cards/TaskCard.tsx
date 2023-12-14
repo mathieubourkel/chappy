@@ -72,7 +72,7 @@ export default function TaskCard({ id, handleReload, categories, allUsers }: Pro
     await modifyTaskToBDD(task.id, data);
     setTask(data)
   };
-console.log(task)
+
   const renderTaskOwner = () => (
     <>
       <Typography variant="h5" color="blue-gray" className="flex">

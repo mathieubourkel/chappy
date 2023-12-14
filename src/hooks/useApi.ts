@@ -25,7 +25,6 @@ export function useApi() {
   api.interceptors.request.use(
     (config) => {
       const token = localStorage.getItem("token");
-      console.log("request interceptor");
       if (token) {
         config.headers["Authorization"] = "Bearer " + token;
       }
@@ -38,12 +37,9 @@ export function useApi() {
 
   api.interceptors.response.use(
     (res) => {
-      console.log("J'intercepte une réponse qui va bien");
       return res;
     },
     async (err) => {
-      console.log(err);
-      console.log("J'intercepte une réponse en erreur");
       const originalConfig = err.config;
       originalConfig._toto = true;
       // pour éviter boucle infinie du refreshToken

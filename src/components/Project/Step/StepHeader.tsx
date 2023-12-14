@@ -38,7 +38,7 @@ export default function StepHeader() {
       const tmpProject = await getProjectById(idProject);
       setBusy(false);
       setStep(tmpStep);
-      tmpProject.user.id.toString() === idUser && setIsOwner(true);
+      tmpProject.owner.id.toString() === idUser && setIsOwner(true);
     }
     getInfoStep();
 

@@ -24,11 +24,8 @@ export default function EspaceComment({ table, idParent }: Props) {
 
   useEffect(() => {
     async function fetchData() {
-      console.log(table);
-      console.log(idParent);
       const result = await getComments(table, idParent);
       setComments(result);
-      console.log(result);
     }
 
     fetchData();

@@ -26,7 +26,7 @@ export default function DocumentsPage() {
       setBusy(false);
       setDocument(result)
       setProject(tmpProj)
-      tmpProj.user.id.toString() === idUser && setIsOwner(true);
+      tmpProj.owner.id.toString() === idUser && setIsOwner(true);
     }
 
     getDocuments();
