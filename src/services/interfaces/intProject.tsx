@@ -6,7 +6,7 @@ export interface intProject extends intProjectLight {
     status: number
     project_steps: intSteps
     estimEndDate: Date | null
-    user: intUserLight
+    owner: intUserLight
     users?: intUsersLight
     companies?: intCompanies
 }
@@ -88,7 +88,6 @@ export interface intUser extends intUserLight {
     zip: number,
     status:number
     phone:string
-
 }
 
 export interface intProfileUser extends intUser {

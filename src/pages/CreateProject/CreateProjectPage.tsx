@@ -36,7 +36,7 @@ export default function CreateProjectPage() {
     status: 0,
     estimEndDate: null,
     project_steps: [],
-    user: { id: userId },
+    owner: { id: userId },
     users: [{ id: null }],
     companies: [{ id: null }],
     name: "",
@@ -93,14 +93,14 @@ export default function CreateProjectPage() {
 
   return (
     <main className="project-page sm:mx-20 mx-5 mt-10">
-      <Typography variant="h1" className={"font-bold text-center"}>
+      <Typography variant="h1" className={"font-bold text-center"} >
         Créer un projet
       </Typography>
 
       <section className={"mt-5 lg:w-[55lvw] m-auto"}>
         <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
           <article>
-            <Typography variant="h2" className={"text-xl font-extrabold my-10"}>
+            <Typography variant="h2" className={"text-xl font-extrabold my-10"} >
               Détails du projet
             </Typography>
             <div className="sm:flex sm:gap-x-5">

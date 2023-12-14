@@ -7,7 +7,7 @@ const PROJECTS_ENDPOINT = "projects";
 export async function getProjectsFromOwner(idUser: string | null) {
     return handleApiCall(() =>
       api.get(
-        `${PROJECTS_ENDPOINT}?populate[user][fields]=id&filters[user][id][$eq]=${idUser}&populate[project_steps]=*`
+        `${PROJECTS_ENDPOINT}?populate[owner][fields]=id&filters[owner][id][$eq]=${idUser}&populate[project_steps]=*`
       )
     );
   }
@@ -15,7 +15,7 @@ export async function getProjectsFromOwner(idUser: string | null) {
   export async function getProjectsFromUsers(idUser: string | null) {
     return handleApiCall(() =>
       api.get(
-        `${PROJECTS_ENDPOINT}?populate[users][fields]=id&filters[users][id][$eq]=${idUser}&populate[project_steps]=*&populate[user]=*`
+        `${PROJECTS_ENDPOINT}?populate[users][fields]=id&filters[users][id][$eq]=${idUser}&populate[project_steps]=*&populate[owner]=*`
       )
     );
   }

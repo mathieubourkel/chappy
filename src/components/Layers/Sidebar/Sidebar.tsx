@@ -25,7 +25,7 @@ import {
   faSquarePollHorizontal,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../../assets/img/icon_sidebar.png";
-import avatar from "../../../assets/img/icon user.png";
+import avatar from "../../../assets/img/icon_user.png";
 import {NavLink} from "react-router-dom";
 import './sidebar.css'
 
