@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { faReply } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Avatar,Button,Card,CardBody,Typography} from "@material-tailwind/react";
@@ -10,15 +11,14 @@ type Props = {
 
 export default function CommentCard({ comment }: Props) {
   return (
-    <Card className="w-full custom-block mb-10">
-      <CardBody>
+    <Card className="w-full custom-block mb-10" placeholder={undefined}>
+      <CardBody placeholder={undefined}>
         <div className="flex justify-between">
           <div>
             <Typography
               variant="h3"
-              className="mb-2 flex items-center gap-3 font-bold text-marine-300"
-            >
-              <Avatar variant="circular" alt="toto" src={user} />
+              className="mb-2 flex items-center gap-3 font-bold text-marine-300" placeholder="">
+              <Avatar variant="circular" alt="toto" src={user} placeholder={undefined} />
               {comment.author.firstName}
             </Typography>
           </div>

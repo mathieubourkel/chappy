@@ -75,9 +75,9 @@ export default function StepHeader() {
 
       <div className="b1-body mt-10">
         <div className="b1-body-desc-calendar lg:flex gap-5">
-          <Card className="b1-body-desc w-full bg-white">
+          <Card className="b1-body-desc w-full bg-white" placeholder={'coucou'}>
             <CardBody>
-              <Typography variant="h4" className="mb-2">
+              <Typography variant="h4" className="mb-2" placeholder=''>
                 Description du jalon
               </Typography>
               <Typography>{step.description}</Typography>
