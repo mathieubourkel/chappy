@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { Avatar, Typography } from "@material-tailwind/react";
 import DeleteButton from "../elements/Buttons/DeleteButton";
 import { intUser, intUsers } from "../../../services/interfaces/intProject";
-import user from "../../../assets/img/icon user.png";
+import user from "../../../assets/img/icon_user.png";
 import { deleteUserToProjectToBDD } from "../../../services/api/users";
 
 type Props = {
@@ -43,8 +43,7 @@ export default function MemberCard({ member, isOwner }: Props) {
           <Typography
             variant="h5"
             color="blue-gray"
-            className="p-2 text-brick-300 border border-brick-300 rounded-xl"
-          >
+            className="p-2 text-brick-300 border border-brick-300 rounded-xl"         >
             7 tâches en cours
           </Typography>
           {isOwner && <DeleteButton handleDeleteBDD={handleDelete} />}

@@ -20,7 +20,7 @@ import {
   faMoon, faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../../assets/img/logo.png";
-import iUser from "../../../assets/img/icon user.png";
+import iUser from "../../../assets/img/icon_user.png";
 import {NavLink} from "react-router-dom";
 
 export function NavbarConnected(props:any) {

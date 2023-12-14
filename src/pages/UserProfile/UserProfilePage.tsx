@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import {
   Avatar,
   Button,
@@ -8,15 +9,14 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk, faRotateRight } from "@fortawesome/free-solid-svg-icons";
-import { getUserInfo, modifyUserToBDD } from "../../services/api/users";
-import { useEffect, useState } from "react";
-import avatar from "../../assets/img/icon user.png";
+import avatar from "../../assets/img/icon_user.png";
 import "./userProfile.css";
 import {
   intProfileUser,
   InputEvent,
   FormEvent,
 } from "../../services/interfaces/intProject";
+import { getUserInfo, modifyUserToBDD } from "../../services/api/users";
 
 export default function UserProfilePage() {
   const [user, setUser] = useState<intProfileUser>({
@@ -55,9 +55,7 @@ export default function UserProfilePage() {
     alert("Les modifications ont été enregistré");
   };
 
-  const handlePassword = () => {
-    displayPwd ? setDisplayPwd(false) : setDisplayPwd(true);
-  };
+  const handlePassword = () => setDisplayPwd(!displayPwd);
 
   const sendPwd = async (e: any) => {
     const data = { ...user, password: e.target.form.newPassword.value };
@@ -66,7 +64,19 @@ export default function UserProfilePage() {
     setDisplayPwd(false);
   };
 
-  console.log(user);
+  const renderInput = (label: string, name: keyof intProfileUser, type = "text") => (
+    <Input
+      label={label}
+      className={"bg-light-100"}
+      crossOrigin={undefined}
+      name={name}
+      id={name}
+      type={type}
+      value={user[name] as string}
+      onChange={(e: InputEvent) => handleChange(e)}
+    />
+  );
+
   return (
     <main className={"sm:mx-20 mx-5"}>
       <section
@@ -90,41 +100,10 @@ export default function UserProfilePage() {
               Informations de connexion
             </Typography>
             <div className="sm:flex sm:gap-x-5">
-              <div className={"mb-5 w-full"}>
-                <Input
-                  label="Nom"
-                  className={"bg-light-100"}
-                  crossOrigin={undefined}
-                  name="lastName"
-                  id="lastName"
-                  value={user.lastName}
-                  onChange={(e: InputEvent) => handleChange(e)}
-                />
-              </div>
-
-              <div className={"mb-5 w-full"}>
-                <Input
-                  label="Prénom"
-                  className={"bg-light-100"}
-                  crossOrigin={undefined}
-                  name="firstName"
-                  id="firstName"
-                  value={user.firstName}
-                  onChange={(e: InputEvent) => handleChange(e)}
-                />
-              </div>
+              <div className={"mb-5 w-full"}>{renderInput("Nom", "lastName")} </div>
+              <div className={"mb-5 w-full"}>{renderInput("Prénom", "firstName")}</div>
             </div>
-
-            <Input
-              label="E-mail"
-              className={"bg-light-100"}
-              crossOrigin={undefined}
-              name="email"
-              id="email"
-              value={user.email}
-              onChange={(e: InputEvent) => handleChange(e)}
-            />
-
+            <div>{renderInput("Email", "email")}</div>
             <div className="flex gap-5 my-5">
               <Input
                 label={
@@ -167,50 +146,13 @@ export default function UserProfilePage() {
               Informations Personnelles
             </Typography>
 
-            <Input
-              label="Adresse"
-              className={"bg-light-100"}
-              crossOrigin={undefined}
-              name="address"
-              id="address"
-              value={user.address}
-              onChange={(e: InputEvent) => handleChange(e)}
-            />
+            {renderInput("Adresse", "address")}
 
             <div className="sm:flex sm:gap-x-5 mt-5">
-              <div className={"mb-5 w-full"}>
-                <Input
-                  label="Ville"
-                  className={"bg-light-100"}
-                  crossOrigin={undefined}
-                  name="city"
-                  id="city"
-                  value={user.city}
-                  onChange={(e: InputEvent) => handleChange(e)}
-                />
-              </div>
-
-              <div className={"mb-5 w-full"}>
-                <Input
-                  label="Code Postal"
-                  className={"bg-light-100"}
-                  crossOrigin={undefined}
-                  name="zip"
-                  id="zip"
-                  value={user.zip}
-                  onChange={(e: InputEvent) => handleChange(e)}
-                />
-              </div>
+              <div className={"mb-5 w-full"}>{renderInput("Ville", "city")}</div>
+              <div className={"mb-5 w-full"}>{renderInput("Code Postal", "zip")} </div>
             </div>
-            <Input
-              label="Téléphone"
-              className={"bg-light-100"}
-              crossOrigin={undefined}
-              name="phone"
-              id="phone"
-              value={user.phone}
-              onChange={(e: InputEvent) => handleChange(e)}
-            />
+            <div>{renderInput("Téléphone", "phone")}</div>
           </article>
 
           <article>
@@ -229,33 +171,33 @@ export default function UserProfilePage() {
               </div>
             </div>
 
-            <div className='mb-5'>
+            <div className="mb-5">
               {/* Besoin d'ajouter des modals pour ajouter et rejoindre */}
 
-              {user.company && 
-              <Input
+              {user.company && (
+          
+                <Input
                   label="Mon entreprise"
                   className={"bg-light-100"}
                   crossOrigin={undefined}
                   name="owner"
                   id="owner"
-                  value={user.company.name}
+                  defaultValue={user.company.name}
                 />
-              }
+              )}
 
               {user.companies.length != 0 && (
-                <ul className='flex'>
+                <ul className="flex">
                   {user.companies.map((_company, index) => (
-                    <li key={index} className='mt-5'>
+                    <li key={index} className="mt-5">
                       <Input
-                  label="Salarié de l'entreprise"
-                  className={"bg-light-100"}
-                  crossOrigin={undefined}
-                  name="member"
-                  id="member"
-                  value={user.companies[index].name}
-                />
-                      
+                        label="Salarié de l'entreprise"
+                        className={"bg-light-100"}
+                        crossOrigin={undefined}
+                        name="member"
+                        id={`member ${index}`}
+                        defaultValue={user.companies[index].name}
+                      />
                     </li>
                   ))}
                 </ul>

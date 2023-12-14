@@ -38,7 +38,8 @@ export default function DashboardPage() {
 
     fetchProjects();
   }, [idUser, reload]);
-
+  console.log(collabs)
+  console.log(projects)
   return (
     <main className="dashboard-page sm:mx-20 mx-5">
       {busy ? (
