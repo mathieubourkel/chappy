@@ -51,7 +51,6 @@ export function useApi() {
 
         try {
           const rs = await refreshToken();
-
           if (rs) {
             originalConfig.headers["Authorization"] = "Bearer " + rs.data.jwt;
           }

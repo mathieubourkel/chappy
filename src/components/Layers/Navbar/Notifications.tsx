@@ -53,7 +53,7 @@ export default function Notifications() {
     modifyNotificationToBDD(notifications[index].id, newNotif);
     setNotifications(newArrayNotifs);
   };
-  console.log(notifications);
+
   return (
     <MenuList>
       {notifications.map((notification, index: number) => (

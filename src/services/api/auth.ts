@@ -14,18 +14,17 @@ export async function login(data: Login) {
     password: data.password,
   };
 
-  // const options = {
-  //   credentials: "include",
-  //   withCredentials: true,
-  // };
+  const options = {
+    credentials: "include",
+    withCredentials: true,
+  };
 
   try {
-    const { data: responseData } = await api.post("auth/local", body);
+    const { data: responseData } = await api.post("auth/local",body, options);
     const { jwt, user } = responseData;
     localStorage.setItem("token", jwt);
     localStorage.setItem("name", `${user.firstName} ${user.lastName}`);
     localStorage.setItem("id", user.id);
-
     return responseData;
   } catch (error) {
     console.log(error);
