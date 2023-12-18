@@ -40,7 +40,7 @@ export default function CreateProjectPage() {
     users: [{ id: null }],
     companies: [{ id: null }],
     name: "",
-    code:''
+    code: randomCode(),
   });
 
   useEffect(() => {
@@ -61,6 +61,19 @@ export default function CreateProjectPage() {
     }
     getUsers();
   }, []);
+
+  function randomCode() {
+    let nombre = '';
+    const longueurNombre = 16;
+  
+    for (let i = 0; i < longueurNombre; i++) {
+      const chiffreAleatoire = Math.floor(Math.random() * 10);
+      nombre += chiffreAleatoire.toString();
+    }
+  
+    return nombre;
+  }
+  
 
   const handleUsers = (value: Array<intSelect>) => {
     const goodArray: intUsersLight = value.map((element: intSelect) => ({ id: element.value }));
