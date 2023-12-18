@@ -72,11 +72,8 @@ body {
     background: var(--bg-color);
 }
 
-body > div {
-    min-height: 100lvh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+main {
+    min-height: 69.5lvh;
 }
 
         /* Typography */
@@ -153,7 +150,7 @@ p {
 }
 
 .custom-task-body {
-    height: 12lvh;
+    height: 10lvh;
 }
 
 .custom-subt {
@@ -194,11 +191,6 @@ p {
 
 .text-indigo-500 {
     color: var(--input-color) !important;
-}
-
-.bg-blue-100 {
-    background: var(--input-color) !important;
-    color: var(--bg-white);
 }
 
 
