@@ -71,10 +71,10 @@ export default function ProjectCreateStep({ setReload }: Props) {
         handler={handleOpen}
         className="bg-transparent shadow-none"
       >
-        <Card className="mx-auto w-full">
+        <Card className="custom-modal">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-              <Typography variant="h2" color="blue-gray">
+              <Typography variant="h3" className={"text-marine-300 text-xl font-extrabold text-center mb-5"}>
                 Créer un jalon
               </Typography>
               <Input
@@ -118,7 +118,7 @@ export default function ProjectCreateStep({ setReload }: Props) {
               <SelectStatus handleStatus={handleStatus} />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
-              <Button variant="gradient" onClick={handleOpen} type="submit">
+              <Button size="sm" className={"bg-brick-300"} onClick={handleOpen} type="submit">
                 Créer
               </Button>
             </CardFooter>

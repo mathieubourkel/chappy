@@ -1,7 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Card, CardBody, Typography } from "@material-tailwind/react";
+import {
+  Alert,
+  Button,
+  Card,
+  CardBody, Chip,
+  Tooltip,
+  Typography
+} from "@material-tailwind/react";
 import { intStep } from "../../../services/interfaces/intProject";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBookOpen,
+  faListCheck,
+  faXmark
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModifiableInput from "../elements/Input/ModifiableInput";
 import "react-date-picker/dist/DatePicker.css";
@@ -39,40 +50,87 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
 
   // Render
   return (
-    <section className="bloc-1 mb-40">
-      <div className="b1-header md:flex justify-between">
-        <div className="b1-header-title shrink-0">
-          <h1>{step.name}</h1>
+    <section className="my-20">
+      <div className="md:flex justify-between items-stretch">
+        <div className="shrink-0">
+          <Typography
+              variant="h1"
+              className={"font-bold text-4xl"}
+          >
+            {step.name}
+          </Typography>
           <Breadcrumb step={step} />
         </div>
-        <Button onClick={() => handleDeleteStep()}>
-          <FontAwesomeIcon icon={faXmark} size="xl" />
-          <a className="ml-5">Supprimer le jalon</a>
-        </Button>
+
+        <div>
+          <Tooltip
+              content={"Supprimer le jalon"}
+              className="lg:hidden bg-marine-300 px-4"
+              animate={{
+                mount: { scale: 1, y: 0 },
+                unmount: { scale: 0, y: 25 },
+              }}
+          >
+            <Button onClick={() => handleDeleteStep()}
+                    size={"sm"}
+                    className="bg-marine-300">
+              <FontAwesomeIcon icon={faXmark} size="xl" className={"mr-2"}/>
+              <span className="hidden lg:inline whitespace-nowrap">Supprimer le jalon</span>
+            </Button>
+          </Tooltip>
+        </div>
+
+
       </div>
 
-      <div className="b1-body mt-10">
-        <div className="b1-body-desc-calendar lg:flex gap-5">
-          <Card className="b1-body-desc w-full bg-white" placeholder={"coucou"}>
-            <CardBody>
-              <Typography variant="h4" className="mb-2" placeholder="">
-                Description du jalon
+      <section className="mt-10">
+        <div>
+          <Alert className={"mb-5 bg-brick-300 p-5"}>
+            <FontAwesomeIcon
+                icon={faListCheck}
+                className={"mr-5 text-brick-400/50"}
+            />
+
+            <span>
+              Vous avez actuellement X tâches
+              ouvertes sur ce jalon.
+            </span>
+          </Alert>
+          <Card className="custom-block">
+            <CardBody
+                className={"custom-project-body custom-scroll"}>
+              <div
+                  className={"flex gap-2 items-center"}>
+                <FontAwesomeIcon
+                    icon={faBookOpen}
+                    className={"text-marine-300 text-xl"}
+                />
+                <Chip
+                    variant="ghost"
+                    value="Description du jalon"
+                    className={"w-full bg-marine-100/10 text-marine-300"}
+                />
+              </div>
+              <Typography type={"p"}
+                          className={"pt-3"}>
+                {step.description}
               </Typography>
-              <Typography>{step.description}</Typography>
             </CardBody>
           </Card>
         </div>
-        <div className="b1-body-budget-status md:flex gap-5 mt-5">
+        <div
+            className="b1-body-budget-status md:flex gap-5 mt-5">
           <div className="basis-1/2">
             <ModifiableInput
-              value={"Budget : " + step.budget.toString() + "€"}
-              type="number"
-              label="budget"
-              placeHolder="Entrez le nouveau budget"
-              state={step}
-              setState={setStep}
-              isOwner={isOwner}
-              handleBdd={handleModifyStep}
+                value={"Budget : " +
+                    step.budget.toString() + "€"}
+                type="number"
+                label="budget"
+                placeHolder="Entrez le nouveau budget"
+                state={step}
+                setState={setStep}
+                isOwner={isOwner}
+                handleBdd={handleModifyStep}
             />
           </div>
           <div className="basis-1/2 ">
@@ -83,7 +141,7 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
             />
           </div>
         </div>
-      </div>
+      </section>
     </section>
   );
 }

@@ -117,15 +117,15 @@ export default function StepCreateTask({ handleReload, categories ,step }: Props
     <div>
       <CreateButton handleClick={handleOpen} value="Créer" />
       <Dialog
-        size="lg"
+        size="sm"
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"
       >
-        <Card className="mx-auto w-full">
+        <Card className="custom-modal">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-              <Typography variant="h2" color="blue-gray">
+              <Typography variant="h3" className={"text-marine-300 text-xl font-extrabold text-center mb-5"}>
                 Créer une tâche
               </Typography>
               <Input
@@ -176,10 +176,20 @@ export default function StepCreateTask({ handleReload, categories ,step }: Props
                 placeholder="Inviter des membres sur votre projet"
                 components={animatedComponents}
                 onChange={(value: any) => handleUsers(value)}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 5,
+                  colors: {
+                    ...theme.colors,
+                    primary25: 'rgba(126,55,47, 0.2)',
+                    primary:'rgba(126,55,47, 0.7)',
+                    primary50: 'rgba(126,55,47, 0.3)',
+                  },
+                })}
               />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
-              <Button variant="gradient" type="submit">
+              <Button size={"sm"} type="submit" className={"bg-brick-300"}>
                 Créer
               </Button>
             </CardFooter>

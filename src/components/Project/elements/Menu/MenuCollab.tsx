@@ -41,11 +41,11 @@ export function MenuCollab({see, request, setReload, join, menu, idProject}:Prop
             <MenuHandler>
 
                 <Button
-                    className="flex items-center justify-center text-marine-300 border-marine-300"
+                    className="text-marine-300 border-marine-300"
                     variant="outlined"
                 >
                     <FontAwesomeIcon icon={faList} className={"text-sm lg:mr-3"}/>
-                    <Typography className={"hidden lg:inline font-extrabold text-xl mt-0.5"}>
+                    <Typography className={"hidden lg:inline font-extrabold"}>
                         Actions
                     </Typography>
 

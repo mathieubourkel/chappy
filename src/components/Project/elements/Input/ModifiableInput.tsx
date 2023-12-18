@@ -64,7 +64,7 @@ export default function ModifiableInput(props: Props) {
             ripple={true}
             type="submit"
           >
-            <FontAwesomeIcon icon={faCheck} size={"lg"}/>
+            <FontAwesomeIcon icon={faCheck} size={"sm"}/>
           </IconButton>
         </form>
       )}

@@ -25,6 +25,16 @@ export default function SelectCategory({ handleCategory, categories, defaultValu
       defaultValue={defaultValue}
       components={animatedComponents}
       onChange={(value: any) => handleCategoriesEnfant(value)}
+      theme={(theme) => ({
+        ...theme,
+        borderRadius: 5,
+        colors: {
+          ...theme.colors,
+          primary25: 'rgba(126,55,47, 0.2)',
+          primary:'rgba(126,55,47, 0.7)',
+          primary50: 'rgba(126,55,47, 0.3)',
+        },
+      })}
     />
   );
 }

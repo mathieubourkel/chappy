@@ -43,7 +43,7 @@ export default function DashboardPage() {
     <main className="dashboard-page sm:mx-20 mx-5">
       {busy ? (
         <div className="flex justify-center mt-20">
-          <Spinner className="h-16 w-16 text-gray-900/50" />
+          <Spinner className="h-16 w-16 text-brick-300" />
         </div>
       ) : (
         <>

@@ -28,7 +28,7 @@ export default function StepCard({ step, idProject }: Props) {
         <div className={"flex gap-2 items-center"}>
           <FontAwesomeIcon icon={faBarsProgress} />
 
-          <Typography className="custom-subt mb-2" textGradient>
+          <Typography className="custom-subt mb-1" textGradient>
             Jalon {enumStatus[step.status].label}
           </Typography>
         </div>
