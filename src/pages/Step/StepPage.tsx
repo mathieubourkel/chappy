@@ -1,12 +1,12 @@
-import StepTasks from "../../components/Project/Step/StepTasks";
-import EspaceComment from "../../components/Project/Comments/EspaceComment";
-import StepHeader from "../../components/Project/Step/StepHeader";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Spinner } from "@material-tailwind/react";
 import { getStepById } from "../../services/api/steps";
 import { getProjectById } from "../../services/api/projects";
 import { intStep } from "../../services/interfaces/intProject";
-import { Spinner } from "@material-tailwind/react";
+import StepTasks from "../../components/Project/Step/StepTasks";
+import EspaceComment from "../../components/Project/Comments/EspaceComment";
+import StepHeader from "../../components/Project/Step/StepHeader";
 
 export default function StepPage() {
   console.log("StepPage");

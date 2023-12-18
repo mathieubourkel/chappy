@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
+import { Spinner } from "@material-tailwind/react";
+import { useParams } from "react-router-dom";
 import { intProject } from "../../services/interfaces/intProject";
-import "../../css/Project.css";
 import EspaceComment from "../../components/Project/Comments/EspaceComment";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
 import ProjectDesc from "../../components/Project/Project/ProjectDesc";
-import { useParams } from "react-router-dom";
-import {
-  getProjectById,
-} from "../../services/api/projects";
+import {getProjectById} from "../../services/api/projects";
 import ProjectSteps from "../../components/Project/Project/ProjectSteps";
-import { Spinner } from "@material-tailwind/react";
 
 export default function ProjectPage() {
   console.log("ProjectPage");
