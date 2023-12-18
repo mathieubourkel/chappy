@@ -5,6 +5,8 @@
 // export interface intForms extends intUsers, intCompany, intEmployee {}
 
 export interface intForms {
+    username: string,
+    // role: {id: number},
     lastname: string,
     firstname: string,
     email: string,
