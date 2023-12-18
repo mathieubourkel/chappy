@@ -6,12 +6,17 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { intEmployee } from "../../services/interfaces/intEmployee";
 
-export default function FormEmployee() {
+interface FormEmployeeProps{
+    handleChange: (e: React.ChangeEvent<any>) => void;
+    values: intEmployee;
+  }
+
+export default function FormEmployee(props: FormEmployeeProps) {
     const validationEmployee = Yup.object({
         companyName: Yup.string().required("Ce champ est requis")
     })
 
-    const {handleChange, handleSubmit, values, errors} = useFormik<intEmployee>({
+    const {handleChange, values, errors} = useFormik<intEmployee>({
         initialValues: {
             companyNameEmployee: "",
         },
@@ -24,7 +29,7 @@ export default function FormEmployee() {
 
     return (
        <Card className="flex justify-center p-5">
-        <form className="w-full flex gap-5 flex-col items-center" onSubmit={handleSubmit}>
+       
         <Input
             label="Nom de l'entreprise"
             type="text"
@@ -36,7 +41,7 @@ export default function FormEmployee() {
             crossOrigin={undefined}
           />
           {errors.companyNameEmployee && <small>{errors.companyNameEmployee}</small>}
-        </form>
+     
        </Card>
     )
 }
