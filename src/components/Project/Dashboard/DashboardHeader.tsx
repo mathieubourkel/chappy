@@ -26,8 +26,8 @@ export default function DashboardHeader({ nbProj, setReload}: Props) {
   console.log("DashBoardHeaderComposant")
   const userName = localStorage.getItem('name')
   return (
-    <section className="mt-20 md:flex justify-between gap-x-10">
-      <div className="basis-1/2">
+    <section className="mt-20 md:flex gap-x-10">
+      <div className="basis-[40lvw]">
         {nbProj > 0 ? (
           <div className="flex items-center mb-5">
               <Typography
@@ -90,9 +90,7 @@ export default function DashboardHeader({ nbProj, setReload}: Props) {
             </>
         )}
       </div>
-      <div className='lg:w-1/2'>
-        <Calendar className='lg:w-[49.4lvw] lg:h-[50lvh]'/>
-      </div>
+        <Calendar className='lg:w-[49.4lvw] lg:h-[50lvh] overflow-x-clip'/>
 
     </section>
   );

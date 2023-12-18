@@ -1,0 +1,9 @@
+@import "../../css/index.css";
+
+.text-blue-500 {
+    color: var(--input-color) !important;
+}
+
+.bg-blue-500 {
+    background: var(--input-color) !important;
+}

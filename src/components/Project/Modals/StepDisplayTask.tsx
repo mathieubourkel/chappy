@@ -21,14 +21,14 @@ type Props = {
 export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
   return (
     <Dialog
-      size="lg"
+      size="sm"
       open={openM}
       handler={handleOpenM}
       className="bg-transparent shadow-none"
     >
-      <Card className="mx-auto w-full">
+      <Card className="custom-modal">
         <CardBody className="flex flex-col gap-4">
-          <Typography variant="h2" color="blue-gray">
+          <Typography variant="h3" className={"text-marine-300 text-xl font-extrabold text-center mb-5"}>
             Afficher la tâche
           </Typography>
           <Input
@@ -101,7 +101,7 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
               />
             ))}
           </div>
-          <p>Commentaires</p>
+          {/*<p>Commentaires</p>*/}
           {/* {tasks[index].comments.map((comment: string, index: number) => (
               <Input
                 key={index}

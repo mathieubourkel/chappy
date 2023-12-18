@@ -20,6 +20,7 @@ import { getAllCompanies, getAllUsers } from "../../services/api/users";
 import ReactSelect from "react-select";
 import makeAnimated from "react-select/animated";
 import { enumStatus } from "../../services/interfaces/Status";
+import "./CreateProject.css"
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -200,6 +201,16 @@ export default function CreateProjectPage() {
                   defaultValue={enumStatus[0]}
                   components={animatedComponents}
                   onChange={(value: any) => handleStatus(value)}
+                  theme={(theme) => ({
+                    ...theme,
+                    borderRadius: 5,
+                    colors: {
+                      ...theme.colors,
+                      primary25: 'rgba(126,55,47, 0.2)',
+                      primary:'rgba(126,55,47, 0.7)',
+                      primary50: 'rgba(126,55,47, 0.3)',
+                    },
+                  })}
                 />
               </div>
               <div className="w-full">
@@ -225,6 +236,16 @@ export default function CreateProjectPage() {
                 placeholder="Inviter des membres sur votre projet"
                 components={animatedComponents}
                 onChange={(value: any) => handleUsers(value)}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 5,
+                  colors: {
+                    ...theme.colors,
+                    primary25: 'rgba(126,55,47, 0.2)',
+                    primary:'rgba(126,55,47, 0.7)',
+                    primary50: 'rgba(126,55,47, 0.3)',
+                  },
+                })}
               />
             </div>
             <div>
@@ -234,6 +255,16 @@ export default function CreateProjectPage() {
                 components={animatedComponents}
                 placeholder="Inviter des entreprises sur votre projet"
                 onChange={(value: any) => handleCompanies(value)}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 5,
+                  colors: {
+                    ...theme.colors,
+                    primary25: 'rgba(126,55,47, 0.2)',
+                    primary:'rgba(126,55,47, 0.7)',
+                    primary50: 'rgba(126,55,47, 0.3)',
+                  },
+                })}
               />
             </div>
 

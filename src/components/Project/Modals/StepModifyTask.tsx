@@ -94,15 +94,15 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
         <FontAwesomeIcon icon={faPen} />
       </IconButton>
       <Dialog
-        size="lg"
+        size="sm"
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"
       >
-        <Card className="mx-auto w-full">
+        <Card className="custom-modal">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-              <Typography variant="h2" color="blue-gray">
+              <Typography variant="h3" className={"text-marine-300 text-xl font-extrabold text-center mb-5"}>
                 Modifier la tâche
               </Typography>
               <Input
@@ -136,21 +136,27 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
 
               <div className="sm:flex gap-3">
                 <Datepicker
-                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
+                  inputClassName="w-full p-2 rounded-md font-normal placeholder:text-black text-black"
                   onChange={handleDate}
                   value={{ startDate: form.startDate, endDate: form.endDate }}
                   inputName="rangeDate"
                   placeholder={"Choisir la durée de la tâche"}
                 />
               </div>
-              <h3>Participants</h3>
+              <Typography variant="h4" className={"text-marine-300 text-lg font-extrabold"}>
+                Participants
+              </Typography>
               <div className="flex gap-10">
                 {task.users.map((user: any, indexT: number) => (
                   <div className="flex gap-2" key={indexT}>
-                    <p className="bg-white p-2 rounded-lg">{user.email}</p>
-                      <IconButton onClick={() => handleDeleteUser(indexT)}>
-                        <FontAwesomeIcon icon={faXmark} size="xl" />
-                      </IconButton>
+                    <div className="bg-marine-100/25 flex gap-2  p-2 rounded-lg justify-center items-center">
+                      <Typography variant="paragraph" className={"text-marine-300"}>
+                        {user.email}
+                      </Typography>
+                      <IconButton onClick={() => handleDeleteUser(indexT)} size={"sm"} className={"ml-3"}>
+                      <FontAwesomeIcon icon={faXmark} size="sm" />
+                    </IconButton></div>
+
                   </div>
                 ))}
               </div>
@@ -161,10 +167,20 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
                 placeholder="Inviter des membres sur votre projet"
                 components={animatedComponents}
                 onChange={(value: any) => handleUsers(value)}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 5,
+                  colors: {
+                    ...theme.colors,
+                    primary25: 'rgba(126,55,47, 0.2)',
+                    primary:'rgba(126,55,47, 0.7)',
+                    primary50: 'rgba(126,55,47, 0.3)',
+                  },
+                })}
               />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
-              <Button variant="gradient" onClick={handleOpen} type="submit">
+              <Button size={"sm"} className={"bg-brick-300"} onClick={handleOpen} type="submit">
                 Modifier
               </Button>
             </CardFooter>

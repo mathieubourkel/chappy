@@ -43,12 +43,12 @@ export function MenuProject({ project, idProject }: Props) {
         <Menu>
           <MenuHandler>
             <Button
-              className="flex items-center justify-center text-light-100 bg-marine-300"
+              className="text-light-100 bg-marine-300"
               size={"sm"}
             >
               <FontAwesomeIcon icon={faList} className={"text-sm lg:mr-3"} />
               <Typography
-                className={"hidden lg:inline font-extrabold text-xl mt-0.5"}
+                className={"hidden lg:inline font-extrabold"}
               >
                 Gérer mon projet
               </Typography>

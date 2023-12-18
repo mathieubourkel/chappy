@@ -42,9 +42,9 @@ export default function SelectStatus({
           borderRadius: 5,
           colors: {
             ...theme.colors,
-            primary25: 'rgba(119,125,149,0.2)',
-            primary: 'rgba(119,125,149,0.3)',
-            primary50: 'rgba(119,125,149,0.3)',
+            primary25: 'rgba(126,55,47, 0.2)',
+            primary:'rgba(126,55,47, 0.7)',
+            primary50: 'rgba(126,55,47, 0.3)',
           },
         })}
       />

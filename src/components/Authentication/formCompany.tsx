@@ -6,7 +6,12 @@ import {
     Input
 } from "@material-tailwind/react";
 
-export default function FormCompagny() {
+interface FormCompanyProps{
+  handleChange: (e: React.ChangeEvent<any>) => void;
+  values: intCompany;
+}
+
+export default function FormCompany(props: FormCompanyProps) {
 
   const validationCompany = Yup.object({
     companyName: Yup.string().min(2, "Le nom de votre entreprise doit contenir au minimum 2 charactères").required("Le nom de votre entreprise est requis"),
@@ -15,7 +20,7 @@ export default function FormCompagny() {
   })
 
 
-  const {handleChange, handleSubmit, values, errors} = useFormik<intCompany>({
+  const {handleChange, values, errors} = useFormik<intCompany>({
     initialValues: {
         companyName: "",
         siret: null,
@@ -31,7 +36,6 @@ export default function FormCompagny() {
 
   return (
       <Card className="flex justify-center p-5">
-        <form className="w-full flex gap-5 flex-col items-center" onSubmit={handleSubmit}>
           <Input
             label="Nom de l'entreprise"
             type="text"
@@ -64,7 +68,6 @@ export default function FormCompagny() {
           crossOrigin={undefined}
           />
           {errors.companySActivity && <small>{errors.companySActivity}</small>}
-        </form>
       </Card>
   );
 }

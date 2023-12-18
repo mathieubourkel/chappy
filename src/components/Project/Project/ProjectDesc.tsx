@@ -48,7 +48,7 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
             />
 
             <span>
-              Vous avez actuellement {project.project_steps.length} jalons
+              Vous avez actuellement {project.project_steps.length} { project.project_steps.length > 1 ? "jalons " : "jalon " }
               ouvert sur ce projet.
             </span>
           </Alert>

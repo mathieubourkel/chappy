@@ -61,17 +61,17 @@ export default function RejoinModal({ join, menu, setReload }: Props) {
         <RejoinButton value={"Rejoindre un projet"} onClick={handleOpen} />
       )}
       <Dialog
-        size="xl"
+        size="sm"
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"
       >
-        <Card className="mx-auto w-full">
+        <Card className="custom-modal">
           <CardBody className="flex flex-col gap-4">
-            <Typography variant="h2" color="blue-gray">
+            <Typography variant="h3" className="text-marine-300 text-xl font-extrabold text-center">
               Veuillez renseigner votre code projet
             </Typography>
-            <div className="flex gap-2">
+            <div className="flex gap-2 mt-5">
               <Input
                 label="Code à 16 caractères"
                 id="code"
@@ -81,7 +81,7 @@ export default function RejoinModal({ join, menu, setReload }: Props) {
                 crossOrigin={undefined}
                 onChange={(e: any) => handleCode(e)}
               />
-              <Button onClick={handleClick}>Rejoindre</Button>
+              <Button onClick={handleClick} size={"sm"} className={"bg-brick-300"}>Rejoindre</Button>
             </div>
           </CardBody>
         </Card>

@@ -45,14 +45,14 @@ export default function DemandsModal({request}:Props) {
             </Typography>
         </MenuItem>
       <Dialog
-        size="xl"
+        size="sm"
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"
       >
-        <Card className="mx-auto w-full">
-          <CardBody className="custom-modal flex flex-col gap-4">
-            <Typography variant="h2" className={"text-marine-300"}>
+        <Card className="custom-modal">
+          <CardBody className="flex flex-col gap-4">
+            <Typography variant="h3" className={"text-marine-300 text-xl font-extrabold text-center mb-5"}>
               Vous avez {demands.length} {demands.length > 1 ? "demandes" : "demande" }  en cours
             </Typography>
             {demands.map((demand, index: number) => (

@@ -54,7 +54,7 @@ export default function ProjectSteps({ idProject, isOwner }: Props) {
       </article>
       {busy ? (
         <div className="flex justify-center mt-20">
-          <Spinner className="h-16 w-16 text-gray-900/50" />
+          <Spinner className="h-16 w-16 text-brick-300" />
         </div>
       ) : (
         <div className="flex flex-wrap justify-center gap-10 mt-10">
