@@ -46,6 +46,7 @@ export interface intStep extends intStepLight{
     estimEndDate: Date | null
     status:number
     project: {id:string|undefined, name:string|undefined}
+    step_tasks : intTasks
 }
 
 export type intSelect = {

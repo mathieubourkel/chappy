@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
-import { IconButton, Spinner } from "@material-tailwind/react";
+import {
+  Alert,
+  IconButton,
+  Spinner
+} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBan,
+  faFilter
+} from "@fortawesome/free-solid-svg-icons";
 import StepCreateTask from "../Modals/StepCreateTask";
 import TaskCard from "../Cards/TaskCard";
 import {
@@ -60,7 +67,7 @@ export default function StepTasks({step}:Props) {
   };
 
   return (
-    <section className="bloc-2 mb-40">
+    <section className="mb-20">
       <div className="b2-header flex justify-between items-center">
         <div className="b2-header-title">
           <h2>Les tâches</h2>
@@ -74,7 +81,7 @@ export default function StepTasks({step}:Props) {
             />
           </div>
           <div>
-            <IconButton>
+            <IconButton size={"sm"}>
               <FontAwesomeIcon icon={faFilter} />
             </IconButton>
           </div>
@@ -82,10 +89,10 @@ export default function StepTasks({step}:Props) {
       </div>
       {busy ? (
         <div className="flex justify-center mt-20">
-          <Spinner className="h-16 w-16 text-gray-900/50" />
+          <Spinner className="h-16 w-16 text-brick-300" />
         </div>
       ) : (
-        <ul className="b2-body mt-5">
+        <ul className="mt-5">
           {tasks.map((task: intTask) => (
             <TaskCard
               key={task.id}
@@ -97,6 +104,13 @@ export default function StepTasks({step}:Props) {
           ))}
         </ul>
       )}
+
+      {tasks.length == 0 && <><Alert
+          icon={<FontAwesomeIcon icon={faBan} className={"text-marine-300 text-xl"}/>}
+          className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5"
+      >
+        Aucune tâche en cours.
+      </Alert></>}
     </section>
   );
 }

@@ -50,7 +50,7 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
 
   // Render
   return (
-    <section className="my-20">
+    <section className="mt-20 mb-10">
       <div className="md:flex justify-between items-stretch">
         <div className="shrink-0">
           <Typography
@@ -83,17 +83,17 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
 
       </div>
 
-      <section className="mt-10">
+      <article className="mt-10">
         <div>
           <Alert className={"mb-5 bg-brick-300 p-5"}>
             <FontAwesomeIcon
                 icon={faListCheck}
-                className={"mr-5 text-brick-400/50"}
+                className={"mr-5 text-light-100"}
             />
 
             <span>
-              Vous avez actuellement X tâches
-              ouvertes sur ce jalon.
+              {step.step_tasks.length > 0 ? `Vous avez actuellement ${step.step_tasks.length} ${step.step_tasks.length == 1 ? "tâche ouverte" : " tâches ouvertes"} dans ce jalon.`  : "Vous n'avez aucune tâche ouverte sur ce jalon"}
+
             </span>
           </Alert>
           <Card className="custom-block">
@@ -141,7 +141,7 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
             />
           </div>
         </div>
-      </section>
+      </article>
     </section>
   );
 }
