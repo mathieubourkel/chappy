@@ -1,4 +1,4 @@
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 import './home.css';
 import {
     Button,
@@ -11,29 +11,29 @@ export default function HomePage() {
   return (
 
           <main className={"flex justify-center gap-11 items-center"}>
-              <section className={"w-1/4 flex flex-col gap-10"}>
+              <section className={"lg:w-1/4 flex flex-col gap-10 mx-5"}>
                   <article className={"flex flex-col gap-5"}>
                       <Typography variant="h1" className={"font-extrabold text-center"}>Bienvenue sur Chappy</Typography>
                       <Typography variant="h3">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Typography>
                       <Typography variant="paragraph" className={""}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut autem commodi facilis magni non possimus, quibusdam repellat velit? </Typography>
                   </article>
-                  <article className={"flex gap-5 justify-center"}>
+                  <article className={"flex flex-wrap gap-5 justify-center"}>
                       <Button
                           size="sm"
-                          className="hidden lg:inline-block bg-brick-400"
+                          className="w-full lg:w-1/3 bg-brick-400"
                       >
-                          <NavLink to={"/signup"}>Je suis un particulier</NavLink>
+                          <Link to={"/signup"}>Je suis un particulier</Link>
                       </Button>
                       <Button
                           size="sm"
-                          className="hidden lg:inline-block bg-brick-400"
+                          className="w-full lg:w-1/3 bg-brick-400"
                       >
-                          <NavLink to={"/signup"}>Je suis un professionnel</NavLink>
+                          <Link to={"/signup"}>Je suis un professionnel</Link>
                       </Button>
                   </article>
 
               </section>
-              <section className={"w-1/4 animation-section"}>
+              <section className={"hidden lg:flex lg:w-1/4 lg:animation-section"}>
                   <img src={blop} alt={"fond animé"} className={"scale-in-right"} />
                   <img src={planning} alt={"logo de planning"} className={"planning slide-in-right"}/>
 

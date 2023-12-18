@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { handleApiCall, useApi } from "../../hooks/useApi";
-import { intProfileUser, intUser } from "../interfaces/intProject";
+import { intProfileUser } from "../interfaces/intProject";
+import { intForms } from "../interfaces/intForms";
 const api = useApi();
 
 export async function getMembersByProject(idProject: string | undefined) {
@@ -50,8 +51,10 @@ export async function getMembersByProject(idProject: string | undefined) {
     return handleApiCall(() => api.get("companies"));
   }
   
-  export async function addUserToBDD(data: intUser) {
-    const body = { data };
+  export async function addUserToBDD(data: intForms) {
+    const body = data;
+    // const newBody = {...data, role: {connect: [{id:1}]}};
+    console.log("body", body, "data", data)
     return handleApiCall(() => api.post("users", body));
   }
 
@@ -79,8 +82,10 @@ export async function getUserInfo(idUser: string|number|null) {
   }
 }
 
-
-
+export async function addCompanyToBDD(data: intForms) {
+  const body = {data};
+  return handleApiCall(() => api.post("company", body))
+}
 
 
 
