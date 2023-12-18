@@ -69,7 +69,7 @@ export default function FormGlobal() {
       password: "",
       checkPassword: "",
       companyName: "",
-      siret: null,
+      siret: "",
       companySActivity: "",
       companyNameEmployee: "",
     },

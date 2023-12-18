@@ -15,7 +15,7 @@ export interface intForms {
     password: string,
     checkPassword: string,
     companyName?: string,
-    siret?: number | null,
+    siret?: string,
     companySActivity?: string,
     companyNameEmployee?: string,
 }
