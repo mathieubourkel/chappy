@@ -5,6 +5,9 @@ import { Button, Radio, Input, Typography } from "@material-tailwind/react";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { addUserToBDD } from "../../services/api/users";
+import { intUser } from "../../services/interfaces/intProject";
 
 
 
@@ -73,9 +76,30 @@ export default function FormGlobal() {
       companySActivity: "",
       companyNameEmployee: "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log("submit", values);
       // setFormValues(formValues);
+
+      try {
+        const userResponse = await addUserToBDD(values)
+        console.log(userResponse.data);
+
+        const userId = userResponse.data.id;
+
+        if (selectedOption === "checkCompany") {
+          const companyResponse = await axios.post("http://localhost:1997/company-endpoint", {
+            userId: userId,
+            name: values.companyName,
+            siret: values.siret,
+            description: values.companySActivity
+          })
+          console.log(companyResponse.data)
+        }
+        
+      } catch (error) {
+        console.error("Erreur lors de l'envoi du formulaire")
+      }
+
 
     },
     validationSchema: validationGlobal,
