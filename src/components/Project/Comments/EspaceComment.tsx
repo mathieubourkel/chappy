@@ -6,7 +6,6 @@ import {
 import DisplayMore from "./DisplayMore";
 import CreateComment from "./CreateComment";
 import CommentCard from "../Cards/CommentCard";
-import './comment.css'
 import { getComments } from "../../../services/api/comments";
 
 type Props = {

@@ -10,6 +10,10 @@ type Props = {
 };
 
 export default function CommentCard({ comment }: Props) {
+
+  const linear = "linear-gradient(to bottom, rgb(47,44,54,1), rgb(126,55,47,1)) 1 100%"
+  const CommentStyle = {display: 'block', borderLeft: '3px solid', paddingLeft: '1rem', marginLeft: '3rem', borderImage: linear}
+
   return (
     <Card className="w-full custom-block mb-10" placeholder={undefined}>
       <CardBody placeholder={undefined}>
@@ -33,7 +37,7 @@ export default function CommentCard({ comment }: Props) {
             </Button>
           </div>
         </div>
-        <Typography className="comment-bar">{comment.content}</Typography>
+        <Typography style={CommentStyle}>{comment.content}</Typography>
       </CardBody>
     </Card>
   );

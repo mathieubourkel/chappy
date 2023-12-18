@@ -38,7 +38,7 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
   };
 
   return (
-    <section className="mt-5 mb-20">
+    <section className="mt-10 mb-20">
       <div className="lg:flex gap-5">
         <div>
           <Alert className={"mb-5 bg-marine-300 p-5"}>
