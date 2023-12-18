@@ -96,8 +96,10 @@ export default function CreateProjectPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    console.log(form)
     await addProjectToBDD(form);
     navigate("/dashboard");
+    
   }
 
   const handleDate = (value: any) => {
