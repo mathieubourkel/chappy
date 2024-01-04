@@ -34,6 +34,8 @@
     --input-color: rgba(126,55,47,1);
     --input-gray: rgba(119,125,149,0.4);
 
+    --button-marine : rgb(47,44,54,0.8);
+
     --gradient: linear-gradient(90deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
     --alt-gradient: linear-gradient(90deg, rgba(126,55,47,1) 0%, rgba(47,44,54,1) 12%);
     --gradient-top: linear-gradient(0deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
@@ -138,18 +140,18 @@ p {
     border: 1px solid var(--border-color);
     border-radius: 0.5em;
     box-shadow: 1px 0.5px 1px rgb(30,29,34, 0.1);
-    border-bottom : 5px solid var(--border-card)
+    border-bottom : 2px solid var(--border-card)
 }
 
 .custom-card-body {
-    height: 8rem;
+    min-height: 8rem;
 }
 
 .custom-task {
     border: 1px solid var(--border-color);
     border-radius: 0.5em;
     box-shadow: 1px 0.5px 1px rgb(30,29,34, 0.1);
-    border-left : 5px solid var(--border-task)
+    border-left : 2px solid var(--border-task)
 }
 
 .custom-task-body {
@@ -164,6 +166,20 @@ p {
     font-size: 1.1em!important;
 
 }
+
+.custom-sb-task {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.custom-card-task {
+    border: 1px solid var(--border-color);
+    border-radius: 0.5em;
+    box-shadow: 1px 0.5px 1px rgb(30,29,34, 0.1);
+    border-bottom : 2px solid var(--border-task)
+}
+
 
         /* Block */
 
@@ -194,6 +210,17 @@ p {
 
 .text-indigo-500 {
     color: var(--input-color) !important;
+}
+
+        /* Custom Task */
+
+.bg-gray-900 {
+    background: var(--marine) !important;
+    transition: 0.2s;
+}
+
+.bg-gray-900:hover {
+    background: var(--button-marine) !important;
 }
 
 
