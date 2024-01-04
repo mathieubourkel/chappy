@@ -16,7 +16,7 @@ export default function ProjectPage() {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [project, setProject] = useState<intProject>({
     name: "",
-    description: "",
+    description: "aa",
     status: 0,
     owner: { id: null },
     budget: 0,

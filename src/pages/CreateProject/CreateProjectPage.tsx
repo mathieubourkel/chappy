@@ -59,7 +59,7 @@ export default function CreateProjectPage() {
 
   const formik = useFormik({
     initialValues: {
-      description: "",
+      description: "aaa",
       budget: 0,
       status: 0,
       estimEndDate: null,
@@ -67,7 +67,7 @@ export default function CreateProjectPage() {
       owner: { id: userId },
       users: [{ id: null }],
       companies: [{ id: null }],
-      name: "",
+      name: "aaa",
       code: randomCode(),
     },
     onSubmit: async (values) => {
