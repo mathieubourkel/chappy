@@ -1,60 +1,39 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { handleApiCall, useApi } from "../../hooks/useApi";
 import { intProject } from "../interfaces/intProject";
+// eslint-disable-next-line react-hooks/rules-of-hooks
 const api = useApi();
-const PROJECTS_ENDPOINT = "projects";
+const PROJECT_ENDPOINT = "project";
 
 export async function getProjectsFromOwner(idUser: string | null) {
-    return handleApiCall(() =>
-      api.get(
-        `${PROJECTS_ENDPOINT}?populate[owner][fields]=id&filters[owner][id][$eq]=${idUser}&populate[project_steps]=*`
-      )
-    );
+    return handleApiCall(() => api.get(`myprojects/${idUser}`));
   }
   
   export async function getProjectsFromUsers(idUser: string | null) {
-    return handleApiCall(() =>
-      api.get(
-        `${PROJECTS_ENDPOINT}?populate[users][fields]=id&filters[users][id][$eq]=${idUser}&populate[project_steps]=*&populate[owner]=*`
-      )
-    );
+    return handleApiCall(() => api.get(`mycollabs/${idUser}`));
   }
   
   export async function getProjectById(idProject: string | undefined) {
-    return handleApiCall(() =>
-      api.get(`${PROJECTS_ENDPOINT}/${idProject}?populate[0]=project_steps&populate[1]=owner`)
-    );
-  }
-
-  export async function userRejoinProject(idUser: string | null, code:string) {
-
-    const body = {
-      users: {
-        connect: [idUser],
-      },
-    };
-    const res = await api.get(`${PROJECTS_ENDPOINT}?filters[code][$eq]=${code}`)
-    const idProject = res.data.data[0].id
-
-    return handleApiCall(() =>
-      api.put(`${PROJECTS_ENDPOINT}/${idProject}`, body)
-    );
+    return handleApiCall(() =>api.get(`${PROJECT_ENDPOINT}/${idProject}`));
   }
   
   export async function getProjectNameById(idProject: string | undefined) {
-    return handleApiCall(() => api.get(`${PROJECTS_ENDPOINT}/${idProject}?fields[0]=name`));
+    return handleApiCall(() =>api.get(`${PROJECT_ENDPOINT}/name/${idProject}`));
   }
   
   export async function addProjectToBDD(data: intProject) {
-    const body = { data };
-    return handleApiCall(() => api.post(PROJECTS_ENDPOINT, body));
+    return handleApiCall(() => api.post(PROJECT_ENDPOINT, data));
   }
   
   export async function deleteProjectFromBDD(idProject: string | number | undefined) {
-    return handleApiCall(() => api.delete(`${PROJECTS_ENDPOINT}/${idProject}`));
+    return handleApiCall(() => api.delete(`${PROJECT_ENDPOINT}/${idProject}`));
   }
   
   export async function modifyProjectToBDD(idProject: string | undefined, data: intProject) {
-    const body = { data };
-    return handleApiCall(() => api.put(`${PROJECTS_ENDPOINT}/${idProject}`, body));
+    return handleApiCall(() => api.put(`${PROJECT_ENDPOINT}/${idProject}`, data));
+  }
+
+  export async function userRejoinProject(idUser: string | null,idProject: string | null, code:string) {
+    const body = {code};
+    return handleApiCall(() =>api.put(`${PROJECT_ENDPOINT}/${idProject}/rejoin/${idUser}`, body)
+    );
   }

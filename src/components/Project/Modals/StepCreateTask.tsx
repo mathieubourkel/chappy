@@ -58,7 +58,7 @@ export default function StepCreateTask({ handleReload, categories ,step }: Props
     status: 0,
     users: [],
     user: { id: userId },
-    project_step: { id: idStep }
+    step: { id: idStep }
   });
 
   useEffect(() => {
@@ -89,7 +89,6 @@ export default function StepCreateTask({ handleReload, categories ,step }: Props
       receivers:tmpIdUsers, timestamp: Date.now(), 
       path:`/project/${idProject}/step/${idStep}`
     }
-    console.log(form)
     await addTaskToStepToBDD(form);
     await addNotificationToBDD(notif)
     handleOpen();

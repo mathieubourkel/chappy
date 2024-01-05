@@ -34,6 +34,7 @@ export default function ProjectSteps({ idProject, isOwner }: Props) {
 
     getProject();
   }, [idProject, reload]);
+  console.log("step", steps)
 
   return (
     <section className="mb-20">

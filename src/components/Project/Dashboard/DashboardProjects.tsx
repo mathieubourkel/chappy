@@ -58,14 +58,14 @@ export default function DashboardProjects({ projects }: Props) {
             </div>
           </nav>
           <div className="flex flex-wrap gap-5 justify-center">
-            {projects[selected].project_steps.map((step: intStep) => (
+            {projects[selected].steps.map((step: intStep) => (
               <StepCard
                 step={step}
                 key={step.id}
                 idProject={projects[selected].id}
               />
             ))}
-            {projects[selected].project_steps.length == 0 &&
+            {projects[selected].steps.length == 0 &&
                 <Alert
                 icon={<FontAwesomeIcon icon={faCircleExclamation} className={"text-brick-400 text-xl"}/>}
                 className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5"

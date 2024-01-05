@@ -29,7 +29,7 @@ export default function DashboardCollabStepCard({ step, collab }: Props) {
           <Typography className="mt-2">
             Propriétaire :
             <span className="font-bold">
-              {" " + collab.owner.firstName + " " + collab.owner.lastName}
+              {" " + collab.owner.firstname + " " + collab.owner.lastname}
             </span>
           </Typography>
         </div>

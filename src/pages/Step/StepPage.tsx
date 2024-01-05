@@ -13,7 +13,8 @@ export default function StepPage() {
   const [busy, setBusy] = useState<boolean>(true);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const {idStep, idProject} = useParams();
-  const idUser = localStorage.getItem("id");
+  //const idUser = localStorage.getItem("id");
+  const idUser = "1"
   const [step, setStep] = useState<intStep>({
     name: "",
     description: "",
@@ -21,7 +22,7 @@ export default function StepPage() {
     budget: 0,
     status:0,
     project: {id:idProject, name: ''},
-    step_tasks: []
+    tasks: []
   });
 
   useEffect(() => {

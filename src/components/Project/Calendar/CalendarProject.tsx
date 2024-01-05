@@ -62,12 +62,10 @@ export default function CalendarProject({ className }: Props) {
     async function getFetchData() {
       const dataOwner = await getTasksByProjectId(idProject);
       const tmpTasks:any = []
-      dataOwner.map((_jalon:any, index:number) => {
-        dataOwner[index].step_tasks.map((task:any) => {
+      dataOwner.map((task:any, index:number) => {
             task.title = task.name
             task.jalons = index + 1
             tmpTasks.push(task)
-        })
       })
       setTasks(tmpTasks);
       setBusy(false);

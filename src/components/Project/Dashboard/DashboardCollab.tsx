@@ -58,7 +58,7 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
           </nav>
 
           <div className="mt-5 flex gap-5 flex-wrap justify-center">
-            {collabs[selected].project_steps.map((step: intStep) => (
+            {collabs[selected].steps.map((step: intStep) => (
               <DashboardCollabStepCard
                 step={step}
                 key={step.id}

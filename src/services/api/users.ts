@@ -62,15 +62,9 @@ export async function getMembersByProject(idProject: string | undefined) {
   //   return handleApiCall(() => api.get(`users/${idUser}?populate[0]=projects&populate[1]=projects_collab`));
   // }
 
-export async function getAllUsers() {
-    
-    try {
-        const data = await api.get('users');
-        return data.data
-    } catch (error) {
-        return error
-    }
-}
+  export async function getAllUsers() {
+    return handleApiCall(() => api.get("users"));
+  }
 
 export async function getUserInfo(idUser: string|number|null) {
     

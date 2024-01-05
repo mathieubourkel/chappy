@@ -7,21 +7,23 @@ import ProjectHeader from "../../components/Project/Project/ProjectHeader";
 import ProjectDesc from "../../components/Project/Project/ProjectDesc";
 import {getProjectById} from "../../services/api/projects";
 import ProjectSteps from "../../components/Project/Project/ProjectSteps";
+import { Status } from "../../services/enums/status.enum";
 
 export default function ProjectPage() {
   console.log("ProjectPage");
   const { idProject } = useParams();
-  const idUser = localStorage.getItem("id");
+  //const idUser = localStorage.getItem("id");
+  const idUser = "1"
   const [busy, setBusy] = useState<boolean>(true);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [project, setProject] = useState<intProject>({
     name: "",
     description: "aa",
-    status: 0,
-    owner: { id: null },
+    status: Status[0].value,
+    owner: 0,
     budget: 0,
     id: 0,
-    project_steps: [],
+    steps: [],
     estimEndDate: new Date(),
     code:''
   });
@@ -29,11 +31,13 @@ export default function ProjectPage() {
   useEffect(() => {
     async function getProject() {
       const result = await getProjectById(idProject);
+      console.log("result",result)
       setBusy(false);
       setProject(result);
       result.owner.id.toString() === idUser && setIsOwner(true);
+      
     }
-
+    
     getProject();
   }, [idProject, idUser]);
 

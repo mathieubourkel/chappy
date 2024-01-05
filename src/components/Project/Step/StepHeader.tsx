@@ -92,7 +92,7 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
             />
 
             <span>
-              {step.step_tasks.length > 0 ? `Vous avez actuellement ${step.step_tasks.length} ${step.step_tasks.length == 1 ? "tâche ouverte" : " tâches ouvertes"} dans ce jalon.`  : "Vous n'avez aucune tâche ouverte sur ce jalon"}
+              {step.tasks.length > 0 ? `Vous avez actuellement ${step.tasks.length} ${step.tasks.length == 1 ? "tâche ouverte" : " tâches ouvertes"} dans ce jalon.`  : "Vous n'avez aucune tâche ouverte sur ce jalon"}
 
             </span>
           </Alert>

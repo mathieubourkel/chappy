@@ -48,7 +48,8 @@ type Props = {
 
 
 export default function Calendar({className}:Props) {
-  const idUser = localStorage.getItem("id");
+  //const idUser = localStorage.getItem("id");
+  const idUser = "1"
   const [busy, setBusy] = useState<boolean>(true);
   const [tasks, setTasks] = useState<Array<Task>>([
     { startDate: new Date(), endDate: new Date(), title: "" },

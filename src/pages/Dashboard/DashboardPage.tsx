@@ -18,8 +18,8 @@ export default function DashboardPage() {
 
   const nbProj = collabs.length + projects.length;
 
-  const idUser = localStorage.getItem("id");
-
+  //const idUser = localStorage.getItem("id");
+  const idUser = "1"
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -38,7 +38,8 @@ export default function DashboardPage() {
 
     fetchProjects();
   }, [idUser, reload]);
-  
+  console.log(collabs)
+  console.log(projects)
   return (
     <main className="dashboard-page sm:mx-20 mx-5">
       {busy ? (

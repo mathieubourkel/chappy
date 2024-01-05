@@ -20,7 +20,7 @@ import {
   intUser,
 } from "../../../services/interfaces/intProject";
 import { useParams } from "react-router-dom";
-import { getTasksByStepId } from "../../../services/api/steps";
+import { getTasksByStepId } from "../../../services/api/tasks";
 import { getCategories } from "../../../services/api/category";
 import { getAllUsers } from "../../../services/api/users";
 
@@ -55,7 +55,7 @@ export default function StepTasks({step}:Props) {
         value: element.id,
       }));
       setCategories(dataCategoriesReformat);
-      setTasks(result.step_tasks);
+      setTasks(result);
       setAllUsers(emailArray)
     }
 

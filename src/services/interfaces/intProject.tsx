@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent } from "react"
 
 export interface intProject extends intProjectLight {
     description: string,
     budget?: number,
     status: number
-    project_steps: intSteps
+    steps: intSteps
     estimEndDate: Date | null
-    owner: intUserLight
+    owner: any
     users?: intUsersLight
     companies?: intCompanies
 }
@@ -46,7 +47,7 @@ export interface intStep extends intStepLight{
     estimEndDate: Date | null
     status:number
     project: {id:string|undefined, name:string|undefined}
-    step_tasks : intTasks
+    tasks : intTasks
 }
 
 export type intSelect = {
@@ -73,7 +74,7 @@ export interface intTask {
     user?: intUserLight
     users: intUsersLight
     id?:number
-    project_step?: intStepLight
+    step?: intStepLight
 }
 
 export interface intPurchase {
@@ -100,6 +101,7 @@ export interface intUser extends intUserLight {
     zip: number,
     status:number
     phone:string
+    
 }
 
 export interface intProfileUser extends intUser {
@@ -109,8 +111,8 @@ export interface intProfileUser extends intUser {
 }
 
 export interface intUserLight {
-    firstName?: string,
-    lastName?: string,
+    firstname?: string,
+    lastname?: string,
     company?: intCompany,
     email?: string,
     id: number | null | string

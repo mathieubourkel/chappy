@@ -12,10 +12,10 @@ import SelectStatus from "../elements/Select/SelectStatus";
 import SelectDate from "../elements/Select/SelectDate";
 import { useParams } from "react-router-dom";
 import { modifyProjectToBDD } from "../../../services/api/projects";
-import { enumStatus } from "../../../services/interfaces/Status";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen, faSitemap } from "@fortawesome/free-solid-svg-icons";
 import CalendarProject from "../Calendar/CalendarProject";
+import { Status } from "../../../services/enums/status.enum";
 
 type Props = {
   project: intProject;
@@ -36,7 +36,6 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
     await modifyProjectToBDD(idProject, data);
     setProject(data);
   };
-
   return (
     <section className="mt-10 mb-20">
       <div className="lg:flex gap-5">
@@ -48,7 +47,7 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
             />
 
             <span>
-              Vous avez actuellement {project.project_steps.length} { project.project_steps.length > 1 ? "jalons " : "jalon " }
+              Vous avez actuellement {project.steps.length} { project.steps.length > 1 ? "jalons " : "jalon " }
               ouvert sur ce projet.
             </span>
           </Alert>
@@ -89,7 +88,7 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
                 <div className="w-full">
                   <SelectStatus
                     handleStatus={handleStatus}
-                    value={enumStatus[project.status]}
+                    value={Status[project.status]}
                   />
                 </div>
                 <div className="w-full my-5 md:my-0">
@@ -104,7 +103,7 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
           ) : (
             <div className="md:flex gap-5">
               <div className="w-full bg-white p-2 rounded-xl">
-                {enumStatus[project.status].label}
+                {project.status}
               </div>
               <div className="w-full bg-white p-2 rounded-xl">
                 {project.estimEndDate?.toString()}
