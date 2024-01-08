@@ -10,21 +10,23 @@ export interface Login {
 
 export async function login(data: Login) {
   const body = {
-    identifier: data.email,
+    email: data.email,
     password: data.password,
   };
 
-  const options = {
-    credentials: "include",
-    withCredentials: true,
-  };
+  // const options = {
+  //   credentials: "include",
+  //   withCredentials: true,
+  // };
 
   try {
-    const { data: responseData } = await api.post("auth/local",body, options);
-    const { jwt, user } = responseData;
-    localStorage.setItem("token", jwt);
-    localStorage.setItem("name", `${user.firstName} ${user.lastName}`);
+    const { data: responseData } = await api.post("http://localhost:3000/auth/login", body);
+    const { token, refreshToken, user } = responseData.data;
+    localStorage.setItem("token", token);
+    localStorage.setItem("refreshToken", refreshToken);
+    localStorage.setItem("name", `${user.firstname} ${user.lastname}`);
     localStorage.setItem("id", user.id);
+    localStorage.setItem("email", user.email);
     return responseData;
   } catch (error) {
     console.log(error);
@@ -37,13 +39,12 @@ export async function refreshToken() {
       withCredentials: true,
     };
 
-    const res = await axios.get(import.meta.env.VITE_URL_API +
-      "token/refresh",
+    const res = await axios.get("http://localhost:3000/auth/login",
       options
     );
 // test
-    localStorage.setItem("token", res.data.jwt);
-
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("refreshToken", res.data.refreshToken);
     return res;
   } catch (err) {
     console.log(err);

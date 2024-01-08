@@ -20,8 +20,8 @@ import { getUserInfo, modifyUserToBDD } from "../../services/api/users";
 
 export default function UserProfilePage() {
   const [user, setUser] = useState<intProfileUser>({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     email: "",
     id: 0,
     city: "",
@@ -35,6 +35,7 @@ export default function UserProfilePage() {
   });
   const idUser = localStorage.getItem("id");
   const [displayPwd, setDisplayPwd] = useState<boolean>(false);
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await getUserInfo(idUser);
@@ -100,8 +101,8 @@ export default function UserProfilePage() {
               Informations de connexion
             </Typography>
             <div className="sm:flex sm:gap-x-5">
-              <div className={"mb-5 w-full"}>{renderInput("Nom", "lastName")} </div>
-              <div className={"mb-5 w-full"}>{renderInput("Prénom", "firstName")}</div>
+              <div className={"mb-5 w-full"}>{renderInput("Nom", "lastname")} </div>
+              <div className={"mb-5 w-full"}>{renderInput("Prénom", "firstname")}</div>
             </div>
             <div>{renderInput("Email", "email")}</div>
             <div className="flex gap-5 my-5">

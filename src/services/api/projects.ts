@@ -20,7 +20,8 @@ export async function getProjectsFromOwner(idUser: string | null) {
     return handleApiCall(() =>api.get(`${PROJECT_ENDPOINT}/name/${idProject}`));
   }
   
-  export async function addProjectToBDD(data: intProject) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  export async function addProjectToBDD(data: any) {
     return handleApiCall(() => api.post(PROJECT_ENDPOINT, data));
   }
   

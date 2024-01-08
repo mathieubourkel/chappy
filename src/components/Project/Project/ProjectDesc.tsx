@@ -71,9 +71,10 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
           </Card>
 
           <div className="mt-5">
+            Budget : 
             <ModifiableInput
               isOwner={isOwner}
-              value={"Budget : " + project.budget + "€"}
+              value={project.budget}
               state={project}
               setState={setProject}
               type="number"

@@ -18,8 +18,7 @@ export default function DashboardPage() {
 
   const nbProj = collabs.length + projects.length;
 
-  //const idUser = localStorage.getItem("id");
-  const idUser = "1"
+  const idUser = localStorage.getItem("id");
   useEffect(() => {
     const fetchProjects = async () => {
       try {

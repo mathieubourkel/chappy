@@ -36,7 +36,7 @@ export default function MemberCard({ member, isOwner }: Props) {
             color="blue-gray"
             className="p-2 text-brick-300 font-bold"
           >
-            {member.firstName} {member.lastName}
+            {member.firstname} {member.lastname}
           </Typography>
         </div>
         <div className="flex gap-10">

@@ -7,8 +7,8 @@ export interface intProject extends intProjectLight {
     status: number
     steps: intSteps
     estimEndDate: Date | null
-    owner: any
-    users?: intUsersLight
+    owner: number
+    users?: number[]
     companies?: intCompanies
 }
 

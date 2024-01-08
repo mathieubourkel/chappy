@@ -13,8 +13,7 @@ export default function StepPage() {
   const [busy, setBusy] = useState<boolean>(true);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const {idStep, idProject} = useParams();
-  //const idUser = localStorage.getItem("id");
-  const idUser = "1"
+  const idUser = localStorage.getItem("id");
   const [step, setStep] = useState<intStep>({
     name: "",
     description: "",
@@ -36,8 +35,6 @@ export default function StepPage() {
     getInfoStep();
 
   }, [idProject, idStep, idUser]);
-
-  console.log(step)
 
   return (
     <main className="project-page sm:mx-20 mx-5">

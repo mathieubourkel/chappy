@@ -23,7 +23,7 @@ export default function CommentCard({ comment }: Props) {
               variant="h3"
               className="mb-2 flex items-center gap-3 font-bold text-marine-300" placeholder="">
               <Avatar variant="circular" alt="toto" src={user} placeholder={undefined} />
-              {comment.author.firstName}
+              {comment.author.firstname}
             </Typography>
           </div>
           <div>

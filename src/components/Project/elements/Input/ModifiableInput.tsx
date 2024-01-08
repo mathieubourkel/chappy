@@ -10,7 +10,7 @@ type Props = {
   label: string;
   placeHolder: string;
   state: any;
-  value: string;
+  value: string | number | undefined;
   setState: (element: any) => void;
   isOwner: boolean;
   handleBdd?: any;

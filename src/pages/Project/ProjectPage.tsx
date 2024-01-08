@@ -12,30 +12,27 @@ import { Status } from "../../services/enums/status.enum";
 export default function ProjectPage() {
   console.log("ProjectPage");
   const { idProject } = useParams();
-  //const idUser = localStorage.getItem("id");
-  const idUser = "1"
+  const idUser = localStorage.getItem("id");
   const [busy, setBusy] = useState<boolean>(true);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [project, setProject] = useState<intProject>({
     name: "",
-    description: "aa",
+    description: "",
     status: Status[0].value,
-    owner: 0,
-    budget: 0,
-    id: 0,
+    owner: undefined,
+    budget: undefined,
+    id: undefined,
     steps: [],
     estimEndDate: new Date(),
-    code:''
+    code:""
   });
 
   useEffect(() => {
     async function getProject() {
       const result = await getProjectById(idProject);
-      console.log("result",result)
       setBusy(false);
       setProject(result);
-      result.owner.id.toString() === idUser && setIsOwner(true);
-      
+      result.owner.id.toString() === idUser && setIsOwner(true);   
     }
     
     getProject();

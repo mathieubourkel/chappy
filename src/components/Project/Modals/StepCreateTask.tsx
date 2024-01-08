@@ -24,21 +24,26 @@ import { addTaskToStepToBDD } from "../../../services/api/tasks";
 import { useParams } from "react-router-dom";
 import { getMembersByProject } from "../../../services/api/users";
 import ReactSelect from "react-select";
+import * as Yup from "yup";
 import makeAnimated from "react-select/animated";
 import CreateButton from "../elements/Buttons/CreateButton";
 import SelectCategory from "../elements/Select/SelectCategory";
 import SelectStatus from "../elements/Select/SelectStatus";
-import './modal.css'
+import "./modal.css";
 import { addNotificationToBDD } from "../../../services/api/notifications";
 
 type Props = {
   handleReload: () => void;
-  categories: Array<intSelect>
-  step:intStep
+  categories: Array<intSelect>;
+  step: intStep;
 };
 
 let count = 1;
-export default function StepCreateTask({ handleReload, categories ,step }: Props) {
+export default function StepCreateTask({
+  handleReload,
+  categories,
+  step,
+}: Props) {
   console.log("StepCreateTaskComponent" + count++);
   const { idStep, idProject } = useParams();
   const userId = localStorage.getItem("id");
@@ -58,7 +63,7 @@ export default function StepCreateTask({ handleReload, categories ,step }: Props
     status: 0,
     users: [],
     user: { id: userId },
-    step: { id: idStep }
+    step: { id: idStep },
   });
 
   useEffect(() => {
@@ -74,6 +79,18 @@ export default function StepCreateTask({ handleReload, categories ,step }: Props
     getUsers();
   }, [idProject]);
 
+  const taskSchema = Yup.object().shape({
+    name: Yup.string()
+      .max(50, "Pas plus de 50")
+      .required("Le nom de la tâche est requis"),
+    description: Yup.string()
+      .max(300, "pas plus de 300")
+      .required("La description de la tâche est requise"),
+    status: Yup.number().required("Le statut de la tâche est requis"),
+    startDate: Yup.date().required("Veuillez remplir le champ date"),
+    endDate: Yup.date().required("Veuillez remplir le champ date"),
+  });
+
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -81,22 +98,34 @@ export default function StepCreateTask({ handleReload, categories ,step }: Props
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const tmpIdUsers:any = [];
-    users.map((user:any) => {tmpIdUsers.push(user.value)})
+    const tmpIdUsers: any = [];
+    users.map((user: any) => {
+      tmpIdUsers.push(user.value);
+    });
     const notif = {
-      content:`a créé la tâche ${form.name} dans ${step.name} sur le projet ${step.project.name}`, 
-      sender:Number(userId), 
-      receivers:tmpIdUsers, timestamp: Date.now(), 
-      path:`/project/${idProject}/step/${idStep}`
-    }
-    await addTaskToStepToBDD(form);
-    await addNotificationToBDD(notif)
-    handleOpen();
-    handleReload();
+      content: `a créé la tâche ${form.name} dans ${step.name} sur le projet ${step.project.name}`,
+      sender: Number(userId),
+      receivers: tmpIdUsers,
+      timestamp: Date.now(),
+      path: `/project/${idProject}/step/${idStep}`,
+    };
+    taskSchema
+      .validate(form)
+      .then(async (validForm:any) => {
+        await addTaskToStepToBDD(validForm);
+        await addNotificationToBDD(notif);
+        handleOpen();
+        handleReload();
+      })
+      .catch((validationError) => {
+        alert(validationError.errors);
+      });
   };
 
   const handleUsers = (value: Array<intSelect>) => {
-    const goodArray: intUsersLight = value.map((element: intSelect) => ({ id: element.value }));
+    const goodArray: intUsersLight = value.map((element: intSelect) => ({
+      id: element.value,
+    }));
     setForm({ ...form, users: goodArray });
   };
 
@@ -124,7 +153,12 @@ export default function StepCreateTask({ handleReload, categories ,step }: Props
         <Card className="custom-modal">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-              <Typography variant="h3" className={"text-marine-300 text-xl font-extrabold text-center mb-5"}>
+              <Typography
+                variant="h3"
+                className={
+                  "text-marine-300 text-xl font-extrabold text-center mb-5"
+                }
+              >
                 Créer une tâche
               </Typography>
               <Input
@@ -180,9 +214,9 @@ export default function StepCreateTask({ handleReload, categories ,step }: Props
                   borderRadius: 5,
                   colors: {
                     ...theme.colors,
-                    primary25: 'rgba(126,55,47, 0.2)',
-                    primary:'rgba(126,55,47, 0.7)',
-                    primary50: 'rgba(126,55,47, 0.3)',
+                    primary25: "rgba(126,55,47, 0.2)",
+                    primary: "rgba(126,55,47, 0.7)",
+                    primary50: "rgba(126,55,47, 0.3)",
                   },
                 })}
               />
