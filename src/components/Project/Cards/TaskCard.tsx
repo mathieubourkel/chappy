@@ -116,47 +116,57 @@ export default function TaskCard({ id, handleReload, categories, allUsers }: Pro
   );
 
     const renderTaskUser = () => (
-        <>
-            <Typography
-                variant="h5"
-                color="blue-gray"
-                className="flex"
-                onClick={handleOpenM}
-            >
-                <p className="border p-2 rounded-xl bg-light-200">{task.category.name}</p>
-            </Typography>
-            <Typography
-                variant="h5"
-                className="p-2 text-brick-300"
-                onClick={handleOpenM}
-            >
-                {task.name}
-            </Typography>
-            <Typography
-                variant="h5"
-                className="p-2 text-brick-300"
-        onClick={handleOpenM}
-      >
-        {task.description}
-      </Typography>
-      <div className="md:flex justify-end gap-10">
-        <Typography
-          variant="h5"
-          className="p-2 text-brick-300"
-          onClick={handleOpenM}
-        >
-          {enumStatus[task.status].label}
-        </Typography>
-        <StepDisplayTask task={task} handleOpenM={handleOpenM} openM={openM} />
-      </div>
-    </>
-  );
 
-  return (
-    <>
+            <CardBody className={"custom-card-body px-6 pt-4"}>
+                <div
+                    className={"flex flex-wrap md:justify-between"}>
+                    <div
+                        className={"flex gap-x-2 items-center"}>
+                        <FontAwesomeIcon
+                            icon={faListCheck}
+                            size={"sm"}
+                            className={"text-marine-100"}/>
+                        <Typography
+                            className="custom-subt custom-sb-task"
+                            onClick={handleOpenM}>
+                            {task.category.name} / {task.name}
+                        </Typography>
+                    </div>
+
+                    <div
+                        className="flex gap-x-2 w-full lg:w-fit justify-center items-center">
+                        <form
+                            className={"w-full lg:w-fit"}
+                            >
+                            <SelectStatus
+                                handleStatus={handleStatus}
+                                value={enumStatus[task.status]}/>
+                        </form>
+                        <div
+                            className="flex gap-x-2">
+                            <StepDisplayTask task={task}
+                                             handleOpenM={handleOpenM}
+                                             openM={openM}/>
+                        </div>
+                    </div>
+                </div>
+
+                <Typography variant="paragraph"
+                            className={"bg-marine-100/10 text-marine-300 rounded-lg p-2 mt-2"}
+                            onClick={handleOpenM}>
+                    {task.description}
+                </Typography>
+
+            </CardBody>
+
+    );
+
+    return (
+
         <Card
             className={`w-full custom-card-task mb-5`}
         >
+            <div>
             {isOwner ? renderTaskOwner() :
                 renderTaskUser()}
 
@@ -170,7 +180,8 @@ export default function TaskCard({ id, handleReload, categories, allUsers }: Pro
                         size={"sm"}
                         className={"divide-light-100/50 mb-2"}
                         key={indexT}>
-                        <Button>
+                        <Button
+                        className={!isOwner ? "rounded-r-lg" : undefined }>
                             {user.email}
                         </Button>
 
@@ -186,9 +197,9 @@ export default function TaskCard({ id, handleReload, categories, allUsers }: Pro
                     </ButtonGroup>
                 ))}
             </div>
-
+        </div>
         </Card>
 
-    </>
+
   );
 }

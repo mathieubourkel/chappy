@@ -177,8 +177,22 @@ p {
     border: 1px solid var(--border-color);
     border-radius: 0.5em;
     box-shadow: 1px 0.5px 1px rgb(30,29,34, 0.1);
-    border-bottom : 2px solid var(--border-task)
+    border-bottom : 2px solid var(--border-task);
+    display: grid;
+    grid-template-rows: 0.8fr;
+    transition: grid-template-rows 0.5s ease-out;
 }
+
+.custom-card-task > div {
+    overflow: hidden;
+}
+
+.custom-card-task:hover {
+    grid-template-rows: 1fr;
+}
+
+
+
 
 
         /* Block */
@@ -219,9 +233,7 @@ p {
     transition: 0.2s;
 }
 
-.bg-gray-900:hover {
-    background: var(--button-marine) !important;
-}
+
 
 
 
