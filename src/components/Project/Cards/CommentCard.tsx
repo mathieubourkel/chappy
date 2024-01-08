@@ -37,7 +37,8 @@ export default function CommentCard({ comment }: Props) {
             </Button>
           </div>
         </div>
-        <Typography style={CommentStyle}>{comment.content}</Typography>
+        <div style={CommentStyle}
+        >{comment.content}</div>
       </CardBody>
     </Card>
   );

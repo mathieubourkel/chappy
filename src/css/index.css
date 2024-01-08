@@ -39,6 +39,9 @@
     --gradient: linear-gradient(90deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
     --alt-gradient: linear-gradient(90deg, rgba(126,55,47,1) 0%, rgba(47,44,54,1) 12%);
     --gradient-top: linear-gradient(0deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
+
+    --ck-color-button-on-color : var(--border-task) !important;
+    --ck-color-focus-border: rgba(126,55,47,0.4) !important;
 }
 
 /*==================== GLOBAL CSS ====================*/
@@ -191,10 +194,6 @@ p {
     grid-template-rows: 1fr;
 }
 
-
-
-
-
         /* Block */
 
 .custom-block {
@@ -231,6 +230,20 @@ p {
 .bg-gray-900 {
     background: var(--marine) !important;
     transition: 0.2s;
+}
+
+        /* Custom Text Editor */
+
+.ck-content {
+    height: 12em !important;
+}
+
+.ck-toolbar {
+    border-radius: 8px 8px 0 0 !important;
+}
+
+.ck-rounded-corners {
+    border-radius: 0 0 8px 8px !important;
 }
 
 
