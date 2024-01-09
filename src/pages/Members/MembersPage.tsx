@@ -38,22 +38,23 @@ export default function MembersPage() {
   return (
     <main className="project-page sm:mx-20 mx-5 mt-10">
       <ProjectHeader isOwner={isOwner} project={project} idProject={idProject} />
-      <section className="b2-header flex justify-between mt-20">
-        <div>
+      <section className="flex justify-between mt-20">
+        <div className={"w-full flex justify-between gap-5 items-baseline"}>
           <h2>Les participants</h2>
-        </div>
+
         {isOwner && (
-          <div className="b2-header-buttons flex">
+
             <MembersAdd members={members} setMember={setMember} />
-          </div>
+
         )}
+        </div>
       </section>
       {busy ? (
         <div className="flex justify-center mt-20">
-          <Spinner className="h-16 w-16 text-gray-900/50" />
+          <Spinner className="h-16 w-16 text-brick-300" />
         </div>
       ) : (
-        <ul className="mt-5">
+        <div className="mt-5">
           {members.map((member: intUser, index: number) => (
             <MemberCard
               key={index}
@@ -64,7 +65,7 @@ export default function MembersPage() {
               index={index}
             />
           ))}
-        </ul>
+        </div>
       )}
     </main>
   );

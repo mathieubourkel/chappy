@@ -3,7 +3,6 @@ import { Input, Textarea, Typography, Button } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import {
-  FormEvent,
   InputEvent,
   intCompany,
   intUser,
@@ -269,7 +268,7 @@ export default function CreateProjectPage() {
             </div>
 
             <div className={"flex justify-center my-10"}>
-              <Button className={"bg-brick-400"} type="submit">
+              <Button className={"bg-brick-400"} type="submit" size={"sm"}>
                 <FontAwesomeIcon
                   icon={faPaperPlane}
                   className={"text-sm mr-3"}

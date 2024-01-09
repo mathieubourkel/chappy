@@ -108,7 +108,7 @@ export default function TaskCard({ id, handleReload, categories, allUsers }: Pro
                   </div>
               </div>
           </div>
-          <Typography variant="paragraph" className={"bg-marine-100/10 text-marine-300 rounded-lg p-2 mt-2"}>
+          <Typography variant="paragraph" className={"bg-marine-100/10 text-marine-300 rounded-lg p-2 mt-2 taskDescription"}>
               {task.description}
           </Typography>
 

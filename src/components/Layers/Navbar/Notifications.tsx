@@ -60,7 +60,7 @@ export default function Notifications() {
         <div key={notification.id} className='flex justify-between'>
           <Link to={notification.path}>
             <MenuItem
-              className={`flex items-center gap-4 py-2 pl-2 pr-8 hover:bg-marine-100/75 ${
+              className={`flex items-center gap-4 py-2 pl-2 pr-8 hover:bg-marine-100/10 ${
                 notification.isView && "bg-brick-300"
               }`}
             >
@@ -82,12 +82,12 @@ export default function Notifications() {
               </div>
             </MenuItem>
           </Link>
-          <div>
-          <IconButton onClick={() => handleView(index)}>
-            <FontAwesomeIcon icon={faEye} size="xl" />
+          <div className={"flex gap-2 items-center pl-1"}>
+          <IconButton size={"sm"} onClick={() => handleView(index)}>
+            <FontAwesomeIcon icon={faEye} size="sm" />
           </IconButton>
-          <IconButton onClick={() => handleDelete(index)}>
-            <FontAwesomeIcon icon={faXmark} size="xl" />
+          <IconButton size={"sm"} onClick={() => handleDelete(index)}>
+            <FontAwesomeIcon icon={faXmark} size="sm" />
           </IconButton>
           </div>
          
