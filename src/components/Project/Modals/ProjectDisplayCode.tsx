@@ -20,14 +20,14 @@ type Props = {
 export default function ProjectDisplayCode({ code, open, handleOpen }: Props) {
   return (
     <Dialog
-      size="xl"
+      size="sm"
       open={open}
       handler={handleOpen}
       className="bg-transparent shadow-none"
     >
-      <Card className="mx-auto w-full">
+      <Card className="custom-modal">
         <CardBody className="flex flex-col gap-4">
-          <Typography variant="h2" color="blue-gray">
+          <Typography variant="h3" className="text-marine-300 text-xl font-extrabold text-center">
             Obtenir un code projet
           </Typography>
           <p>
@@ -36,7 +36,7 @@ export default function ProjectDisplayCode({ code, open, handleOpen }: Props) {
             votre projet automatiquement.
           </p>
           <div className="flex gap-2">
-            <Input label={code} disabled size="lg" crossOrigin={undefined} />
+            <Input label={code} disabled size="lg" className={"bg-select !border !border-marine-100/50"} crossOrigin={undefined} />
             <CopyToClipboard text={code}>
               <IconButton>
                 <FontAwesomeIcon icon={faCopy} />

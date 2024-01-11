@@ -18,7 +18,7 @@ export default function DashboardCollabStepCard({ step, collab }: Props) {
         <div>
           <div className={"flex gap-2 items-center"}>
             <FontAwesomeIcon icon={faChartPie} className={"text-sm"} />
-            <Typography className="custom-subt mb-2" textGradient>
+            <Typography className="custom-subt mb-1" textGradient>
               <span className="font-bold">3 sur 10 tâches à faire</span>
             </Typography>
           </div>

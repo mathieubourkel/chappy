@@ -158,7 +158,7 @@ export default function CreateProjectPage() {
               <div className={"mb-5 w-full"}>
                 <Input
                   label="Nom du projet"
-                  className={"!bg-light-100"}
+                  className={"!bg-light-100 border-select placeholder:!text-text-100"}
                   name="name"
                   id="name"
                   crossOrigin={undefined}
@@ -168,7 +168,7 @@ export default function CreateProjectPage() {
             </div>
             <Textarea
               label="Description du projet"
-              className={"!bg-light-100"}
+              className={"!bg-light-100 border-select placeholder:!text-text-100"}
               name="description"
               id="description"
               onChange={(e: any) => handleChange(e)}
@@ -184,7 +184,7 @@ export default function CreateProjectPage() {
               <Input
                 label="Budget du projet"
                 type="number"
-                className={"!bg-light-100"}
+                className={"!bg-light-100 border-select"}
                 name="budget"
                 id="budget"
                 crossOrigin={undefined}
@@ -195,7 +195,7 @@ export default function CreateProjectPage() {
               <div className="w-full">
                 <ReactSelect
                   options={enumStatus}
-                  className="rounded-xl"
+                  className="rounded-xl border-select"
                   placeholder="Status"
                   defaultValue={enumStatus[0]}
                   components={animatedComponents}
@@ -214,7 +214,7 @@ export default function CreateProjectPage() {
               </div>
               <div className="w-full">
                 <Datepicker
-                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
+                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black border-select"
                   onChange={handleDate}
                   value={{
                     startDate: form.estimEndDate,
@@ -230,7 +230,7 @@ export default function CreateProjectPage() {
             <div className="my-5">
               <ReactSelect
                 options={users}
-                className="rounded-xl"
+                className="rounded-xl border-select"
                 isMulti
                 placeholder="Inviter des membres sur votre projet"
                 components={animatedComponents}
@@ -253,6 +253,7 @@ export default function CreateProjectPage() {
                 isMulti
                 components={animatedComponents}
                 placeholder="Inviter des entreprises sur votre projet"
+                className={"border-select"}
                 onChange={(value: any) => handleCompanies(value)}
                 theme={(theme) => ({
                   ...theme,

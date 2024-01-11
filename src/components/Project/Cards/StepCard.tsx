@@ -36,7 +36,7 @@ export default function StepCard({ step, idProject }: Props) {
         <Typography variant="h3" className="mb-2 font-bold text-marine-300">
           {step.name}
         </Typography>
-        <Typography variant="paragraph" className="text-text-100">
+        <Typography variant="paragraph" className="text-text-100 min-h-[3rem]">
           {truncatedDescription}
         </Typography>
       </CardBody>
