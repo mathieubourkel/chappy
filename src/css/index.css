@@ -295,6 +295,20 @@ p {
     color: var(--input-color) !important;
 }
 
+        /* Modifiable Textarea */
+
+.modifiableDescription {
+
+    border: none;
+    overflow: clip;
+}
+
+.modifiableDescription:focus {
+    border-color: transparent;
+    border-style: none;
+    outline: none;
+}
+
 
 
 

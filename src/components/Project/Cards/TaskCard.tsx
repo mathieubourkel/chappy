@@ -152,7 +152,7 @@ export default function TaskCard({ id, handleReload, categories, allUsers }: Pro
                 </div>
 
                 <Typography variant="paragraph"
-                            className={"bg-marine-100/10 text-marine-300 rounded-lg p-2 mt-2"}
+                            className={"bg-marine-100/10 text-marine-300 rounded-lg p-2 mt-2 taskDescription"}
                             onClick={handleOpenM}>
                     {task.description}
                 </Typography>
