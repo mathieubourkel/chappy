@@ -15,7 +15,7 @@ export default function CommentCard({ comment }: Props) {
   const CommentStyle = {display: 'block', borderLeft: '3px solid', paddingLeft: '1rem', marginLeft: '3rem', borderImage: linear}
 
   return (
-    <Card className="w-full custom-block mb-10" placeholder={undefined}>
+    <Card className="w-full custom-block mb-5" placeholder={undefined}>
       <CardBody placeholder={undefined}>
         <div className="flex justify-between">
           <div>

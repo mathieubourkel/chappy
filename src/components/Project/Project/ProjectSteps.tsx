@@ -25,6 +25,7 @@ export default function ProjectSteps({ idProject, isOwner }: Props) {
   const [steps, setSteps] = useState<intSteps>([]);
   const [busy, setBusy] = useState<boolean>(true);
   const [reload, setReload] = useState<boolean>(false);
+
   useEffect(() => {
     async function getProject() {
       const result = await getStepsByIdProject(idProject);

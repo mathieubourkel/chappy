@@ -198,12 +198,37 @@ p {
     grid-template-rows: 0.4fr;
     transition: grid-template-rows 0.5s ease-out;
 }
-
-.custom-card-task > div, .custom-card-user > div {
-    overflow: hidden;
+.custom-card-doc {
+    border: 1px solid var(--border-color);
+    border-radius: 0.5em;
+    box-shadow: 1px 0.5px 1px rgb(30,29,34, 0.1);
+    border-bottom : 2px solid var(--button-marine);
+    grid-template-rows: 0.7fr;
+    transition: grid-template-rows 0.5s ease-out;
 }
 
-.custom-card-task:hover, .custom-card-user:hover {
+
+.custom-card-purchase-all {
+    border: 1px solid var(--border-color);
+    border-radius: 0.5em;
+    box-shadow: 1px 0.5px 1px rgb(30,29,34, 0.1);
+    border-bottom : 2px solid var(--border-task);
+}
+
+.custom-card-purchase {
+    border: 1px solid var(--border-color);
+    border-radius: 0.5em;
+    box-shadow: 1px 0.5px 1px rgb(30,29,34, 0.1);
+    border-bottom : 2px solid var(--button-marine);
+}
+
+
+.custom-card-task > div, .custom-card-user > div, .custom-card-doc > div {
+    overflow: hidden;
+    white-space: break-spaces;
+}
+
+.custom-card-task:hover, .custom-card-user:hover, .custom-card-doc:hover {
     grid-template-rows: 1fr;
 }
 

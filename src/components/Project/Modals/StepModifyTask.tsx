@@ -89,9 +89,11 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
       <IconButton
         variant="outlined"
         className="text-brick-300 border-brick-300"
+        size={"sm"}
         onClick={handleOpen}
       >
-        <FontAwesomeIcon icon={faPen} />
+        <FontAwesomeIcon icon={faPen}
+        size={"sm"}/>
       </IconButton>
       <Dialog
         size="sm"

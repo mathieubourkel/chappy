@@ -84,6 +84,7 @@ export default function ProjectCreateStep({ setReload }: Props) {
                 size="lg"
                 name="name"
                 id="name"
+                className={"border-select"}
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />
@@ -92,9 +93,10 @@ export default function ProjectCreateStep({ setReload }: Props) {
                 size="lg"
                 name="description"
                 id="description"
+                className={"border-select"}
                 onChange={(e: any) => handleChange(e)}
               />
-              <div className="sm:flex gap-3">
+              <div className="flex gap-3 flex-wrap">
                 <Input
                   label="Budget"
                   size="lg"
@@ -102,10 +104,11 @@ export default function ProjectCreateStep({ setReload }: Props) {
                   type="number"
                   name="budget"
                   id="budget"
+                  className={"border-select"}
                   onChange={(e: InputEvent) => handleChange(e)}
                 />
                 <Datepicker
-                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
+                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black border-select"
                   onChange={handleDate}
                   value={{
                     startDate: form.estimEndDate,

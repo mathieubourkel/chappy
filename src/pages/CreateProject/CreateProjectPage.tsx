@@ -191,7 +191,7 @@ export default function CreateProjectPage() {
                 onChange={(e: InputEvent) => handleChange(e)}
               />
             </div>
-            <div className="sm:flex gap-5 mb-5">
+            <div className="flex gap-5 mb-5 flex-wrap">
               <div className="w-full">
                 <ReactSelect
                   options={enumStatus}
@@ -214,7 +214,7 @@ export default function CreateProjectPage() {
               </div>
               <div className="w-full">
                 <Datepicker
-                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black border-select"
+                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-text-100 text-text-100 border-select placeholder:!text-sm"
                   onChange={handleDate}
                   value={{
                     startDate: form.estimEndDate,

@@ -6,7 +6,16 @@ import DocumentsAdd from "../../components/Project/Modals/DocumentsAdd";
 import { useParams } from "react-router-dom";
 import { getProjectById } from "../../services/api/projects";
 import { getDocumentsByProject } from "../../services/api/documents";
-import { Spinner } from "@material-tailwind/react";
+import {
+  Alert,
+  Spinner
+} from "@material-tailwind/react";
+import {
+  FontAwesomeIcon
+} from "@fortawesome/react-fontawesome";
+import {
+  faCircleInfo
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function DocumentsPage() {
   console.log('DocumentsPage')
@@ -33,24 +42,28 @@ export default function DocumentsPage() {
   }, [idProject, reload, idUser]);
 
   return (
-    <main className="project-page sm:mx-20 mx-5 mt-10">
+    <main className="sm:mx-20 mx-5 mt-10">
       <ProjectHeader isOwner={isOwner} project={project} idProject={idProject}/>
-      <section className="b2-header flex justify-between mt-20">
-        <div>
-          <h2>Mes documents</h2>
-        </div>
+      <section
+          className="flex justify-between mt-20">
+        <div
+            className={"w-full flex justify-between gap-5 items-center"}>
+          <h2>Les documents</h2>
+
         {isOwner && (
-          <div className="b2-header-buttons flex">
-            <DocumentsAdd handleReload={handleReload} />
-          </div>
+              <DocumentsAdd
+                  handleReload={handleReload}/>
         )}
+        </div>
       </section>
       {busy ? (
-        <div className="flex justify-center mt-20">
-          <Spinner className="h-16 w-16 text-gray-900/50" />
+          <div
+              className="flex justify-center mt-20">
+            <Spinner
+                className="h-16 w-16 text-brick-300" />
         </div>
       ) : (
-      <ul className="mt-5">
+      <div className="mt-5 mb-20">
         {documents.map((document: intDocument, index: number) => (
           <DocumentCard
             key={index}
@@ -61,7 +74,15 @@ export default function DocumentsPage() {
             document={document}
           />
         ))}
-      </ul>
+
+        {documents.length == 0 &&
+            <Alert
+            icon={<FontAwesomeIcon icon={faCircleInfo} className={"text-marine-300 text-xl"}/>}
+            className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 mb-5"
+        >
+          Aucun document disponible.
+        </Alert>}
+      </div>
       )}
     </main>
   );
