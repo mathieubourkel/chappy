@@ -42,7 +42,7 @@ export default function MemberCard({ member, isOwner }: Props) {
                 variant="h5"
                 className="ml-3 p-2 text-marine-300 font-extrabold"
             >
-              {member.firstName} {member.lastName}
+              {member.firstname} {member.lastname}
             </Typography>
           </div>
 

@@ -15,9 +15,8 @@ import ModifiableInput from "../elements/Input/ModifiableInput";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
 import SelectDate from "../elements/Select/SelectDate";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
-  deleteStepFromBDD,
   modifyStepToBDD,
 } from "../../../services/api/steps";
 import Breadcrumb from "../../Layers/Breadcrumb/Breadcrumb.tsx";
@@ -34,14 +33,13 @@ type Props = {
 
 export default function StepHeader({step, setStep, isOwner}:Props) {
   console.log("StepHeaderComposant" + count++);
-  const navigate = useNavigate();
 
-  const { idStep, idProject } = useParams();
+  const { idStep } = useParams();
 
-  const handleDeleteStep = async () => {
-    await deleteStepFromBDD(idStep);
-    navigate("/project/" + idProject);
-  };
+  // const handleDeleteStep = async () => {
+  //   await deleteStepFromBDD(idStep);
+  //   navigate("/project/" + idProject);
+  // };
 
   const handleModifyStep = (data: intStep) => {
     modifyStepToBDD(idStep, data);
