@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance } from "axios";
-import { refreshToken } from "../services/api/auth";
-export async function handleApiCall(apiCall:any) {
+
+export async function handleApiCall(apiCall: any) {
   try {
-    const { data } = await apiCall();
-    return data.data;
+    const response = await apiCall();
+   if (!response.data || !response) return {}
+    return response.data.data;
   } catch (error) {
-    console.error(error);
     return error;
   }
 }
@@ -41,33 +41,33 @@ export function useApi() {
     },
     async (err) => {
       const originalConfig = err.config;
-      originalConfig._toto = true;
+      originalConfig.__retryCount = originalConfig.__retryCount || 0;
       // pour éviter boucle infinie du refreshToken
-
-      if (err.response && err.response.status === 401) {
-        if (!originalConfig._retry) {
-          originalConfig._retry = true;
-        }
-
-        try {
-          const rs = await refreshToken();
-          if (rs) {
-            originalConfig.headers["Authorization"] = "Bearer " + rs.data.jwt;
+      if (err.response) {
+        if (
+          err.response.status === 401 &&
+          err.response.data.message === "jwt expired" &&
+          originalConfig.__retryCount < 2
+        ) {
+          try {
+            const options = {
+              credentials: "include",
+              withCredentials: true,
+            };
+            originalConfig.__retryCount += 1;
+            const result = await api.get(
+              `${import.meta.env.VITE_URL_AUTH}/refreshToken`,
+              options
+            );
+            const { token } = result.data.data;
+            localStorage.setItem("token", token);
+            console.log("I just refreshed the token")
+            return true;
+          } catch (error) {
+            console.error('Error refreshing token')
           }
-          return axios(originalConfig);
-        } catch (error) {
-          if (error) {
-            return Promise.reject(error);
-          }
-
-          return Promise.reject(error);
         }
       }
-
-      if (err.response && err.response.status === 403) {
-        return Promise.reject(err.response.data);
-      }
-
       return Promise.reject(err);
     }
   );

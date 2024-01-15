@@ -37,7 +37,7 @@ export default function CreateProjectPage() {
     status: Status[0].value,
     estimEndDate: null,
     steps: [],
-    owner: +userId,
+    owner: userId && +userId,
     users: [],
     companies: [{ id: null }],
 

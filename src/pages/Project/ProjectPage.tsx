@@ -8,36 +8,43 @@ import ProjectDesc from "../../components/Project/Project/ProjectDesc";
 import {getProjectById} from "../../services/api/projects";
 import ProjectSteps from "../../components/Project/Project/ProjectSteps";
 import { Status } from "../../services/enums/status.enum";
+import NotFoundPage from "../../services/utils/NotFoundPage";
 
 export default function ProjectPage() {
   console.log("ProjectPage");
   const { idProject } = useParams();
   const idUser = localStorage.getItem("id");
   const [busy, setBusy] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [project, setProject] = useState<intProject>({
     name: "",
     description: "",
     status: Status[0].value,
-    owner: undefined,
+    owner: null,
     budget: undefined,
     id: undefined,
     steps: [],
     estimEndDate: new Date(),
     code:""
   });
-
+ 
   useEffect(() => {
-    async function getProject() {
+    const getProject = async () => {
+      try {
       const result = await getProjectById(idProject);
-      setBusy(false);
       setProject(result);
-      result.owner.id.toString() === idUser && setIsOwner(true);   
+      result.owner.id.toString() === idUser && setIsOwner(true); 
+      } catch (_error) {
+        setError(true)
+      } finally {
+        setBusy(false)
+      }   
     }
-    
     getProject();
   }, [idProject, idUser]);
 
+  if (error) return (<NotFoundPage />)
   return (
     <main className="project-page sm:mx-20 mx-5 mt-10">
       {busy ? (

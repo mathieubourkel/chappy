@@ -24,7 +24,7 @@ type Props = {
 
 export default function DashboardHeader({ nbProj, setReload}: Props) {
   console.log("DashBoardHeaderComposant")
-  const userName = "Mathieu"
+  const userName = localStorage.getItem('name')
   return (
     <section className="mt-20 md:flex gap-x-10">
       <div className="basis-[40lvw]">
