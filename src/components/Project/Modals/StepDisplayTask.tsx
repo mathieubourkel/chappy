@@ -5,7 +5,7 @@ import {
   CardBody,
   Typography,
   Textarea,
-  Input,
+  Input, Button,
 } from "@material-tailwind/react";
 
 import { intTask} from "../../../services/interfaces/intProject";
@@ -29,17 +29,8 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
       <Card className="custom-modal">
         <CardBody className="flex flex-col gap-4">
           <Typography variant="h3" className={"text-marine-300 text-xl font-extrabold text-center mb-5"}>
-            Afficher la tâche
+            {task.name}
           </Typography>
-          <Input
-            label="Nom de la tâche"
-            value={task.name}
-            size="lg"
-            name="name"
-            id="name"
-            disabled
-            crossOrigin={undefined}
-          />
           <Textarea
             label="Description"
             value={task.description}
@@ -47,6 +38,7 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
             disabled
             name="description"
             id="description"
+            className={"bg-select !border !border-marine-100/50"}
           />
           <Input
             label="Catégorie"
@@ -55,6 +47,7 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
             size="lg"
             name="categorie"
             id="categorie"
+            className={"bg-select !border !border-marine-100/50"}
             crossOrigin={undefined}
           />
           <Input
@@ -64,6 +57,7 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
             size="lg"
             name="status"
             id="status"
+            className={"bg-select !border !border-marine-100/50"}
             crossOrigin={undefined}
           />
           <div className="sm:flex gap-3">
@@ -74,6 +68,7 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
               disabled
               name="startDate"
               id="startDate"
+              className={"bg-select !border !border-marine-100/50"}
               crossOrigin={undefined}
             />
             <Input
@@ -83,37 +78,24 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
               size="lg"
               name="endDate"
               id="endDate"
+              className={"bg-select !border !border-marine-100/50 mt-5 sm:mt-0"}
               crossOrigin={undefined}
             />
           </div>
-          <p>Participants</p>
-          <div className="flex gap-10">
-            {task.users.map((user: any) => (
-              <Input
-                key={user.id}
-                label="Participants"
-                disabled
-                value={user.name}
-                size="lg"
-                name="participants"
-                id="participants"
-                crossOrigin={undefined}
-              />
+          <Typography variant="h4" className={"text-marine-300 text-lg font-extrabold mt-3"}>
+            Participants
+          </Typography>
+          <div className="flex gap-2 flex-wrap justify-center">
+            {task.users.map((user: any, indexT: number) => (
+                <div key={indexT}>
+                    <Button
+                        className={"bg-marine-300 disabled:opacity-100"}
+                        size={"sm"}>
+                      {user.email}
+                    </Button>
+                </div>
             ))}
           </div>
-          {/*<p>Commentaires</p>*/}
-          {/* {tasks[index].comments.map((comment: string, index: number) => (
-              <Input
-                key={index}
-                label="Participants"
-                disabled
-                value={comment}
-                size="lg"
-                name="participants"
-                id="participants"
-                crossOrigin={undefined}
-              />
-            ))} */}
         </CardBody>
       </Card>
     </Dialog>

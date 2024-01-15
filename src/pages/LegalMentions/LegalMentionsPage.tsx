@@ -1,17 +1,11 @@
-import {
-    Typography
-} from "@material-tailwind/react";
 
 export default function LegalMentionsPage() {
   return (
       <main className={"flex justify-center"}>
-        <article className={"w-2/3 mt-10"}>
-            <Typography
-                variant="h1"
-                className={"font-bold text-center"}
-            >
+        <article className={"w-2/3"}>
+            <h1 className={"text-center"}>
                 Mentions légales
-            </Typography>
+            </h1>
 
             <section className={"my-5 border"}>
                 <h2>Titre de la partie</h2>

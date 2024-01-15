@@ -68,11 +68,9 @@ export default function StepTasks({step}:Props) {
 
   return (
     <section className="mb-20">
-      <div className="b2-header flex justify-between items-center">
-        <div className="b2-header-title">
+      <div className="flex justify-between items-center">
           <h2>Les tâches</h2>
-        </div>
-        <div className="b2-header-buttons flex gap-5 items-center">
+        <nav className="flex gap-5 items-center">
           <div>
             <StepCreateTask
               handleReload={handleReload}
@@ -85,14 +83,14 @@ export default function StepTasks({step}:Props) {
               <FontAwesomeIcon icon={faFilter} />
             </IconButton>
           </div>
-        </div>
+        </nav>
       </div>
       {busy ? (
         <div className="flex justify-center mt-20">
           <Spinner className="h-16 w-16 text-brick-300" />
         </div>
       ) : (
-        <ul className="mt-5">
+        <div className="mt-10">
           {tasks.map((task: intTask) => (
             <TaskCard
               key={task.id}
@@ -102,7 +100,7 @@ export default function StepTasks({step}:Props) {
               allUsers={allUsers}
             />
           ))}
-        </ul>
+        </div>
       )}
 
       {tasks.length == 0 && <><Alert

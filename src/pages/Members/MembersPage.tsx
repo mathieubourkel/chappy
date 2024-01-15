@@ -10,7 +10,16 @@ import MemberCard from "../../components/Project/Cards/MemberCard";
 import { useParams } from "react-router-dom";
 import { getProjectById } from "../../services/api/projects";
 import { getMembersByProject } from "../../services/api/users";
-import { Spinner } from "@material-tailwind/react";
+import {
+  Alert,
+  Spinner
+} from "@material-tailwind/react";
+import {
+  FontAwesomeIcon
+} from "@fortawesome/react-fontawesome";
+import {
+  faCircleInfo
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function MembersPage() {
   console.log("MembersPage");
@@ -36,24 +45,25 @@ export default function MembersPage() {
   }, [idProject, idUser]);
 
   return (
-    <main className="project-page sm:mx-20 mx-5 mt-10">
+    <main className="sm:mx-20 mx-5 mt-10">
       <ProjectHeader isOwner={isOwner} project={project} idProject={idProject} />
-      <section className="b2-header flex justify-between mt-20">
-        <div>
+      <section className="flex justify-between mt-20">
+        <div className={"w-full flex justify-between gap-5 items-baseline"}>
           <h2>Les participants</h2>
-        </div>
+
         {isOwner && (
-          <div className="b2-header-buttons flex">
+
             <MembersAdd members={members} setMember={setMember} />
-          </div>
+
         )}
+        </div>
       </section>
       {busy ? (
         <div className="flex justify-center mt-20">
-          <Spinner className="h-16 w-16 text-gray-900/50" />
+          <Spinner className="h-16 w-16 text-brick-300" />
         </div>
       ) : (
-        <ul className="mt-5">
+        <div className="mt-5">
           {members.map((member: intUser, index: number) => (
             <MemberCard
               key={index}
@@ -64,7 +74,16 @@ export default function MembersPage() {
               index={index}
             />
           ))}
-        </ul>
+
+          {members.length == 0 &&
+              <Alert
+                  icon={<FontAwesomeIcon icon={faCircleInfo} className={"text-marine-300 text-xl"}/>}
+                  className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 mb-5"
+              >
+                Aucun participant actif sur le projet.
+              </Alert>}
+
+        </div>
       )}
     </main>
   );

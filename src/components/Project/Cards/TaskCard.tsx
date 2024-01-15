@@ -1,8 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { IconButton, Typography } from "@material-tailwind/react";
+import {
+    Button, ButtonGroup,
+    Card, CardBody,
+    Typography
+} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+    faListCheck,
+    faXmark
+} from "@fortawesome/free-solid-svg-icons";
 import SelectStatus from "../elements/Select/SelectStatus";
 import StepModifyTask from "../Modals/StepModifyTask";
 import StepDisplayTask from "../Modals/StepDisplayTask";
@@ -72,85 +79,126 @@ export default function TaskCard({ id, handleReload, categories, allUsers }: Pro
   };
 
   const renderTaskOwner = () => (
-    <>
-      <Typography variant="h5" color="blue-gray" className="flex">
-        <p className="border p-2 rounded-xl bg-light-200">{task.category.name}</p>
-      </Typography>
-      <Typography variant="h5" className="p-2 text-brick-300">
-        {task.name}
-      </Typography>
-      <Typography variant="h5" className="p-2 text-brick-300">
-        {task.description}
-      </Typography>
-      <div className="md:flex justify-end gap-10">
-        <form>
-          <SelectStatus handleStatus={handleStatus} value={enumStatus[task.status]} />
-        </form>
-        <div className="flex gap-2">
-          <StepModifyTask task={task} categories={categories} 
-          setTask={setTask} allUsers={allUsers} />
-          <DeleteButton handleDeleteBDD={handleDeleteTask} />
-        </div>
-      </div>
-    </>
-  );
+      <CardBody className={"custom-card-body px-6 pt-4"}>
+          <div className={"flex flex-wrap md:justify-between"}>
+              <div
+                  className={"flex gap-x-2 items-center"}>
+                  <FontAwesomeIcon icon={faListCheck} size={"sm"} className={"text-marine-100"} />
+                  <Typography
+                      className="custom-subt custom-sb-task">
+                      {task.category.name} / {task.name}
+                  </Typography>
+              </div>
 
-  const renderTaskUser = () => (
-    <>
-      <Typography
-        variant="h5"
-        color="blue-gray"
-        className="flex"
-        onClick={handleOpenM}
-      >
-        <p className="border p-2 rounded-xl bg-light-200">{task.category.name}</p>
-      </Typography>
-      <Typography
-        variant="h5"
-        className="p-2 text-brick-300"
-        onClick={handleOpenM}
-      >
-        {task.name}
-      </Typography>
-      <Typography
-        variant="h5"
-        className="p-2 text-brick-300"
-        onClick={handleOpenM}
-      >
-        {task.description}
-      </Typography>
-      <div className="md:flex justify-end gap-10">
-        <Typography
-          variant="h5"
-          className="p-2 text-brick-300"
-          onClick={handleOpenM}
-        >
-          {enumStatus[task.status].label}
-        </Typography>
-        <StepDisplayTask task={task} handleOpenM={handleOpenM} openM={openM} />
-      </div>
-    </>
-  );
-
-  return (
-    <>
-      <li
-        className={`md:flex justify-between gap-5 rounded-xl p-2 mb-5 mt-10 bg-white items-center border-solid border-4 border-b-brick-200`}
-      >
-        {isOwner ? renderTaskOwner() : renderTaskUser()}
-      </li>
-      <div className="flex sm:gap-10" onClick={handleOpenM}>
-        {task.users.map((user: any, indexT: number) => (
-          <div className="flex gap-2" key={indexT}>
-            <p className="bg-white p-2 rounded-lg">{user.email}</p>
-            {isOwner && (
-              <IconButton onClick={() => handleDelete(indexT)}>
-                <FontAwesomeIcon icon={faXmark} size="xl" />
-              </IconButton>
-            )}
+              <div
+                  className="flex gap-x-2 w-full lg:w-fit justify-center items-center">
+                  <form className={"w-full lg:w-fit"}>
+                      <SelectStatus
+                          handleStatus={handleStatus}
+                          value={enumStatus[task.status]}/>
+                  </form>
+                  <div className="flex gap-x-2">
+                      <StepModifyTask task={task}
+                                      categories={categories}
+                                      setTask={setTask}
+                                      allUsers={allUsers}/>
+                      <DeleteButton
+                          handleDeleteBDD={handleDeleteTask}/>
+                  </div>
+              </div>
           </div>
-        ))}
-      </div>
-    </>
+          <Typography variant="paragraph" className={"bg-marine-100/10 text-marine-300 rounded-lg p-2 mt-2 taskDescription"}>
+              {task.description}
+          </Typography>
+
+      </CardBody>
+  );
+
+    const renderTaskUser = () => (
+
+            <CardBody className={"custom-card-body px-6 pt-4"}>
+                <div
+                    className={"flex flex-wrap md:justify-between"}>
+                    <div
+                        className={"flex gap-x-2 items-center"}>
+                        <FontAwesomeIcon
+                            icon={faListCheck}
+                            size={"sm"}
+                            className={"text-marine-100"}/>
+                        <Typography
+                            className="custom-subt custom-sb-task"
+                            onClick={handleOpenM}>
+                            {task.category.name} / {task.name}
+                        </Typography>
+                    </div>
+
+                    <div
+                        className="flex gap-x-2 w-full lg:w-fit justify-center items-center">
+                        <form
+                            className={"w-full lg:w-fit"}
+                            >
+                            <SelectStatus
+                                handleStatus={handleStatus}
+                                value={enumStatus[task.status]}/>
+                        </form>
+                        <div
+                            className="flex gap-x-2">
+                            <StepDisplayTask task={task}
+                                             handleOpenM={handleOpenM}
+                                             openM={openM}/>
+                        </div>
+                    </div>
+                </div>
+
+                <Typography variant="paragraph"
+                            className={"bg-marine-100/10 text-marine-300 rounded-lg p-2 mt-2 taskDescription"}
+                            onClick={handleOpenM}>
+                    {task.description}
+                </Typography>
+
+            </CardBody>
+
+    );
+
+    return (
+
+        <Card
+            className={`w-full custom-card-task mb-5`}
+        >
+            <div>
+            {isOwner ? renderTaskOwner() :
+                renderTaskUser()}
+
+            <div className="pr-3 py-3 flex flex-wrap gap-x-2 justify-end"
+                 onClick={handleOpenM}>
+                {task.users.map((
+                                    user: any,
+                                    indexT: number
+                                ) => (
+                    <ButtonGroup
+                        size={"sm"}
+                        className={"divide-light-100/50 mb-2"}
+                        key={indexT}>
+                        <Button
+                        className={!isOwner ? "rounded-r-lg" : undefined }>
+                            {user.email}
+                        </Button>
+
+                        {isOwner && (
+                            <Button
+                                onClick={() => handleDelete(
+                                    indexT)}>
+                                <FontAwesomeIcon
+                                    icon={faXmark}
+                                    size="sm"/>
+                            </Button>
+                        )}
+                    </ButtonGroup>
+                ))}
+            </div>
+        </div>
+        </Card>
+
+
   );
 }

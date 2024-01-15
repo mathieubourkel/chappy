@@ -138,7 +138,7 @@ export default function CreateProjectPage() {
               <div className={"mb-5 w-full"}>
                 <Input
                   label="Nom du projet"
-                  className={"!bg-light-100"}
+                  className={"!bg-light-100 border-select placeholder:!text-text-100"}
                   name="name"
                   id="name"
                   crossOrigin={undefined}
@@ -148,7 +148,7 @@ export default function CreateProjectPage() {
             </div>
             <Textarea
               label="Description du projet"
-              className={"!bg-light-100"}
+              className={"!bg-light-100 border-select placeholder:!text-text-100"}
               name="description"
               id="description"
               onChange={(e: any) => handleChange(e)}
@@ -164,27 +164,37 @@ export default function CreateProjectPage() {
               <Input
                 label="Budget du projet"
                 type="number"
-                className={"!bg-light-100"}
+                className={"!bg-light-100 border-select"}
                 name="budget"
                 id="budget"
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />
             </div>
-            <div className="sm:flex gap-5 mb-5">
+            <div className="flex gap-5 mb-5 flex-wrap">
               <div className="w-full">
                 <ReactSelect
                   options={Status}
-                  className="rounded-xl"
+                  className="rounded-xl border-select"
                   placeholder="Status"
                   defaultValue={Status[0].label}
                   components={animatedComponents}
                   onChange={(value: any) => handleStatus(value)}
+                  theme={(theme) => ({
+                    ...theme,
+                    borderRadius: 5,
+                    colors: {
+                      ...theme.colors,
+                      primary25: 'rgba(126,55,47, 0.2)',
+                      primary:'rgba(126,55,47, 0.7)',
+                      primary50: 'rgba(126,55,47, 0.3)',
+                    },
+                  })}
                 />
               </div>
               <div className="w-full">
                 <Datepicker
-                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
+                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-text-100 text-text-100 border-select placeholder:!text-sm"
                   onChange={handleDate}
                   value={{
                     startDate: form.estimEndDate,
@@ -200,11 +210,21 @@ export default function CreateProjectPage() {
             <div className="my-5">
               <ReactSelect
                 options={users}
-                className="rounded-xl"
+                className="rounded-xl border-select"
                 isMulti
                 placeholder="Inviter des membres sur votre projet"
                 components={animatedComponents}
                 onChange={(value: any) => handleUsers(value)}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 5,
+                  colors: {
+                    ...theme.colors,
+                    primary25: 'rgba(126,55,47, 0.2)',
+                    primary:'rgba(126,55,47, 0.7)',
+                    primary50: 'rgba(126,55,47, 0.3)',
+                  },
+                })}
               />
             </div>
             <div>
@@ -213,12 +233,23 @@ export default function CreateProjectPage() {
                 isMulti
                 components={animatedComponents}
                 placeholder="Inviter des entreprises sur votre projet"
+                className={"border-select"}
                 onChange={(value: any) => handleCompanies(value)}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 5,
+                  colors: {
+                    ...theme.colors,
+                    primary25: 'rgba(126,55,47, 0.2)',
+                    primary:'rgba(126,55,47, 0.7)',
+                    primary50: 'rgba(126,55,47, 0.3)',
+                  },
+                })}
               />
             </div>
 
             <div className={"flex justify-center my-10"}>
-              <Button className={"bg-brick-400"} type="submit">
+              <Button className={"bg-brick-400"} type="submit" size={"sm"}>
                 <FontAwesomeIcon
                   icon={faPaperPlane}
                   className={"text-sm mr-3"}

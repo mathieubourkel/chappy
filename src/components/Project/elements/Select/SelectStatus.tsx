@@ -16,7 +16,7 @@ export default function SelectStatus({
   classState,
   value,
 }: Props) {
-  console.log("SelectStatusCOmponent");
+  console.log("SelectStatusComponent");
   const animatedComponents = makeAnimated();
   const [selected, setSelected] = useState<any>(value);
   function handleStatusEnfant(value: intSelect) {
@@ -37,15 +37,17 @@ export default function SelectStatus({
         defaultValue={enumStatus[0]}
         components={animatedComponents}
         onChange={(value: any) => handleStatusEnfant(value)}
+        className={"border-select"}
         theme={(theme) => ({
           ...theme,
           borderRadius: 5,
           colors: {
             ...theme.colors,
-            primary25: 'rgba(126,55,47, 0.2)',
             primary:'rgba(126,55,47, 0.7)',
+            primary25: 'rgba(126,55,47, 0.2)',
             primary50: 'rgba(126,55,47, 0.3)',
           },
+          fontSize: '0.875rem',
         })}
       />
     </div>

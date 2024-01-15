@@ -40,7 +40,7 @@ export default function DashboardPage() {
   console.log(collabs)
   console.log(projects)
   return (
-    <main className="dashboard-page sm:mx-20 mx-5">
+    <main className="sm:mx-20 mx-5">
       {busy ? (
         <div className="flex justify-center mt-20">
           <Spinner className="h-16 w-16 text-brick-300" />

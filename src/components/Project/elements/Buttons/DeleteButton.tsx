@@ -14,8 +14,11 @@ export default function DeleteButton({ handleDeleteBDD }: Props) {
   }
 
   return (
-    <IconButton onClick={() => handleDelete()}>
-      <FontAwesomeIcon icon={faXmark} className={"text-sm"} />
+    <IconButton
+        size={"sm"}
+        onClick={() => handleDelete()}>
+      <FontAwesomeIcon icon={faXmark} className={"text-sm"}
+      size={"sm"}/>
     </IconButton>
   );
 }

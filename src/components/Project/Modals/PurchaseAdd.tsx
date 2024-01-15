@@ -42,7 +42,7 @@ export default function PurchaseAdd({ handleReload }: Props) {
     <div>
       <CreateButton handleClick={handleOpen} value="Ajouter" />
       <Dialog
-        size="lg"
+        size="sm"
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"
@@ -50,12 +50,13 @@ export default function PurchaseAdd({ handleReload }: Props) {
         <Card className="mx-auto w-full">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-            <Typography variant="h2" color="blue-gray">
+              <Typography variant="h3" className={"text-marine-300 text-xl font-extrabold text-center mb-5"}>
                 Ajouter un achat
               </Typography>
               <Input
                 label="Nom de l'achat"
                 size="lg"
+                className={"border-select"}
                 name="name"
                 id="name"
                 crossOrigin={undefined}
@@ -65,6 +66,7 @@ export default function PurchaseAdd({ handleReload }: Props) {
                 label="Prix de l'achat"
                 type="number"
                 size="lg"
+                className={"border-select"}
                 name="price"
                 id="price"
                 crossOrigin={undefined}
@@ -72,7 +74,7 @@ export default function PurchaseAdd({ handleReload }: Props) {
               />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
-              <Button variant="gradient" onClick={handleOpen} type="submit">
+              <Button onClick={handleOpen} size={"sm"} type="submit" className={"bg-brick-300"}>
                 Ajouter
               </Button>
             </CardFooter>

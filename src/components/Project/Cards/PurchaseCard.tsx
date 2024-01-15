@@ -1,4 +1,6 @@
-import { Typography } from "@material-tailwind/react";
+import {
+  Card, CardBody
+} from "@material-tailwind/react";
 import DeleteButton from "../elements/Buttons/DeleteButton";
 import PurchaseModify from "../Modals/PurchaseModify";
 import {
@@ -28,35 +30,40 @@ export default function PurchaseCard({
     deletePurchaseFromBDD(purchase.id);
   };
   return (
-    <li
-      className="md:flex justify-between mb-10 items-center gap-2 border-4 
-        border-b-brick-200 w-full p-2 rounded-xl bg-white border-solid"
+    <Card
+      className="custom-card-purchase mb-5"
     >
-      <Typography
-        variant="h5"
-        color="blue-gray"
-        className="p-2 text-brick-300 font-bold"
-      >
-        {purchase.name}
-      </Typography>
+      <CardBody>
+        <div
+            className="flex md:justify-between justify-center items-center flex-wrap">
+          <span
+              className="ml-3 text-brick-300 font-extrabold"
+          >
+            {purchase.name}
+          </span>
 
-      <div className="flex gap-10 justify-between">
-        <Typography variant="h5" color="blue-gray" className="flex">
-          <p className="border p-2 rounded-xl bg-light-200">
-            Prix : {purchase.price}€
-          </p>
-        </Typography>
-        {isOwner && (
-          <div className="flex">
-            <PurchaseModify
-              purchases={purchases}
-              setPurchase={setPurchase}
-              index={index}
-            />
-            <DeleteButton handleDeleteBDD={handleDelete} />
+          <div className={"flex gap-2"}>
+            <div
+                className="border px-5 rounded-xl bg-light-200 m-2 text-sm text-marine-300 font-bold uppercase">
+              Prix : {purchase.price}€
+            </div>
+            {isOwner && (
+                <div
+                    className="flex gap-2 items-center">
+                  <PurchaseModify
+                      purchases={purchases}
+                      setPurchase={setPurchase}
+                      index={index}
+                  />
+                  <DeleteButton
+                      handleDeleteBDD={handleDelete}/>
+                </div>
+            )}
           </div>
-        )}
-      </div>
-    </li>
+
+
+        </div>
+      </CardBody>
+    </Card>
   );
 }

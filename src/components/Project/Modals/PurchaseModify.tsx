@@ -45,13 +45,15 @@ export default function PurchaseModify({ purchases, setPurchase, index}: Props) 
   return (
     <div>
       <IconButton
-        className="mr-5 bg-brick-300 flex items-center"
+        className="bg-brick-300 flex items-center"
+        size={"sm"}
         onClick={handleOpen}
       >
-        <FontAwesomeIcon icon={faPen} />
+        <FontAwesomeIcon icon={faPen}
+        size={"sm"}/>
       </IconButton>
       <Dialog
-        size="lg"
+        size="sm"
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"
@@ -59,12 +61,13 @@ export default function PurchaseModify({ purchases, setPurchase, index}: Props) 
         <Card className="mx-auto w-full">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-            <Typography variant="h2" color="blue-gray">
-                Modifier un achat
+              <Typography variant="h3" className={"text-marine-300 text-xl font-extrabold text-center mb-5"}>
+                Modifier un document
               </Typography>
               <Input
                 label="Nom de l'achat"
                 size="lg"
+                className={"border-select"}
                 name="name"
                 id="name"
                 value={form.name}
@@ -74,6 +77,7 @@ export default function PurchaseModify({ purchases, setPurchase, index}: Props) 
               <Input
                 label="Prix de l'achat"
                 type="number"
+                className={"border-select"}
                 size="lg"
                 value={form.price}
                 name="price"
@@ -83,7 +87,7 @@ export default function PurchaseModify({ purchases, setPurchase, index}: Props) 
               />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
-              <Button variant="gradient" onClick={handleOpen} type="submit">
+              <Button onClick={handleOpen} size={"sm"} type="submit" className={"bg-brick-300"}>
                 Ajouter
               </Button>
             </CardFooter>

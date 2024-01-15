@@ -47,11 +47,13 @@ export default function DocumentModify({ documents, setDocument, index}: Props) 
       <IconButton
         className="mr-5 bg-brick-300 flex items-center"
         onClick={handleOpen}
+        size={"sm"}
       >
-        <FontAwesomeIcon icon={faPen} />
+        <FontAwesomeIcon icon={faPen}
+        size={"sm"}/>
       </IconButton>
       <Dialog
-        size="lg"
+        size="sm"
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"
@@ -59,12 +61,13 @@ export default function DocumentModify({ documents, setDocument, index}: Props) 
         <Card className="mx-auto w-full">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-            <Typography variant="h2" color="blue-gray">
-                Modifier un document
+              <Typography variant="h3" className={"text-marine-300 text-xl font-extrabold text-center mb-5"}>
+                Modifier le document
               </Typography>
               <Input
                 label="Chemin d'accès du document"
                 size="lg"
+                className={"border-select"}
                 name="path"
                 id="path"
                 value={form.path}
@@ -74,6 +77,7 @@ export default function DocumentModify({ documents, setDocument, index}: Props) 
               <Input
                 label="Type du document"
                 size="lg"
+                className={"border-select"}
                 value={form.type}
                 name="type"
                 id="type"
@@ -82,8 +86,8 @@ export default function DocumentModify({ documents, setDocument, index}: Props) 
               />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
-              <Button variant="gradient" onClick={handleOpen} type="submit">
-                Modifier
+              <Button onClick={handleOpen} size={"sm"} type="submit" className={"bg-brick-300"}>
+               Modifier
               </Button>
             </CardFooter>
           </form>

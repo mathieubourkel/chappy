@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { Spinner, Typography } from "@material-tailwind/react";
+import {
+  Alert,
+  Card, CardBody,
+  Spinner,
+} from "@material-tailwind/react";
 import {
   intPurchases,
   intPurchase,
@@ -11,6 +15,12 @@ import ProjectHeader from "../../components/Project/Project/ProjectHeader";
 import { useParams } from "react-router-dom";
 import { getPurchasesByProject } from "../../services/api/purchases";
 import { getProjectById } from "../../services/api/projects";
+import {
+  FontAwesomeIcon
+} from "@fortawesome/react-fontawesome";
+import {
+  faCircleInfo
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function PurchasesPage() {
   console.log("PurchasePage");
@@ -52,24 +62,26 @@ export default function PurchasesPage() {
   };
 
   return (
-    <main className="project-page sm:mx-20 mx-5 mb-20">
+    <main className="sm:mx-20 mx-5 mt-10">
       <ProjectHeader isOwner={isOwner} project={project} idProject={idProject} />
-      <section className="b2-header flex justify-between mt-20">
+      <section
+          className={"w-full flex justify-between gap-5 items-center"}>
         <div>
           <h2>Mes achats</h2>
         </div>
         {isOwner && (
-          <div className="b2-header-buttons flex">
-             <PurchaseAdd handleReload={() => setReload((bool) => !bool)} />
-          </div>
+              <PurchaseAdd
+                  handleReload={() => setReload(
+                      (bool) => !bool)}/>
         )}
       </section>
       {busy ? (
-        <div className="flex justify-center mt-20">
-          <Spinner className="h-16 w-16 text-gray-900/50" />
+          <div
+              className="flex justify-center mt-20">
+          <Spinner className="h-16 w-16 text-brick-300" />
         </div>
       ) : (
-        <ul className="mt-5">
+        <div className="mt-5 mb-20">
           {purchases.map((purchase: intPurchase, index: number) => (
             <PurchaseCard
               key={index}
@@ -80,20 +92,30 @@ export default function PurchasesPage() {
               purchase={purchase}
             />
           ))}
-          <li className="flex gap-5 items-center mb-10 justify-end gap-2 mr-20">
-            <div className="flex border-4 border-b-brick-200 mr-5 p-2 rounded-xl bg-white border-solid">
-              <Typography variant="h5" className="flex">
-                <p className="p-2 rounded-xl font-bold">TOTAL</p>
-              </Typography>
-              <Typography
-                variant="h5"
-                className="border p-2 rounded-xl text-brick-300 bg-brick-200"
+
+          {purchases.length == 0 &&
+              <Alert
+                  icon={<FontAwesomeIcon icon={faCircleInfo} className={"text-marine-300 text-xl"}/>}
+                  className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 mb-5"
               >
-                {calculateTotal()} €
-              </Typography>
-            </div>
-          </li>
-        </ul>
+                Aucun achat recensé.
+              </Alert>}
+
+          <Card
+              className="custom-card-purchase-all mb-8"
+          >
+            <CardBody className="flex lg:justify-between justify-center flex-wrap">
+                <span className="text-marine-300 uppercase font-extrabold mr-5">TOTAL</span>
+              <div
+                className="border rounded-xl text-light-100 bg-brick-300"
+              >
+                <span className={"mx-7"}>
+                  {calculateTotal()} €
+                </span>
+              </div>
+            </CardBody>
+          </Card>
+        </div>
       )}
     </main>
   );

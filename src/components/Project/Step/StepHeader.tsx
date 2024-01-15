@@ -1,17 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Alert,
-  Button,
   Card,
   CardBody, Chip,
-  Tooltip,
   Typography
 } from "@material-tailwind/react";
 import { intStep } from "../../../services/interfaces/intProject";
 import {
   faBookOpen,
   faListCheck,
-  faXmark
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModifiableInput from "../elements/Input/ModifiableInput";
@@ -24,6 +21,8 @@ import {
   modifyStepToBDD,
 } from "../../../services/api/steps";
 import Breadcrumb from "../../Layers/Breadcrumb/Breadcrumb.tsx";
+import ModifiableDescription
+  from "../elements/Input/ModifiableDescription.tsx";
 
 let count = 1;
 
@@ -62,40 +61,27 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
           <Breadcrumb step={step} />
         </div>
 
-        <div>
-          <Tooltip
-              content={"Supprimer le jalon"}
-              className="lg:hidden bg-marine-300 px-4"
-              animate={{
-                mount: { scale: 1, y: 0 },
-                unmount: { scale: 0, y: 25 },
-              }}
-          >
-            <Button onClick={() => handleDeleteStep()}
-                    size={"sm"}
-                    className="bg-marine-300">
-              <FontAwesomeIcon icon={faXmark} size="xl" className={"mr-2"}/>
-              <span className="hidden lg:inline whitespace-nowrap">Supprimer le jalon</span>
-            </Button>
-          </Tooltip>
-        </div>
-
-
       </div>
 
       <article className="mt-10">
-        <div>
-          <Alert className={"mb-5 bg-brick-300 p-5"}>
+          <div>
+            <Alert
+              className={"mb-5 bg-brick-300 p-5"}>
             <FontAwesomeIcon
                 icon={faListCheck}
                 className={"mr-5 text-light-100"}
             />
 
             <span>
-              {step.tasks.length > 0 ? `Vous avez actuellement ${step.tasks.length} ${step.tasks.length == 1 ? "tâche ouverte" : " tâches ouvertes"} dans ce jalon.`  : "Vous n'avez aucune tâche ouverte sur ce jalon"}
+              {step.tasks.length > 0 ?
+                  `Vous avez actuellement ${step.tasks.length} ${step.tasks.length ==
+                  1 ? "tâche ouverte" :
+                      " tâches ouvertes"} dans ce jalon.` :
+                  "Vous n'avez aucune tâche ouverte sur ce jalon"}
 
             </span>
           </Alert>
+
           <Card className="custom-block">
             <CardBody
                 className={"custom-project-body custom-scroll"}>
@@ -111,15 +97,21 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
                     className={"w-full bg-marine-100/10 text-marine-300"}
                 />
               </div>
-              <Typography type={"p"}
-                          className={"pt-3"}>
-                {step.description}
-              </Typography>
+              <div className={"pt-3"}>
+                <ModifiableDescription
+                    label={"description"}
+                    placeHolder={"Saisissez la description de votre jalon"}
+                    state={step}
+                    value={step.description}
+                    setState={setStep}
+                    isOwner={isOwner}
+                    handleBdd={handleModifyStep}/>
+              </div>
             </CardBody>
           </Card>
         </div>
         <div
-            className="b1-body-budget-status md:flex gap-5 mt-5">
+            className="md:flex gap-5 mt-5">
           <div className="basis-1/2">
             <ModifiableInput
                 value={"Budget : " +
@@ -135,12 +127,13 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
           </div>
           <div className="basis-1/2 ">
             <SelectDate
-              state={step}
-              setState={setStep}
-              handleBdd={handleModifyStep}
+                state={step}
+                setState={setStep}
+                handleBdd={handleModifyStep}
             />
           </div>
         </div>
+
       </article>
     </section>
   );

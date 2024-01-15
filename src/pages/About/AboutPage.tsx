@@ -2,7 +2,7 @@
 export default function AboutPage() {
   return (
       <main className={"flex justify-center"}>
-          <article className={"w-2/3 mt-10"}>
+          <article className={"w-2/3"}>
               <h1 className={"text-center"}>A propos de Chappy</h1>
 
               <section className={"my-5 border"}>
