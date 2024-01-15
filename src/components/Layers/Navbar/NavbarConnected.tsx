@@ -52,7 +52,7 @@ export function NavbarConnected({ toggleSidebar }: Props) {
 
         <div className="flex items-center">
           <div className="hidden lg:flex">
-            <IconButton variant="text" className={"hover:bg-marine-100/50"}>
+            <IconButton variant="text" className={"hover:bg-marine-100/20"}>
               <FontAwesomeIcon
                 icon={faMoon}
                 className="h-4 w-4 text-marine-300"
@@ -62,7 +62,7 @@ export function NavbarConnected({ toggleSidebar }: Props) {
               <MenuHandler>
                 <IconButton
                   variant="text"
-                  className={"hover:bg-marine-100/50 mx-3"}
+                  className={"hover:bg-marine-100/20 mx-3"}
                 >
                   <FontAwesomeIcon
                     icon={faBell}

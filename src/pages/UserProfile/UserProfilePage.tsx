@@ -101,10 +101,10 @@ export default function UserProfilePage() {
               Informations de connexion
             </Typography>
             <div className="sm:flex sm:gap-x-5">
-              <div className={"mb-5 w-full"}>{renderInput("Nom", "lastname")} </div>
-              <div className={"mb-5 w-full"}>{renderInput("Prénom", "firstname")}</div>
+              <div className={"mb-5 w-full !bg-light-100"}>{renderInput("Nom", "lastname")} </div>
+              <div className={"mb-5 w-full !bg-light-100"}>{renderInput("Prénom", "firstname")}</div>
             </div>
-            <div>{renderInput("Email", "email")}</div>
+            <div className={"!bg-light-100"}>{renderInput("Email", "email")}</div>
             <div className="flex gap-5 my-5">
               <Input
                 label={
@@ -147,13 +147,13 @@ export default function UserProfilePage() {
               Informations Personnelles
             </Typography>
 
-            {renderInput("Adresse", "address")}
+            <div className={"!bg-light-100"}>{renderInput("Adresse", "address")}</div>
 
             <div className="sm:flex sm:gap-x-5 mt-5">
-              <div className={"mb-5 w-full"}>{renderInput("Ville", "city")}</div>
-              <div className={"mb-5 w-full"}>{renderInput("Code Postal", "zip")} </div>
+              <div className={"mb-5 w-full !bg-light-100"}>{renderInput("Ville", "city")}</div>
+              <div className={"mb-5 w-full !bg-light-100"}>{renderInput("Code Postal", "zip")} </div>
             </div>
-            <div>{renderInput("Téléphone", "phone")}</div>
+            <div className={"!bg-light-100"}>{renderInput("Téléphone", "phone")}</div>
           </article>
 
           <article>
@@ -165,8 +165,8 @@ export default function UserProfilePage() {
                 Accès professionnel
               </Typography>
               <div className="md:flex gap-3">
-                <Button>Rejoindre une entreprise</Button>
-                <Button>
+                <Button size={"sm"}>Rejoindre une entreprise</Button>
+                <Button size={"sm"}>
                   {user.company ? "Modifier" : "Ajouter"} mon entreprise
                 </Button>
               </div>
@@ -230,7 +230,9 @@ export default function UserProfilePage() {
 
           <div className={"flex justify-center my-10"}>
             <a href="#buttons-with-link">
-              <Button className={"bg-brick-400"} type="submit">
+              <Button className={"bg-brick-400"}
+                      size={"sm"}
+                      type="submit">
                 <FontAwesomeIcon
                   icon={faFloppyDisk}
                   className={"text-sm mr-3"}

@@ -1,7 +1,13 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { intForms } from "../../services/interfaces/intForms";
-import { Button, Radio, Input, Typography } from "@material-tailwind/react";
+import {
+  Button,
+  Radio,
+  Input,
+  Typography,
+  Card
+} from "@material-tailwind/react";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -116,9 +122,9 @@ export default function FormGlobal() {
   };
   return (
     <>
-      <form className="w-full flex gap-5 flex-col items-center" onSubmit={handleSubmit}>
-        <div className="sm:flex sm:gap-x-5">
-          <div className={"mb-5 w-full"}>
+      <form className="w-full flex gap-5 flex-col items-center mt-10" onSubmit={handleSubmit}>
+        <div className="flex gap-5 flex-wrap md:flex-nowrap">
+          <div className={"w-full"}>
             <Input
               label="Nom"
               type="text"
@@ -137,7 +143,7 @@ export default function FormGlobal() {
             )}
           </div>
 
-          <div className={"mb-5 w-full"}>
+          <div className={"w-full"}>
             <Input
               label="Prénom"
               type="text"
@@ -156,7 +162,7 @@ export default function FormGlobal() {
             )}
           </div>
         </div>
-        <div className={"mb-5 w-full"}>
+        <div className={"w-full"}>
           <Input
             label="E-mail"
             type="email"
@@ -172,7 +178,7 @@ export default function FormGlobal() {
             <small className={"text-brick-400 font-bold"}>{errors.email}</small>
           )}
         </div>
-        <div className={"mb-5 w-full"}>
+        <div className={"w-full"}>
           <Input
             label="Adresse"
             type="text"
@@ -191,8 +197,8 @@ export default function FormGlobal() {
           )}
         </div>
 
-        <div className="sm:flex sm:gap-x-5">
-          <div className={"mb-5 w-full"}>
+        <div className="flex gap-5 flex-wrap md:flex-nowrap">
+          <div className={"w-full"}>
             <Input
               label="Code postal"
               type="text"
@@ -210,7 +216,7 @@ export default function FormGlobal() {
               </small>
             )}
           </div>
-          <div className={"mb-5 w-full"}>
+          <div className={"w-full"}>
             <Input
               label="Ville"
               type="text"
@@ -229,7 +235,7 @@ export default function FormGlobal() {
             )}
           </div>
         </div>
-        <div className={"mb-5 w-full"}>
+        <div className={"w-full"}>
           <Input
             label="Téléphone"
             type="tel"
@@ -245,8 +251,8 @@ export default function FormGlobal() {
             <small className={"text-brick-400 font-bold"}>{errors.phone}</small>
           )}
         </div>
-        <div className="sm:flex sm:gap-x-5">
-          <div className={"mb-5 w-full"}>
+        <div className="flex gap-5 flex-wrap md:flex-nowrap">
+          <div className={"w-full"}>
             <Input
               label="Mot de passe"
               type="password"
@@ -264,7 +270,7 @@ export default function FormGlobal() {
               </small>
             )}
           </div>
-          <div className={"mb-5 w-full"}>
+          <div className={"w-full"}>
             <Input
               label="Confirmer du mot de passe"
               type="password"
@@ -324,7 +330,7 @@ export default function FormGlobal() {
           </div>
         </div>
         {selectedOption === "chekCompany" && (
-          <div>
+            <Card className={"w-full p-10 flex flex-col gap-5 taskDescription"}>
             <Input
               label="Nom de l'entreprise"
               type="text"
@@ -336,6 +342,7 @@ export default function FormGlobal() {
               crossOrigin={undefined}
             />
             {errors.companyName && <small>{errors.companyName}</small>}
+
             <Input
               label="SIRET"
               type="text"
@@ -359,11 +366,11 @@ export default function FormGlobal() {
             {errors.companySActivity && (
               <small>{errors.companySActivity}</small>
             )}
-          </div>
+            </Card>
         )}
 
         {selectedOption === "checkEmployee" && (
-          <>
+          <Card className={"w-full p-10 taskDescription"}>
             <Input
               label="Nom de l'entreprise"
               type="text"
@@ -377,7 +384,7 @@ export default function FormGlobal() {
             {errors.companyNameEmployee && (
               <small>{errors.companyNameEmployee}</small>
             )}
-          </>
+          </Card>
         )}
 
         {/* {selectedOption === "neitherOfTheTwo" && null} */}

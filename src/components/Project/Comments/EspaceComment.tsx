@@ -35,7 +35,7 @@ export default function EspaceComment({ table, idParent }: Props) {
         <h2>Espace commentaire</h2>
         {comments.length > 0 && 
           <>
-          <div className="flex flex-col">
+          <div className="flex flex-col mt-10">
             {display ? (
               comments.map((comment: intComment) => (
                 <CommentCard comment={comment} key={comment.id} />

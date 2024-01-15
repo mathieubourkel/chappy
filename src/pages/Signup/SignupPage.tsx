@@ -7,7 +7,9 @@ export default function Signup() {
   return (
     <main className={"m-5 flex flex-col justify-center items-center"}>
       <section className={"flex flex-col mt-5"}>
-        <Typography variant="h1" className={"font-bold text-center"}>
+        <Typography
+                    variant="h1"
+                    className={"font-bold text-4xl text-center"}>
           Créer son compte
         </Typography>
 

@@ -44,7 +44,7 @@ export default function DocumentsAdd({ handleReload }: Props) {
     <div>
       <CreateButton handleClick={handleOpen} value="Ajouter" />
       <Dialog
-        size="lg"
+        size="sm"
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"
@@ -52,11 +52,12 @@ export default function DocumentsAdd({ handleReload }: Props) {
         <Card className="mx-auto w-full">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-            <Typography variant="h2" color="blue-gray">
+              <Typography variant="h3" className={"text-marine-300 text-xl font-extrabold text-center mb-5"}>
                 Ajouter un document
               </Typography>
               <Input
                 label="Chemin d'accès du document"
+                className={"border-select"}
                 size="lg"
                 name="path"
                 id="path"
@@ -68,12 +69,13 @@ export default function DocumentsAdd({ handleReload }: Props) {
                 size="lg"
                 name="type"
                 id="type"
+                className={"border-select"}
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
-              <Button variant="gradient" onClick={handleOpen} type="submit">
+              <Button onClick={handleOpen} size={"sm"} type="submit" className={"bg-brick-300"}>
                 Ajouter
               </Button>
             </CardFooter>

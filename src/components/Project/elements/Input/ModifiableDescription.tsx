@@ -1,24 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { IconButton, Input, Typography } from "@material-tailwind/react";
+import {
+  IconButton,
+  Textarea,
+  Typography
+} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faPen } from "@fortawesome/free-solid-svg-icons";
 import { FormEvent } from "../../../../services/interfaces/intProject";
 
 type Props = {
-  type: string;
+
   label: string;
   placeHolder: string;
   state: any;
-  value: string | number | undefined;
+  value: string;
   setState: (element: any) => void;
   isOwner: boolean;
   handleBdd?: any;
 };
-let count = 1;
-export default function ModifiableInput(props: Props) {
-  console.log("ModifiableInputComposant" + count++)
-  const { type, label, placeHolder, handleBdd, setState, state, value, isOwner } = props;
+export default function ModifiableDescription(props: Props) {
+  const { label, placeHolder, handleBdd, setState, state, value, isOwner } = props;
   const [display, setDisplay] = useState(true);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -34,10 +36,10 @@ export default function ModifiableInput(props: Props) {
   }
 
   return (
-    <div className="b1-body-budget flex basis-1/2 gap-2 mb-5">
+    <>
       {display ? (
         <div className="flex w-full gap-2">
-          <div className="flex items-center w-full false-input">
+          <div className="flex items-center w-full">
             <Typography className="p-2 text-text-100">{value}</Typography>
           </div>
           {isOwner && (
@@ -49,14 +51,13 @@ export default function ModifiableInput(props: Props) {
       ) : (
         <form className="flex w-full gap-2" onSubmit={handleSubmit}>
           <div className="flex w-full !bg-white">
-            <Input
-                className={"!border-gray-700/50 !text-text-100 focus:!border-gray-700/50"}
-              type={type}
+            <Textarea
+              variant="standard"
+              className={"modifiableDescription !text-text-100 !outline-offset-0"}
               name={label}
               id={label}
               defaultValue={state[label]}
               placeholder={placeHolder}
-              crossOrigin={undefined}
             />
           </div>
           <IconButton
@@ -68,6 +69,6 @@ export default function ModifiableInput(props: Props) {
           </IconButton>
         </form>
       )}
-    </div>
+    </>
   );
 }

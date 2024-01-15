@@ -9,7 +9,7 @@ import {
   Typography,
   Input,
   Textarea,
-  IconButton,
+  IconButton, ButtonGroup,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -89,9 +89,11 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
       <IconButton
         variant="outlined"
         className="text-brick-300 border-brick-300"
+        size={"sm"}
         onClick={handleOpen}
       >
-        <FontAwesomeIcon icon={faPen} />
+        <FontAwesomeIcon icon={faPen}
+        size={"sm"}/>
       </IconButton>
       <Dialog
         size="sm"
@@ -109,6 +111,7 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
                 label="Nom de la tâche"
                 type="text"
                 value={form.name}
+                className={"bg-select focus:!b-brick-300"}
                 size="lg"
                 name="name"
                 id="name"
@@ -119,9 +122,15 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
                 label="Description"
                 value={form.description}
                 size="lg"
+                className={"bg-select"}
                 name="description"
                 id="description"
                 onChange={(e: any) => handleChange(e)}
+              />
+
+              <SelectStatus
+                  handleStatus={handleStatus}
+                  value={enumStatus[task.status]}
               />
 
               <SelectCategory
@@ -129,40 +138,42 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
                 handleCategory={handleCategory}
                 defaultValue={categories[task.category.id - 1]}
               />
-              <SelectStatus
-                handleStatus={handleStatus}
-                value={enumStatus[task.status]}
-              />
 
               <div className="sm:flex gap-3">
                 <Datepicker
-                  inputClassName="w-full p-2 rounded-md font-normal placeholder:text-black text-black"
+                  inputClassName="w-full p-2 rounded-md font-normal border-select bg-select placeholder:text-text-100 text-sm placeholder:text-sm"
                   onChange={handleDate}
                   value={{ startDate: form.startDate, endDate: form.endDate }}
                   inputName="rangeDate"
                   placeholder={"Choisir la durée de la tâche"}
                 />
               </div>
-              <Typography variant="h4" className={"text-marine-300 text-lg font-extrabold"}>
+              <Typography variant="h4" className={"text-marine-300 text-lg font-extrabold mt-3"}>
                 Participants
               </Typography>
-              <div className="flex gap-10">
-                {task.users.map((user: any, indexT: number) => (
-                  <div className="flex gap-2" key={indexT}>
-                    <div className="bg-marine-100/25 flex gap-2  p-2 rounded-lg justify-center items-center">
-                      <Typography variant="paragraph" className={"text-marine-300"}>
-                        {user.email}
-                      </Typography>
-                      <IconButton onClick={() => handleDeleteUser(indexT)} size={"sm"} className={"ml-3"}>
-                      <FontAwesomeIcon icon={faXmark} size="sm" />
-                    </IconButton></div>
 
+              <div className={"flex gap-2 justify-center flex-wrap"}>
+                {task.users.map((user: any, indexT: number) => (
+                    <div key={indexT}>
+                    <ButtonGroup
+                        size={"sm"}
+                        className={"divide-light-100/50 mb-2"}
+                        key={indexT}>
+                      <Button>
+                        {user.email}
+                      </Button>
+                       <Button onClick={() => handleDeleteUser(indexT)}>
+                            <FontAwesomeIcon
+                                icon={faXmark}
+                                size="sm"/>
+                       </Button>
+                    </ButtonGroup>
                   </div>
                 ))}
-              </div>
+            </div>
               <ReactSelect
                 options={allUsers}
-                className="rounded-xl"
+                className="rounded-xl border-select"
                 isMulti
                 placeholder="Inviter des membres sur votre projet"
                 components={animatedComponents}
@@ -176,6 +187,7 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
                     primary:'rgba(126,55,47, 0.7)',
                     primary50: 'rgba(126,55,47, 0.3)',
                   },
+                  fontSize: '0.875rem',
                 })}
               />
             </CardBody>

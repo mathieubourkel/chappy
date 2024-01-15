@@ -163,6 +163,7 @@ export default function StepCreateTask({
               </Typography>
               <Input
                 label="Nom de la tâche"
+                className={"bg-select focus:!b-brick-300"}
                 size="lg"
                 name="name"
                 id="name"
@@ -172,6 +173,7 @@ export default function StepCreateTask({
               <Textarea
                 label="Description"
                 size="lg"
+                className={"bg-select"}
                 name="description"
                 id="description"
                 onChange={(e: any) => handleChange(e)}
@@ -179,6 +181,7 @@ export default function StepCreateTask({
               <Input
                 label="Budget"
                 size="lg"
+                className={"bg-select"}
                 crossOrigin={undefined}
                 type="number"
                 name="budget"
@@ -195,7 +198,7 @@ export default function StepCreateTask({
 
               <div className="sm:flex gap-3">
                 <Datepicker
-                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
+                  inputClassName="w-full p-2 rounded-md font-normal border-select bg-select placeholder:text-text-100 text-sm placeholder:text-sm"
                   onChange={handleDate}
                   value={{ startDate: form.startDate, endDate: form.endDate }}
                   inputName="rangeDate"
@@ -204,7 +207,7 @@ export default function StepCreateTask({
               </div>
               <ReactSelect
                 options={users}
-                className="rounded-xl"
+                className="rounded-xl border-select"
                 isMulti
                 placeholder="Inviter des membres sur votre projet"
                 components={animatedComponents}
@@ -218,6 +221,7 @@ export default function StepCreateTask({
                     primary: "rgba(126,55,47, 0.7)",
                     primary50: "rgba(126,55,47, 0.3)",
                   },
+                  fontSize: '0.875rem',
                 })}
               />
             </CardBody>

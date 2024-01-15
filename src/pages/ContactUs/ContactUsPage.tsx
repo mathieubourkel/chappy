@@ -14,7 +14,7 @@ import {
 export default function ContactUsPage() {
   return (
       <main className={"flex justify-center"}>
-          <article className={"w-2/3 mt-10"}>
+          <article className={"w-2/3"}>
               <h1 className={"text-center"}>Contactez-nous</h1>
 
               <form>

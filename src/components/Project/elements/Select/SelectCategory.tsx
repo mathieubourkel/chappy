@@ -20,7 +20,7 @@ export default function SelectCategory({ handleCategory, categories, defaultValu
   return (
     <ReactSelect
       options={categories}
-      className="rounded-xl"
+      className="rounded-xl border-select"
       placeholder="Catégories"
       defaultValue={defaultValue}
       components={animatedComponents}
@@ -34,6 +34,7 @@ export default function SelectCategory({ handleCategory, categories, defaultValu
           primary:'rgba(126,55,47, 0.7)',
           primary50: 'rgba(126,55,47, 0.3)',
         },
+          fontSize: '0.875rem',
       })}
     />
   );
