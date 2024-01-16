@@ -106,7 +106,8 @@ export interface intUser extends intUserLight {
 
 export interface intProfileUser extends intUser {
     projects: intProjects
-    projects_collab: intProjects
+    participations: intProjects
+    myOwnTasks: intTasks
     companies: intCompanies
 }
 

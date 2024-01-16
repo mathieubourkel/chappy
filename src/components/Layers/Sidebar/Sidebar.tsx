@@ -53,22 +53,27 @@ export function Sidebar(props:any) {
                                                      phone: "",
                                                      status: 0,
                                                      zip: 0,
-                                                     firstName: "",
-                                                     lastName:"",
+                                                     firstname: "",
+                                                     lastname:"",
                                                      id:0,
                                                      projects:[],
-                                                     projects_collab:[]
+                                                     myOwnTasks: [],
+                                                     participations: []
+
                                                    });
 
   const idUser = localStorage.getItem("id");
 
   useEffect(() => {
     const fetchData = async() => {
-      const result = await getUserInfo(idUser);
-      setUser(result)
+      const result = await getUserInfo();
+      if (idUser == result.id ) setUser(result)
+        console.log(result)
     }
     fetchData();
   }, [idUser, reload]);
+
+
 
   const handleLogout = () => {
     localStorage.removeItem('token')
@@ -82,7 +87,6 @@ export function Sidebar(props:any) {
     setOpen(open === value ? 0 : value);
   };
 
-  console.log(user)
   return (
       <Drawer overlay={false} className="w-full sidebar bg-marine-300 text-white flex flex-col justify-between" open={openSidebar} onClose={toggleSidebar}>
 
@@ -196,7 +200,7 @@ export function Sidebar(props:any) {
             </AccordionHeader>
             <AccordionBody className="p-0 max-h-[20vh] custom-scroll">
               <List className={"text-light-200"}>
-                {user.projects_collab.map((collab:any) => (
+                {user.participations.map((collab:any) => (
                     <ListItem key={collab.key} className={"py-0.5 px-3 hover:pl-2 l-small-item"}>
                       <NavLink to={'/project/' + collab.id} className={"flex items-center"}>
                         <ListItemPrefix>
@@ -226,7 +230,7 @@ export function Sidebar(props:any) {
             </AccordionHeader>
             <AccordionBody className="p-0 max-h-[20vh] custom-scroll">
               <List className={"text-light-200"}>
-                {user.projects_collab.map((collab:any) => (
+                {user.participations.map((collab:any) => (
                     <ListItem key={collab.key} className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
                       <NavLink to={'/project/step/task'} className={"flex items-center"}>
                         <ListItemPrefix>
@@ -247,7 +251,7 @@ export function Sidebar(props:any) {
             <div className={"flex items-center justify-start gap-10 my-3"}>
               <Avatar src={avatar} alt="avatar" size="sm" className={"border border-brick-300 shadow-xl shadow-brick-300/20 ring-8 ring-brick-300"} />
               <Typography className="text-center font-semibold text-light-200 text-sm">
-                {user.firstName} {user.lastName}
+                {user.firstname} {user.lastname}
               </Typography>
             </div>
             <NavLink to={"/profile"} >
@@ -258,13 +262,13 @@ export function Sidebar(props:any) {
             </NavLink>
 
 
-              <Button 
+              <Button
               onClick={handleLogout}
               className="flex items-center justify-between h-3 bg-brick-300 w-full mb-3">
                 <FontAwesomeIcon icon={faRightFromBracket} className={"h-4 w-4"} />
                 Se déconnecter
               </Button>
-      
+
           </div>
       </Drawer>
   );
