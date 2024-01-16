@@ -17,13 +17,13 @@ import {
   FontAwesomeIcon
 } from "@fortawesome/react-fontawesome";
 import {
-  faCalendarDays,
-  // faChartPie,
-  faChevronRight,
-  faFolderPlus, faGear, faListCheck,
-  faPlay,
-  faRightFromBracket,
-  faSquarePollHorizontal,
+    faCalendarDays, faChartPie,
+    // faChartPie,
+    faChevronRight,
+    faFolderPlus, faGear, faListCheck,
+    faPlay,
+    faRightFromBracket,
+    faSquarePollHorizontal,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../../assets/img/icon_sidebar.png";
 import avatar from "../../../assets/img/icon_user.png";
@@ -67,8 +67,8 @@ export function Sidebar(props:any) {
   useEffect(() => {
     const fetchData = async() => {
       const result = await getUserInfo();
+      console.log(result)
       if (idUser == result.id ) setUser(result)
-        console.log(result)
     }
     fetchData();
   }, [idUser, reload]);
@@ -167,17 +167,17 @@ export function Sidebar(props:any) {
             </ListItem>
             <AccordionBody className="py-1 max-h-[20vh] custom-scroll">
               <List className="p-0">
-                {/*{project.project_steps.map((jalon:any) => (*/}
-                {/*    <ListItem key={jalon.key} className={"py-1.5 px-3 hover:bg-marine-300/50 hover:text-marine-100 text-light-200 hover:pl-2 text-sm"}>*/}
-                {/*      <NavLink to={'/project/step'} className={"flex items-center"}>*/}
-                {/*        <ListItemPrefix>*/}
-                {/*          <FontAwesomeIcon icon={faChartPie} strokeWidth={3} className="h-4 w-4 pl-5 text-marine-100" />*/}
-                {/*        </ListItemPrefix>*/}
-                {/*        {jalon.name}*/}
-                {/*      </NavLink>*/}
-                {/*    </ListItem>*/}
+                {project.step && project.step.map((step:any) => (
+                    <ListItem key={step.key} className={"py-1.5 px-3 hover:bg-marine-300/50 hover:text-marine-100 text-light-200 hover:pl-2 text-sm"}>
+                      <NavLink to={'/project/step'} className={"flex items-center"}>
+                        <ListItemPrefix>
+                          <FontAwesomeIcon icon={faChartPie} strokeWidth={3} className="h-4 w-4 pl-5 text-marine-100" />
+                        </ListItemPrefix>
+                        {step.name}
+                      </NavLink>
+                    </ListItem>
 
-                {/*))}*/}
+                ))}
               </List>
             </AccordionBody>
           </Accordion>
@@ -200,13 +200,13 @@ export function Sidebar(props:any) {
             </AccordionHeader>
             <AccordionBody className="p-0 max-h-[20vh] custom-scroll">
               <List className={"text-light-200"}>
-                {user.participations.map((collab:any) => (
-                    <ListItem key={collab.key} className={"py-0.5 px-3 hover:pl-2 l-small-item"}>
-                      <NavLink to={'/project/' + collab.id} className={"flex items-center"}>
+                {user.participations.map((participation:any) => (
+                    <ListItem key={participation.key} className={"py-0.5 px-3 hover:pl-2 l-small-item"}>
+                      <NavLink to={'/project/' + participation.id} className={"flex items-center"}>
                         <ListItemPrefix>
                           <FontAwesomeIcon icon={faSquarePollHorizontal} className="h-4 w-4 text-marine-100" />
                         </ListItemPrefix>
-                        {collab.name}
+                        {participation.name}
                       </NavLink>
                     </ListItem>
                 ))}
@@ -230,13 +230,13 @@ export function Sidebar(props:any) {
             </AccordionHeader>
             <AccordionBody className="p-0 max-h-[20vh] custom-scroll">
               <List className={"text-light-200"}>
-                {user.participations.map((collab:any) => (
-                    <ListItem key={collab.key} className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
-                      <NavLink to={'/project/step/task'} className={"flex items-center"}>
+                {user.myOwnTasks.map((task:any) => (
+                    <ListItem key={task.key} className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
+                      <NavLink to={'/project/step/' + task.id} className={"flex items-center"}>
                         <ListItemPrefix>
                           <FontAwesomeIcon icon={faListCheck} className="h-4 w-4 text-marine-100" />
                         </ListItemPrefix>
-                        {collab.name}
+                        {task.name}
                       </NavLink>
                     </ListItem>
                 ))}
