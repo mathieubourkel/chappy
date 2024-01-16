@@ -38,7 +38,7 @@ import {
 import RejoinModalSidebar
   from "../../Project/Modals/RejoinModalSidebar.tsx";
 
-export function Sidebar(props:any) {
+export default function Sidebar(props:any) {
   const {openSidebar, toggleSidebar} = props;
   const [open, setOpen] = React.useState(0);
 
