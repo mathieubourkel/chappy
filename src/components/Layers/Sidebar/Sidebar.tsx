@@ -38,7 +38,7 @@ import {
 import RejoinModalSidebar
   from "../../Project/Modals/RejoinModalSidebar.tsx";
 
-export function Sidebar(props:any) {
+export default function Sidebar(props:any) {
   const {openSidebar, toggleSidebar} = props;
   const [open, setOpen] = React.useState(0);
 
@@ -67,7 +67,6 @@ export function Sidebar(props:any) {
   useEffect(() => {
     const fetchData = async() => {
       const result = await getUserInfo();
-      console.log(result)
       if (idUser == result.id ) setUser(result)
     }
     fetchData();

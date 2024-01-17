@@ -33,7 +33,7 @@ export async function getProjectsFromOwner(idUser: string | null) {
     return handleApiCall(async () => await api.put(`${PROJECT_ENDPOINT}/${idProject}`, data));
   }
 
-  export async function userRejoinProject(idUser: string | null,idProject: string | null, code:string) {
+  export async function userRejoinProject(idUser: string | null, idProject: string | undefined, code:string) {
     const body = {code};
     return handleApiCall(async () => await api.put(`${PROJECT_ENDPOINT}/${idProject}/rejoin/${idUser}`, body)
     );

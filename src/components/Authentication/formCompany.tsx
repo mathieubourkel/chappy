@@ -6,12 +6,7 @@ import {
     Input
 } from "@material-tailwind/react";
 
-interface FormCompanyProps{
-  handleChange: (e: React.ChangeEvent<any>) => void;
-  values: intCompany;
-}
-
-export default function FormCompany(props: FormCompanyProps) {
+export default function FormCompany() {
 
   const validationCompany = Yup.object({
     companyName: Yup.string().min(2, "Le nom de votre entreprise doit contenir au minimum 2 charactères").required("Le nom de votre entreprise est requis"),

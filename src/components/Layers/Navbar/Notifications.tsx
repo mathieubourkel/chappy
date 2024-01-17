@@ -74,7 +74,7 @@ export default function Notifications() {
                     variant="small"
                     className="font-semibold text-marine-300"
                 >
-                  {notification.sender.firstName} {notification.content}
+                  {notification.sender.firstname} {notification.content}
                 </Typography>
                 <Typography
                     className="flex items-center gap-1 text-sm font-medium text-brick-300">

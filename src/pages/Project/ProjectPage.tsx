@@ -21,7 +21,7 @@ export default function ProjectPage() {
     name: "",
     description: "",
     status: Status[0].value,
-    owner: null,
+    owner: {id:0, firstname:"", lastname:"", email:""},
     budget: undefined,
     id: undefined,
     steps: [],

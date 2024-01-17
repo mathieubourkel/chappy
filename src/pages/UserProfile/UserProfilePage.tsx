@@ -30,15 +30,16 @@ export default function UserProfilePage() {
     status: 0,
     phone: "",
     projects: [],
-    projects_collab: [],
+    participations: [],
     companies: [],
+    myOwnTasks: []
   });
   const idUser = localStorage.getItem("id");
   const [displayPwd, setDisplayPwd] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getUserInfo(idUser);
+      const result = await getUserInfo();
       setUser(result);
     };
     fetchData();
@@ -90,7 +91,7 @@ export default function UserProfilePage() {
         <div className={"flex gap-5 justify-center"}>
           <div className={"chip"}>{user.projects.length} projets</div>
           <div className={"chip"}>
-            {user.projects_collab.length} collaborations
+            {user.participations.length} collaborations
           </div>
         </div>
       </section>
