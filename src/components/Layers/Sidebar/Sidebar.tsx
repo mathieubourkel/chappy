@@ -17,8 +17,8 @@ import {
   FontAwesomeIcon
 } from "@fortawesome/react-fontawesome";
 import {
-    faCalendarDays, faChartPie,
-    // faChartPie,
+    faCalendarDays,
+    faChartPie,
     faChevronRight,
     faFolderPlus, faGear, faListCheck,
     faPlay,
