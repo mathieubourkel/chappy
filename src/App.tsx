@@ -19,11 +19,11 @@ import PrivateRoute from "./services/utils/PrivateRoute.tsx";
 import NotFoundPage from "./services/utils/NotFoundPage.tsx";
 import { NavbarConnected } from "./components/Layers/Navbar/NavbarConnected.tsx";
 import { NavbarVisitor } from "./components/Layers/Navbar/NavbarVisitor.tsx";
-import { Sidebar } from "./components/Layers/Sidebar/Sidebar.tsx";
 import CreateProjectPage from "./pages/CreateProject/CreateProjectPage.tsx";
 import ScrollToTop from "./services/utils/ScrollToTop.tsx";
 import PublicRoute from "./services/utils/PublicRoute.tsx";
 import ContextIsLogged from "./context/ContextIsLogged.tsx";
+import Sidebar from "./components/Layers/Sidebar/Sidebar.tsx";
 
 export default function App() {
   console.log("AppComposant");

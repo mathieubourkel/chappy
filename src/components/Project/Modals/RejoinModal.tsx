@@ -14,6 +14,7 @@ import { faHandHoldingHand } from "@fortawesome/free-solid-svg-icons";
 import RejoinButton from "../elements/Buttons/OpenButton.tsx";
 import "./modal.css";
 import { userRejoinProject } from "../../../services/api/projects.ts";
+import { useParams } from "react-router-dom";
 
 type Props = {
   join: string;
@@ -23,6 +24,7 @@ type Props = {
 
 export default function RejoinModal({ join, menu, setReload }: Props) {
   const [open, setOpen] = useState(false);
+  const { idProject } = useParams();
   const handleOpen = () => setOpen((bool) => !bool);
   const [code, setCode] = useState<string>("");
   const idUser = localStorage.getItem("id");
@@ -33,7 +35,7 @@ export default function RejoinModal({ join, menu, setReload }: Props) {
   const handleClick = async () => {
     let reload = false;
     try {
-      await userRejoinProject(idUser, code);
+      await userRejoinProject(idUser, idProject, code);
       reload = true;
       handleOpen()
     } catch {
