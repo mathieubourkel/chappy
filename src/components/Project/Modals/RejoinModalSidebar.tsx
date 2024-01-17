@@ -14,6 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./modal.css";
 import { userRejoinProject } from "../../../services/api/projects.ts";
+import { useParams } from "react-router-dom";
 
 type Props = {
   idUser: string | null;
@@ -23,6 +24,7 @@ type Props = {
 
 export default function RejoinModalSidebar({idUser, setReload}: Props) {
   const [open, setOpen] = useState(false);
+  const { idProject } = useParams();
   const handleOpen = () => setOpen((bool) => !bool);
   const [code, setCode] = useState<string>("");
 
@@ -34,7 +36,7 @@ export default function RejoinModalSidebar({idUser, setReload}: Props) {
 
     let reload = false;
     try {
-      await userRejoinProject(idUser, code);
+      await userRejoinProject(idUser, idProject, code);
       reload = true;
       handleOpen()
     } catch {

@@ -26,7 +26,6 @@ const animatedComponents = makeAnimated();
 
 export default function CreateProjectPage() {
   console.log("CreateProjectPage");
-  const userId = localStorage.getItem("id");
   const navigate = useNavigate();
   const [users, setUsers] = useState<Array<intSelect>>([]);
   const [companies, setCompanies] = useState<Array<intSelect>>([]);
@@ -37,7 +36,7 @@ export default function CreateProjectPage() {
     status: Status[0].value,
     estimEndDate: null,
     steps: [],
-    owner: userId && +userId,
+    owner: {id:0, firstname:"", lastname:"", email:""},
     users: [],
     companies: [{ id: null }],
 

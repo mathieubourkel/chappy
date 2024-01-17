@@ -166,7 +166,7 @@ export default function Sidebar(props:any) {
               </AccordionHeader>
             </ListItem>
             <AccordionBody className="py-1 max-h-[20vh] custom-scroll">
-              <List className="p-0">
+              {/* <List className="p-0"> */}
                 {/*{project.project_steps.map((jalon:any) => (*/}
                 {/*    <ListItem key={jalon.key} className={"py-1.5 px-3 hover:bg-marine-300/50 hover:text-marine-100 text-light-200 hover:pl-2 text-sm"}>*/}
                 {/*      <NavLink to={'/project/step'} className={"flex items-center"}>*/}
@@ -178,7 +178,7 @@ export default function Sidebar(props:any) {
                 {/*    </ListItem>*/}
 
                 {/*))}*/}
-              </List>
+              {/* </List> */}
             </AccordionBody>
           </Accordion>
           ))}

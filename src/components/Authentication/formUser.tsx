@@ -3,12 +3,8 @@ import * as Yup from "yup";
 import { intUsers } from "../../services/interfaces/intUser";
 import { Input } from "@material-tailwind/react";
 
-  interface FormUserProps{
-    handleChange: (e: React.ChangeEvent<any>) => void;
-    values: intUsers;
-  }
 
-export default function FormUser(props: FormUserProps) {
+export default function FormUser() {
   const validationUser = Yup.object({
     lastname: Yup.string().min(2, "Votre nom doit contenir au minimum 2 charactères").required("Ce champ est requis"),
     firstname: Yup.string().min(2).required("Ce champ est requis"),

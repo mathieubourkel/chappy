@@ -6,12 +6,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { intEmployee } from "../../services/interfaces/intEmployee";
 
-interface FormEmployeeProps{
-    handleChange: (e: React.ChangeEvent<any>) => void;
-    values: intEmployee;
-  }
 
-export default function FormEmployee(props: FormEmployeeProps) {
+export default function FormEmployee() {
     const validationEmployee = Yup.object({
         companyName: Yup.string().required("Ce champ est requis")
     })
