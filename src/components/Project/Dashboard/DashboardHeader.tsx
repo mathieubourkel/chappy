@@ -1,6 +1,6 @@
-import CreateButton from "../elements/Buttons/CreateButton";
+import CreateButton from "../elements/Buttons/CreateButton.tsx";
 import {Link} from "react-router-dom";
-import RejoinModal from "../Modals/RejoinModal";
+import RejoinModal from "../Modals/RejoinModal.tsx";
 import {
     Alert,
     Chip,
@@ -15,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Breadcrumb
     from "../../Layers/Breadcrumb/Breadcrumb.tsx";
-import Calendar from "../Calendar/Calendar";
+import Calendar from "../Calendar/Calendar.tsx";
 
 type Props = {
   nbProj: number;
