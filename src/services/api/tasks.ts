@@ -6,37 +6,37 @@ const TASK_ENDPOINT = "task";
 const TASKS_ENDPOINT = "tasks";
 
 export async function getTasksByStepId(idStep: string | undefined) {
-    return handleApiCall(() => api.get(`${TASKS_ENDPOINT}/step/${idStep}`));
+    return handleApiCall(async () => await api.get(`${TASKS_ENDPOINT}/step/${idStep}`));
   }
   export async function getTasksByProjectId(idProject: string | undefined) {
-    return handleApiCall(() => api.get(`${TASKS_ENDPOINT}/project/${idProject}`));
+    return handleApiCall(async () => await api.get(`${TASKS_ENDPOINT}/project/${idProject}`));
   }
 
   export async function getTasksByUser(idUser: string | undefined |null) {
-    return handleApiCall(() => api.get(`${TASKS_ENDPOINT}/owner/${idUser}`));
+    return handleApiCall(async () => await api.get(`${TASKS_ENDPOINT}/owner/${idUser}`));
   }
 
   export async function getTasksByUsers(idUser: string | undefined|null) {
-    return handleApiCall(() => api.get(`${TASKS_ENDPOINT}/member/${idUser}`));
+    return handleApiCall(async () => await api.get(`${TASKS_ENDPOINT}/member/${idUser}`));
   }
   
   export async function getTaskById(idTask: number | undefined) {
-    return handleApiCall(() => api.get(`${TASK_ENDPOINT}/${idTask}`));
+    return handleApiCall(async () => await api.get(`${TASK_ENDPOINT}/${idTask}`));
   }
   
   export async function addTaskToStepToBDD(data: intTask) {
-    return handleApiCall(() => api.post(TASK_ENDPOINT, data));
+    return handleApiCall(async () => await api.post(TASK_ENDPOINT, data));
   }
  
   export async function modifyTaskToBDD(idTask: number | undefined, data: intTask) {
-    return handleApiCall(() => api.put(`${TASK_ENDPOINT}/${idTask}`, data));
+    return handleApiCall(async () => await api.put(`${TASK_ENDPOINT}/${idTask}`, data));
   }
   
   export async function deleteUserToTaskToBDD(idTask: number | undefined, idUser: string | number |null) {
-    return handleApiCall(() => api.put(`${TASK_ENDPOINT}/${idTask}/delete/${idUser}`));
+    return handleApiCall(async () => await api.put(`${TASK_ENDPOINT}/${idTask}/delete/${idUser}`));
   }
 
   export async function deleteTaskFromBDD(idTask: number | undefined) {
-    return handleApiCall(() => api.delete(`${TASK_ENDPOINT}/${idTask}`));
+    return handleApiCall(async () => await api.delete(`${TASK_ENDPOINT}/${idTask}`));
   }
   

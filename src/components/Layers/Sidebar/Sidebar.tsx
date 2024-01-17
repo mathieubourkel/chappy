@@ -65,7 +65,7 @@ export default function Sidebar(props:any) {
   const idUser = localStorage.getItem("id");
 
   useEffect(() => {
-    const fetchData = async() => {
+    const fetchData = async () => {
       const result = await getUserInfo();
       if (idUser == result.id ) setUser(result)
     }

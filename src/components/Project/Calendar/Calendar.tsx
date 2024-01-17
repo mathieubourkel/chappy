@@ -55,24 +55,30 @@ export default function Calendar({className}:Props) {
   ]);
   const currentDate = new Date();
   useEffect(() => {
-    async function getFetchData() {
-      const dataOwner = await getTasksByUser(idUser);
-      const dataCollab = await getTasksByUsers(idUser);
-      const tmpTasks:Array<Task> = []
-      dataOwner.map((_elem: any, index: number) => {
-        dataOwner[index].title = dataOwner[index].name;
-        dataOwner[index].owner = 1;
-        tmpTasks.push(dataOwner[index])
-      });
-      dataCollab.map((_elem: any, index: number) => {
-        dataCollab[index].title = dataCollab[index].name;
-        dataCollab[index].owner = 2;
-        dataCollab[index].id = dataCollab[index].id * 4589647524
-        tmpTasks.push(dataCollab[index])
-      });
-
-      setTasks(tmpTasks);
-      setBusy(false)
+    const getFetchData = async () => {
+      try {
+        const dataOwner = await getTasksByUser(idUser);
+        const dataCollab = await getTasksByUsers(idUser);
+        const tmpTasks:Array<Task> = []
+        dataOwner.map((_elem: any, index: number) => {
+          dataOwner[index].title = dataOwner[index].name;
+          dataOwner[index].owner = 1;
+          tmpTasks.push(dataOwner[index])
+        });
+        dataCollab.map((_elem: any, index: number) => {
+          dataCollab[index].title = dataCollab[index].name;
+          dataCollab[index].owner = 2;
+          dataCollab[index].id = dataCollab[index].id * 4589647524
+          tmpTasks.push(dataCollab[index])
+        });
+  
+        setTasks(tmpTasks);
+        
+      } catch (e){
+        console.log("error fetching")
+      } finally {
+        setBusy(false)
+      }  
     }
     getFetchData();
   }, [idUser]);
