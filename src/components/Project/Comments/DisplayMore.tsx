@@ -8,7 +8,6 @@ type Props = {
 };
 
 export default function DisplayMore({ state, setState }: Props) {
-  console.log('DisplayMoreComposant')
   function handleDisplay() {
     state ? setState(false) : setState(true);
   }

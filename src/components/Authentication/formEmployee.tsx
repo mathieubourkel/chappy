@@ -17,7 +17,6 @@ export default function FormEmployee() {
             companyNameEmployee: "",
         },
         onSubmit:values => {
-            console.log(values)
         },
         validationSchema: validationEmployee
  

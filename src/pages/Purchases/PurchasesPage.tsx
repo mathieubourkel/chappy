@@ -23,7 +23,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function PurchasesPage() {
-  console.log("PurchasePage");
   const { idProject } = useParams();
   const idUser = localStorage.getItem("id");
   const [busy, setBusy] = useState<boolean>(true);
@@ -43,8 +42,6 @@ export default function PurchasesPage() {
           getProjectById(idProject),
           getPurchasesByProject(idProject),
         ]);
-        console.log("proj", projectData)
-        console.log("purch", purchasesData)
         setProject(projectData);
         setPurchases(purchasesData);
         setIsOwner(projectData.owner.id.toString() === idUser);

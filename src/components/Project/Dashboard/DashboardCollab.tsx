@@ -23,7 +23,6 @@ type Props = {
 };
 
 export default function DashboardCollab({ collabs, setReload }: Props) {
-  console.log("DashBoardCollabComposant");
   const [selected, setSelected] = useState(0);
 
   function handleClick(index: number) {

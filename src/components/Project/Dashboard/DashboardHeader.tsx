@@ -23,7 +23,6 @@ type Props = {
 };
 
 export default function DashboardHeader({ nbProj, setReload}: Props) {
-  console.log("DashBoardHeaderComposant")
   const userName = localStorage.getItem('name')
   return (
     <section className="mt-20 md:flex gap-x-10">

@@ -53,7 +53,6 @@ export default function UserProfilePage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     await modifyUserToBDD(idUser, user);
-    console.log(user);
     alert("Les modifications ont été enregistré");
   };
 

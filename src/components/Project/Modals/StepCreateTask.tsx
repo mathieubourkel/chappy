@@ -44,7 +44,6 @@ export default function StepCreateTask({
   categories,
   step,
 }: Props) {
-  console.log("StepCreateTaskComponent" + count++);
   const { idStep, idProject } = useParams();
   const userId = localStorage.getItem("id");
   const animatedComponents = makeAnimated();

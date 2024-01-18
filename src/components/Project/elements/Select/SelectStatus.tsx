@@ -16,7 +16,6 @@ export default function SelectStatus({
   classState,
   value,
 }: Props) {
-  console.log("SelectStatusComponent");
   const animatedComponents = makeAnimated();
   const [selected, setSelected] = useState<any>(value);
   function handleStatusEnfant(value: intSelect) {

@@ -47,7 +47,6 @@ export default function MembersAdd({ members, setMember}: Props) {
     e.preventDefault();
     const user:any = users.find((element:intUser) => element.email == selected)
     setMember([...members, user]);
-    console.log(users)
     addUserToProjectToBDD(idProject, user.id)
   }
 

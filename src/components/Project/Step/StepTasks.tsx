@@ -31,7 +31,6 @@ type Props = {
 let count = 1;
 export default function StepTasks({step}:Props) {
 
-  console.log("StepTasksComposant " + count++);
   const { idStep } = useParams();
   const [tasks, setTasks] = useState<intTasks>([]);
   const [categories, setCategories] = useState<Array<intSelect>>([]);

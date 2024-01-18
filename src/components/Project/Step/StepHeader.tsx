@@ -32,7 +32,6 @@ type Props = {
 }
 
 export default function StepHeader({step, setStep, isOwner}:Props) {
-  console.log("StepHeaderComposant" + count++);
 
   const { idStep } = useParams();
 

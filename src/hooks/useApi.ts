@@ -51,7 +51,6 @@ export function useApi() {
 
   api.interceptors.response.use(
     (res) => {
-      console.log(res);
       return res;
     },
     async (err) => {

@@ -22,7 +22,6 @@ export default function FormCompany() {
         companySActivity:"",
     },
    onSubmit: values =>{
-    console.log(values)
    },
    validationSchema: validationCompany
   })

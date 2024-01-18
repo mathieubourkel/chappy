@@ -17,7 +17,6 @@ type Props = {
 
 export default function DocumentCard({ index, setDocument,document, documents, isOwner }: Props) {
   
-  console.log('DocumentCardComposant')
   const handleDelete = () => {
     deleteDocumentFromBDD(document.id)
   }

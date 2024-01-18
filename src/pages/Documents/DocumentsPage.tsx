@@ -18,7 +18,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function DocumentsPage() {
-  console.log('DocumentsPage')
   const {idProject} = useParams();
   const [project, setProject] = useState<intProjectLight>({id:undefined, name:"", code:''})
   const [documents, setDocument] = useState<intDocuments>([]);

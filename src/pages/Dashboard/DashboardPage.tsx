@@ -10,7 +10,6 @@ import {
 } from "../../services/api/projects";
 
 export default function DashboardPage() {
-  console.log("DashBoardPageComposant");
   const [collabs, setCollab] = useState<intProjects>([]);
   const [projects, setProject] = useState<intProjects>([]);
   const [busy, setBusy] = useState<boolean>(true);

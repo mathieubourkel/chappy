@@ -83,16 +83,13 @@ export default function FormGlobal() {
       companyNameEmployee: "",
     },
     onSubmit: async (values) => {
-      console.log("submit", values);
       // setFormValues(formValues);
 
       try {
         values.username = values.email;
         const userResponse = await addUserToBDD(values)
-        console.log(userResponse);
 
         const userId = userResponse.data.id;
-        console.log(userId)
 
         if (selectedOption === "checkCompany") {
           const companyResponse = await axios.post("http://localhost:1997/company-endpoint", {
@@ -101,7 +98,6 @@ export default function FormGlobal() {
             siret: values.siret,
             description: values.companySActivity
           })
-          console.log(companyResponse.data)
         }
         
       } catch (error) {

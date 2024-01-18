@@ -16,7 +16,6 @@ type Props = {
 }
 
 export default function ProjectHeader({project ,idProject, isOwner} :Props) {
-  console.log("ProjectHeaderComposant")
   return (
       <section className="lg:flex justify-between mb-20">
         <div>

@@ -24,7 +24,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function StepPage() {
-  console.log("StepPage");
   const [busy, setBusy] = useState<boolean>(true);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const {idStep, idProject} = useParams();

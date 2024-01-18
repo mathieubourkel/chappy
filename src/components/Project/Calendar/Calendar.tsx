@@ -75,7 +75,7 @@ export default function Calendar({className}:Props) {
         setTasks(tmpTasks);
         
       } catch (e){
-        console.log("error fetching")
+        console.log(e)
       } finally {
         setBusy(false)
       }  

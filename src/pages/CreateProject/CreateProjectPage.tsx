@@ -25,7 +25,6 @@ import { Status } from "../../services/enums/status.enum";
 const animatedComponents = makeAnimated();
 
 export default function CreateProjectPage() {
-  console.log("CreateProjectPage");
   const navigate = useNavigate();
   const [users, setUsers] = useState<Array<intSelect>>([]);
   const [companies, setCompanies] = useState<Array<intSelect>>([]);

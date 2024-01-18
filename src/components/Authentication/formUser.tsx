@@ -30,7 +30,6 @@ export default function FormUser() {
       checkPassword: "",
     },
     onSubmit:values =>{
-      console.log(values)
      },
      validationSchema: validationUser
   })
