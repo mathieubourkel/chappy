@@ -18,9 +18,10 @@ import { useEffect, useState } from "react";
 type Props = {
   idProject: string | undefined
   isOwner:boolean
+  handleNbStep: (number:number) => void;
 };
 
-export default function ProjectSteps({ idProject, isOwner }: Props) {
+export default function ProjectSteps({ idProject, isOwner, handleNbStep }: Props) {
   const [steps, setSteps] = useState<intSteps>([]);
   const [busy, setBusy] = useState<boolean>(true);
   const [reload, setReload] = useState<boolean>(false);
@@ -28,11 +29,12 @@ export default function ProjectSteps({ idProject, isOwner }: Props) {
     async function getProject() {
       const result = await getStepsByIdProject(idProject);
       setBusy(false);
+      handleNbStep(result.length)
       setSteps(result);
     }
 
     getProject();
-  }, [idProject, reload]);
+  }, [handleNbStep, idProject, reload]);
 
   return (
     <section className="mb-20">

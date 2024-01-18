@@ -21,9 +21,10 @@ type Props = {
   project: intProject;
   setProject: (project: intProject) => void;
   isOwner: boolean;
+  nbStep: number
 };
 
-export default function ProjectDesc({ project, setProject, isOwner }: Props) {
+export default function ProjectDesc({ project, setProject, isOwner, nbStep }: Props) {
   const { idProject } = useParams();
 
   function handleModifyProject(data: intProject) {
@@ -46,7 +47,7 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
             />
 
             <span>
-              Vous avez actuellement {project.steps.length} { project.steps.length > 1 ? "jalons " : "jalon " }
+              Vous avez actuellement {nbStep} { nbStep > 1 ? "jalons " : "jalon " }
               ouvert sur ce projet.
             </span>
           </Alert>

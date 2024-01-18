@@ -16,14 +16,14 @@ export default function ProjectPage() {
   const [busy, setBusy] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const [isOwner, setIsOwner] = useState<boolean>(false);
+  const [nbStep, setNbStep] = useState<number>(0)
   const [project, setProject] = useState<intProject>({
     name: "",
     description: "",
     status: Status[0].value,
-    owner: {id:0, firstname:"", lastname:"", email:""},
+    owner: {id:0},
     budget: undefined,
     id: undefined,
-    steps: [],
     estimEndDate: new Date(),
     code:""
   });
@@ -43,6 +43,10 @@ export default function ProjectPage() {
     getProject();
   }, [idProject, idUser]);
 
+  const handleNbStep = (value:number) => {
+    setNbStep(value)
+  }
+
   if (error) return (<NotFoundPage />)
   return (
     <main className="project-page sm:mx-20 mx-5 mt-10">
@@ -54,11 +58,13 @@ export default function ProjectPage() {
         <>
           <ProjectHeader isOwner={isOwner} project={project} idProject={idProject} />
           <ProjectDesc
+            nbStep={nbStep}
             project={project}
             setProject={setProject}
             isOwner={isOwner}
           />
           <ProjectSteps
+            handleNbStep={handleNbStep}
             idProject={idProject}
             isOwner={isOwner}
           />

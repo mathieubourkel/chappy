@@ -5,7 +5,7 @@ export interface intProject extends intProjectLight {
     description: string,
     budget?: number,
     status: number
-    steps: intSteps
+    steps?: intSteps
     estimEndDate: Date | null
     owner: intOwner
     users?: number[]
@@ -14,9 +14,9 @@ export interface intProject extends intProjectLight {
 
 export interface intOwner {
     id: number,
-    firstname: string,
-    lastname: string,
-    email: string
+    firstname?: string,
+    lastname?: string,
+    email?: string
 }
 
 export interface intCompany {

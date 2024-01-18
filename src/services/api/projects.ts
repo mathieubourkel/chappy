@@ -16,10 +16,6 @@ export async function getProjectsFromOwner(idUser: string | null) {
     return handleApiCall(async () => await api.get(`${PROJECT_ENDPOINT}/${idProject}`));
   }
   
-  export async function getProjectNameById(idProject: string | undefined) {
-    return handleApiCall(async () => await api.get(`${PROJECT_ENDPOINT}/name/${idProject}`));
-  }
-  
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export async function addProjectToBDD(data: any) {
     return handleApiCall(async () => await api.post(PROJECT_ENDPOINT, data));
