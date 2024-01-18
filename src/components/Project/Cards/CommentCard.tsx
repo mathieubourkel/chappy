@@ -13,6 +13,8 @@ export default function CommentCard({ comment }: Props) {
 
   const linear = "linear-gradient(to bottom, rgb(47,44,54,1), rgb(126,55,47,1)) 1 100%"
   const CommentStyle = {display: 'block', borderLeft: '3px solid', paddingLeft: '1rem', marginLeft: '3rem', borderImage: linear}
+  
+  comment.content = comment.content.replace(/^"(.*)"$/, '$1');
 
   return (
     <Card className="w-full custom-block mb-5" placeholder={undefined}>

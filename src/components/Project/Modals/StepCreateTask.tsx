@@ -38,7 +38,6 @@ type Props = {
   step: intStep;
 };
 
-let count = 1;
 export default function StepCreateTask({
   handleReload,
   categories,
