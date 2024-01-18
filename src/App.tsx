@@ -26,7 +26,6 @@ import ContextIsLogged from "./context/ContextIsLogged.tsx";
 import Sidebar from "./components/Layers/Sidebar/Sidebar.tsx";
 
 export default function App() {
-  console.log("AppComposant");
   // const [logins, setLogin] = useState<Array<string>>([]);
   const token = localStorage.getItem("token");
   const [isLogged, setIsLogged] = useState<boolean>(!!token);

@@ -1,6 +1,6 @@
 # Utiliser une image Node.js comme base
 FROM node:20.10.0-alpine
-
+RUN apk add --no-cache tzdata
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 

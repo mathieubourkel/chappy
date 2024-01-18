@@ -7,6 +7,15 @@
     border-radius: 0;
 }
 
+.sidebar-list {
+    transition: 1s;
+}
+
+.sidebar-list:hover {
+    margin-left: 0.5em;
+    color: var(--border-card);
+}
+
 .l-item:hover, .l-item:active, .l-item:focus {
     background: var(--gradient) !important;
     color: var(--bg-color) !important;

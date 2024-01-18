@@ -17,7 +17,6 @@ type Props = {
 };
 
 export default function StepCard({ step, idProject }: Props) {
-  console.log("StepCardComposant");
   const truncatedDescription =
     step.description.substring(0, 75) +
     (step.description.length >= 75 ? "..." : "");

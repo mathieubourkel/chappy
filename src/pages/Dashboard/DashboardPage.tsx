@@ -10,7 +10,6 @@ import {
 } from "../../services/api/projects";
 
 export default function DashboardPage() {
-  console.log("DashBoardPageComposant");
   const [collabs, setCollab] = useState<intProjects>([]);
   const [projects, setProject] = useState<intProjects>([]);
   const [busy, setBusy] = useState<boolean>(true);
@@ -22,10 +21,8 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const [tmpCollabs, tmpProjects] = await Promise.all([
-          getProjectsFromUsers(idUser),
-          getProjectsFromOwner(idUser),
-        ]);
+        const tmpProjects = await getProjectsFromOwner(idUser)
+        const tmpCollabs = await getProjectsFromUsers(idUser)
         setCollab(tmpCollabs);
         setProject(tmpProjects);
       } catch (error) {

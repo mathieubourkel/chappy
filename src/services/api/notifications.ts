@@ -7,10 +7,9 @@ const api = useApi();
 const NOTIFICATION_ENDPOINT = "notification";
 const NOTIFICATIONS_ENDPOINT = "notifications";
 
+
 export async function getNotificationsByUser(idUser: string | null) {
-  return handleApiCall(() =>
-    api.get(`${NOTIFICATIONS_ENDPOINT}/${idUser}`)
-  );
+  return handleApiCall(async () => await api.get(`${NOTIFICATIONS_ENDPOINT}/${idUser}`));
 }
 
 export async function addNotificationToBDD(data: any) {

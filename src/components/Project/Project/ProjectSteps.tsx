@@ -21,7 +21,6 @@ type Props = {
 };
 
 export default function ProjectSteps({ idProject, isOwner }: Props) {
-  console.log("ProjectStepsComposant");
   const [steps, setSteps] = useState<intSteps>([]);
   const [busy, setBusy] = useState<boolean>(true);
   const [reload, setReload] = useState<boolean>(false);

@@ -14,7 +14,6 @@ type Props = {
 };
 
 export default function EspaceComment({ table, idParent }: Props) {
-  console.log("EspaceCommentComposant");
   const [display, setDisplay] = useState<boolean>(false);
   const [comments, setComments] = useState<intComments>([]);
   const [reload, setReload] = useState(false);

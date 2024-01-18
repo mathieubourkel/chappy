@@ -18,7 +18,6 @@ import {
 } from "@fortawesome/react-fontawesome";
 import {
     faCalendarDays,
-    faChartPie,
     faChevronRight,
     faFolderPlus, faGear, faListCheck,
     faPlay,
@@ -37,6 +36,8 @@ import {
 } from "../../../services/api/users.ts";
 import RejoinModalSidebar
   from "../../Project/Modals/RejoinModalSidebar.tsx";
+import NestedMenuSidebar
+    from "./NestedMenuSidebar.tsx";
 
 export default function Sidebar(props:any) {
   const {openSidebar, toggleSidebar} = props;
@@ -65,7 +66,7 @@ export default function Sidebar(props:any) {
   const idUser = localStorage.getItem("id");
 
   useEffect(() => {
-    const fetchData = async() => {
+    const fetchData = async () => {
       const result = await getUserInfo();
       if (idUser == result.id ) setUser(result)
     }
@@ -135,18 +136,19 @@ export default function Sidebar(props:any) {
         </Typography>
 
         <List className={"text-light-200"}>
-          {user.projects.map((project:any) => (
+            {user.projects.map((project:any, index:number) => (
               <Accordion
-              open={open === 1}
-              icon={
+                    key={index}
+                    open={open === index}
+                    icon={
                 <FontAwesomeIcon icon={faChevronRight}
                     strokeWidth={2.5}
-                    className={`mx-auto h-3 w-3 mb-0.5 text-light-200 transition-transform ${open === 1 ? "rotate-90" : ""}`}
+                    className={`mx-auto h-3 w-3 mb-0.5 text-light-200 transition-transform ${open === index ? "rotate-90" : ""}`}
                 />
               }
               >
-            <ListItem className="p-0 l-item hover:text-light-200" selected={open === 1}>
-              <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 px-3 py-0">
+            <ListItem className="p-0 l-item hover:text-light-200" selected={open === index}>
+              <AccordionHeader onClick={() => handleOpen(index)} className="border-b-0 px-3 py-0">
                 <NavLink to={'/project/' + project.id} className={"flex items-center"}>
                   <ListItemPrefix>
 
@@ -164,35 +166,25 @@ export default function Sidebar(props:any) {
                 </NavLink>
               </AccordionHeader>
             </ListItem>
-            <AccordionBody className="py-1 max-h-[20vh] custom-scroll">
-              <List className="p-0">
-                {project.step && project.step.map((step:any) => (
-                    <ListItem key={step.key} className={"py-1.5 px-3 hover:bg-marine-300/50 hover:text-marine-100 text-light-200 hover:pl-2 text-sm"}>
-                      <NavLink to={'/project/step'} className={"flex items-center"}>
-                        <ListItemPrefix>
-                          <FontAwesomeIcon icon={faChartPie} strokeWidth={3} className="h-4 w-4 pl-5 text-marine-100" />
-                        </ListItemPrefix>
-                        {step.name}
-                      </NavLink>
-                    </ListItem>
+                  <AccordionBody className="py-1 max-h-[20vh] custom-scroll">
+                       <NestedMenuSidebar steps={project.steps} />
+                  </AccordionBody>
 
-                ))}
-              </List>
-            </AccordionBody>
           </Accordion>
+
           ))}
 
           <hr className={"mt-3 border-marine-100/20"} />
           <Accordion
-              open={open === 11}
+              open={open === 0.1}
               icon={
                 <FontAwesomeIcon icon={faChevronRight}
                                  strokeWidth={2.5}
-                                 className={`mx-auto h-3 w-3 text-light-200 transition-transform ${open === 11 ? "rotate-90" : ""}`}
+                                 className={`mx-auto h-3 w-3 text-light-200 transition-transform ${open === 0.1 ? "rotate-90" : ""}`}
                 />
               }
           >
-            <AccordionHeader onClick={() => handleOpen(11)} className="border-b-0 flex justify-between items-end">
+            <AccordionHeader onClick={() => handleOpen(0.1)} className="border-b-0 flex justify-between items-end">
               <Typography className="text-center font-bold uppercase text-light-200">
                 <span className={"text-sm"}>Vos participations</span>
               </Typography>
@@ -200,7 +192,7 @@ export default function Sidebar(props:any) {
             <AccordionBody className="p-0 max-h-[20vh] custom-scroll">
               <List className={"text-light-200"}>
                 {user.participations.map((participation:any) => (
-                    <ListItem key={participation.key} className={"py-0.5 px-3 hover:pl-2 l-small-item"}>
+                    <ListItem key={participation.id} className={"py-0.5 px-3 hover:pl-2 l-small-item"}>
                       <NavLink to={'/project/' + participation.id} className={"flex items-center"}>
                         <ListItemPrefix>
                           <FontAwesomeIcon icon={faSquarePollHorizontal} className="h-4 w-4 text-marine-100" />
@@ -214,15 +206,15 @@ export default function Sidebar(props:any) {
           </Accordion>
 
           <Accordion
-              open={open === 21}
+              open={open === 0.2}
               icon={
                 <FontAwesomeIcon icon={faChevronRight}
                                  strokeWidth={2.5}
-                                 className={`mx-auto h-3 w-3 text-light-200 transition-transform ${open === 21 ? "rotate-90" : ""}`}
+                                 className={`mx-auto h-3 w-3 text-light-200 transition-transform ${open === 0.2 ? "rotate-90" : ""}`}
                 />
               }
           >
-            <AccordionHeader onClick={() => handleOpen(21)} className="border-b-0 flex justify-between items-end">
+            <AccordionHeader onClick={() => handleOpen(0.2)} className="border-b-0 flex justify-between items-end">
               <Typography className="text-center font-bold uppercase text-light-200">
                 <span className={"text-sm"}>Vos tâches</span>
               </Typography>
@@ -230,7 +222,7 @@ export default function Sidebar(props:any) {
             <AccordionBody className="p-0 max-h-[20vh] custom-scroll">
               <List className={"text-light-200"}>
                 {user.myOwnTasks.map((task:any) => (
-                    <ListItem key={task.key} className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
+                    <ListItem key={task.id} className={"py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"}>
                       <NavLink to={'/project/step/' + task.id} className={"flex items-center"}>
                         <ListItemPrefix>
                           <FontAwesomeIcon icon={faListCheck} className="h-4 w-4 text-marine-100" />

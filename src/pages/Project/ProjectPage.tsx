@@ -11,7 +11,6 @@ import { Status } from "../../services/enums/status.enum";
 import NotFoundPage from "../../services/utils/NotFoundPage";
 
 export default function ProjectPage() {
-  console.log("ProjectPage");
   const { idProject } = useParams();
   const idUser = localStorage.getItem("id");
   const [busy, setBusy] = useState<boolean>(true);

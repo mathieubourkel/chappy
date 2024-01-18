@@ -22,7 +22,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function MembersPage() {
-  console.log("MembersPage");
   const { idProject } = useParams();
   const [members, setMember] = useState<intUsers>([]);
   const [project, setProject] = useState<intProjectLight>({

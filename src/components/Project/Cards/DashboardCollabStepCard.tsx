@@ -11,7 +11,6 @@ type Props = {
 };
 
 export default function DashboardCollabStepCard({ step, collab }: Props) {
-  console.log("DashBoardCOllabStepCard");
   return (
     <Card className="md:flex justify-between custom-task w-full md:w-[92lvh]">
       <CardBody className="custom-task-body flex justify-between items-center">

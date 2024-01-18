@@ -11,8 +11,6 @@ import {
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
-import { addUserToBDD } from "../../services/api/users";
 
 
 
@@ -83,26 +81,22 @@ export default function FormGlobal() {
       companyNameEmployee: "",
     },
     onSubmit: async (values) => {
-      console.log("submit", values);
       // setFormValues(formValues);
 
       try {
         values.username = values.email;
-        const userResponse = await addUserToBDD(values)
-        console.log(userResponse);
+        // const userResponse = await addUserToBDD(values)
 
-        const userId = userResponse.data.id;
-        console.log(userId)
+        // const userId = userResponse.data.id;
 
-        if (selectedOption === "checkCompany") {
-          const companyResponse = await axios.post("http://localhost:1997/company-endpoint", {
-            userId: userId,
-            name: values.companyName,
-            siret: values.siret,
-            description: values.companySActivity
-          })
-          console.log(companyResponse.data)
-        }
+        // // if (selectedOption === "checkCompany") {
+        // //   const companyResponse = await axios.post("http://localhost:1997/company-endpoint", {
+        // //     userId: userId,
+        // //     name: values.companyName,
+        // //     siret: values.siret,
+        // //     description: values.companySActivity
+        // //   })
+        // // }
         
       } catch (error) {
         console.error("Erreur lors de l'envoi du formulaire")

@@ -31,9 +31,7 @@ type Props = {
   allUsers: Array<intSelect>;
 };
 
-let count = 1;
 export default function TaskCard({ id, handleReload, categories, allUsers }: Props) {
-  console.log("TaskCardComposant " + count++);
  const userId: string | undefined | null = localStorage.getItem("id");
   const [openM, setOpenM] = useState(false);
   const handleOpenM = () => setOpenM((bool) => !bool);

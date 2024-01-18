@@ -25,7 +25,6 @@ import { Status } from "../../services/enums/status.enum";
 const animatedComponents = makeAnimated();
 
 export default function CreateProjectPage() {
-  console.log("CreateProjectPage");
   const navigate = useNavigate();
   const [users, setUsers] = useState<Array<intSelect>>([]);
   const [companies, setCompanies] = useState<Array<intSelect>>([]);
@@ -39,7 +38,6 @@ export default function CreateProjectPage() {
     owner: {id:0, firstname:"", lastname:"", email:""},
     users: [],
     companies: [{ id: null }],
-
     code: randomCode(),
   });
 
@@ -104,8 +102,6 @@ export default function CreateProjectPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(users)
-    console.log(form)
     projectSchema
       .validate(form)
       .then(async (validForm) => {
@@ -120,7 +116,7 @@ export default function CreateProjectPage() {
   const handleDate = (value: any) => {
     setForm({ ...form, estimEndDate: value.startDate });
   };
-  console.log(Status);
+
   return (
     <main className="project-page sm:mx-20 mx-5 mt-10">
       <Typography variant="h1" className={"font-bold text-center"}>

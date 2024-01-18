@@ -18,7 +18,6 @@ type Props = {
 };
 
 export default function MemberCard({ member, isOwner }: Props) {
-  console.log("MemberCardComposant");
   const { idProject } = useParams();
 
   const handleDelete = () => {

@@ -38,13 +38,11 @@ type Props = {
   step: intStep;
 };
 
-let count = 1;
 export default function StepCreateTask({
   handleReload,
   categories,
   step,
 }: Props) {
-  console.log("StepCreateTaskComponent" + count++);
   const { idStep, idProject } = useParams();
   const userId = localStorage.getItem("id");
   const animatedComponents = makeAnimated();

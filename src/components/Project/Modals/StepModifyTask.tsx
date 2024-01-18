@@ -36,9 +36,7 @@ type Props = {
   allUsers: Array<intSelect>;
 };
 
-let count = 1;
 export default function StepModifyTask({ task, categories, setTask, allUsers }: Props) {
-  console.log("StepModifyTask" + count++);
   const [form, setForm] = useState<intTask>(task);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);

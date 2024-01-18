@@ -5,7 +5,7 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCartShopping,faFolderOpen,faUser} from "@fortawesome/free-solid-svg-icons";
-import { intProjectLight } from "../../../services/interfaces/intProject";
+import { intProjectLight } from "../../../services/interfaces/intProject.tsx";
 import Breadcrumb from "../../Layers/Breadcrumb/Breadcrumb.tsx";
 import {MenuProject} from "../elements/Menu/MenuProject.tsx";
 
@@ -16,7 +16,6 @@ type Props = {
 }
 
 export default function ProjectHeader({project ,idProject, isOwner} :Props) {
-  console.log("ProjectHeaderComposant")
   return (
       <section className="lg:flex justify-between mb-20">
         <div>

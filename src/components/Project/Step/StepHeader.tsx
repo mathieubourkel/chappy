@@ -5,25 +5,23 @@ import {
   CardBody, Chip,
   Typography
 } from "@material-tailwind/react";
-import { intStep } from "../../../services/interfaces/intProject";
+import { intStep } from "../../../services/interfaces/intProject.tsx";
 import {
   faBookOpen,
   faListCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ModifiableInput from "../elements/Input/ModifiableInput";
+import ModifiableInput from "../elements/Input/ModifiableInput.tsx";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
-import SelectDate from "../elements/Select/SelectDate";
+import SelectDate from "../elements/Select/SelectDate.tsx";
 import { useParams } from "react-router-dom";
 import {
   modifyStepToBDD,
-} from "../../../services/api/steps";
+} from "../../../services/api/steps.ts";
 import Breadcrumb from "../../Layers/Breadcrumb/Breadcrumb.tsx";
 import ModifiableDescription
   from "../elements/Input/ModifiableDescription.tsx";
-
-let count = 1;
 
 type Props = {
   step:intStep,
@@ -32,7 +30,6 @@ type Props = {
 }
 
 export default function StepHeader({step, setStep, isOwner}:Props) {
-  console.log("StepHeaderComposant" + count++);
 
   const { idStep } = useParams();
 

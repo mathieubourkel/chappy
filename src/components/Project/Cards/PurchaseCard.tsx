@@ -24,7 +24,6 @@ export default function PurchaseCard({
   purchase,
   isOwner,
 }: Props) {
-  console.log("PurchaseCardComposant");
 
   const handleDelete = () => {
     deletePurchaseFromBDD(purchase.id);

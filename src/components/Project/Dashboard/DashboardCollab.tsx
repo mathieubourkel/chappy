@@ -3,16 +3,16 @@ import {
   intProject,
   intProjects,
   intStep,
-} from "../../../services/interfaces/intProject";
+} from "../../../services/interfaces/intProject.tsx";
 import {
   faBan,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import RejoinModal from "../Modals/RejoinModal";
+import RejoinModal from "../Modals/RejoinModal.tsx";
 import {
   Alert,
 } from "@material-tailwind/react";
-import DashboardCollabStepCard from "../Cards/DashboardCollabStepCard";
+import DashboardCollabStepCard from "../Cards/DashboardCollabStepCard.tsx";
 import {
   MenuCollab
 } from "../elements/Menu/MenuCollab.tsx";
@@ -23,7 +23,6 @@ type Props = {
 };
 
 export default function DashboardCollab({ collabs, setReload }: Props) {
-  console.log("DashBoardCollabComposant");
   const [selected, setSelected] = useState(0);
 
   function handleClick(index: number) {

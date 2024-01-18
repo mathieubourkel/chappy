@@ -8,9 +8,8 @@ type Props = {
   categories: Array<intSelect>
   defaultValue?: intSelect
 };
-let count = 1;
+
 export default function SelectCategory({ handleCategory, categories, defaultValue }: Props) {
-  console.log("SelectCategoryComposant" + count++);
   const animatedComponents = makeAnimated();
 
   const handleCategoriesEnfant = (value: intSelect) => {

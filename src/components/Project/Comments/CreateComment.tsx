@@ -14,9 +14,8 @@ type Props = {
   handleReload: () => void;
 }
 
-export default function CreateComment({ idParent, table, handleReload}:Props) {
+export default function CreateComment({ idParent, table, handleReload }:Props) {
 
-  console.log('CreateCommentComposant')
 
   const idUser = localStorage.getItem('id')
   const [form, setForm] = useState<intComment>({
@@ -29,9 +28,14 @@ export default function CreateComment({ idParent, table, handleReload}:Props) {
 //   setForm({...form, [name] : value})
 //
 // }
+const handleEditorChange = (_event: any, editor: any) => {
+    const content = editor.getData();
+    setForm({ ...form, content });
+  };
 
 const handleSubmit = (e:FormEvent) => {
   e.preventDefault();
+  console.log(form)
   addCommentToBDD(form)
   setForm({...form, content:""})
   handleReload();
@@ -49,30 +53,11 @@ const handleDelete = () => {
               onSubmit={(e: FormEvent) => handleSubmit(
                   e)}>
 
-                  <CKEditor
-                      editor={ClassicEditor}
-                      data={form.content}
-                      onReady={editor => {
-                          console.log(
-                              'Editor is ready to use!',
-                              editor
-                          );
-                      }}
-                      onChange={(_event, editor) => {
-                          const content = editor.getData();
-                          setForm({ ...form, content })
-                      }}
-                      onBlur={(_event, editor) => {
-                          console.log(
-                              'Blur.', editor);
-                      }}
-                      onFocus={(_event, editor) => {
-                          console.log(
-                              'Focus.', editor);
-                      }}
-                  />
-
-
+                <CKEditor
+                    editor={ClassicEditor}
+                    data={form.content}
+                    onChange={handleEditorChange}
+                />
 
               <div
                   className="flex w-full justify-end py-1.5 mt-5">
