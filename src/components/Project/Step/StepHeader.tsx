@@ -23,8 +23,6 @@ import Breadcrumb from "../../Layers/Breadcrumb/Breadcrumb.tsx";
 import ModifiableDescription
   from "../elements/Input/ModifiableDescription.tsx";
 
-let count = 1;
-
 type Props = {
   step:intStep,
   setStep: (step:intStep) => void;
