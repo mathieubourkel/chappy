@@ -166,8 +166,9 @@ export default function Sidebar(props:any) {
                 </NavLink>
               </AccordionHeader>
             </ListItem>
-
-           <NestedMenuSidebar steps={project.steps} />
+                  <AccordionBody className="py-1 max-h-[20vh] custom-scroll">
+                       <NestedMenuSidebar steps={project.steps} />
+                  </AccordionBody>
 
           </Accordion>
 
