@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useApi } from "../../hooks/useApi";
+import { URL_API, useApi } from "../../hooks/useApi";
 const api = useApi();
 
 export interface Login {
@@ -21,7 +21,7 @@ export async function login(data: Login) {
 
 
   try {
-    const result = await api.post(`${import.meta.env.VITE_URL_AUTH}/login`, body, options);
+    const result = await api.post(`${URL_API}/auth/login`, body, options);
     const { token, user } = result.data.data;
     localStorage.setItem("token", token);
     localStorage.setItem("name", `${user.firstname} ${user.lastname}`);

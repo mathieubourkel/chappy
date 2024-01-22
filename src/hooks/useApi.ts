@@ -14,6 +14,7 @@ export async function handleApiCall(apiCall: any) {
 let isRefreshing = false;
 let refreshSubscribers: ((token: string) => void)[] = [];
 
+export const URL_API = `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_BACK_HOST}:${import.meta.env.VITE_BACK_PORT}`
 export function useApi() {
   const headers = {
     Accept: "Content-type",
@@ -21,7 +22,7 @@ export function useApi() {
   };
 
   const api: AxiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_URL_API,
+    baseURL: `${URL_API}/api/`,
     headers,
   });
 
@@ -70,7 +71,7 @@ export function useApi() {
                 withCredentials: true,
               };
               const result = await axios.get(
-                `${import.meta.env.VITE_URL_AUTH}/refreshToken`,
+                `${URL_API}/auth/refreshToken`,
                 options
               );
               const { token } = result.data.data;

@@ -4,7 +4,7 @@ RUN apk add --no-cache tzdata
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
-# Copier le fichier package.json et package-lock.json (si existant)
+# Copier le fichier package.json et package-lock.json (si existant)aa
 COPY package.json ./
 
 # Installer les dépendances
