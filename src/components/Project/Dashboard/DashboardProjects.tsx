@@ -1,6 +1,6 @@
 import {
   intProject,
-  intProjects,
+  intProjectsDash,
   intStep,
 } from "../../../services/interfaces/intProject";
 import StepCard from "../Cards/StepCard";
@@ -17,7 +17,7 @@ import {
 } from "@material-tailwind/react";
 
 type Props = {
-  projects: intProjects;
+  projects: intProjectsDash;
 };
 
 export default function DashboardProjects({ projects }: Props) {

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   intProject,
-  intProjects,
+  intProjectsDash,
   intStep,
 } from "../../../services/interfaces/intProject.tsx";
 import {
@@ -18,7 +18,7 @@ import {
 } from "../elements/Menu/MenuCollab.tsx";
 
 type Props = {
-  collabs: intProjects;
+  collabs: intProjectsDash;
   setReload: (bool:boolean) => void
 };
 
