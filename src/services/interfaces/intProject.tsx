@@ -12,6 +12,17 @@ export interface intProject extends intProjectLight {
     companies?: intCompanies
 }
 
+export interface intProjectDash extends intProjectLight {
+    description: string,
+    budget?: number,
+    status: number
+    steps: intSteps
+    estimEndDate: Date | null
+    owner: intOwner
+    users?: number[]
+    companies?: intCompanies
+}
+
 export interface intOwner {
     id: number,
     firstname?: string,
@@ -138,6 +149,7 @@ export interface intRangeDate {
 export type intCategories = intCategory[]
 export type intStatus = string[]
 export type intProjects = intProject[]
+export type intProjectsDash = intProjectDash[]
 export type intProjectsLight = intProjectLight[]
 export type intStepsLight = intStepLight[]
 export type intUsers = intUser[]
