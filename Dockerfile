@@ -24,6 +24,7 @@ FROM nginx:1.25.3-alpine as production
 ENV TZ Europe/Paris
 LABEL maintainer="Laetitia Ashry, Jeremy Laigle, Mathieu Bourkel"
 LABEL version="production"
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=buildprod /app/dist /app/dist
 COPY --from=base /usr/share/zoneinfo/$TZ /usr/share/zoneinfo/$TZ
 
