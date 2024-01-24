@@ -1,5 +1,5 @@
 FROM node:20.10.0-alpine as base
-ENV TZ Europe/Paris
+ARG TZ
 RUN apk add --no-cache --virtual .build-tz tzdata;\
     cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone;\
     apk del .build-tz;\
@@ -12,6 +12,9 @@ FROM base as build
 RUN npm install --silent
 
 FROM build as buildprod
+ARG VITE_BACK_HOST
+ARG VITE_PROTOCOL
+ARG VITE_BACK_PORT
 COPY . .
 RUN npm run build
 
@@ -21,11 +24,17 @@ COPY --from=build /app/node_modules /app/node_modules
 CMD ["npm", "run", "dev"]
 
 FROM nginx:1.25.3-alpine as production
-ENV TZ Europe/Paris
+ARG TZ
+COPY --from=base --chown=nginx:nginx /usr/share/zoneinfo/$TZ /usr/share/zoneinfo/$TZ
+WORKDIR /app
 LABEL maintainer="Laetitia Ashry, Jeremy Laigle, Mathieu Bourkel"
 LABEL version="production"
-COPY --from=buildprod /app/dist /app/dist
-COPY --from=base /usr/share/zoneinfo/$TZ /usr/share/zoneinfo/$TZ
-
+RUN chown -R nginx:nginx /var/cache/nginx && \
+    chown -R nginx:nginx /var/log/nginx && \
+    touch /var/run/nginx.pid && \
+    chown -R nginx:nginx /var/run/nginx.pid
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=buildprod --chown=nginx:nginx /app/dist /app/dist
+USER nginx
 CMD ["nginx", "-g", "daemon off;"]
 
