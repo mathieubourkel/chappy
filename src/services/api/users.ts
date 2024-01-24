@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { handleApiCall, useApi } from "../../hooks/useApi";
+import { URL_API, handleApiCall, useApi } from "../../hooks/useApi";
 import { intProfileUser } from "../interfaces/intProject";
 import { intForms } from "../interfaces/intForms";
+import { intCompany, intUser } from "../interfaces/intUser";
 const api = useApi();
 
 export async function getMembersByProject(idProject: string | undefined) {
@@ -51,11 +52,11 @@ export async function getMembersByProject(idProject: string | undefined) {
     return handleApiCall(async () => await api.get("companies"));
   }
   
-  export async function addUserToBDD(data: intForms) {
+  export async function addUserToBDD(data: intUser) {
     const body = data;
     // const newBody = {...data, role: {connect: [{id:1}]}};
     console.log("body", body, "data", data)
-    return handleApiCall(async () => await api.post("users", body));
+    return handleApiCall(async () => await api.post(`${URL_API}/auth/register`, body));
   }
 
   export async function getUserInfo() {
@@ -66,9 +67,10 @@ export async function getMembersByProject(idProject: string | undefined) {
     return handleApiCall(async () => await api.get("users"));
   }
 
-export async function addCompanyToBDD(data: intForms) {
-  const body = {data};
-  return handleApiCall(async () => await api.post("company", body))
+export async function addCompanyToBDD(data: intCompany) {
+  const body = data;
+  console.log("body", body, "data", data)
+  return handleApiCall(async () => await api.post(`${URL_API}/auth/company/register`, body))
 }
 
 

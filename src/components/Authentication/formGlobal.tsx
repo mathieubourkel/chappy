@@ -1,22 +1,22 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { intForms } from "../../services/interfaces/intForms";
 import {
   Button,
   Radio,
   Input,
   Typography,
-  Card
+  Card,
 } from "@material-tailwind/react";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
-
-
+import { addCompanyToBDD, addUserToBDD } from "../../services/api/users";
+import { useNavigate } from "react-router-dom";
+import { intRegister } from "../../services/interfaces/intUser";
 
 export default function FormGlobal() {
   const [selectedOption, setSelectedOption] = React.useState("");
+  const navigate = useNavigate();
   // const [formValues, setFormValues] = useState<any>({});
   const validationGlobal = Yup.object({
     lastname: Yup.string()
@@ -35,7 +35,7 @@ export default function FormGlobal() {
 
     address: Yup.string().required("Ce champ est requis"),
 
-    postal: Yup.string()
+    zip: Yup.string()
       .min(5, "Le code postal doit contenir 5 charactères")
       .max(5, "Le code postal doit contenir 5 charactères")
       .required("Ce champ est requis"),
@@ -54,56 +54,48 @@ export default function FormGlobal() {
       .oneOf([Yup.ref("password")], "Les mots de passe ne correspondent pas.")
       .required("Ce champ est requis"),
 
-    companyName: Yup.string(),
-    
+    name: Yup.string(),
 
     siret: Yup.string(),
 
-    companySActivity: Yup.string(),
+    description: Yup.string(),
 
     companyNameEmployee: Yup.string(),
   });
 
-  const { handleChange, handleSubmit, values, errors } = useFormik<intForms>({
+  const { handleChange, handleSubmit, values, errors } = useFormik<intRegister>({
     initialValues: {
-      username:"",
-      lastname: "",
-      firstname: "",
-      email: "",
-      address: "",
-      postal: null,
-      city: "",
-      phone: null,
-      password: "",
-      checkPassword: "",
-      companyName: "",
-      siret: "",
-      companySActivity: "",
+      userInfos: {
+        lastname: "",
+        firstname: "",
+        email: "",
+        address: "",
+        zip: null,
+        city: "",
+        phone: null,
+        password: "",
+        checkPassword: "",
+      },
+      companyInfos: {
+        name: "",
+        siret: "",
+        description: "",
+      },
       companyNameEmployee: "",
     },
     onSubmit: async (values) => {
       // setFormValues(formValues);
 
       try {
-        values.username = values.email;
-        // const userResponse = await addUserToBDD(values)
-
-        // const userId = userResponse.data.id;
-
-        // // if (selectedOption === "checkCompany") {
-        // //   const companyResponse = await axios.post("http://localhost:1997/company-endpoint", {
-        // //     userId: userId,
-        // //     name: values.companyName,
-        // //     siret: values.siret,
-        // //     description: values.companySActivity
-        // //   })
-        // // }
-        
+        // values.username = values.email;
+        await addUserToBDD(values.userInfos);
+        if (selectedOption === "checkCompany") {
+          await addCompanyToBDD(values.companyInfos);
+        }
+        navigate("/login");
       } catch (error) {
-        console.error("Erreur lors de l'envoi du formulaire")
+        console.error("Erreur lors de l'envoi du formulaire");
       }
-
-
     },
     validationSchema: validationGlobal,
   });
@@ -117,23 +109,26 @@ export default function FormGlobal() {
   };
   return (
     <>
-      <form className="w-full flex gap-5 flex-col items-center mt-10" onSubmit={handleSubmit}>
+      <form
+        className="w-full flex gap-5 flex-col items-center mt-10"
+        onSubmit={handleSubmit}
+      >
         <div className="flex gap-5 flex-wrap md:flex-nowrap">
           <div className={"w-full"}>
             <Input
               label="Nom"
               type="text"
-              name="lastname"
+              name="userInfos.lastname"
               id="lastname"
               className={"!bg-light-100"}
-              value={values.lastname}
+              value={values.userInfos.lastname}
               onChange={handleChange}
               crossOrigin={undefined}
               aria-required
             />
-            {errors.lastname && (
+            {errors.userInfos && (
               <small className={"text-brick-400 font-bold"}>
-                {errors.lastname}
+                {errors.userInfos.lastname}
               </small>
             )}
           </div>
@@ -145,14 +140,14 @@ export default function FormGlobal() {
               name="firstname"
               id="firstname"
               className={"!bg-light-100"}
-              value={values.firstname}
+              value={values.userInfos.firstname}
               onChange={handleChange}
               crossOrigin={undefined}
               aria-required
             />
-            {errors.firstname && (
+            {errors.userInfos && (
               <small className={"text-brick-400 font-bold"}>
-                {errors.firstname}
+                {errors.userInfos.firstname}
               </small>
             )}
           </div>
@@ -164,13 +159,13 @@ export default function FormGlobal() {
             name="email"
             id="email"
             className={"!bg-light-100"}
-            value={values.email}
+            value={values.userInfos.email}
             onChange={handleChange}
             crossOrigin={undefined}
             aria-required
           />
-          {errors.email && (
-            <small className={"text-brick-400 font-bold"}>{errors.email}</small>
+          {errors.userInfos && (
+            <small className={"text-brick-400 font-bold"}>{errors.userInfos.email}</small>
           )}
         </div>
         <div className={"w-full"}>
@@ -180,14 +175,14 @@ export default function FormGlobal() {
             name="address"
             id="address"
             className={"!bg-light-100"}
-            value={values.address}
+            value={values.userInfos.address}
             onChange={handleChange}
             crossOrigin={undefined}
             aria-required
           />
-          {errors.address && (
+          {errors.userInfos && (
             <small className={"text-brick-400 font-bold"}>
-              {errors.address}
+              {errors.userInfos.address}
             </small>
           )}
         </div>
@@ -197,18 +192,16 @@ export default function FormGlobal() {
             <Input
               label="Code postal"
               type="text"
-              name="postal"
-              id="postal"
+              name="zip"
+              id="zip"
               className={"!bg-light-100"}
-              value={values.postal !== null ? values.postal : ""}
+              value={values.userInfos.zip !== null ? values.userInfos.zip : ""}
               onChange={handleChange}
               crossOrigin={undefined}
               aria-required
             />
-            {errors.postal && (
-              <small className={"text-brick-400 font-bold"}>
-                {errors.postal}
-              </small>
+            {errors.userInfos && (
+              <small className={"text-brick-400 font-bold"}>{errors.userInfos.zip}</small>
             )}
           </div>
           <div className={"w-full"}>
@@ -218,14 +211,14 @@ export default function FormGlobal() {
               name="city"
               id="city"
               className={"!bg-light-100"}
-              value={values.city}
+              value={values.userInfos.city}
               onChange={handleChange}
               crossOrigin={undefined}
               aria-required
             />
-            {errors.city && (
+            {errors.userInfos && (
               <small className={"text-brick-400 font-bold"}>
-                {errors.city}
+                {errors.userInfos.city}
               </small>
             )}
           </div>
@@ -237,13 +230,13 @@ export default function FormGlobal() {
             name="phone"
             id="phone"
             className={"!bg-light-100"}
-            value={values.phone !== null ? values.phone : ""}
+            value={values.userInfos.phone !== null ? values.userInfos.phone : ""}
             onChange={handleChange}
             crossOrigin={undefined}
             aria-required
           />
-          {errors.phone && (
-            <small className={"text-brick-400 font-bold"}>{errors.phone}</small>
+          {errors.userInfos && (
+            <small className={"text-brick-400 font-bold"}>{errors.userInfos.phone}</small>
           )}
         </div>
         <div className="flex gap-5 flex-wrap md:flex-nowrap">
@@ -254,14 +247,14 @@ export default function FormGlobal() {
               name="password"
               id="password"
               className={"!bg-light-100"}
-              value={values.password}
+              value={values.userInfos.password}
               onChange={handleChange}
               crossOrigin={undefined}
               aria-required
             />
-            {errors.password && (
+            {errors.userInfos && (
               <small className={"text-brick-400 font-bold"}>
-                {errors.password}
+                {errors.userInfos.password}
               </small>
             )}
           </div>
@@ -272,14 +265,14 @@ export default function FormGlobal() {
               name="checkPassword"
               id="checkPassword"
               className={"!bg-light-100"}
-              value={values.checkPassword}
+              value={values.userInfos.checkPassword}
               onChange={handleChange}
               crossOrigin={undefined}
               aria-required
             />
-            {errors.checkPassword && (
+            {errors.userInfos && (
               <small className={"text-brick-400 font-bold"}>
-                {errors.checkPassword}
+                {errors.userInfos.checkPassword}
               </small>
             )}
           </div>
@@ -325,43 +318,41 @@ export default function FormGlobal() {
           </div>
         </div>
         {selectedOption === "chekCompany" && (
-            <Card className={"w-full p-10 flex flex-col gap-5 taskDescription"}>
+          <Card className={"w-full p-10 flex flex-col gap-5 taskDescription"}>
             <Input
               label="Nom de l'entreprise"
               type="text"
-              name="companyName"
-              id="companyName"
-              value={values.companyName}
+              name="name"
+              id="name"
+              value={values.companyInfos.name}
               aria-required
               onChange={handleChange}
               crossOrigin={undefined}
             />
-            {errors.companyName && <small>{errors.companyName}</small>}
+            {errors.companyInfos && <small>{errors.companyInfos.name}</small>}
 
             <Input
               label="SIRET"
               type="text"
               name="siret"
               id="siret"
-              value={values.siret !== null ? values.siret : ""}
+              value={values.companyInfos.siret !== null ? values.companyInfos.siret : ""}
               aria-required
               onChange={handleChange}
               crossOrigin={undefined}
             />
-            {errors.siret && <small>{errors.siret}</small>}
+            {errors.companyInfos && <small>{errors.companyInfos.siret}</small>}
             <Input
               label="Décrire vos activités"
-              name="companySActivity"
-              id="companySActivity"
-              value={values.companySActivity}
+              name="description"
+              id="description"
+              value={values.companyInfos.description}
               aria-required
               onChange={handleChange}
               crossOrigin={undefined}
             />
-            {errors.companySActivity && (
-              <small>{errors.companySActivity}</small>
-            )}
-            </Card>
+            {errors.companyInfos && <small>{errors.companyInfos.description}</small>}
+          </Card>
         )}
 
         {selectedOption === "checkEmployee" && (

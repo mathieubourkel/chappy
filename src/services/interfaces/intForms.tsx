@@ -4,20 +4,25 @@
 
 // export interface intForms extends intUsers, intCompany, intEmployee {}
 
+
 export interface intForms {
-    username: string,
+   
     // role: {id: number},
+   userInfos: {
     lastname: string,
     firstname: string,
     email: string,
     address: string,
-    postal: number | null,
+    zip: number | null,
     city: string,
     phone: number | null,
     password: string,
     checkPassword: string,
-    companyName?: string,
+   },
+   companyInfos: {
+    name?: string,
     siret?: string,
-    companySActivity?: string,
+    description?: string,
+   }
     companyNameEmployee?: string,
 }

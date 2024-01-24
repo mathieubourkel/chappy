@@ -1,5 +1,5 @@
 export interface intCompany {
-    companyName: string,
-    siret: number | null,
-    companySActivity: string,
+    name?: string,
+    siret?: string,
+    description?: string,
 }
