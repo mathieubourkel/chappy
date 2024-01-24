@@ -39,10 +39,7 @@ export default function ProjectCreateStep({ setReload }: Props) {
                                               budget: 0,
                                               estimEndDate: null,
                                               status: 0,
-                                              project: {
-                                                id: idProject,
-                                                name: undefined
-    }
+                                              project: idProject
   });
 
   const handleChange = (e: InputEvent) => {
@@ -52,6 +49,7 @@ export default function ProjectCreateStep({ setReload }: Props) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    console.log(form)
     await addProjectStepToBDD(form);
     setReload(true)
   }

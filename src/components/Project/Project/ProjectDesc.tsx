@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import ModifiableInput from "../elements/Input/ModifiableInput";
-import { intProject } from "../../../services/interfaces/intProject";
+import { intProject, intProjectDash } from "../../../services/interfaces/intProject";
 import SelectStatus from "../elements/Select/SelectStatus";
 import SelectDate from "../elements/Select/SelectDate";
 import { useParams } from "react-router-dom";
@@ -18,19 +18,17 @@ import CalendarProject from "../Calendar/CalendarProject";
 import { Status } from "../../../services/enums/status.enum";
 
 type Props = {
-  project: intProject;
-  setProject: (project: intProject) => void;
+  project: intProjectDash;
+  setProject: (project: intProjectDash) => void;
   isOwner: boolean;
-  nbStep: number
 };
 
-export default function ProjectDesc({ project, setProject, isOwner, nbStep }: Props) {
+export default function ProjectDesc({ project, setProject, isOwner }: Props) {
   const { idProject } = useParams();
 
   function handleModifyProject(data: intProject) {
     modifyProjectToBDD(idProject, data);
   }
-
   const handleStatus = async (values: any) => {
     const data = { ...project, status: values.value };
     await modifyProjectToBDD(idProject, data);
@@ -47,7 +45,7 @@ export default function ProjectDesc({ project, setProject, isOwner, nbStep }: Pr
             />
 
             <span>
-              Vous avez actuellement {nbStep} { nbStep > 1 ? "jalons " : "jalon " }
+              Vous avez actuellement {project.steps.length} { project.steps.length > 1 ? "jalons " : "jalon " }
               ouvert sur ce projet.
             </span>
           </Alert>
