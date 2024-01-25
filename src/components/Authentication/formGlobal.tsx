@@ -19,7 +19,8 @@ export default function FormGlobal() {
   const navigate = useNavigate();
   // const [formValues, setFormValues] = useState<any>({});
   const validationGlobal = Yup.object({
-    lastname: Yup.string()
+    userInfos: Yup.object().shape({
+      lastname: Yup.string()
       .min(2, "Votre nom doit contenir au minimum 2 charactères")
       .required("Ce champ est requis"),
 
@@ -54,11 +55,14 @@ export default function FormGlobal() {
       .oneOf([Yup.ref("password")], "Les mots de passe ne correspondent pas.")
       .required("Ce champ est requis"),
 
+    }),
+   companyInfos: Yup.object().shape({
     name: Yup.string(),
 
     siret: Yup.string(),
 
     description: Yup.string(),
+   }),
 
     companyNameEmployee: Yup.string(),
   });
@@ -83,15 +87,21 @@ export default function FormGlobal() {
       },
       companyNameEmployee: "",
     },
+    
     onSubmit: async (values) => {
       // setFormValues(formValues);
-
+      
       try {
         // values.username = values.email;
+        console.log(values, "coucou")
+
+        console.log(values.userInfos, values.companyInfos)
         await addUserToBDD(values.userInfos);
-        if (selectedOption === "checkCompany") {
-          await addCompanyToBDD(values.companyInfos);
-        }
+        await addCompanyToBDD(values.companyInfos);
+        
+        // if (selectedOption === "checkCompany") {
+        //   await addCompanyToBDD(values.companyInfos);
+        // }
         navigate("/login");
       } catch (error) {
         console.error("Erreur lors de l'envoi du formulaire");
@@ -137,7 +147,7 @@ export default function FormGlobal() {
             <Input
               label="Prénom"
               type="text"
-              name="firstname"
+              name="userInfos.firstname"
               id="firstname"
               className={"!bg-light-100"}
               value={values.userInfos.firstname}
@@ -156,7 +166,7 @@ export default function FormGlobal() {
           <Input
             label="E-mail"
             type="email"
-            name="email"
+            name="userInfos.email"
             id="email"
             className={"!bg-light-100"}
             value={values.userInfos.email}
@@ -172,7 +182,7 @@ export default function FormGlobal() {
           <Input
             label="Adresse"
             type="text"
-            name="address"
+            name="userInfos.address"
             id="address"
             className={"!bg-light-100"}
             value={values.userInfos.address}
@@ -192,7 +202,7 @@ export default function FormGlobal() {
             <Input
               label="Code postal"
               type="text"
-              name="zip"
+              name="userInfos.zip"
               id="zip"
               className={"!bg-light-100"}
               value={values.userInfos.zip !== null ? values.userInfos.zip : ""}
@@ -208,7 +218,7 @@ export default function FormGlobal() {
             <Input
               label="Ville"
               type="text"
-              name="city"
+              name="userInfos.city"
               id="city"
               className={"!bg-light-100"}
               value={values.userInfos.city}
@@ -227,7 +237,7 @@ export default function FormGlobal() {
           <Input
             label="Téléphone"
             type="tel"
-            name="phone"
+            name="userInfos.phone"
             id="phone"
             className={"!bg-light-100"}
             value={values.userInfos.phone !== null ? values.userInfos.phone : ""}
@@ -244,7 +254,7 @@ export default function FormGlobal() {
             <Input
               label="Mot de passe"
               type="password"
-              name="password"
+              name="userInfos.password"
               id="password"
               className={"!bg-light-100"}
               value={values.userInfos.password}
@@ -262,7 +272,7 @@ export default function FormGlobal() {
             <Input
               label="Confirmer du mot de passe"
               type="password"
-              name="checkPassword"
+              name="userInfos.checkPassword"
               id="checkPassword"
               className={"!bg-light-100"}
               value={values.userInfos.checkPassword}
@@ -322,7 +332,7 @@ export default function FormGlobal() {
             <Input
               label="Nom de l'entreprise"
               type="text"
-              name="name"
+              name="companyInfos.name"
               id="name"
               value={values.companyInfos.name}
               aria-required
@@ -334,7 +344,7 @@ export default function FormGlobal() {
             <Input
               label="SIRET"
               type="text"
-              name="siret"
+              name="companyInfos.siret"
               id="siret"
               value={values.companyInfos.siret !== null ? values.companyInfos.siret : ""}
               aria-required
@@ -344,7 +354,7 @@ export default function FormGlobal() {
             {errors.companyInfos && <small>{errors.companyInfos.siret}</small>}
             <Input
               label="Décrire vos activités"
-              name="description"
+              name="companyInfos.description"
               id="description"
               value={values.companyInfos.description}
               aria-required
