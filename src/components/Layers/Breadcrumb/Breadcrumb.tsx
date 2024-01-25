@@ -9,13 +9,13 @@ import {
     faHouse
 } from "@fortawesome/free-solid-svg-icons";
 import {
-    intStep
+     intStepNew
 } from "../../../services/interfaces/intProject.tsx";
 
 type Props = {
     nameProject?:string,
     idProject?: string | number | undefined
-    step?:intStep
+    step?:intStepNew
 }
 
 export default function Breadcrumb({nameProject, idProject, step}:Props) {

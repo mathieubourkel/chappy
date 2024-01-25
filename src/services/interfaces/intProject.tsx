@@ -64,7 +64,16 @@ export interface intStep extends intStepLight{
     budget: number,
     estimEndDate: Date | null
     status:number
-    project: {id:string|undefined, name:string|undefined}
+    project: string |undefined
+    tasks : intTasks
+}
+
+export interface intStepNew extends intStepLight{
+    description: string,
+    budget: number,
+    estimEndDate: Date | null
+    status:number
+    project: {id: number, name:string, owner: {id: number}, users: []}
     tasks : intTasks
 }
 
@@ -84,15 +93,31 @@ export interface intComment {
 export interface intTask {
     name: string,
     status: number
-    category: intCategory,
+    category: intCategory | number,
     description: string,
-    startDate: Date,
-    endDate:Date,
+    startDate: string,
+    endDate:string,
     comments?: intComments
-    user?: intUserLight
-    users: intUsersLight
+    owner?: {id: number}
+    users: Array<number | string | null>
     id?:number
-    step?: intStepLight
+    step?:number | string |undefined
+    project?:number
+}
+
+export interface intTaskRelou {
+    name: string,
+    status: number
+    category: any
+    description: string,
+    startDate: string,
+    endDate:string,
+    comments?: intComments
+    owner?: {id: number}
+    users: any
+    id?:number
+    step?:number | string |undefined
+    project?:number
 }
 
 export interface intPurchase {

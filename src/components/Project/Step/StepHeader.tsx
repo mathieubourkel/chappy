@@ -5,7 +5,7 @@ import {
   CardBody, Chip,
   Typography
 } from "@material-tailwind/react";
-import { intStep } from "../../../services/interfaces/intProject.tsx";
+import { intStep, intStepNew } from "../../../services/interfaces/intProject.tsx";
 import {
   faBookOpen,
   faListCheck,
@@ -24,8 +24,8 @@ import ModifiableDescription
   from "../elements/Input/ModifiableDescription.tsx";
 
 type Props = {
-  step:intStep,
-  setStep: (step:intStep) => void;
+  step:intStepNew,
+  setStep: (step:intStepNew) => void;
   isOwner:boolean
 }
 

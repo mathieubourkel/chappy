@@ -14,7 +14,7 @@ import SelectStatus from "../elements/Select/SelectStatus";
 import StepModifyTask from "../Modals/StepModifyTask";
 import StepDisplayTask from "../Modals/StepDisplayTask";
 import DeleteButton from "../elements/Buttons/DeleteButton";
-import { intSelect,intTask} from "../../../services/interfaces/intProject";
+import { intSelect, intTaskRelou} from "../../../services/interfaces/intProject";
 
 import {
   deleteTaskFromBDD,
@@ -35,23 +35,25 @@ export default function TaskCard({ id, handleReload, categories, allUsers }: Pro
  const userId: string | undefined | null = localStorage.getItem("id");
   const [openM, setOpenM] = useState(false);
   const handleOpenM = () => setOpenM((bool) => !bool);
-  const [task, setTask] = useState<intTask>({
+  const [task, setTask] = useState<intTaskRelou>({
     name: "",
     status: 0,
     category: { id: 0, name: "" },
     description: "",
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: '',
+    endDate: '',
     users: [],
-    user: { id: 0 }
+    owner: { id: 0 }
   });
 
   const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
     const getTask = async () => {
+        console.log(id, "id")
       const result = await getTaskById(id);
-      result.user.id == userId && setIsOwner(true);
+      console.log("resuklt", result)
+      result.owner.id == userId && setIsOwner(true);
       setTask(result);
     }
     getTask();
