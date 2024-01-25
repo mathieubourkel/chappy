@@ -27,7 +27,7 @@ export default function FormGlobal() {
     firstname: Yup.string()
       .min(2, "Votre prénom doit contenir au minimum 2 charactères")
       .required("Ce champ est requis"),
-
+ 
     email: Yup.string()
       .email(
         "L'adresse email doit contenir '@' et une extension '.com', '.fr' "
@@ -88,20 +88,24 @@ export default function FormGlobal() {
       companyNameEmployee: "",
     },
     
+    
     onSubmit: async (values) => {
-      // setFormValues(formValues);
+      
       
       try {
         // values.username = values.email;
         console.log(values, "coucou")
 
         console.log(values.userInfos, values.companyInfos)
+        
+        if (selectedOption === "checkCompany") {
+          console.log("tu es dans la condition")
         await addUserToBDD(values.userInfos);
         await addCompanyToBDD(values.companyInfos);
+        } else {
+          await addUserToBDD(values.userInfos);
+        }
         
-        // if (selectedOption === "checkCompany") {
-        //   await addCompanyToBDD(values.companyInfos);
-        // }
         navigate("/login");
       } catch (error) {
         console.error("Erreur lors de l'envoi du formulaire");
@@ -112,10 +116,6 @@ export default function FormGlobal() {
 
   const handleRadioChange = (value: string) => {
     setSelectedOption(value);
-
-    // if (value === "neitherOfTheTwo") {
-    //   setSelectedOption("");
-    // }
   };
   return (
     <>
@@ -296,10 +296,10 @@ export default function FormGlobal() {
                 </Typography>
               }
               name="check"
-              value="chekCompany"
+              value="checkCompany"
               crossOrigin={undefined}
-              checked={selectedOption === "chekCompany"}
-              onChange={() => handleRadioChange("chekCompany")}
+              checked={selectedOption === "checkCompany"}
+              onChange={() => handleRadioChange("checkCompany")}
             />
             <Radio
               label={
@@ -327,7 +327,7 @@ export default function FormGlobal() {
             />
           </div>
         </div>
-        {selectedOption === "chekCompany" && (
+        {selectedOption === "checkCompany" && (
           <Card className={"w-full p-10 flex flex-col gap-5 taskDescription"}>
             <Input
               label="Nom de l'entreprise"
