@@ -50,9 +50,7 @@ export default function TaskCard({ id, handleReload, categories, allUsers }: Pro
 
   useEffect(() => {
     const getTask = async () => {
-        console.log(id, "id")
       const result = await getTaskById(id);
-      console.log("resuklt", result)
       result.owner.id == userId && setIsOwner(true);
       setTask(result);
     }

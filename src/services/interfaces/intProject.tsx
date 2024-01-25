@@ -124,11 +124,12 @@ export interface intPurchase {
     name: string,
     price: number,
     ref?: string,
-    commandDate?: Date,
-    deliveryDate?: Date,
-    status?: number,
+    commandDate: Date | null,
+    deliveryDate: Date | null,
+    status: number,
     id?:number,
-    project: intProjectLight
+    project: intProjectLight,
+    idProject: any
   }
 
 export interface intDocument {

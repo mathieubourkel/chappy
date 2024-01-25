@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import {
   Button,
@@ -13,6 +14,8 @@ import CreateButton from "../elements/Buttons/CreateButton";
 import { useParams } from "react-router-dom";
 import { addPurchaseToBDD } from "../../../services/api/purchases";
 import './modal.css'
+import Datepicker from "react-tailwindcss-datepicker";
+import SelectStatus from "../elements/Select/SelectStatus";
 
 type Props = {
   handleReload: () => void;
@@ -24,13 +27,26 @@ export default function PurchaseAdd({ handleReload }: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intPurchase>({
-    name: "", price:0, project:{id: idProject, code:''}
+    name: "", price:0, project:{id: idProject, code:''},
+    ref:'', deliveryDate: new Date(), commandDate: new Date(),
+    status:0, idProject: idProject || 1
   });
 
   function handleChange(e: InputEvent) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
+
+  const handleDate = (value: any) => {
+    setForm({ ...form, commandDate: value.startDate });
+  };
+  const handleDate2 = (value: any) => {
+    setForm({ ...form, deliveryDate: value.startDate });
+  };
+
+  const handleStatus = (value: any) => {
+    setForm({ ...form, status: value.value });
+  };
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -72,6 +88,40 @@ export default function PurchaseAdd({ handleReload }: Props) {
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />
+              <Input
+                label="Référence de la commande"
+                size="lg"
+                className={"border-select"}
+                name="ref"
+                id="ref"
+                crossOrigin={undefined}
+                onChange={(e: InputEvent) => handleChange(e)}
+              />
+              <Datepicker
+                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black border-select"
+                  onChange={handleDate}
+                  value={{
+                    startDate: form.commandDate,
+                    endDate: form.commandDate,
+                  }}
+                  useRange={false}
+                  asSingle={true}
+                  inputName="rangeDate"
+                  placeholder={"Choisir la date de commande"}
+                />
+                <Datepicker
+                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black border-select"
+                  onChange={handleDate2}
+                  value={{
+                    startDate: form.deliveryDate,
+                    endDate: form.deliveryDate,
+                  }}
+                  useRange={false}
+                  asSingle={true}
+                  inputName="rangeDate"
+                  placeholder={"Choisir la date de livraison"}
+                />
+                <SelectStatus handleStatus={handleStatus} />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button onClick={handleOpen} size={"sm"} type="submit" className={"bg-brick-300"}>

@@ -5,9 +5,7 @@ const api = useApi();
 const TASK_ENDPOINT = "task";
 const TASKS_ENDPOINT = "tasks";
 
-export async function getTasksByStepId(idStep: string | undefined) {
-    return handleApiCall(async () => await api.get(`${TASKS_ENDPOINT}/step/${idStep}`));
-  }
+  // Calendar
   export async function getTasksByProjectId(idProject: string | undefined) {
     return handleApiCall(async () => await api.get(`${TASKS_ENDPOINT}/project/${idProject}`));
   }
@@ -19,7 +17,8 @@ export async function getTasksByStepId(idStep: string | undefined) {
   export async function getTasksByUsers(idUser: string | undefined|null) {
     return handleApiCall(async () => await api.get(`${TASKS_ENDPOINT}/member/${idUser}`));
   }
-  
+
+  // ------------
   export async function getTaskById(idTask: number | undefined) {
     return handleApiCall(async () => await api.get(`${TASK_ENDPOINT}/${idTask}`));
   }
