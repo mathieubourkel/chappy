@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "@material-tailwind/react";
 import { useParams } from "react-router-dom";
-import { intProject } from "../../services/interfaces/intProject";
+import { intProjectDash } from "../../services/interfaces/intProject";
 import EspaceComment from "../../components/Project/Comments/EspaceComment";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
 import ProjectDesc from "../../components/Project/Project/ProjectDesc";
@@ -16,8 +16,8 @@ export default function ProjectPage() {
   const [busy, setBusy] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const [isOwner, setIsOwner] = useState<boolean>(false);
-  const [nbStep, setNbStep] = useState<number>(0)
-  const [project, setProject] = useState<intProject>({
+  const [reload, setReload] = useState<boolean>(false)
+  const [project, setProject] = useState<intProjectDash>({
     name: "",
     description: "",
     status: Status[0].value,
@@ -25,7 +25,8 @@ export default function ProjectPage() {
     budget: undefined,
     id: undefined,
     estimEndDate: new Date(),
-    code:""
+    code:"",
+    steps: []
   });
  
   useEffect(() => {
@@ -41,11 +42,7 @@ export default function ProjectPage() {
       }   
     }
     getProject();
-  }, [idProject, idUser]);
-
-  const handleNbStep = (value:number) => {
-    setNbStep(value)
-  }
+  }, [idProject, idUser, reload]);
 
   if (error) return (<NotFoundPage />)
   return (
@@ -58,15 +55,15 @@ export default function ProjectPage() {
         <>
           <ProjectHeader isOwner={isOwner} project={project} idProject={idProject} />
           <ProjectDesc
-            nbStep={nbStep}
             project={project}
             setProject={setProject}
             isOwner={isOwner}
           />
           <ProjectSteps
-            handleNbStep={handleNbStep}
+            project={project}
             idProject={idProject}
             isOwner={isOwner}
+            setReload={setReload}
           />
           <EspaceComment table="project" idParent={idProject} />
         </>

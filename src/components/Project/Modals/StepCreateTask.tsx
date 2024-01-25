@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Dialog,
@@ -13,16 +13,13 @@ import {
 import {
   FormEvent,
   InputEvent,
-  intUser,
   intSelect,
   intTask,
-  intUsersLight,
-  intStep,
+  intStepNew,
 } from "../../../services/interfaces/intProject";
 import Datepicker from "react-tailwindcss-datepicker";
 import { addTaskToStepToBDD } from "../../../services/api/tasks";
 import { useParams } from "react-router-dom";
-import { getMembersByProject } from "../../../services/api/users";
 import ReactSelect from "react-select";
 import * as Yup from "yup";
 import makeAnimated from "react-select/animated";
@@ -35,7 +32,7 @@ import { addNotificationToBDD } from "../../../services/api/notifications";
 type Props = {
   handleReload: () => void;
   categories: Array<intSelect>;
-  step: intStep;
+  step: intStepNew;
 };
 
 export default function StepCreateTask({
@@ -50,32 +47,17 @@ export default function StepCreateTask({
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 
-  const [users, setUsers] = useState<Array<intSelect>>([]);
-
   const [form, setForm] = useState<intTask>({
     name: "",
     description: "",
     category: { id: 1, name: "" },
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: '',
+    endDate: '',
     status: 0,
     users: [],
-    user: { id: userId },
-    step: { id: idStep },
+    step: step.id,
+    project: step.project.id
   });
-
-  useEffect(() => {
-    async function getUsers() {
-      const dataUsers = await getMembersByProject(idProject);
-      // Reformatage pour le React Select {value: , label: }
-      const dataUsersReformat: Array<intSelect> = [];
-      dataUsers.users.map((element: intUser) => {
-        dataUsersReformat.push({ label: element.email, value: element.id });
-      });
-      setUsers(dataUsersReformat);
-    }
-    getUsers();
-  }, [idProject]);
 
   const taskSchema = Yup.object().shape({
     name: Yup.string()
@@ -85,8 +67,6 @@ export default function StepCreateTask({
       .max(300, "pas plus de 300")
       .required("La description de la tâche est requise"),
     status: Yup.number().required("Le statut de la tâche est requis"),
-    startDate: Yup.date().required("Veuillez remplir le champ date"),
-    endDate: Yup.date().required("Veuillez remplir le champ date"),
   });
 
   const handleChange = (e: InputEvent) => {
@@ -96,8 +76,9 @@ export default function StepCreateTask({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    console.log(form)
     const tmpIdUsers: any = [];
-    users.map((user: any) => {
+    step.project.users.map((user: any) => {
       tmpIdUsers.push(user.value);
     });
     const notif = {
@@ -110,6 +91,7 @@ export default function StepCreateTask({
     taskSchema
       .validate(form)
       .then(async (validForm:any) => {
+        console.log(validForm)
         await addTaskToStepToBDD(validForm);
         await addNotificationToBDD(notif);
         handleOpen();
@@ -121,14 +103,15 @@ export default function StepCreateTask({
   };
 
   const handleUsers = (value: Array<intSelect>) => {
-    const goodArray: intUsersLight = value.map((element: intSelect) => ({
-      id: element.value,
-    }));
+    const goodArray: Array<number | string | null> = [];
+    value.map((element: intSelect) => (
+      goodArray.push(element.value)
+    ));
     setForm({ ...form, users: goodArray });
   };
 
   const handleDate = (value: any) => {
-    setForm({ ...form, startDate: value.startDate, endDate: value.endDate });
+    setForm({ ...form, startDate: value.startDate.toString(), endDate: value.endDate.toString() });
   };
 
   const handleStatus = (value: any) => {
@@ -204,7 +187,7 @@ export default function StepCreateTask({
                 />
               </div>
               <ReactSelect
-                options={users}
+                options={step.project.users}
                 className="rounded-xl border-select"
                 isMulti
                 placeholder="Inviter des membres sur votre projet"

@@ -1,7 +1,6 @@
 import {
   Alert,
   IconButton,
-  Spinner,
   Typography
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,30 +10,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ProjectCreateStep from "../Modals/ProjectCreateStep";
 import StepCard from "../Cards/StepCard";
-import { intStep, intSteps } from "../../../services/interfaces/intProject";
-import { getStepsByIdProject } from "../../../services/api/steps";
-import { useEffect, useState } from "react";
+import { intProjectDash, intStep } from "../../../services/interfaces/intProject";
 
 type Props = {
   idProject: string | undefined
   isOwner:boolean
-  handleNbStep: (number:number) => void;
+  project: intProjectDash
+  setReload: (bool:boolean) => void;
 };
 
-export default function ProjectSteps({ idProject, isOwner, handleNbStep }: Props) {
-  const [steps, setSteps] = useState<intSteps>([]);
-  const [busy, setBusy] = useState<boolean>(true);
-  const [reload, setReload] = useState<boolean>(false);
-  useEffect(() => {
-    async function getProject() {
-      const result = await getStepsByIdProject(idProject);
-      setBusy(false);
-      handleNbStep(result.length)
-      setSteps(result);
-    }
-
-    getProject();
-  }, [handleNbStep, idProject, reload]);
+export default function ProjectSteps({ idProject, isOwner, project, setReload}: Props) {
 
   return (
     <section className="mb-20">
@@ -53,19 +38,13 @@ export default function ProjectSteps({ idProject, isOwner, handleNbStep }: Props
           </div>
         </nav>
       </article>
-      {busy ? (
-        <div className="flex justify-center mt-20">
-          <Spinner className="h-16 w-16 text-brick-300" />
-        </div>
-      ) : (
+
         <div className="flex flex-wrap justify-center gap-10 mt-10">
-          {steps.map((step: intStep) => (
+          {project.steps.map((step: intStep) => (
             <StepCard key={step.id} step={step} idProject={idProject} />
           ))}
         </div>
-      )}
-
-      {steps.length == 0 && <Alert
+      {project.steps.length == 0 && <Alert
           icon={<FontAwesomeIcon icon={faCircleExclamation} className={"text-brick-400 text-xl"}/>}
           className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5"
       >
