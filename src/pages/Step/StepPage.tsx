@@ -39,7 +39,6 @@ export default function StepPage() {
     const getStep = async () => {
       try {
         const tmpStep = await getStepById(idStep);
-        console.log(tmpStep)
         const dataCategories = await getCategories();
         tmpStep.project.owner.id.toString() === idUser && setIsOwner(true);
         const emailArray: Array<intSelect> = tmpStep.project.users.map(
