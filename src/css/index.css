@@ -255,7 +255,7 @@ p {
 
         /* Selection Date */
 
-.bg-indigo-500 {
+.bg-indigo-500, .bg-blue-500 {
     background: var(--input-color) !important;
 }
 
@@ -263,7 +263,7 @@ p {
     background: var(--datepicker-color) !important;
 }
 
-.text-indigo-500 {
+.text-indigo-500, .text-blue-500 {
     color: var(--input-color) !important;
 }
 
