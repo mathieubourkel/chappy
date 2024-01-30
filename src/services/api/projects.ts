@@ -4,12 +4,12 @@ import { intProject } from "../interfaces/intProject";
 const api = useApi();
 const PROJECT_ENDPOINT = "project";
 
-export async function getProjectsFromOwner(idUser: string | null) {
-    return handleApiCall(async () => await api.get(`myprojects/${idUser}`));
+export async function getProjectsFromOwner() {
+    return handleApiCall(async () => await api.get(`myprojects`));
   }
   
-  export async function getProjectsFromUsers(idUser: string | null) {
-    return handleApiCall(async () => await api.get(`mycollabs/${idUser}`));
+  export async function getProjectsFromUsers() {
+    return handleApiCall(async () => await api.get(`mycollabs`));
   }
   
   export async function getProjectById(idProject: string | undefined) {

@@ -9,3 +9,9 @@ export enum DocumentTypeEnum {
     'Jpg',
     'Png'
 }
+
+// export const lesEnumOnAimePasCa = [
+//     "Pdf",
+//     "Jpg",
+//     "Png"
+// ]

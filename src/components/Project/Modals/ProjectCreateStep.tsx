@@ -39,7 +39,7 @@ export default function ProjectCreateStep({ setReload }: Props) {
                                               budget: 0,
                                               estimEndDate: null,
                                               status: 0,
-                                              project: idProject
+                                              project: Number(idProject)
   });
 
   const handleChange = (e: InputEvent) => {

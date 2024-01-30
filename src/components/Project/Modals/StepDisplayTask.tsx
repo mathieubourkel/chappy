@@ -8,12 +8,12 @@ import {
   Input, Button,
 } from "@material-tailwind/react";
 
-import { intTask} from "../../../services/interfaces/intProject";
+import { intTaskRelou} from "../../../services/interfaces/intProject";
 import { enumStatus } from "../../../services/interfaces/Status";
 import './modal.css'
 
 type Props = {
-  task: intTask;
+  task: intTaskRelou;
   handleOpenM: () => void;
   openM: boolean;
 };

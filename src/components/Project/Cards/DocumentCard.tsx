@@ -20,13 +20,16 @@ export default function DocumentCard({ index, setDocument,document, documents, i
 
   const getDocumentTypeString = (type: DocumentTypeEnum): string => {
     const typeDocument = Object.entries(DocumentTypeEnum);
+    console.log(typeDocument)
     const foundType = typeDocument.find(([, value]) : boolean => value === type);
+    console.log(foundType)
     return foundType ? foundType[0] : 'N/A';
   };
   
   const handleDelete = () => {
     deleteDocumentFromBDD(document.id)
   }
+
   return (
     <>
       <Card
@@ -37,6 +40,7 @@ export default function DocumentCard({ index, setDocument,document, documents, i
             <div
                 className="border p-1 rounded-xl bg-light-200 m-2 text-sm text-marine-300 font-bold ml-5 uppercase">
               {getDocumentTypeString(document.type)}
+              {/* {lesEnumOnAimePasCa[document.type]} */}
             </div>
             <Typography
                 variant="h5"

@@ -24,6 +24,7 @@ const TASKS_ENDPOINT = "tasks";
   }
   
   export async function addTaskToStepToBDD(data: intTask) {
+    data.budget = Number(data.budget)
     return handleApiCall(async () => await api.post(TASK_ENDPOINT, data));
   }
  

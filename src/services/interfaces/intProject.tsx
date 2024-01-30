@@ -53,7 +53,7 @@ export interface intProjectLight {
     name?:string
     owner?: intOwner,
     code:string
-    users?: intUsersLight
+    users?: number[]
   }
 
   export interface intStepLight {
@@ -66,7 +66,7 @@ export interface intStep extends intStepLight{
     budget: number,
     estimEndDate: Date | null
     status:number
-    project: string |undefined
+    project: number
     tasks : intTasks
 }
 
@@ -105,9 +105,11 @@ export interface intTask {
     id?:number
     step?:number | string |undefined
     project?:number
+    budget:number
 }
 
 export interface intTaskRelou {
+    budget: number
     name: string,
     status: number
     category: any
@@ -133,6 +135,17 @@ export interface intPurchase {
     project: intProjectLight,
     idProject: any
   }
+
+export interface intCreatePurchase {
+    name: string,
+    price: number,
+    ref?: string,
+    commandDate: Date | null,
+    deliveryDate: Date | null,
+    status: number,
+    id?:number,
+    project: number,
+}
 
 export interface intDocument {
     path: string,

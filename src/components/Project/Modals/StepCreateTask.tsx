@@ -56,7 +56,8 @@ export default function StepCreateTask({
     status: 0,
     users: [],
     step: step.id,
-    project: step.project.id
+    project: step.project.id,
+    budget: 0
   });
 
   const taskSchema = Yup.object().shape({
@@ -119,7 +120,8 @@ export default function StepCreateTask({
   };
 
   const handleCategory = (value: any) => {
-    setForm({ ...form, category: { id: value.value, name: value.label } });
+    console.log(value)
+    setForm({ ...form, category: value.value});
   };
 
   return (

@@ -43,7 +43,8 @@ export default function TaskCard({ id, handleReload, categories, allUsers }: Pro
     startDate: '',
     endDate: '',
     users: [],
-    owner: { id: 0 }
+    owner: { id: 0 },
+    budget: 0
   });
 
   const [isOwner, setIsOwner] = useState(false);

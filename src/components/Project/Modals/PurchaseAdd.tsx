@@ -9,7 +9,7 @@ import {
   Typography,
   Input,
 } from "@material-tailwind/react";
-import { FormEvent, InputEvent, intPurchase } from "../../../services/interfaces/intProject";
+import { FormEvent, InputEvent, intCreatePurchase } from "../../../services/interfaces/intProject";
 import CreateButton from "../elements/Buttons/CreateButton";
 import { useParams } from "react-router-dom";
 import { addPurchaseToBDD } from "../../../services/api/purchases";
@@ -26,10 +26,10 @@ export default function PurchaseAdd({ handleReload }: Props) {
   const {idProject} = useParams();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  const [form, setForm] = useState<intPurchase>({
-    name: "", price:0, project:{id: idProject, code:''},
+  const [form, setForm] = useState<intCreatePurchase>({
+    name: "", price:0,
     ref:'', deliveryDate: new Date(), commandDate: new Date(),
-    status:0, idProject: idProject || 1
+    status:0, project: Number(idProject)
   });
 
   function handleChange(e: InputEvent) {
