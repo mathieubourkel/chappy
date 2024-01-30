@@ -10,7 +10,12 @@ import {
   Option,
   Select,
 } from "@material-tailwind/react";
-import { FormEvent, intUser, intUserLight, intUsers } from "../../../services/interfaces/intProject";
+import {
+  FormEvent, intProjectLight,
+  intUser,
+  intUserLight,
+  intUsers
+} from "../../../services/interfaces/intProject";
 import CreateButton from "../elements/Buttons/CreateButton";
 import { useParams } from "react-router-dom";
 import { addUserToProjectToBDD, getAllUsers } from "../../../services/api/users";
@@ -18,11 +23,11 @@ import './modal.css'
 
 
 type Props = {
-  members: intUsers
-  setMember: (members: intUsers) => void;
+  project: intProjectLight
+  setProject: (project: intProjectLight) => void;
 };
 
-export default function MembersAdd({ members, setMember}: Props) {
+export default function MembersAdd({ project, setProject}: Props) {
   
   const {idProject} = useParams();
   const [open, setOpen] = useState<boolean>(false);
@@ -46,7 +51,9 @@ export default function MembersAdd({ members, setMember}: Props) {
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const user:any = users.find((element:intUser) => element.email == selected)
-    setMember([...members, user]);
+    const tmpArrayUsers = project.users;
+    tmpArrayUsers?.push(user)
+    setProject({ ...project, users: tmpArrayUsers});
     addUserToProjectToBDD(idProject, user.id)
   }
 
@@ -72,7 +79,7 @@ export default function MembersAdd({ members, setMember}: Props) {
               >
               {users.map((user: intUserLight, index: number) => (
             <Option key={index} value={user.email}>
-              {user.email}
+              {user.firstname} {user.lastname}
             </Option>
           ))}
               </Select>

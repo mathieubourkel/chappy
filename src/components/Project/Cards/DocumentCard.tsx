@@ -6,6 +6,7 @@ import DeleteButton from "../elements/Buttons/DeleteButton";
 import { intDocument, intDocuments } from "../../../services/interfaces/intProject";
 import DocumentModify from "../Modals/DocumentModifiy";
 import { deleteDocumentFromBDD } from "../../../services/api/documents";
+import { DocumentTypeEnum } from "../../../services/enums/document.type.enum.ts";
 
 type Props = {
   index: number;
@@ -16,6 +17,12 @@ type Props = {
 };
 
 export default function DocumentCard({ index, setDocument,document, documents, isOwner }: Props) {
+
+  const getDocumentTypeString = (type: DocumentTypeEnum): string => {
+    const typeDocument = Object.entries(DocumentTypeEnum);
+    const foundType = typeDocument.find(([, value]) : boolean => value === type);
+    return foundType ? foundType[0] : 'N/A';
+  };
   
   const handleDelete = () => {
     deleteDocumentFromBDD(document.id)
@@ -29,11 +36,11 @@ export default function DocumentCard({ index, setDocument,document, documents, i
           <div className="flex gap-2 items-center">
             <div
                 className="border p-1 rounded-xl bg-light-200 m-2 text-sm text-marine-300 font-bold ml-5 uppercase">
-              {document.type}
+              {getDocumentTypeString(document.type)}
             </div>
             <Typography
                 variant="h5"
-                className="ml-3 text-marine-300 font-extrabold"
+                className="ml-3 text-marine-300 text-sm"
             >
               {document.path}
             </Typography>

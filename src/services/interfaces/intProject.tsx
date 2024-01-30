@@ -49,13 +49,15 @@ export interface intNotification {
 }
 
 export interface intProjectLight {
-    id?:number | string | string | undefined
+    id?:number | string | undefined
     name?:string
+    owner?: intOwner,
     code:string
+    users?: intUsersLight
   }
 
   export interface intStepLight {
-    id?:number | string | string | undefined
+    id?:number | string | undefined
     name?:string
   }
 
@@ -134,17 +136,23 @@ export interface intPurchase {
 
 export interface intDocument {
     path: string,
-    type: string,
+    type: number,
     id?:number,
     project: intProjectLight
 }
+
+export type intSelectDocument = {
+    value: number | null | string
+    label: string | undefined
+};
 
 export interface intUser extends intUserLight {
     city:string,
     address: string,
     zip: number,
-    status:number
-    phone:string
+    status:number,
+    phone:string,
+    tasks:intTasks
     
 }
 

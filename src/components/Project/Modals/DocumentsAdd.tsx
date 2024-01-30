@@ -8,11 +8,17 @@ import {
   Typography,
   Input,
 } from "@material-tailwind/react";
-import { FormEvent, InputEvent, intDocument } from "../../../services/interfaces/intProject";
+import {
+  FormEvent,
+  InputEvent,
+  intDocument,
+} from "../../../services/interfaces/intProject";
 import CreateButton from "../elements/Buttons/CreateButton";
 import { addDocumentToBDD } from "../../../services/api/documents";
 import { useParams } from "react-router-dom";
 import './modal.css'
+import SelectTypeDocument from "../elements/Select/SelectTypeDocument.tsx";
+import { Type } from "../../../services/enums/document.type.enum.ts";
 
 type Props = {
   handleReload: () => void;
@@ -24,7 +30,7 @@ export default function DocumentsAdd({ handleReload }: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intDocument>({
-    path: "", type: "", project: {id: idProject, code:''}
+    path: "", type: 0, project: {id: idProject, code:''}
   });
 
   function handleChange(e: InputEvent) {
@@ -40,6 +46,11 @@ export default function DocumentsAdd({ handleReload }: Props) {
     
   }
 
+  const handleTypeDocument = (value:any) : void => {
+    setForm({ ...form, type: value.value })
+  }
+
+  // @ts-ignore
   return (
     <div>
       <CreateButton handleClick={handleOpen} value="Ajouter" />
@@ -64,14 +75,9 @@ export default function DocumentsAdd({ handleReload }: Props) {
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />
-              <Input
-                label="Type du document"
-                size="lg"
-                name="type"
-                id="type"
-                className={"border-select"}
-                crossOrigin={undefined}
-                onChange={(e: InputEvent) => handleChange(e)}
+              <SelectTypeDocument
+                value={Type[form.type]}
+                handleDocument={handleTypeDocument}
               />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">

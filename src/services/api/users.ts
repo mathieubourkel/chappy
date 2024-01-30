@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { URL_API, handleApiCall, useApi } from "../../hooks/useApi";
 import { intProfileUser } from "../interfaces/intProject";
-import { intForms } from "../interfaces/intForms";
 import { intCompany, intUser } from "../interfaces/intUser";
-const api = useApi();
+import {AxiosInstance} from "axios";
+const api:AxiosInstance = useApi();
 
 export async function getMembersByProject(idProject: string | undefined) {
-    return handleApiCall(async () => await api.get(`projects/${idProject}?[fields]=id&populate[0]=users`));
+    return handleApiCall(async () => await api.get(`project/${idProject}/members`));
   }
   
   export async function getMembersByTask(idTask: number | undefined) {
@@ -14,12 +14,8 @@ export async function getMembersByProject(idProject: string | undefined) {
   }
   
   export async function addUserToProjectToBDD(idProject: string | undefined, idUser: number) {
-    const body = {
-      users: {
-        connect: [idUser],
-      },
-    };
-    return handleApiCall(() => api.put(`projects/${idProject}`, body));
+    return handleApiCall(async () => await api.put(`project/addUser/${idProject}`,
+                                                   {idUser}));
   }
 
   export async function modifyUserToBDD(idUser: string | null, data: intProfileUser) {

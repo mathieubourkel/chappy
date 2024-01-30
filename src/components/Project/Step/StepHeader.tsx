@@ -5,7 +5,7 @@ import {
   CardBody, Chip,
   Typography
 } from "@material-tailwind/react";
-import { intStep, intStepNew } from "../../../services/interfaces/intProject.tsx";
+import { intStepNew } from "../../../services/interfaces/intProject.tsx";
 import {
   faBookOpen,
   faListCheck,
@@ -22,6 +22,11 @@ import {
 import Breadcrumb from "../../Layers/Breadcrumb/Breadcrumb.tsx";
 import ModifiableDescription
   from "../elements/Input/ModifiableDescription.tsx";
+import SelectStatus
+  from "../elements/Select/SelectStatus.tsx";
+import {
+  Status
+} from "../../../services/enums/status.enum.ts";
 
 type Props = {
   step:intStepNew,
@@ -33,13 +38,14 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
 
   const { idStep } = useParams();
 
-  // const handleDeleteStep = async () => {
-  //   await deleteStepFromBDD(idStep);
-  //   navigate("/project/" + idProject);
-  // };
-
-  const handleModifyStep = (data: intStep) => {
+  const handleModifyStep = (data: intStepNew) => {
     modifyStepToBDD(idStep, data);
+  };
+
+  const handleStatus = async (values:any):Promise<void> => {
+    const data = { ...step, status:values.value};
+    await modifyStepToBDD(idStep, data);
+    setStep(data);
   };
 
   // Render
@@ -59,8 +65,8 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
       </div>
 
       <article className="mt-10">
-          <div>
-            <Alert
+        <div>
+          <Alert
               className={"mb-5 bg-brick-300 p-5"}>
             <FontAwesomeIcon
                 icon={faListCheck}
@@ -105,22 +111,29 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
             </CardBody>
           </Card>
         </div>
+        <div className="mt-3">
+          <ModifiableInput
+              value={"Budget : " +
+                  step.budget.toString() + "€"}
+              type="number"
+              label="budget"
+              placeHolder="Entrez le nouveau budget"
+              state={step}
+              setState={setStep}
+              isOwner={isOwner}
+              handleBdd={handleModifyStep}
+          />
+        </div>
         <div
             className="md:flex gap-5 mt-5">
-          <div className="basis-1/2">
-            <ModifiableInput
-                value={"Budget : " +
-                    step.budget.toString() + "€"}
-                type="number"
-                label="budget"
-                placeHolder="Entrez le nouveau budget"
-                state={step}
-                setState={setStep}
-                isOwner={isOwner}
-                handleBdd={handleModifyStep}
+          <div className="w-full">
+            <SelectStatus
+                handleStatus={handleStatus}
+                value={Status[step.status]}
             />
           </div>
-          <div className="basis-1/2 ">
+
+          <div className="w-full my-5 md:my-0">
             <SelectDate
                 state={step}
                 setState={setStep}

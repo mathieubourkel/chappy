@@ -5,15 +5,15 @@ import {
   Typography
 } from "@material-tailwind/react";
 import DeleteButton from "../elements/Buttons/DeleteButton";
-import { intUser, intUsers } from "../../../services/interfaces/intProject";
+import {
+  intUserLight,
+} from "../../../services/interfaces/intProject";
 import user from "../../../assets/img/icon_user.png";
 import { deleteUserToProjectToBDD } from "../../../services/api/users";
 
 type Props = {
   isOwner: boolean;
-  member: intUser;
-  members: intUsers;
-  setMember: (members: intUsers) => void;
+  member: intUserLight;
   index: number;
 };
 
@@ -46,11 +46,11 @@ export default function MemberCard({ member, isOwner }: Props) {
           </div>
 
           <div className="flex gap-5 justify-end">
-            <Typography
-                variant="h5"
-                className="p-2 px-5 text-brick-300 border border-brick-300 text-sm rounded-xl">
-              7 tâches en cours
-            </Typography>
+            {/*<Typography*/}
+            {/*    variant="h5"*/}
+            {/*    className="p-2 px-5 text-brick-300 border border-brick-300 text-sm rounded-xl">*/}
+            {/*  {member.tasks.length} tâches en cours*/}
+            {/*</Typography>*/}
             {isOwner && <DeleteButton
                 handleDeleteBDD={handleDelete}/>}
           </div>

@@ -51,7 +51,8 @@ export default function DocumentsPage() {
 
         {isOwner && (
               <DocumentsAdd
-                  handleReload={handleReload}/>
+                  handleReload={handleReload}
+                   />
         )}
         </div>
       </section>

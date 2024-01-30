@@ -1,6 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { handleApiCall, useApi } from "../../hooks/useApi";
-import { intStep } from "../interfaces/intProject";
+import {
+    intStep,
+    intStepNew
+} from "../interfaces/intProject";
 const api = useApi();
 const STEP_ENDPOINT = "step";
 
@@ -16,7 +19,7 @@ export async function addProjectStepToBDD(data: intStep) {
     return handleApiCall(async () => await api.post(STEP_ENDPOINT, data));
   }
 
-  export async function modifyStepToBDD(idStep: string | undefined, data: intStep) {
+  export async function modifyStepToBDD(idStep: string | undefined, data: intStepNew) {
     return handleApiCall(async () => await api.put(`${STEP_ENDPOINT}/${idStep}`, data));
   }
 

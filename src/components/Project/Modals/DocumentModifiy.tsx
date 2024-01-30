@@ -13,6 +13,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FormEvent, InputEvent, intDocument, intDocuments} from "../../../services/interfaces/intProject";
 import './modal.css'
+import {
+  Type
+} from "../../../services/enums/document.type.enum.ts";
+import SelectTypeDocument
+  from "../elements/Select/SelectTypeDocument.tsx";
 
 type Props = {
   documents: intDocuments
@@ -41,6 +46,10 @@ export default function DocumentModify({ documents, setDocument, index}: Props) 
   useEffect(() => {
     setForm({ ...documents[index] });
   }, [index, open, documents]);
+
+  const handleTypeDocument = (value:any) : void => {
+    setForm({ ...form, type: value.value })
+  }
 
   return (
     <div>
@@ -74,16 +83,12 @@ export default function DocumentModify({ documents, setDocument, index}: Props) 
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />
-              <Input
-                label="Type du document"
-                size="lg"
-                className={"border-select"}
-                value={form.type}
-                name="type"
-                id="type"
-                crossOrigin={undefined}
-                onChange={(e: InputEvent) => handleChange(e)}
+
+              <SelectTypeDocument
+                  value={Type[form.type]}
+                  handleDocument={handleTypeDocument}
               />
+
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <Button onClick={handleOpen} size={"sm"} type="submit" className={"bg-brick-300"}>
