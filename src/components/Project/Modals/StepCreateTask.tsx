@@ -28,6 +28,7 @@ import SelectCategory from "../elements/Select/SelectCategory";
 import SelectStatus from "../elements/Select/SelectStatus";
 import "./modal.css";
 import { addNotificationToBDD } from "../../../services/api/notifications";
+import { formatDate } from "../../../services/utils/FormatDate";
 
 type Props = {
   handleReload: () => void;
@@ -43,7 +44,7 @@ export default function StepCreateTask({
   const { idStep, idProject } = useParams();
   const userId = localStorage.getItem("id");
   const animatedComponents = makeAnimated();
-
+  const date = new Date()
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 
@@ -51,8 +52,8 @@ export default function StepCreateTask({
     name: "",
     description: "",
     category: { id: 1, name: "" },
-    startDate: '',
-    endDate: '',
+    startDate: formatDate(date),
+    endDate: formatDate(date),
     status: 0,
     users: [],
     step: step.id,

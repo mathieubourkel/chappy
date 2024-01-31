@@ -15,6 +15,7 @@ export async function getPurchasesByProject(idProject: string | undefined) {
   }
 
   export async function modifyPurchaseFromBDD(idPurchase: number | undefined, data: any) {
+    data.price = Number(data.price)
     return handleApiCall(() => api.put(`${PURCHASE_ENDPOINT}/${idPurchase}`, data));
   }
   

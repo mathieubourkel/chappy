@@ -4,29 +4,32 @@ import {
 import DeleteButton from "../elements/Buttons/DeleteButton";
 import PurchaseModify from "../Modals/PurchaseModify";
 import {
+  intProjectForPurchases,
   intPurchase,
-  intPurchases,
 } from "../../../services/interfaces/intProject";
 import { deletePurchaseFromBDD } from "../../../services/api/purchases";
 
 type Props = {
   index: number;
-  setPurchase: (purchase: intPurchases) => void;
-  purchases: intPurchases;
+  setProject: (project: intProjectForPurchases) => void;
+  project: intProjectForPurchases;
   isOwner: boolean;
   purchase: intPurchase;
+  handleReload: () => void;
 };
 
 export default function PurchaseCard({
   index,
-  setPurchase,
-  purchases,
+  setProject,
+  project,
   purchase,
   isOwner,
+  handleReload
 }: Props) {
 
-  const handleDelete = () => {
-    deletePurchaseFromBDD(purchase.id);
+  const handleDelete = async () => {
+    await deletePurchaseFromBDD(purchase.id);
+    handleReload()
   };
   return (
     <Card
@@ -50,8 +53,8 @@ export default function PurchaseCard({
                 <div
                     className="flex gap-2 items-center">
                   <PurchaseModify
-                      purchases={purchases}
-                      setPurchase={setPurchase}
+                      project={project}
+                      setProject={setProject}
                       index={index}
                   />
                   <DeleteButton

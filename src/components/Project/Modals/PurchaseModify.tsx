@@ -11,16 +11,16 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { FormEvent, InputEvent, intPurchase, intPurchases } from "../../../services/interfaces/intProject";
+import { FormEvent, InputEvent, intProjectForPurchases, intPurchase, intPurchases } from "../../../services/interfaces/intProject";
 import './modal.css'
 
 type Props = {
-  purchases: intPurchases
-  setPurchase: (purchases: intPurchases) => void;
+  project: intProjectForPurchases
+  setProject: (project: intProjectForPurchases) => void;
   index:number
 };
 
-export default function PurchaseModify({ purchases, setPurchase, index}: Props) {
+export default function PurchaseModify({ project, setProject, index}: Props) {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -37,10 +37,6 @@ export default function PurchaseModify({ purchases, setPurchase, index}: Props) 
     tempArray[index] = form;
     setPurchase(tempArray);
   }
-    
-  useEffect(() => {
-    setForm({ ...purchases[index] });
-  }, [index, open, purchases]);
 
   return (
     <div>

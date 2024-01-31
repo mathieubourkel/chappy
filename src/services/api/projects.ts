@@ -18,6 +18,7 @@ export async function getProjectsFromOwner() {
   
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export async function addProjectToBDD(data: any) {
+    data.budget = Number(data.budget)
     return handleApiCall(async () => await api.post(PROJECT_ENDPOINT, data));
   }
   
@@ -26,6 +27,7 @@ export async function getProjectsFromOwner() {
   }
   
   export async function modifyProjectToBDD(idProject: string | undefined, data: intProject) {
+    data.budget = Number(data.budget)
     return handleApiCall(async () => await api.put(`${PROJECT_ENDPOINT}/${idProject}`, data));
   }
 

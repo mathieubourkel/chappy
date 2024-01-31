@@ -5,59 +5,62 @@ import {
   Spinner,
 } from "@material-tailwind/react";
 import {
-  intPurchases,
   intPurchase,
-  intProjectLight,
+  intProject,
+  intProjectForPurchases,
 } from "../../services/interfaces/intProject";
 import PurchaseCard from "../../components/Project/Cards/PurchaseCard";
 import PurchaseAdd from "../../components/Project/Modals/PurchaseAdd";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
 import { useParams } from "react-router-dom";
 import { getPurchasesByProject } from "../../services/api/purchases";
-import { getProjectById } from "../../services/api/projects";
 import {
   FontAwesomeIcon
 } from "@fortawesome/react-fontawesome";
 import {
   faCircleInfo
 } from "@fortawesome/free-solid-svg-icons";
+import NotFoundPage from "../../services/utils/NotFoundPage";
 
 export default function PurchasesPage() {
   const { idProject } = useParams();
   const idUser = localStorage.getItem("id");
   const [busy, setBusy] = useState<boolean>(true);
-  const [project, setProject] = useState<intProjectLight>({
-    id: undefined,
-    name: "", code:''
-  });
-  const [purchases, setPurchases] = useState<intPurchases>([]);
-  const [reload, setReload] = useState(false);
   const [isOwner, setIsOwner] = useState<boolean>(false);
-
+  const [project, setProject] = useState<intProjectForPurchases>({
+    name: "",
+    owner: {id:0},
+    id: 0,
+    purchases: []
+  });
+  const [reload, setReload] = useState(false);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const [projectData, purchasesData] = await Promise.all([
-          getProjectById(idProject),
-          getPurchasesByProject(idProject),
-        ]);
-        setProject(projectData);
-        setPurchases(purchasesData);
-        setIsOwner(projectData.owner.id.toString() === idUser);
-        setBusy(false);
+        const result = await getPurchasesByProject(idProject)
+        result.owner.id.toString() === idUser && setIsOwner(true); 
+        setProject(result);
       } catch (error) {
-        console.error(error);
+        setError(true)
+      } finally {
+        setBusy(false)
       }
     }
-
     fetchData();
   }, [idProject, reload, idUser]);
 
-  const calculateTotal = () => {
-    return purchases.reduce((total, purchase) => total + Math.floor(purchase.price), 0);
+  const handleReload = () => {
+    setReload((cur) => !cur);
   };
 
+  const calculateTotal = () => {
+    return project.purchases.reduce((total, purchase) => total + Math.floor(purchase.price), 0);
+  };
+
+  if (error) return (<NotFoundPage />)
+  
   return (
     <main className="sm:mx-20 mx-5 mt-10">
       <ProjectHeader isOwner={isOwner} project={project} idProject={idProject} />
@@ -79,18 +82,19 @@ export default function PurchasesPage() {
         </div>
       ) : (
         <div className="mt-5 mb-20">
-          {purchases.map((purchase: intPurchase, index: number) => (
+          {project.purchases.map((purchase: intPurchase, index: number) => (
             <PurchaseCard
               key={index}
-              setPurchase={setPurchases}
-              purchases={purchases}
+              setProject={setProject}
+              project={project}
               index={index}
               isOwner={isOwner}
               purchase={purchase}
+              hanldeReload={handleReload}
             />
           ))}
 
-          {purchases.length == 0 &&
+          {project.purchases.length == 0 &&
               <Alert
                   icon={<FontAwesomeIcon icon={faCircleInfo} className={"text-marine-300 text-xl"}/>}
                   className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 mb-5"

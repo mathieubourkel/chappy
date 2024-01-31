@@ -16,19 +16,20 @@ import { addPurchaseToBDD } from "../../../services/api/purchases";
 import './modal.css'
 import Datepicker from "react-tailwindcss-datepicker";
 import SelectStatus from "../elements/Select/SelectStatus";
+import { formatDate } from "../../../services/utils/FormatDate";
 
 type Props = {
   handleReload: () => void;
 };
 
 export default function PurchaseAdd({ handleReload }: Props) {
-
+  const date = new Date()
   const {idProject} = useParams();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intCreatePurchase>({
     name: "", price:0,
-    ref:'', deliveryDate: new Date(), commandDate: new Date(),
+    ref:'', deliveryDate: formatDate(date), commandDate: formatDate(date),
     status:0, project: Number(idProject)
   });
 
@@ -38,6 +39,8 @@ export default function PurchaseAdd({ handleReload }: Props) {
   }
 
   const handleDate = (value: any) => {
+    console.log(typeof form.commandDate)
+    console.log(typeof value.startDate)
     setForm({ ...form, commandDate: value.startDate });
   };
   const handleDate2 = (value: any) => {

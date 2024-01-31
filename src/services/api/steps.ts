@@ -21,6 +21,7 @@ export async function addProjectStepToBDD(data: intStep) {
   }
 
   export async function modifyStepToBDD(idStep: string | undefined, data: intStepNew) {
+    data.budget = Number(data.budget)
     return handleApiCall(async () => await api.put(`${STEP_ENDPOINT}/${idStep}`, data));
   }
 

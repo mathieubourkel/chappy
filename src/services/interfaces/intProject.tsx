@@ -64,10 +64,17 @@ export interface intProjectLight {
 export interface intStep extends intStepLight{
     description: string,
     budget: number,
-    estimEndDate: Date | null
+    estimEndDate: string
     status:number
     project: number
     tasks : intTasks
+}
+
+export interface intProjectForPurchases {
+    id: number,
+    name: string
+    purchases: intPurchases,
+    owner: {id: number}
 }
 
 export interface intStepNew extends intStepLight{
@@ -140,8 +147,8 @@ export interface intCreatePurchase {
     name: string,
     price: number,
     ref?: string,
-    commandDate: Date | null,
-    deliveryDate: Date | null,
+    commandDate: string,
+    deliveryDate: string,
     status: number,
     id?:number,
     project: number,

@@ -20,39 +20,40 @@ import Datepicker from "react-tailwindcss-datepicker";
 import { useParams } from "react-router-dom";
 import { addProjectStepToBDD } from "../../../services/api/steps";
 import SelectStatus from "../elements/Select/SelectStatus";
-import './modal.css'
-
+import "./modal.css";
+import { formatDate } from "../../../services/utils/FormatDate";
 
 type Props = {
   setReload: (bool: boolean) => void;
 };
 
 export default function ProjectCreateStep({ setReload }: Props) {
+  const date = new Date()
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  const {idProject} = useParams()
+  const { idProject } = useParams();
   const [form, setForm] = useState<intStep>({
-                                              id: undefined,
-                                              tasks: [],
-                                              name: "",
-                                              description: "",
-                                              budget: 0,
-                                              estimEndDate: null,
-                                              status: 0,
-                                              project: Number(idProject)
+    id: undefined,
+    tasks: [],
+    name: "",
+    description: "",
+    budget: 0,
+    estimEndDate: formatDate(date),
+    status: 0,
+    project: Number(idProject),
   });
 
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
-  }
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(form)
+    console.log(form);
     await addProjectStepToBDD(form);
-    setReload(true)
-  }
+    setReload(true);
+  };
 
   const handleDate = (value: any) => {
     setForm({ ...form, estimEndDate: value.startDate });
@@ -74,7 +75,12 @@ export default function ProjectCreateStep({ setReload }: Props) {
         <Card className="custom-modal">
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
-              <Typography variant="h3" className={"text-marine-300 text-xl font-extrabold text-center mb-5"}>
+              <Typography
+                variant="h3"
+                className={
+                  "text-marine-300 text-xl font-extrabold text-center mb-5"
+                }
+              >
                 Créer un jalon
               </Typography>
               <Input
@@ -121,7 +127,12 @@ export default function ProjectCreateStep({ setReload }: Props) {
               <SelectStatus handleStatus={handleStatus} />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
-              <Button size="sm" className={"bg-brick-300"} onClick={handleOpen} type="submit">
+              <Button
+                size="sm"
+                className={"bg-brick-300"}
+                onClick={handleOpen}
+                type="submit"
+              >
                 Créer
               </Button>
             </CardFooter>

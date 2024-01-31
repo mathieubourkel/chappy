@@ -29,6 +29,7 @@ const TASKS_ENDPOINT = "tasks";
   }
  
   export async function modifyTaskToBDD(idTask: number | undefined, data: intTask) {
+    data.budget = Number(data.budget)
     return handleApiCall(async () => await api.put(`${TASK_ENDPOINT}/${idTask}`, data));
   }
   
