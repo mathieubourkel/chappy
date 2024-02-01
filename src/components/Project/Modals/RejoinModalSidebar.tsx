@@ -14,17 +14,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./modal.css";
 import { userRejoinProject } from "../../../services/api/projects.ts";
-import { useParams } from "react-router-dom";
 
 type Props = {
-  idUser: string | null;
   setReload: (bool:boolean) => void |undefined;
 
 };
 
-export default function RejoinModalSidebar({idUser, setReload}: Props) {
+export default function RejoinModalSidebar({setReload}: Props) {
   const [open, setOpen] = useState(false);
-  const { idProject } = useParams();
   const handleOpen = () => setOpen((bool) => !bool);
   const [code, setCode] = useState<string>("");
 
@@ -34,15 +31,13 @@ export default function RejoinModalSidebar({idUser, setReload}: Props) {
 
   const handleClick = async () => {
 
-    let reload = false;
     try {
-      await userRejoinProject(idUser, idProject, code);
-      reload = true;
+      await userRejoinProject(code);
       handleOpen()
     } catch {
       alert("Le code n'est pas valide");
     } finally {
-      reload && setReload(true)
+      setReload(true)
     } 
   };
 

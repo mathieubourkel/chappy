@@ -52,7 +52,7 @@ export interface intProjectLight {
     id?:number | string | undefined
     name?:string
     owner?: intOwner,
-    code?:string
+    code:string
     users?: intUserLight[]
   }
 

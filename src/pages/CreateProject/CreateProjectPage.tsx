@@ -9,7 +9,6 @@ import {
   intUser,
   intProject,
   intSelect,
-  intCompanies,
 } from "../../services/interfaces/intProject";
 import { useEffect, useState } from "react";
 import { addProjectToBDD } from "../../services/api/projects";

@@ -50,7 +50,7 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
   };
 
   const handleCategory = (value: any) => {
-    setForm({ ...form, category: { id: value.value, name: value.label } });
+    setForm({ ...form, category: value.value});
   };
   const handleStatus = (value: any) => {
     setForm({ ...form, status: value.value });
@@ -70,9 +70,9 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
   };
 
   const handleUsers = (value: Array<intSelect>) => {
-    const tempUsers = [...task.users];
+    const tempUsers:any = [...task.users];
     value.forEach((element: intSelect) => {
-      const userExists = tempUsers.some((tmpUser) => tmpUser.id === element.value);
+      const userExists = tempUsers.some((tmpUser:any) => tmpUser.id === element.value);
       if (userExists) {
         alert("L'utilisateur est déjà présent");
       } else {
@@ -134,7 +134,6 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
               <SelectCategory
                 categories={categories}
                 handleCategory={handleCategory}
-                defaultValue={categories[task.category.id - 1]}
               />
 
               <div className="sm:flex gap-3">

@@ -1,5 +1,5 @@
 import {
-  intProject,
+  intProjectDash,
   intProjectsDash,
   intStep,
 } from "../../../services/interfaces/intProject";
@@ -35,7 +35,7 @@ export default function DashboardProjects({ projects }: Props) {
         <article>
           <nav className="md:flex md:mb-3">
             <div className="ml-20 mb-3 md:flex justify-center basis-3/4 ">
-              {projects.map((project: intProject, index: number) => (
+              {projects.map((project: intProjectDash, index: number) => (
                 <button
                   key={index}
                   onClick={() => handleClick(index)}

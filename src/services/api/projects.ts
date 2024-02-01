@@ -1,5 +1,5 @@
 import { handleApiCall, useApi } from "../../hooks/useApi";
-import { intProject } from "../interfaces/intProject";
+import { intProjectDash } from "../interfaces/intProject";
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const api = useApi();
 const PROJECT_ENDPOINT = "project";
@@ -26,7 +26,7 @@ export async function getProjectsFromOwner() {
     return handleApiCall(async () => await api.delete(`${PROJECT_ENDPOINT}/${idProject}`));
   }
   
-  export async function modifyProjectToBDD(idProject: string | undefined, data: intProject) {
+  export async function modifyProjectToBDD(idProject: string | undefined, data: intProjectDash) {
     data.budget = Number(data.budget)
     return handleApiCall(async () => await api.put(`${PROJECT_ENDPOINT}/${idProject}`, data));
   }

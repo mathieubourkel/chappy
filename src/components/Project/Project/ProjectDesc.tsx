@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import ModifiableInput from "../elements/Input/ModifiableInput";
-import { intProject, intProjectDash } from "../../../services/interfaces/intProject";
+import { intProjectDash } from "../../../services/interfaces/intProject";
 import SelectStatus from "../elements/Select/SelectStatus";
 import SelectDate from "../elements/Select/SelectDate";
 import { useParams } from "react-router-dom";
@@ -26,14 +26,16 @@ type Props = {
 export default function ProjectDesc({ project, setProject, isOwner }: Props) {
   const { idProject } = useParams();
 
-  function handleModifyProject(data: intProject) {
-    modifyProjectToBDD(idProject, data);
+  const handleModifyProject = async (data: intProjectDash) => {
+    await modifyProjectToBDD(idProject, data);
   }
+
   const handleStatus = async (values: any) => {
     const data = { ...project, status: values.value };
     await modifyProjectToBDD(idProject, data);
     setProject(data);
   };
+
   return (
     <section className="mt-10 mb-20">
       <div className="lg:flex gap-5">

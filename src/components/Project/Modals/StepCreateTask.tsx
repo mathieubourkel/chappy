@@ -121,7 +121,6 @@ export default function StepCreateTask({
   };
 
   const handleCategory = (value: any) => {
-    console.log(value)
     setForm({ ...form, category: value.value});
   };
 
