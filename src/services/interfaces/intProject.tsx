@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ChangeEvent } from "react"
+import React, { ChangeEvent } from "react"
 
 export interface intProject extends intProjectLight {
     description: string,
@@ -8,7 +8,7 @@ export interface intProject extends intProjectLight {
     steps?: intSteps
     estimEndDate: string
     owner: intOwner
-    users?: number[]
+    users?: intUser[]
     companies?: intCompanies
 }
 
@@ -19,7 +19,7 @@ export interface intProjectDash extends intProjectLight {
     steps: intSteps
     estimEndDate: Date | null
     owner: intOwner
-    users?: number[]
+    users?: intUser[]
     companies?: intCompanies
 }
 
@@ -52,8 +52,8 @@ export interface intProjectLight {
     id?:number | string | undefined
     name?:string
     owner?: intOwner,
-    code:string
-    users?: number[]
+    code?:string
+    users?: intUserLight[]
   }
 
   export interface intStepLight {
@@ -153,7 +153,6 @@ export interface intUser extends intUserLight {
     zip: number,
     status:number,
     phone:string,
-    tasks:intTasks
     
 }
 
@@ -170,6 +169,7 @@ export interface intUserLight {
     company?: intCompany,
     email?: string,
     id: number | null | string
+    tasks?:intTasks
 }
 
 export interface intCategory {

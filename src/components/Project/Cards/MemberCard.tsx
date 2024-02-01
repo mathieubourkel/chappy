@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import {
   Avatar,
   Card, CardBody,
@@ -6,23 +5,27 @@ import {
 } from "@material-tailwind/react";
 import DeleteButton from "../elements/Buttons/DeleteButton";
 import {
-  intUserLight,
+  intUserLight
 } from "../../../services/interfaces/intProject";
 import user from "../../../assets/img/icon_user.png";
-import { deleteUserToProjectToBDD } from "../../../services/api/users";
+import {
+  deleteUserToProjectToBDD
+} from "../../../services/api/users.ts";
 
 type Props = {
-  isOwner: boolean;
   member: intUserLight;
   index: number;
+  idProject: string | undefined;
+  handleReload: () => void
 };
 
-export default function MemberCard({ member, isOwner }: Props) {
-  const { idProject } = useParams();
+export default function MemberCard({ member, handleReload, idProject }: Props) {
 
-  const handleDelete = () => {
-    deleteUserToProjectToBDD(idProject, member.id);
-  };
+  async function handleDelete() {
+    await deleteUserToProjectToBDD(idProject, member.id );
+    handleReload()
+  }
+
   return (
 
       <Card
@@ -46,13 +49,9 @@ export default function MemberCard({ member, isOwner }: Props) {
           </div>
 
           <div className="flex gap-5 justify-end">
-            {/*<Typography*/}
-            {/*    variant="h5"*/}
-            {/*    className="p-2 px-5 text-brick-300 border border-brick-300 text-sm rounded-xl">*/}
-            {/*  {member.tasks.length} tâches en cours*/}
-            {/*</Typography>*/}
-            {isOwner && <DeleteButton
-                handleDeleteBDD={handleDelete}/>}
+            <DeleteButton
+                handleDeleteBDD={handleDelete}
+            />
           </div>
         </CardBody>
 
