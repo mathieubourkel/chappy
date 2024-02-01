@@ -39,7 +39,7 @@ export default function CreateProjectPage() {
     steps: [],
     owner: {id:0, firstname:"", lastname:"", email:""},
     users: [],
-    companies: [{ id: null }],
+    companies: [],
     code: randomCode(),
   });
 
@@ -86,9 +86,7 @@ export default function CreateProjectPage() {
   };
 
   const handleCompanies = (value: Array<intSelect>) => {
-    const goodArray: intCompanies = value.map((element: intSelect) => ({
-      id: element.value,
-    }));
+    const goodArray: any = value.map((element: intSelect) => (element.value));
     setForm({ ...form, companies: goodArray });
   };
 

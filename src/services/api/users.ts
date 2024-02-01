@@ -28,7 +28,6 @@ export async function getMembersByProject(idProject: string | undefined) {
 
   export async function modifyUserToBDD(idUser: string | null, data: intProfileUser) {
     const body = data
-    console.log(body)
     return handleApiCall(() => api.put(`${USERS_ENDPOINT}/${idUser}`, body));
   }
 
@@ -39,33 +38,27 @@ export async function getMembersByProject(idProject: string | undefined) {
   ) {
     return handleApiCall(() => api.put(`${PROJECT_ENDPOINT}/${USER_ENDPOINT}/delete`, {idProject, idUser}));
   }
-  
-  export async function addUserToTaskToBDD(idTask: number | undefined, idUser: number | undefined) {
-    const body = {
-      app_users: {
-        connect: [idUser],
-      },
-    };
-    return handleApiCall(() => api.put(`step-tasks/${idTask}`, body));
-  }
 
-  
   export async function getAllCompanies() {
     return handleApiCall(async () => await api.get(`${COMPANIES_ENDPOINT}/`));
   }
   
   export async function addUserToBDD(data: intUser) {
     const body = data;
-    console.log("body", body, "data", data)
     return handleApiCall(async () => await api.post(`${URL_API}/auth/register`, body));
   }
 
+  export async function addUserAndCompanyToBDD(data: intUser, dataCompany: intCompany) {
+    const body = {...data, ...dataCompany}
+    return handleApiCall(async () => await api.post(`${URL_API}/auth/registerWithCompany`, body));
+  }
+
   export async function getUserInfo() {
-    return handleApiCall(async () => await api.get(`${USER_ENDPOINT}/`));
+    return handleApiCall(async () => await api.get(`${USER_ENDPOINT}`));
   }
 
   export async function getAllUsers() {
-    return handleApiCall(async () => await api.get(`${USERS_ENDPOINT}/`));
+    return handleApiCall(async () => await api.get(`${USERS_ENDPOINT}`));
   }
 
 export async function addCompanyToBDD(data: intCompany) {

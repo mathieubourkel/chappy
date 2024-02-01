@@ -5,6 +5,7 @@ import {
   Button,
   IconButton,
   Input,
+  Spinner,
   Typography,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,6 +18,7 @@ import {
   FormEvent,
 } from "../../services/interfaces/intProject";
 import { getUserInfo, modifyUserToBDD } from "../../services/api/users";
+import NotFoundPage from "../../services/utils/NotFoundPage";
 
 export default function UserProfilePage() {
   const [user, setUser] = useState<intProfileUser>({
@@ -31,16 +33,25 @@ export default function UserProfilePage() {
     phone: "",
     projects: [],
     participations: [],
-    companies: [],
+    company: {name:'', siret: "", description:'', id:0},
+    myCompany: {name:'', siret:'', description:'', id:0},
     myOwnTasks: []
   });
   const idUser = localStorage.getItem("id");
   const [displayPwd, setDisplayPwd] = useState<boolean>(false);
+  const [busy, setBusy] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getUserInfo();
-      setUser(result);
+      try {
+        const result = await getUserInfo();
+        setUser(result);
+      } catch (error) {
+        setError(true)
+      } finally {
+        setBusy(false)
+      }  
     };
     fetchData();
   }, [idUser]);
@@ -77,9 +88,15 @@ export default function UserProfilePage() {
       onChange={(e: InputEvent) => handleChange(e)}
     />
   );
-
+  if (error) return (<NotFoundPage />)
   return (
     <main className={"sm:mx-20 mx-5"}>
+      {busy ? (
+        <div className="flex justify-center mt-20">
+          <Spinner className="h-16 w-16 text-brick-300" />
+        </div>
+      ) : (
+        <>
       <section
         className={"flex flex-col justify-center items-center gap-5 mt-10"}
       >
@@ -175,7 +192,7 @@ export default function UserProfilePage() {
             <div className="mb-5">
               {/* Besoin d'ajouter des modals pour ajouter et rejoindre */}
 
-              {user.company && (
+              {user.myCompany && (
           
                 <Input
                   label="Mon entreprise"
@@ -183,11 +200,11 @@ export default function UserProfilePage() {
                   crossOrigin={undefined}
                   name="owner"
                   id="owner"
-                  defaultValue={user.company.name}
+                  defaultValue={user.myCompany.name}
                 />
               )}
 
-              {user.companies.length != 0 && (
+              {/* {user.companies.length != 0 && (
                 <ul className="flex">
                   {user.companies.map((_company, index) => (
                     <li key={index} className="mt-5">
@@ -202,12 +219,12 @@ export default function UserProfilePage() {
                     </li>
                   ))}
                 </ul>
-              )}
-              {!user.company && user.companies.length == 0 && (
+              )} */}
+              {!user.myCompany && 
                 <div>
                   <p>Vous n'avez pas d'entreprise</p>
                 </div>
-              )}
+              }
             </div>
           </article>
 
@@ -243,6 +260,8 @@ export default function UserProfilePage() {
           </div>
         </form>
       </section>
+      </>
+      )}
     </main>
   );
 }

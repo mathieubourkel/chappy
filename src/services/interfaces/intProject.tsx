@@ -32,7 +32,7 @@ export interface intOwner {
 
 export interface intCompany {
     name?: string
-    siret?: number,
+    siret?: string,
     description?: string,
     user?: intUserLight
     id: number | null | string
@@ -160,7 +160,8 @@ export interface intProfileUser extends intUser {
     projects: intProjects
     participations: intProjects
     myOwnTasks: intTasks
-    companies: intCompanies
+    company: intCompany,
+    myCompany: intCompany
 }
 
 export interface intUserLight {

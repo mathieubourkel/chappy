@@ -20,7 +20,6 @@ import { useParams } from "react-router-dom";
 import './modal.css'
 import SelectTypeDocument from "../elements/Select/SelectTypeDocument.tsx";
 import { Type } from "../../../services/enums/document.type.enum.ts";
-import { formatDate } from "../../../services/utils/FormatDate.tsx";
 
 type Props = {
   handleReload: () => void;

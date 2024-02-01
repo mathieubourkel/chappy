@@ -10,7 +10,7 @@ import {
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { addCompanyToBDD, addUserToBDD } from "../../services/api/users";
+import {  addUserAndCompanyToBDD, addUserToBDD } from "../../services/api/users";
 import { useNavigate } from "react-router-dom";
 import { intRegister } from "../../services/interfaces/intUser";
 
@@ -99,8 +99,7 @@ export default function FormGlobal() {
         
         if (selectedOption === "checkCompany") {
           console.log("tu es dans la condition")
-        await addUserToBDD(values.userInfos);
-        await addCompanyToBDD(values.companyInfos);
+        await addUserAndCompanyToBDD(values.userInfos, values.companyInfos);
         } else {
           await addUserToBDD(values.userInfos);
         }
