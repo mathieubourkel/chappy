@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import {
   Button,
   Dialog,
@@ -11,42 +12,37 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { FormEvent, InputEvent, intDocument, intDocuments} from "../../../services/interfaces/intProject";
+import { FormEvent, InputEvent, intDocument} from "../../../services/interfaces/intProject";
 import './modal.css'
 import {
   Type
 } from "../../../services/enums/document.type.enum.ts";
 import SelectTypeDocument
   from "../elements/Select/SelectTypeDocument.tsx";
+import { modifyDocumentFromBDD } from "../../../services/api/documents.ts";
 
 type Props = {
-  documents: intDocuments
-  setDocument: (purchases: intDocuments) => void;
-  index:number
+  document: intDocument
+  handleReload: () => void;
 };
 
-export default function DocumentModify({ documents, setDocument, index}: Props) {
+export default function DocumentModify({ document, handleReload}: Props) {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  const [form, setForm] = useState<intDocument>({...documents[index]});
+  const [form, setForm] = useState<intDocument>(document);
 
   function handleChange(e: InputEvent) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
 
-  function handleSubmit(e: FormEvent) {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const tempArray:intDocuments = [...documents];
-    tempArray[index] = form;
-    setDocument(tempArray);
+    await modifyDocumentFromBDD(document.id, form)
+    handleReload()
   }
-    
-  useEffect(() => {
-    setForm({ ...documents[index] });
-  }, [index, open, documents]);
-
+  
   const handleTypeDocument = (value:any) : void => {
     setForm({ ...form, type: value.value })
   }

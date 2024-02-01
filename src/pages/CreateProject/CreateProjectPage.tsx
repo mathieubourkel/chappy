@@ -20,12 +20,14 @@ import ReactSelect from "react-select";
 import * as Yup from "yup";
 import makeAnimated from "react-select/animated";
 import { Status } from "../../services/enums/status.enum";
+import { formatDate } from "../../services/utils/FormatDate";
 
 
 const animatedComponents = makeAnimated();
 
 export default function CreateProjectPage() {
   const navigate = useNavigate();
+  const date = new Date()
   const [users, setUsers] = useState<Array<intSelect>>([]);
   const [companies, setCompanies] = useState<Array<intSelect>>([]);
   const [form, setForm] = useState<intProject>({
@@ -33,7 +35,7 @@ export default function CreateProjectPage() {
     description: "",
     budget: 0,
     status: Status[0].value,
-    estimEndDate: null,
+    estimEndDate: formatDate(date),
     steps: [],
     owner: {id:0, firstname:"", lastname:"", email:""},
     users: [],
@@ -45,8 +47,7 @@ export default function CreateProjectPage() {
     name: Yup.string().max(50, "Pas plus de 50 charac").required("Le nom du projet est requis"),
     description: Yup.string().max(300, "pas plus de 300").required("La description du projet est requise"),
     budget: Yup.number().required("Le budget du projet est requis"),
-    status: Yup.number().required("Le statut du projet est requis"),
-    estimEndDate: Yup.date().required("Veuillez remplir le champ date"),
+    status: Yup.number().required("Le statut du projet est requis")
   });
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Dialog,
@@ -11,31 +11,30 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { FormEvent, InputEvent, intProjectForPurchases, intPurchase, intPurchases } from "../../../services/interfaces/intProject";
+import { FormEvent, InputEvent, intPurchase } from "../../../services/interfaces/intProject";
 import './modal.css'
+import { modifyPurchaseFromBDD } from "../../../services/api/purchases";
 
 type Props = {
-  project: intProjectForPurchases
-  setProject: (project: intProjectForPurchases) => void;
-  index:number
+  purchase: intPurchase
+  handleReload: () => void;
 };
 
-export default function PurchaseModify({ project, setProject, index}: Props) {
+export default function PurchaseModify({ purchase, handleReload}: Props) {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  const [form, setForm] = useState<intPurchase>({...purchases[index]});
+  const [form, setForm] = useState<intPurchase>({...purchase});
 
   function handleChange(e: InputEvent) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
 
-  function handleSubmit(e: FormEvent) {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const tempArray:intPurchases = [...purchases];
-    tempArray[index] = form;
-    setPurchase(tempArray);
+    await modifyPurchaseFromBDD(purchase.id, form)
+    handleReload()
   }
 
   return (

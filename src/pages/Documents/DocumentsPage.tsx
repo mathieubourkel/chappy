@@ -16,44 +16,44 @@ import {
 import {
   faCircleInfo
 } from "@fortawesome/free-solid-svg-icons";
+import NotFoundPage from "../../services/utils/NotFoundPage";
 
 export default function DocumentsPage() {
   const {idProject} = useParams();
   const [project, setProject] = useState<intProjectLight>({id:undefined, name:"", code:''})
   const [documents, setDocument] = useState<intDocuments>([]);
   const [reload, setReload] = useState(false)
-  const idUser = localStorage.getItem("id");
   const [busy, setBusy] = useState<boolean>(true);
-  const [isOwner, setIsOwner] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const handleReload = () => setReload((bool) => !bool);
   
   useEffect(() => {
-    async function getDocuments(){
-      const tmpProj = await getProjectById(idProject)
-      const result = await getDocumentsByProject(idProject)
-      setBusy(false);
-      setDocument(result)
-      setProject(tmpProj)
-      tmpProj.owner.id.toString() === idUser && setIsOwner(true);
+    const fetchData = async () => {
+      try {
+        const tmpProj = await getProjectById(idProject)
+        const result = await getDocumentsByProject(idProject)
+        setDocument(result)
+        setProject(tmpProj)
+      } catch (error) {
+        setError(true)
+      } finally {
+        setBusy(false);
+      }
+      
     }
+    fetchData();
+  }, [idProject, reload]);
 
-    getDocuments();
-  }, [idProject, reload, idUser]);
-
+  if (error) return (<NotFoundPage />)
+  
   return (
     <main className="sm:mx-20 mx-5 mt-10">
-      <ProjectHeader isOwner={isOwner} project={project} idProject={idProject}/>
+      <ProjectHeader isOwner project={project} idProject={idProject}/>
       <section
           className="flex justify-between mt-20">
-        <div
-            className={"w-full flex justify-between gap-5 items-center"}>
+        <div className={"w-full flex justify-between gap-5 items-center"}>
           <h2>Les documents</h2>
-
-        {isOwner && (
-              <DocumentsAdd
-                  handleReload={handleReload}
-                   />
-        )}
+          <DocumentsAdd handleReload={handleReload}/>
         </div>
       </section>
       {busy ? (
@@ -64,14 +64,11 @@ export default function DocumentsPage() {
         </div>
       ) : (
       <div className="mt-5 mb-20">
-        {documents.map((document: intDocument, index: number) => (
+        {documents.map((document: intDocument) => (
           <DocumentCard
-            key={index}
-            setDocument={setDocument}
-            documents={documents}
-            index={index}
-            isOwner={isOwner}
+            key={document.id}
             document={document}
+            handleReload={handleReload}
           />
         ))}
 

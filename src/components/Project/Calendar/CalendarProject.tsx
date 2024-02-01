@@ -54,25 +54,33 @@ const resources = [
 export default function CalendarProject({ className }: Props) {
   const { idProject } = useParams();
   const [busy, setBusy] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false)
   const [tasks, setTasks] = useState<Array<Task>>([
     { startDate: new Date(), endDate: new Date(), title: "" },
   ]);
   const currentDate = new Date();
   useEffect(() => {
-    async function getFetchData() {
-      const dataOwner = await getTasksByProjectId(idProject);
-      const tmpTasks:any = []
-      dataOwner.map((task:any, index:number) => {
-            task.title = task.name
-            task.jalons = index + 1
-            tmpTasks.push(task)
-      })
-      setTasks(tmpTasks);
-      setBusy(false);
-    }
+    const getFetchData = async () => {
+      try {
+        const dataOwner = await getTasksByProjectId(idProject);
+        const tmpTasks:any = []
+        dataOwner.map((task:any, index:number) => {
+              task.title = task.name
+              task.jalons = index + 1
+              tmpTasks.push(task)
+        })
+        setTasks(tmpTasks);
+        setBusy(false);
+        } catch (error) {
+          setError(true)
+        } finally {
+          setBusy(false)
+        }
+        
+      }
     getFetchData();
   }, [idProject]);
-
+  if (error) return (<div>Error with fetching data</div>)
   return (
     <>
       {busy ? (

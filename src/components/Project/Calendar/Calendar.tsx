@@ -38,7 +38,6 @@ const resources = [
   },
 ];
 
-// const grouping = [{resourceName: "owner"}]
 type Props = {
     className: string
 }
@@ -50,38 +49,42 @@ type Props = {
 export default function Calendar({className}:Props) {
   const idUser = localStorage.getItem("id");
   const [busy, setBusy] = useState<boolean>(true);
-  const [tasks, setTasks] = useState<Array<Task>>([
-    { startDate: new Date(), endDate: new Date(), title: "" },
-  ]);
+  const [error, setError] = useState<boolean>(false)
   const currentDate = new Date();
+  const [tasks, setTasks] = useState<Array<Task>>([
+    { startDate: currentDate, endDate: currentDate, title: "" },
+  ]);
+  
   useEffect(() => {
     const getFetchData = async () => {
       try {
         const dataOwner = await getTasksByUser(idUser);
         const dataCollab = await getTasksByUsers(idUser);
+        console.log(dataOwner)
+        console.log(dataCollab)
         const tmpTasks:Array<Task> = []
-        dataOwner.map((_elem: any, index: number) => {
-          dataOwner[index].title = dataOwner[index].name;
-          dataOwner[index].owner = 1;
-          tmpTasks.push(dataOwner[index])
+        dataOwner.map((task: any) => {
+          task.title = task.name;
+          task.owner = 1;
+          tmpTasks.push(task)
         });
-        dataCollab.map((_elem: any, index: number) => {
-          dataCollab[index].title = dataCollab[index].name;
-          dataCollab[index].owner = 2;
-          dataCollab[index].id = dataCollab[index].id * 4589647524
-          tmpTasks.push(dataCollab[index])
+        dataCollab.map((task: any) => {
+          task.title = task.name;
+          task.owner = 2;
+          task.id = task.id * 4589647524
+          tmpTasks.push(task)
         });
-  
-        setTasks(tmpTasks);
-        
+        setTasks(tmpTasks);  
       } catch (e){
-        console.log(e)
+        setError(true)
       } finally {
         setBusy(false)
       }  
     }
     getFetchData();
   }, [idUser]);
+
+  if (error) return (<div>Error with fetching data</div>)
 
   return (
     <>
@@ -91,22 +94,14 @@ export default function Calendar({className}:Props) {
         </div>
       ) : (
     <Paper className={className}>
-      <Scheduler
-        data={tasks}
-      >
+      <Scheduler data={tasks}>
         <ViewState defaultCurrentDate={currentDate} />
-        {/* <GroupingState
-          grouping={grouping}
-          // groupOrientation={() => "Vertical"}
-        /> */}
         <MonthView />
         <Toolbar />
         <DateNavigator />
         <Appointments />
         <Resources data={resources} mainResourceName="owner" />
-        {/* <IntegratedGrouping /> */}
         <AppointmentTooltip showCloseButton showOpenButton />
-        {/* <GroupingPanel /> */}
       </Scheduler>
     </Paper>)}
     </>

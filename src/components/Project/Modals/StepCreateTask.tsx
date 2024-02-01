@@ -193,7 +193,7 @@ export default function StepCreateTask({
                 options={step.project.users}
                 className="rounded-xl border-select"
                 isMulti
-                placeholder="Inviter des membres sur votre projet"
+                placeholder="Ajouter des participants à la tâche"
                 components={animatedComponents}
                 onChange={(value: any) => handleUsers(value)}
                 theme={(theme) => ({

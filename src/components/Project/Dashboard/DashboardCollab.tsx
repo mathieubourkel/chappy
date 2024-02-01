@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  intProject,
+  intProjectDash,
   intProjectsDash,
   intStep,
 } from "../../../services/interfaces/intProject.tsx";
@@ -38,7 +38,7 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
         <article>
           <nav className="flex">
             <div className="ml-20 lg:flex justify-center basis-3/4">
-              {collabs.map((collab: intProject, index: number) => (
+              {collabs.map((collab: intProjectDash, index: number) => (
                 <button
                   key={index}
                   onClick={() => handleClick(index)}

@@ -3,31 +3,27 @@ import {
   Typography
 } from "@material-tailwind/react";
 import DeleteButton from "../elements/Buttons/DeleteButton";
-import { intDocument, intDocuments } from "../../../services/interfaces/intProject";
+import { intDocument} from "../../../services/interfaces/intProject";
 import DocumentModify from "../Modals/DocumentModifiy";
 import { deleteDocumentFromBDD } from "../../../services/api/documents";
 import { DocumentTypeEnum } from "../../../services/enums/document.type.enum.ts";
 
 type Props = {
-  index: number;
-  setDocument: (documents: intDocuments) => void;
-  documents: intDocuments;
-  isOwner: boolean
   document: intDocument
+  handleReload: () => void;
 };
 
-export default function DocumentCard({ index, setDocument,document, documents, isOwner }: Props) {
+export default function DocumentCard({ document, handleReload }: Props) {
 
   const getDocumentTypeString = (type: DocumentTypeEnum): string => {
     const typeDocument = Object.entries(DocumentTypeEnum);
-    console.log(typeDocument)
     const foundType = typeDocument.find(([, value]) : boolean => value === type);
-    console.log(foundType)
     return foundType ? foundType[0] : 'N/A';
   };
   
-  const handleDelete = () => {
-    deleteDocumentFromBDD(document.id)
+  const handleDelete = async () => {
+    await deleteDocumentFromBDD(document.id)
+    handleReload()
   }
 
   return (
@@ -49,17 +45,13 @@ export default function DocumentCard({ index, setDocument,document, documents, i
               {document.path}
             </Typography>
           </div>
-
-          {isOwner &&
               <div className='flex justify-end'>
                 <DocumentModify
-                    documents={documents}
-                    setDocument={setDocument}
-                    index={index}
+                    document={document}
+                    handleReload={handleReload}
                 />
                 <DeleteButton handleDeleteBDD={handleDelete} />
               </div>
-          }
         </CardBody>
 
       </Card>

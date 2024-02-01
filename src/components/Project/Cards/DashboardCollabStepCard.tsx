@@ -1,5 +1,5 @@
 import { Card, CardBody, Typography } from "@material-tailwind/react";
-import { intProject, intStep } from "../../../services/interfaces/intProject";
+import {  intProjectDash, intStep } from "../../../services/interfaces/intProject";
 import AccederButton from "../elements/Buttons/AccederButton";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,7 +7,7 @@ import { faChartPie } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   step: intStep;
-  collab: intProject;
+  collab: intProjectDash;
 };
 
 export default function DashboardCollabStepCard({ step, collab }: Props) {

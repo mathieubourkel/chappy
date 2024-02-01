@@ -9,7 +9,7 @@ import {
   Typography,
   Input,
 } from "@material-tailwind/react";
-import { FormEvent, InputEvent, intCreatePurchase } from "../../../services/interfaces/intProject";
+import { FormEvent, InputEvent, intPurchase } from "../../../services/interfaces/intProject";
 import CreateButton from "../elements/Buttons/CreateButton";
 import { useParams } from "react-router-dom";
 import { addPurchaseToBDD } from "../../../services/api/purchases";
@@ -27,10 +27,10 @@ export default function PurchaseAdd({ handleReload }: Props) {
   const {idProject} = useParams();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  const [form, setForm] = useState<intCreatePurchase>({
+  const [form, setForm] = useState<intPurchase>({
     name: "", price:0,
     ref:'', deliveryDate: formatDate(date), commandDate: formatDate(date),
-    status:0, project: Number(idProject)
+    status:0, project: Number(idProject), id:0
   });
 
   function handleChange(e: InputEvent) {
@@ -39,8 +39,6 @@ export default function PurchaseAdd({ handleReload }: Props) {
   }
 
   const handleDate = (value: any) => {
-    console.log(typeof form.commandDate)
-    console.log(typeof value.startDate)
     setForm({ ...form, commandDate: value.startDate });
   };
   const handleDate2 = (value: any) => {
@@ -53,6 +51,7 @@ export default function PurchaseAdd({ handleReload }: Props) {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    console.log(form)
     await addPurchaseToBDD(form);
     handleReload();
   }

@@ -17,7 +17,7 @@ import { useState } from "react";
 
 type Props = {
   idProject: string | undefined | number;
-  project: intProjectLight;
+  project: intProjectLight
 };
 
 export function MenuProject({ project, idProject }: Props) {

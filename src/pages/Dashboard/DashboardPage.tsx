@@ -12,26 +12,28 @@ import {
 export default function DashboardPage() {
   const [collabs, setCollab] = useState<intProjectsDash>([]);
   const [projects, setProject] = useState<intProjectsDash>([]);
+  const [error, setError] = useState<boolean>(false);
   const [busy, setBusy] = useState<boolean>(true);
   const [reload, setReload] = useState<boolean>(false)
   const nbProj = collabs.length + projects.length;
-  const idUser = localStorage.getItem("id");
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const tmpProjects = await getProjectsFromOwner(idUser)
-        const tmpCollabs = await getProjectsFromUsers(idUser)
+        const tmpProjects = await getProjectsFromOwner()
+        const tmpCollabs = await getProjectsFromUsers()
         setCollab(tmpCollabs);
         setProject(tmpProjects);
       } catch (error) {
-        console.error("Error fetching projects:", error);
+        setError(true)
       } finally {
         setBusy(false);
       }
     };
 
     fetchProjects();
-  }, [idUser, reload]);
+  }, [reload]);
+
+  if (error) return (<div>Error Fetching Data..</div>)
   
   return (
     <main className="sm:mx-20 mx-5">

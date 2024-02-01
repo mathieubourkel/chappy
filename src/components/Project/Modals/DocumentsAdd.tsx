@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import {
   Button,
@@ -19,6 +20,7 @@ import { useParams } from "react-router-dom";
 import './modal.css'
 import SelectTypeDocument from "../elements/Select/SelectTypeDocument.tsx";
 import { Type } from "../../../services/enums/document.type.enum.ts";
+import { formatDate } from "../../../services/utils/FormatDate.tsx";
 
 type Props = {
   handleReload: () => void;
@@ -29,18 +31,16 @@ export default function DocumentsAdd({ handleReload }: Props) {
   const {idProject} = useParams();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  const [form, setForm] = useState<intDocument>({
-    path: "", type: 0, project: {id: idProject, code:''}
-  });
+  const [form, setForm] = useState<intDocument>({path: "", type: 0, id:0, project: Number(idProject)});
 
-  function handleChange(e: InputEvent) {
+  const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
-    
   }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    console.log(form)
     await addDocumentToBDD(form);
     handleReload();
     
@@ -50,7 +50,6 @@ export default function DocumentsAdd({ handleReload }: Props) {
     setForm({ ...form, type: value.value })
   }
 
-  // @ts-ignore
   return (
     <div>
       <CreateButton handleClick={handleOpen} value="Ajouter" />

@@ -6,8 +6,8 @@ import {
 } from "@material-tailwind/react";
 import {
   intPurchase,
-  intProject,
-  intProjectForPurchases,
+  intPurchases,
+  intProjectLight,
 } from "../../services/interfaces/intProject";
 import PurchaseCard from "../../components/Project/Cards/PurchaseCard";
 import PurchaseAdd from "../../components/Project/Modals/PurchaseAdd";
@@ -21,27 +21,23 @@ import {
   faCircleInfo
 } from "@fortawesome/free-solid-svg-icons";
 import NotFoundPage from "../../services/utils/NotFoundPage";
+import { getProjectById } from "../../services/api/projects";
 
 export default function PurchasesPage() {
   const { idProject } = useParams();
-  const idUser = localStorage.getItem("id");
   const [busy, setBusy] = useState<boolean>(true);
-  const [isOwner, setIsOwner] = useState<boolean>(false);
-  const [project, setProject] = useState<intProjectForPurchases>({
-    name: "",
-    owner: {id:0},
-    id: 0,
-    purchases: []
-  });
+  const [purchases, setPurchases] = useState<intPurchases>([])
+  const [project, setProject] = useState<intProjectLight>({id:undefined, name:"", code:''})
   const [reload, setReload] = useState(false);
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
+        const tmpProj = await getProjectById(idProject)
         const result = await getPurchasesByProject(idProject)
-        result.owner.id.toString() === idUser && setIsOwner(true); 
-        setProject(result);
+        setProject(tmpProj);
+        setPurchases(result)
       } catch (error) {
         setError(true)
       } finally {
@@ -49,31 +45,24 @@ export default function PurchasesPage() {
       }
     }
     fetchData();
-  }, [idProject, reload, idUser]);
+  }, [idProject, reload]);
 
-  const handleReload = () => {
-    setReload((cur) => !cur);
-  };
-
+  const handleReload = () => setReload((bool) => !bool);
   const calculateTotal = () => {
-    return project.purchases.reduce((total, purchase) => total + Math.floor(purchase.price), 0);
+    return purchases.reduce((total, purchase) => total + Math.floor(purchase.price), 0);
   };
 
   if (error) return (<NotFoundPage />)
   
   return (
     <main className="sm:mx-20 mx-5 mt-10">
-      <ProjectHeader isOwner={isOwner} project={project} idProject={idProject} />
+      <ProjectHeader isOwner project={project} idProject={idProject} />
       <section
           className={"w-full flex justify-between gap-5 items-center"}>
         <div>
           <h2>Mes achats</h2>
         </div>
-        {isOwner && (
-              <PurchaseAdd
-                  handleReload={() => setReload(
-                      (bool) => !bool)}/>
-        )}
+        <PurchaseAdd handleReload={() => setReload((bool) => !bool)}/>
       </section>
       {busy ? (
           <div
@@ -82,19 +71,15 @@ export default function PurchasesPage() {
         </div>
       ) : (
         <div className="mt-5 mb-20">
-          {project.purchases.map((purchase: intPurchase, index: number) => (
+          {purchases.map((purchase: intPurchase) => (
             <PurchaseCard
-              key={index}
-              setProject={setProject}
-              project={project}
-              index={index}
-              isOwner={isOwner}
+              key={purchase.id}
               purchase={purchase}
-              hanldeReload={handleReload}
+              handleReload={handleReload}
             />
           ))}
 
-          {project.purchases.length == 0 &&
+          {purchases.length == 0 &&
               <Alert
                   icon={<FontAwesomeIcon icon={faCircleInfo} className={"text-marine-300 text-xl"}/>}
                   className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 mb-5"

@@ -6,7 +6,7 @@ export interface intProject extends intProjectLight {
     budget?: number,
     status: number
     steps?: intSteps
-    estimEndDate: Date | null
+    estimEndDate: string
     owner: intOwner
     users?: number[]
     companies?: intCompanies
@@ -70,13 +70,6 @@ export interface intStep extends intStepLight{
     tasks : intTasks
 }
 
-export interface intProjectForPurchases {
-    id: number,
-    name: string
-    purchases: intPurchases,
-    owner: {id: number}
-}
-
 export interface intStepNew extends intStepLight{
     description: string,
     budget: number,
@@ -134,31 +127,19 @@ export interface intTaskRelou {
 export interface intPurchase {
     name: string,
     price: number,
-    ref?: string,
-    commandDate: Date | null,
-    deliveryDate: Date | null,
-    status: number,
-    id?:number,
-    project: intProjectLight,
-    idProject: any
-  }
-
-export interface intCreatePurchase {
-    name: string,
-    price: number,
-    ref?: string,
+    ref: string,
     commandDate: string,
     deliveryDate: string,
     status: number,
-    id?:number,
-    project: number,
-}
+    id:number,
+    project: intProjectLight | number
+  }
 
 export interface intDocument {
     path: string,
     type: number,
-    id?:number,
-    project: intProjectLight
+    id:number,
+    project: intProjectLight | number
 }
 
 export type intSelectDocument = {

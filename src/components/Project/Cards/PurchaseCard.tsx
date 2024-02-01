@@ -4,26 +4,17 @@ import {
 import DeleteButton from "../elements/Buttons/DeleteButton";
 import PurchaseModify from "../Modals/PurchaseModify";
 import {
-  intProjectForPurchases,
   intPurchase,
 } from "../../../services/interfaces/intProject";
 import { deletePurchaseFromBDD } from "../../../services/api/purchases";
 
 type Props = {
-  index: number;
-  setProject: (project: intProjectForPurchases) => void;
-  project: intProjectForPurchases;
-  isOwner: boolean;
   purchase: intPurchase;
   handleReload: () => void;
 };
 
 export default function PurchaseCard({
-  index,
-  setProject,
-  project,
   purchase,
-  isOwner,
   handleReload
 }: Props) {
 
@@ -31,6 +22,7 @@ export default function PurchaseCard({
     await deletePurchaseFromBDD(purchase.id);
     handleReload()
   };
+
   return (
     <Card
       className="custom-card-purchase mb-5"
@@ -49,18 +41,14 @@ export default function PurchaseCard({
                 className="border px-5 rounded-xl bg-light-200 m-2 text-sm text-marine-300 font-bold uppercase">
               Prix : {purchase.price}€
             </div>
-            {isOwner && (
                 <div
                     className="flex gap-2 items-center">
                   <PurchaseModify
-                      project={project}
-                      setProject={setProject}
-                      index={index}
+                      purchase={purchase}
+                      handleReload={handleReload}
                   />
-                  <DeleteButton
-                      handleDeleteBDD={handleDelete}/>
+                  <DeleteButton handleDeleteBDD={handleDelete}/>
                 </div>
-            )}
           </div>
 
 

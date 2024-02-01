@@ -50,7 +50,7 @@ export default function ProjectCreateStep({ setReload }: Props) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(form);
+
     await addProjectStepToBDD(form);
     setReload(true);
   };
