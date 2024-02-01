@@ -1,22 +1,17 @@
 import { useEffect, useState } from "react";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
-import {
-  intProjectLight, intUserLight,
-} from "../../services/interfaces/intProject";
+import { intProjectLight } from "../../services/interfaces/intProject";
 import MembersAdd from "../../components/Project/Modals/MembersAdd";
 import MemberCard from "../../components/Project/Cards/MemberCard";
 import { useParams } from "react-router-dom";
-import { getMembersByProject } from "../../services/api/users";
 import {
-  Alert,
-  Spinner
-} from "@material-tailwind/react";
-import {
-  FontAwesomeIcon
-} from "@fortawesome/react-fontawesome";
-import {
-  faCircleInfo
-} from "@fortawesome/free-solid-svg-icons";
+  getMembersByProject
+} from "../../services/api/users";
+import { Alert, Spinner } from "@material-tailwind/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import NotFoundPage
+  from "../../services/utils/NotFoundPage.tsx";
 
 export default function MembersPage() {
   const { idProject } = useParams();
@@ -25,33 +20,45 @@ export default function MembersPage() {
     name: "",
     code: "",
     owner: { id : 0, lastname: "", firstname: "", email: ""},
-    users: []
+    users: [ { id:0 } ],
   });
-  const [isOwner, setIsOwner] = useState<boolean>(false);
   const [busy, setBusy] = useState<boolean>(true);
-  const idUser = localStorage.getItem("id");
+  const [error, setError] = useState<boolean>(false);
+  const [reload, setReload] = useState(false);
+
   useEffect(() => {
     async function getMembers() {
-      const result = await getMembersByProject(idProject);
-      setBusy(false);
-      setProject(result);
-      result.owner.id.toString() === idUser && setIsOwner(true);
+      try {
+        const result = await getMembersByProject(idProject);
+        setProject(result);
+      } catch (e) {
+        setError(true)
+      } finally {
+        setBusy(false)
+      }
+
     }
     getMembers();
-  }, [idProject, idUser]);
+
+
+  }, [idProject, reload]);
+
+  const handleReload = () => {
+    setReload((cur) => !cur);
+  };
+
+  if(error) return <NotFoundPage />
+
 
   return (
     <main className="sm:mx-20 mx-5 mt-10">
-      <ProjectHeader isOwner={isOwner} project={project} idProject={idProject} />
+      <ProjectHeader isOwner project={project} idProject={idProject} />
       <section className="flex justify-between mt-20">
         <div className={"w-full flex justify-between gap-5 items-baseline"}>
           <h2>Les participants</h2>
 
-        {isOwner && (
-
             <MembersAdd project={project} setProject={setProject} />
 
-        )}
         </div>
       </section>
       {busy ? (
@@ -60,12 +67,13 @@ export default function MembersPage() {
         </div>
       ) : (
         <div className="mt-5">
-          {project.users && project.users.map((member: intUserLight, index: number) => (
+          {project.users && project.users.map((member: any, index: number) => (
             <MemberCard
               key={index}
-              isOwner={isOwner}
               member={member}
               index={index}
+              handleReload={handleReload}
+              idProject={idProject}
             />
           ))}
 

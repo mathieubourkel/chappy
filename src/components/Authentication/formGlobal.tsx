@@ -38,7 +38,6 @@ export default function FormGlobal() {
 
     zip: Yup.string()
       .min(5, "Le code postal doit contenir 5 charactères")
-      .max(5, "Le code postal doit contenir 5 charactères")
       .required("Ce champ est requis"),
 
     city: Yup.string()
