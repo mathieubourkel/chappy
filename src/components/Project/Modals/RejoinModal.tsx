@@ -6,24 +6,19 @@ import {
   CardBody,
   Typography,
   Input,
-  MenuItem,
   Button,
 } from "@material-tailwind/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHandHoldingHand } from "@fortawesome/free-solid-svg-icons";
-import RejoinButton from "../elements/Buttons/OpenButton.tsx";
 import "./modal.css";
 import { userRejoinProject } from "../../../services/api/projects.ts";
 
 type Props = {
-  join: string;
+  join: string
+  open: boolean
   menu?: boolean,
-  setReload: (bool:boolean) => void;
+  handleOpen: () => void;
 };
 
-export default function RejoinModal({ join, menu, setReload }: Props) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen((bool) => !bool);
+export default function RejoinModal({ open, handleOpen}: Props) {
   const [code, setCode] = useState<string>("");
   const handleCode = (e: any) => {
     setCode(e.target.value);
@@ -35,28 +30,10 @@ export default function RejoinModal({ join, menu, setReload }: Props) {
       handleOpen()
     } catch {
       alert("Le code n'est pas valide");
-    } finally {
-      setReload(true)
-    } 
+    }
   };
 
   return (
-    <>
-      {" "}
-      {menu ? (
-        <MenuItem className="flex items-center gap-2">
-          <FontAwesomeIcon icon={faHandHoldingHand} className={"text-sm"} />
-          <Typography
-            variant="small"
-            className="font-medium"
-            onClick={handleOpen}
-          >
-            {join}
-          </Typography>
-        </MenuItem>
-      ) : (
-        <RejoinButton value={"Rejoindre un projet"} onClick={handleOpen} />
-      )}
       <Dialog
         size="sm"
         open={open}
@@ -83,6 +60,5 @@ export default function RejoinModal({ join, menu, setReload }: Props) {
           </CardBody>
         </Card>
       </Dialog>
-    </>
   );
 }

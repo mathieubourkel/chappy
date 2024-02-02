@@ -8,7 +8,6 @@ import {
   faBan,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import RejoinModal from "../Modals/RejoinModal.tsx";
 import {
   Alert,
 } from "@material-tailwind/react";
@@ -16,6 +15,8 @@ import DashboardCollabStepCard from "../Cards/DashboardCollabStepCard.tsx";
 import {
   MenuCollab
 } from "../elements/Menu/MenuCollab.tsx";
+import RejoinButton from "../elements/Buttons/OpenButton.tsx";
+import RejoinModal from "../Modals/RejoinModal.tsx";
 
 type Props = {
   collabs: intProjectsDash;
@@ -28,6 +29,9 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
   function handleClick(index: number) {
     setSelected(index);
   }
+
+  const [openD, setOpenD] = useState(false);
+  const handleOpenD = () => setOpenD((bool) => !bool);
 
   return (
     <section className="my-10 mb-28">
@@ -52,7 +56,7 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
               ))}
             </div>
             <div className="flex basis-1/4 justify-end items-center gap-2">
-              <MenuCollab see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} setReload={setReload} idProject={collabs[selected].id} menu />
+              <MenuCollab handleOpenD={handleOpenD} see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} setReload={setReload} idProject={collabs[selected].id} menu />
             </div>
           </nav>
 
@@ -69,7 +73,7 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
       ) : (
         <article>
           <nav className="flex justify-end">
-            <RejoinModal join="Rejoindre" setReload={setReload}/>
+            <RejoinButton value="Rejoindre un projet" onClick={handleOpenD}/>
           </nav>
 
           <Alert
@@ -80,6 +84,7 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
           </Alert>
         </article>
       )}
+      <RejoinModal join={"Rejoindre"} open={openD} handleOpen={handleOpenD} />
     </section>
   );
 }

@@ -5,22 +5,19 @@ import {
     CardBody,
     Typography,
     Input,
-    IconButton, MenuItem
+    IconButton
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faCheck, faEnvelopesBulk,
-} from "@fortawesome/free-solid-svg-icons";
+import {faCheck} from "@fortawesome/free-solid-svg-icons";
 import DeleteButton from "../elements/Buttons/DeleteButton";
 import './modal.css'
 
 type Props = {
-    request: string,
+   open: boolean,
+   handleOpen: () => void;
 }
 
-export default function DemandsModal({request}:Props) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen((bool) => !bool);
+export default function DemandsModal({open, handleOpen}:Props) {
 
   const [demands, setDemand] = useState([
     { name: "demande1", isPending: true, owner: "Paul" },
@@ -36,14 +33,6 @@ export default function DemandsModal({request}:Props) {
   }
 
   return (
-    <>
-        <MenuItem className="flex items-center gap-2">
-            <FontAwesomeIcon icon={faEnvelopesBulk} className={"text-sm"} />
-
-            <Typography variant="small" className="font-medium" onClick={handleOpen}>
-                {request}
-            </Typography>
-        </MenuItem>
       <Dialog
         size="sm"
         open={open}
@@ -62,6 +51,7 @@ export default function DemandsModal({request}:Props) {
                   value={demand.owner}
                   size="lg"
                   crossOrigin={undefined}
+                  disabled
                 />
                 <div className="flex gap-5">
                   <IconButton
@@ -78,6 +68,5 @@ export default function DemandsModal({request}:Props) {
           </CardBody>
         </Card>
       </Dialog>
-    </>
   );
 }
