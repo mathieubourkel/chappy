@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Button, Spinner } from "@material-tailwind/react";
 import { deleteStepFromBDD, getStepById } from "../../services/api/steps";
 import {
-  intCategory,
   intSelect,
   intStepNew,
   intUser,
@@ -14,7 +13,6 @@ import StepHeader from "../../components/Project/Step/StepHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import NotFoundPage from "../../services/utils/NotFoundPage";
-import { getCategories } from "../../services/api/category";
 
 export default function StepPage() {
   const [busy, setBusy] = useState<boolean>(true);
@@ -23,7 +21,6 @@ export default function StepPage() {
   const { idStep, idProject } = useParams();
   const idUser = localStorage.getItem("id");
   const [reload, setReload] = useState(false);
-  const [categories, setCategories] = useState<intSelect[]>([]);
   const navigate = useNavigate();
   const [step, setStep] = useState<intStepNew>({
     name: "",
@@ -39,7 +36,6 @@ export default function StepPage() {
     const getStep = async () => {
       try {
         const tmpStep = await getStepById(idStep);
-        const dataCategories = await getCategories();
         tmpStep.project.owner.id.toString() === idUser && setIsOwner(true);
         const emailArray: Array<intSelect> = tmpStep.project.users.map(
           (element: intUser) => ({
@@ -47,17 +43,9 @@ export default function StepPage() {
             value: element.id,
           })
         );
-        const categoriesArray: Array<intSelect> = dataCategories.map(
-          (element: intCategory) => ({
-            label: element.name,
-            value: element.id,
-          })
-        );
         tmpStep.project.users = emailArray;
-        setCategories(categoriesArray);
         setStep(tmpStep);
       } catch (error) {
-        console.log(error);
         setError(true);
       } finally {
         setBusy(false);
@@ -88,7 +76,6 @@ export default function StepPage() {
           <StepHeader step={step} isOwner={isOwner} setStep={setStep} />
           <StepTasks
             step={step}
-            categories={categories}
             handleReload={handleReload}
           />
           <EspaceComment table="project_step" idParent={idStep} />

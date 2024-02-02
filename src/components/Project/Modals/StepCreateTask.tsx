@@ -32,13 +32,11 @@ import { formatDate } from "../../../services/utils/FormatDate";
 
 type Props = {
   handleReload: () => void;
-  categories: Array<intSelect>;
   step: intStepNew;
 };
 
 export default function StepCreateTask({
   handleReload,
-  categories,
   step,
 }: Props) {
   const { idStep, idProject } = useParams();
@@ -51,7 +49,7 @@ export default function StepCreateTask({
   const [form, setForm] = useState<intTask>({
     name: "",
     description: "",
-    category: { id: 1, name: "" },
+    category: 0,
     startDate: formatDate(date),
     endDate: formatDate(date),
     status: 0,
@@ -175,10 +173,7 @@ export default function StepCreateTask({
 
               <SelectStatus handleStatus={handleStatus} />
 
-              <SelectCategory
-                categories={categories}
-                handleCategory={handleCategory}
-              />
+              <SelectCategory handleCategory={handleCategory} />
 
               <div className="sm:flex gap-3">
                 <Datepicker

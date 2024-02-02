@@ -2,28 +2,35 @@
 import {intSelect} from "../../../../services/interfaces/intProject";
 import ReactSelect from "react-select";
 import makeAnimated from "react-select/animated";
+import { CategoriesEnum } from "../../../../services/enums/categories.enum";
+import { useEffect, useState } from "react";
 
 type Props = {
-  handleCategory: (categories: intSelect) => void;
-  categories: Array<intSelect>
-  defaultValue?: intSelect
+  handleCategory: (category: intSelect) => void;
+  value?: intSelect
 };
 
-export default function SelectCategory({ handleCategory, categories, defaultValue }: Props) {
+export default function SelectCategory({ handleCategory, value }: Props) {
   const animatedComponents = makeAnimated();
-
-  const handleCategoriesEnfant = (value: intSelect) => {
+  const [selected, setSelected] = useState<any>(value);
+  function handleCategoryEnfant(value: intSelect) {
+    setSelected(value);
     handleCategory(value);
-  };
+  }
+
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
 
   return (
     <ReactSelect
-      options={categories}
+      options={CategoriesEnum}
       className="rounded-xl border-select"
-      placeholder="Catégories"
-      defaultValue={defaultValue}
+      placeholder="Catégorie"
+      value={selected}
+      defaultValue={CategoriesEnum[0]}
       components={animatedComponents}
-      onChange={(value: any) => handleCategoriesEnfant(value)}
+      onChange={(value: any) => handleCategoryEnfant(value)}
       theme={(theme) => ({
         ...theme,
         borderRadius: 5,

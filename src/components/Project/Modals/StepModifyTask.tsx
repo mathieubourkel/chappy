@@ -28,18 +28,19 @@ import { enumStatus } from "../../../services/interfaces/Status";
 import ReactSelect from "react-select";
 const animatedComponents = makeAnimated();
 import './modal.css'
+import { CategoriesEnum } from "../../../services/enums/categories.enum";
 
 type Props = {
   task: intTask;
-  categories: Array<intSelect>;
   setTask: (task: intTask) => void;
   allUsers: Array<intSelect>;
 };
 
-export default function StepModifyTask({ task, categories, setTask, allUsers }: Props) {
+export default function StepModifyTask({ task, setTask, allUsers }: Props) {
   const [form, setForm] = useState<intTask>(task);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
+
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -65,6 +66,7 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    console.log(form)
     await modifyTaskToBDD(task.id, form);
     setTask(form);
   };
@@ -132,7 +134,7 @@ export default function StepModifyTask({ task, categories, setTask, allUsers }: 
               />
 
               <SelectCategory
-                categories={categories}
+                value={CategoriesEnum[task.category]}
                 handleCategory={handleCategory}
               />
 

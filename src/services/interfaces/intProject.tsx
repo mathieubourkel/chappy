@@ -94,7 +94,7 @@ export interface intComment {
 export interface intTask {
     name: string,
     status: number
-    category: intCategory | number,
+    category: number
     description: string,
     startDate: string,
     endDate:string,
@@ -111,7 +111,7 @@ export interface intTaskRelou {
     budget: number
     name: string,
     status: number
-    category: any
+    category: number
     description: string,
     startDate: string,
     endDate:string,
@@ -172,16 +172,11 @@ export interface intUserLight {
     tasks?:intTasks
 }
 
-export interface intCategory {
-    name: string | undefined
-    id: number
-}
 export interface intRangeDate {
     startDate: Date,
     endDate: Date
 }
 
-export type intCategories = intCategory[]
 export type intStatus = string[]
 export type intProjects = intProject[]
 export type intProjectsDash = intProjectDash[]

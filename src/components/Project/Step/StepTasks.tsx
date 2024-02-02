@@ -10,7 +10,6 @@ import {
 import StepCreateTask from "../Modals/StepCreateTask";
 import TaskCard from "../Cards/TaskCard";
 import {
-  intSelect,
   intStepNew,
   intTask,
 } from "../../../services/interfaces/intProject";
@@ -18,11 +17,10 @@ import {
 
 type Props = {
   step:intStepNew
-  categories: intSelect[]
   handleReload: () => void;
 }
 
-export default function StepTasks({step, categories, handleReload}:Props) {
+export default function StepTasks({step, handleReload}:Props) {
 
   return (
     <section className="mb-20">
@@ -32,7 +30,6 @@ export default function StepTasks({step, categories, handleReload}:Props) {
           <div>
             <StepCreateTask
               handleReload={handleReload}
-              categories={categories}
               step={step}
             />
           </div>
@@ -49,7 +46,6 @@ export default function StepTasks({step, categories, handleReload}:Props) {
               key={task.id}
               id={task.id}
               handleReload={handleReload}
-              categories={categories}
               allUsers={step.project.users}
             />
           ))}
