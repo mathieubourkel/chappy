@@ -33,8 +33,9 @@ const TASKS_ENDPOINT = "tasks";
     return handleApiCall(async () => await api.put(`${TASK_ENDPOINT}/${idTask}`, data));
   }
   
-  export async function deleteUserToTaskToBDD(idTask: number | undefined, idUser: string | number |null) {
-    return handleApiCall(async () => await api.put(`${TASK_ENDPOINT}/${idTask}/delete/${idUser}`));
+  export async function deleteUserToTaskToBDD(idUser:number, idTask:number|undefined) {
+    const data = {idUser, idTask}
+    return handleApiCall(async () => await api.put(`${TASK_ENDPOINT}/user/delete`, data));
   }
 
   export async function deleteTaskFromBDD(idTask: number | undefined) {

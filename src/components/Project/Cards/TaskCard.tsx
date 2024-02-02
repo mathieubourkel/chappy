@@ -37,6 +37,8 @@ export default function TaskCard({ id, handleReload, allUsers }: Props) {
   const userId: string | undefined | null = localStorage.getItem("id");
   const [openM, setOpenM] = useState(false);
   const [error, setError] = useState<boolean>(false);
+  const [reload, setReload] = useState<boolean>(false)
+  const handleReloadTask = () => setReload((bool) => !bool);
   const handleOpenM = () => setOpenM((bool) => !bool);
   const [task, setTask] = useState<intTaskRelou>({
     name: "",
@@ -64,7 +66,7 @@ export default function TaskCard({ id, handleReload, allUsers }: Props) {
       
     };
     getTask();
-  }, [id, userId]);
+  }, [id, userId, reload]);
 
   const handleDelete = async (indexT: number) => {
     const tempUsers = [...task.users];
@@ -107,7 +109,7 @@ export default function TaskCard({ id, handleReload, allUsers }: Props) {
             />
           </form>
           <div className="flex gap-x-2">
-            <StepModifyTask task={task} setTask={setTask} allUsers={allUsers} />
+            <StepModifyTask task={task} handleReload={handleReloadTask} allUsers={allUsers} />
             <DeleteButton handleDeleteBDD={handleDeleteTask} />
           </div>
         </div>

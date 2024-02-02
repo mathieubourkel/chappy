@@ -20,7 +20,7 @@ import {
   intTask
 } from "../../../services/interfaces/intProject";
 import Datepicker from "react-tailwindcss-datepicker";
-import { modifyTaskToBDD } from "../../../services/api/tasks";
+import { deleteUserToTaskToBDD, modifyTaskToBDD } from "../../../services/api/tasks";
 import SelectCategory from "../elements/Select/SelectCategory";
 import makeAnimated from "react-select/animated";
 import SelectStatus from "../elements/Select/SelectStatus";
@@ -32,11 +32,11 @@ import { CategoriesEnum } from "../../../services/enums/categories.enum";
 
 type Props = {
   task: intTask;
-  setTask: (task: intTask) => void;
   allUsers: Array<intSelect>;
+  handleReload: () => void;
 };
 
-export default function StepModifyTask({ task, setTask, allUsers }: Props) {
+export default function StepModifyTask({ task, allUsers, handleReload }: Props) {
   const [form, setForm] = useState<intTask>(task);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -58,30 +58,29 @@ export default function StepModifyTask({ task, setTask, allUsers }: Props) {
     // setSelected(value)
   };
 
-  const handleDeleteUser = (index:number) => {
+
+  const handleDeleteUser = async (idUser:number, indexT:number) => {
+    console.log(idUser, task.id)
+    await deleteUserToTaskToBDD(idUser, task.id)
     const tempUsers = [...task.users];
-    tempUsers.splice(index, 1);
-    setForm({...form, users: tempUsers })
+    tempUsers.splice(indexT, 1);
+    setForm({ ...form, users: tempUsers });
+    handleReload()
   }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     console.log(form)
     await modifyTaskToBDD(task.id, form);
-    setTask(form);
+    handleReload()
   };
 
   const handleUsers = (value: Array<intSelect>) => {
-    const tempUsers:any = [...task.users];
-    value.forEach((element: intSelect) => {
-      const userExists = tempUsers.some((tmpUser:any) => tmpUser.id === element.value);
-      if (userExists) {
-        alert("L'utilisateur est déjà présent");
-      } else {
-        tempUsers.push({ id: element.value, email: element.label });
-      }
-    });
-    setForm({ ...form, users: tempUsers });
+    const goodArray: Array<number | string | null> = [];
+    value.map((element: intSelect) => (
+      goodArray.push(element.value)
+    ));
+    setForm({ ...form, users: goodArray });
   };
 
   return (
@@ -152,7 +151,7 @@ export default function StepModifyTask({ task, setTask, allUsers }: Props) {
               </Typography>
 
               <div className={"flex gap-2 justify-center flex-wrap"}>
-                {task.users.map((user: any, indexT: number) => (
+                {form.users.map((user: any, indexT: number) => (
                     <div key={indexT}>
                     <ButtonGroup
                         size={"sm"}
@@ -161,7 +160,7 @@ export default function StepModifyTask({ task, setTask, allUsers }: Props) {
                       <Button>
                         {user.email}
                       </Button>
-                       <Button onClick={() => handleDeleteUser(indexT)}>
+                       <Button onClick={() => handleDeleteUser(user.id, indexT)}>
                             <FontAwesomeIcon
                                 icon={faXmark}
                                 size="sm"/>
