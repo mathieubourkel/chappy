@@ -41,10 +41,9 @@ export interface intCompany {
 export interface intNotification {
     content: string
     id: number | null | string
-    sender: intUserLight
     receivers: intUsers
     isView:boolean
-    timestamp: number
+    sendDate: number
     path: string
 }
 

@@ -60,8 +60,6 @@ export default function Calendar({className}:Props) {
       try {
         const dataOwner = await getTasksByUser(idUser);
         const dataCollab = await getTasksByUsers(idUser);
-        console.log(dataOwner)
-        console.log(dataCollab)
         const tmpTasks:Array<Task> = []
         dataOwner.map((task: any) => {
           task.title = task.name;

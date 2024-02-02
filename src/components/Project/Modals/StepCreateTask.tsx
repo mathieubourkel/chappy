@@ -42,7 +42,7 @@ export default function StepCreateTask({
   step,
 }: Props) {
   const { idStep, idProject } = useParams();
-  const userId = localStorage.getItem("id");
+  const userName = localStorage.getItem("name");
   const animatedComponents = makeAnimated();
   const date = new Date()
   const [open, setOpen] = useState(false);
@@ -79,21 +79,22 @@ export default function StepCreateTask({
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     console.log(form)
-    const tmpIdUsers: any = [];
+    console.log(step)
+    const tmpIdUsers:number[] = [];
     step.project.users.map((user: any) => {
       tmpIdUsers.push(user.value);
     });
+    
     const notif = {
-      content: `a créé la tâche ${form.name} dans ${step.name} sur le projet ${step.project.name}`,
-      sender: Number(userId),
+      content: `${userName} a créé la tâche ${form.name} dans ${step.name} sur le projet ${step.project.name}`,
       receivers: tmpIdUsers,
-      timestamp: Date.now(),
+      sendDate: formatDate(date),
       path: `/project/${idProject}/step/${idStep}`,
     };
+
     taskSchema
       .validate(form)
       .then(async (validForm:any) => {
-        console.log(validForm)
         await addTaskToStepToBDD(validForm);
         await addNotificationToBDD(notif);
         handleOpen();

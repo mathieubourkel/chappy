@@ -21,11 +21,16 @@ import { Link } from "react-router-dom";
 export default function Notifications() {
   const [notifications, setNotifications] = useState<intNotifications>([]);
   const idUser = localStorage.getItem("id");
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     const getNotifs = async () => {
-      const result = await getNotificationsByUser(idUser);
-      setNotifications(result.reverse());
+      try {
+        const result = await getNotificationsByUser();
+        setNotifications(result.reverse());
+      } catch (error) {
+        setError(true)
+      }
     };
 
     getNotifs();
@@ -53,7 +58,7 @@ export default function Notifications() {
     modifyNotificationToBDD(notifications[index].id, newNotif);
     setNotifications(newArrayNotifs);
   };
-
+  if (error) return (<div>Failed to get notifs</div>)
   return (
     <MenuList>
       {notifications.map((notification, index: number) => (
@@ -83,7 +88,7 @@ export default function Notifications() {
                       className={"text-brick-300"}
                   />
                   Il y a {differenceInMinute(
-                    notification.timestamp)} minutes
+                    notification.sendDate)} minutes
                 </Typography>
               </div>
               <div
