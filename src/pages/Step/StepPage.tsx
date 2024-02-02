@@ -55,7 +55,6 @@ export default function StepPage() {
         );
         tmpStep.project.users = emailArray;
         setCategories(categoriesArray);
-        console.log(tmpStep, "after remake")
         setStep(tmpStep);
       } catch (error) {
         console.log(error);

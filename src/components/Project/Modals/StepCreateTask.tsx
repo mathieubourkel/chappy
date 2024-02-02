@@ -78,8 +78,6 @@ export default function StepCreateTask({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(form)
-    console.log(step)
     const tmpIdUsers:number[] = [];
     step.project.users.map((user: any) => {
       tmpIdUsers.push(user.value);
@@ -88,8 +86,10 @@ export default function StepCreateTask({
     const notif = {
       content: `${userName} a créé la tâche ${form.name} dans ${step.name} sur le projet ${step.project.name}`,
       receivers: tmpIdUsers,
-      sendDate: formatDate(date),
+      sendDate: date.toISOString(),
       path: `/project/${idProject}/step/${idStep}`,
+      id:0,
+      isView:false
     };
 
     taskSchema

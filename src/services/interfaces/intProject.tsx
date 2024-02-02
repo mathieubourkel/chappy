@@ -40,10 +40,10 @@ export interface intCompany {
 
 export interface intNotification {
     content: string
-    id: number | null | string
-    receivers: intUsers
+    id: number
+    receivers: number[]
     isView:boolean
-    sendDate: number
+    sendDate: string
     path: string
 }
 
