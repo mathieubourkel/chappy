@@ -3,21 +3,20 @@ import { handleApiCall, useApi } from "../../hooks/useApi";
 import { intComment } from "../interfaces/intProject";
 const api = useApi();
 const COMMENTS_ENDPOINT = "comments";
+const COMMENT_ENDPOINT = "comment";
 
 export async function getComments(table:string, idParent: string | undefined) {
-    return handleApiCall(() => api.get(`${COMMENTS_ENDPOINT}?filters[table][$eq]=${table}&filters[idParent][$eq]=${idParent}&populate[0]=author`));
+   return handleApiCall(async () => await api.get(`${COMMENTS_ENDPOINT}/${table}/${idParent}`));
   }
 
   export async function addCommentToBDD(data: intComment) {
-    const body = data;
-    return handleApiCall(() => api.post(`${COMMENTS_ENDPOINT}`, body));
+    return handleApiCall(async () => await api.post(`${COMMENT_ENDPOINT}`, data));
   }
 
   export async function modifyCommentToBDD(idComment: string |number |undefined, data:intComment) {
-    const body = { data };
-    return handleApiCall(() => api.put(`${COMMENTS_ENDPOINT}/${idComment}`, body));
+    return handleApiCall(async () => await api.put(`${COMMENT_ENDPOINT}/${idComment}`, data));
   }
   
   export async function deleteCommentFromBDD(idComment: number | undefined) {
-    return handleApiCall(() => api.delete(`${COMMENTS_ENDPOINT}/${idComment}`));
+    return handleApiCall(async () => await api.delete(`${COMMENT_ENDPOINT}/${idComment}`));
   }

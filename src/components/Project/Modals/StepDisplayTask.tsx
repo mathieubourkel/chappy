@@ -11,6 +11,7 @@ import {
 import { intTaskRelou} from "../../../services/interfaces/intProject";
 import { enumStatus } from "../../../services/interfaces/Status";
 import './modal.css'
+import { CategoriesEnum } from "../../../services/enums/categories.enum";
 
 type Props = {
   task: intTaskRelou;
@@ -43,7 +44,7 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
           <Input
             label="Catégorie"
             disabled
-            value={task.category.name}
+            value={CategoriesEnum[task.category].label}
             size="lg"
             name="categorie"
             id="categorie"

@@ -45,22 +45,17 @@ export default function StepModifyTask({ task, allUsers, handleReload }: Props) 
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
-
   const handleDate = (value: any) => {
     setForm({ ...form, startDate: value.startDate, endDate: value.endDate });
   };
-
   const handleCategory = (value: any) => {
     setForm({ ...form, category: value.value});
   };
   const handleStatus = (value: any) => {
     setForm({ ...form, status: value.value });
-    // setSelected(value)
   };
 
-
   const handleDeleteUser = async (idUser:number, indexT:number) => {
-    console.log(idUser, task.id)
     await deleteUserToTaskToBDD(idUser, task.id)
     const tempUsers = [...task.users];
     tempUsers.splice(indexT, 1);
@@ -70,15 +65,14 @@ export default function StepModifyTask({ task, allUsers, handleReload }: Props) 
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(form)
     await modifyTaskToBDD(task.id, form);
     handleReload()
   };
 
-  const handleUsers = (value: Array<intSelect>) => {
-    const goodArray: Array<number | string | null> = [];
-    value.map((element: intSelect) => (
-      goodArray.push(element.value)
+  const handleUsers = (value: Array<any>) => {
+    const goodArray: Array<{id:number}> = [];
+    value.map((element: any) => (
+      goodArray.push({id: element.value})
     ));
     setForm({ ...form, users: goodArray });
   };
@@ -151,7 +145,7 @@ export default function StepModifyTask({ task, allUsers, handleReload }: Props) 
               </Typography>
 
               <div className={"flex gap-2 justify-center flex-wrap"}>
-                {form.users.map((user: any, indexT: number) => (
+                {task.users.map((user: any, indexT: number) => (
                     <div key={indexT}>
                     <ButtonGroup
                         size={"sm"}

@@ -16,14 +16,18 @@ import {
 import Breadcrumb
     from "../../Layers/Breadcrumb/Breadcrumb.tsx";
 import Calendar from "../Calendar/Calendar.tsx";
+import { useState } from "react";
+import RejoinButton from "../elements/Buttons/OpenButton.tsx";
 
 type Props = {
   nbProj: number;
-  setReload: (bool:boolean) => void;
 };
 
-export default function DashboardHeader({ nbProj, setReload}: Props) {
+export default function DashboardHeader({ nbProj }: Props) {
   const userName = localStorage.getItem('name')
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen((bool) => !bool);
   return (
     <section className="mt-20 md:flex gap-x-10">
       <div className="basis-[40lvw]">
@@ -84,7 +88,8 @@ export default function DashboardHeader({ nbProj, setReload}: Props) {
                 <Link to='/create-project'>
                 <CreateButton value="Créer un projet"/>
                 </Link>
-                <RejoinModal join="Rejoindre un projet" setReload={setReload}/>
+                <RejoinButton value="Rejoindre un projet" onClick={handleOpen}/>
+                <RejoinModal join="Rejoindre un projet" open={open} handleOpen={handleOpen}/>
               </div>
             </>
         )}

@@ -43,7 +43,7 @@ export default function DashboardPage() {
         </div>
       ) : (
         <>
-          <DashboardHeader nbProj={nbProj} setReload={setReload}/>
+          <DashboardHeader nbProj={nbProj}/>
           <DashboardProjects projects={projects} />
           <DashboardCollab collabs={collabs} setReload={setReload} />
         </>

@@ -13,7 +13,6 @@ import {
 import {
   FormEvent,
   InputEvent,
-  intSelect,
   intTask,
   intStepNew,
 } from "../../../services/interfaces/intProject";
@@ -103,24 +102,22 @@ export default function StepCreateTask({
       });
   };
 
-  const handleUsers = (value: Array<intSelect>) => {
-    const goodArray: Array<number | string | null> = [];
-    value.map((element: intSelect) => (
-      goodArray.push(element.value)
-    ));
-    setForm({ ...form, users: goodArray });
-  };
-
   const handleDate = (value: any) => {
     setForm({ ...form, startDate: value.startDate.toString(), endDate: value.endDate.toString() });
   };
-
   const handleStatus = (value: any) => {
     setForm({ ...form, status: value.value });
   };
-
   const handleCategory = (value: any) => {
     setForm({ ...form, category: value.value});
+  };
+
+  const handleUsers = (value: Array<any>) => {
+    const goodArray: Array<{id:number}> = [];
+    value.map((element: any) => (
+      goodArray.push({id: element.value})
+    ));
+    setForm({ ...form, users: goodArray });
   };
 
   return (

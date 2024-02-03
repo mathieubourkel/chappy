@@ -86,7 +86,7 @@ export type intSelect = {
 export interface intComment {
     content: string,
     table: string,
-    idParent: string | undefined
+    idParent: number
     id?: number
     author: intUserLight
 }
@@ -100,7 +100,7 @@ export interface intTask {
     endDate:string,
     comments?: intComments
     owner?: {id: number}
-    users: Array<number | string | null>
+    users: Array<{id: number, email?:string}>
     id?:number
     step?:number | string |undefined
     project?:number

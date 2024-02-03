@@ -5,6 +5,7 @@ import {
   ButtonGroup,
   Card,
   CardBody,
+  Input,
   Typography,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -34,7 +35,7 @@ type Props = {
 };
 
 export default function TaskCard({ id, handleReload, allUsers }: Props) {
-  const userId: string | undefined | null = localStorage.getItem("id");
+  const userId: string | undefined | null = localStorage.getItem("id") || ""
   const [openM, setOpenM] = useState(false);
   const [error, setError] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false)
@@ -58,7 +59,7 @@ export default function TaskCard({ id, handleReload, allUsers }: Props) {
     const getTask = async () => {
         try {
             const result = await getTaskById(id);
-            result.owner.id == userId && setIsOwner(true);
+            if (result.owner.id == userId || result.users.find((user: { id: number }) => user.id == +userId)) setIsOwner(true);
             setTask(result);
         } catch (error) {
             setError(true)
@@ -72,7 +73,7 @@ export default function TaskCard({ id, handleReload, allUsers }: Props) {
     const tempUsers = [...task.users];
     tempUsers.splice(indexT, 1);
     const tempTask = { ...task, users: tempUsers };
-    await deleteUserToTaskToBDD(task.id, task.users[indexT].id);
+    await deleteUserToTaskToBDD(task.users[indexT].id, task.id);
     setTask(tempTask);
   };
 
@@ -144,10 +145,16 @@ export default function TaskCard({ id, handleReload, allUsers }: Props) {
 
         <div className="flex gap-x-2 w-full lg:w-fit justify-center items-center">
           <form className={"w-full lg:w-fit"}>
-            <SelectStatus
-              handleStatus={handleStatus}
-              value={enumStatus[task.status]}
-            />
+          <Input
+            label="Status"
+            disabled
+            value={enumStatus[task.status].label}
+            size="lg"
+            name="status"
+            id="status"
+            className={"bg-select !border !border-marine-100/50"}
+            crossOrigin={undefined}
+          />
           </form>
           <div className="flex gap-x-2">
             <StepDisplayTask

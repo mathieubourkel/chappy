@@ -65,7 +65,7 @@ export default function ProjectPage() {
             isOwner={isOwner}
             setReload={setReload}
           />
-          <EspaceComment table="project" idParent={idProject} />
+          <EspaceComment table="project" idParent={idProject || ''} />
         </>
       )}
     </main>

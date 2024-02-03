@@ -78,7 +78,7 @@ export default function StepPage() {
             step={step}
             handleReload={handleReload}
           />
-          <EspaceComment table="project_step" idParent={idStep} />
+          <EspaceComment table="step" idParent={idStep || ''} />
 
           <div className={"flex justify-center mb-10"}>
             <Button
