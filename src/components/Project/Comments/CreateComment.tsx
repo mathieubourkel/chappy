@@ -30,8 +30,8 @@ const handleEditorChange = (_event: any, editor: any) => {
 
 const handleSubmit = async (e:FormEvent) => {
   e.preventDefault();
-  console.log(form)
-  await addCommentToBDD(form)
+  const tmpContent = form.content.replace(/^<p>(.*?)<\/p>$/, '$1');
+  await addCommentToBDD({...form, content: tmpContent})
   setForm({...form, content:""})
   handleReload();
 }
