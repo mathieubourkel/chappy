@@ -19,7 +19,7 @@ export default function CreateComment({ idParent, table, handleReload }:Props) {
 
   const idUser = localStorage.getItem('id')
   const [form, setForm] = useState<intComment>({
-    content: "", author: {id: idUser}, table:table,
+    content: "", author: {id: idUser, email:""}, table:table,
      idParent: +idParent
 })
 

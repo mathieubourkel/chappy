@@ -17,8 +17,12 @@ import {
   InputEvent,
   FormEvent,
 } from "../../services/interfaces/intProject";
-import { getUserInfo, modifyUserToBDD } from "../../services/api/users";
+import { getUserInfo, modifyUserToBDD, resetPwd } from "../../services/api/users";
 import NotFoundPage from "../../services/utils/NotFoundPage";
+import AddCompanyModal from "../../components/Project/Modals/AddCompanyModal";
+import RejoinCompanyModal from "../../components/Project/Modals/RejoinCompanyModal";
+import ModifyCompanyModal from "../../components/Project/Modals/ModifyCompanyModal";
+import QuitCompanyModal from "../../components/Project/Modals/QuitCompanyModal";
 
 export default function UserProfilePage() {
   const [user, setUser] = useState<intProfileUser>({
@@ -28,7 +32,7 @@ export default function UserProfilePage() {
     id: 0,
     city: "",
     address: "",
-    zip: 0,
+    zip: "",
     status: 0,
     phone: "",
     projects: [],
@@ -41,6 +45,20 @@ export default function UserProfilePage() {
   const [displayPwd, setDisplayPwd] = useState<boolean>(false);
   const [busy, setBusy] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
+  const [reload, setReload] = useState(false);
+  const [passwords, setPasswords] = useState({
+    oldPassword: "", newPassword:""
+  })
+
+  const handleReload = () => setReload((bool) => !bool);
+  const [openRejoin, setOpenRejoin] = useState(false);
+  const handleOpenRejoin = () => setOpenRejoin((bool) => !bool);
+  const [openAdd, setOpenAdd] = useState(false);
+  const handleOpenAdd = () => setOpenAdd((bool) => !bool);
+  const [openModify, setOpenModify] = useState(false);
+  const handleOpenModify = () => setOpenModify((bool) => !bool);
+  const [openQuit, setOpenQuit] = useState(false);
+  const handleOpenQuit = () => setOpenQuit((bool) => !bool);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,26 +72,39 @@ export default function UserProfilePage() {
       }  
     };
     fetchData();
-  }, [idUser]);
+  }, [idUser, reload]);
 
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
 
+  const handlePasswords = (e: InputEvent) => {
+    const { name, value } = e.target;
+    setPasswords({ ...passwords, [name]: value });
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await modifyUserToBDD(idUser, user);
-    alert("Les modifications ont été enregistré");
+    try {
+      await modifyUserToBDD(user);
+      alert("Les modifications ont été enregistré");
+    } catch (error) {
+      alert(error);
+    } 
   };
 
   const handlePassword = () => setDisplayPwd(!displayPwd);
 
   const sendPwd = async (e: any) => {
-    const data = { ...user, password: e.target.form.newPassword.value };
-    await modifyUserToBDD(idUser, data);
-    alert("Votre mot de passe a bien été mis à jour");
-    setDisplayPwd(false);
+    e.preventDefault();
+    try {
+      await resetPwd({...passwords, email: user.email});
+      alert("Votre mot de passe a bien été mis à jour");
+      setDisplayPwd(false);
+    } catch (error) {
+      alert("Erreur lors de la réinitialisation du mot de passe");
+    }
   };
 
   const renderInput = (label: string, name: keyof intProfileUser, type = "text") => (
@@ -124,12 +155,8 @@ export default function UserProfilePage() {
             <div className={"!bg-light-100"}>{renderInput("Email", "email")}</div>
             <div className="flex gap-5 my-5">
               <Input
-                label={
-                  displayPwd
-                    ? "Entrer le nouveau mot de passe"
-                    : "*************"
-                }
-                disabled={!displayPwd}
+                label="*************"
+                disabled
                 className={"!border !border-gray-500-300 !bg-light-100"}
                 crossOrigin={undefined}
                 name="password"
@@ -143,6 +170,27 @@ export default function UserProfilePage() {
               </IconButton>
             </div>
             {displayPwd && (
+              <div className='gap-5'>
+                <div className='mb-5'>
+                <Input
+                  label="Ancien mot de passe"
+                  className={"!border !border-gray-500-300 !bg-light-100"}
+                  crossOrigin={undefined}
+                  name="oldPassword"
+                  id="oldPassword"
+                  type="password"
+                  onChange={(e: InputEvent) => handlePasswords(e)}
+                />
+                </div>
+                <div className='mb-5'>
+                <Input
+                label="Entrer le nouveau mot de passe"
+                className={"!border !border-gray-500-300 !bg-light-100"}
+                crossOrigin={undefined}
+                name="password"
+                type="password"
+              />
+              </div>
               <div>
                 <Input
                   label="Vérifier le nouveau mot de passe"
@@ -151,7 +199,11 @@ export default function UserProfilePage() {
                   name="newPassword"
                   id="newPassword"
                   type="password"
+                  onChange={(e: InputEvent) => handlePasswords(e)}
                 />
+                </div>
+
+                
                 <Button className="mt-5" onClick={(e: any) => sendPwd(e)}>
                   Envoyer le nouveau pwd
                 </Button>
@@ -172,7 +224,9 @@ export default function UserProfilePage() {
             </div>
             <div className={"!bg-light-100"}>{renderInput("Téléphone", "phone")}</div>
           </article>
-
+          </form>
+          </section>
+          <section className={"mt-5 lg:w-[55lvw] m-auto"}>
           <article>
             <div className="flex items-center justify-between">
               <Typography
@@ -182,10 +236,14 @@ export default function UserProfilePage() {
                 Accès professionnel
               </Typography>
               <div className="md:flex gap-3">
-                <Button size={"sm"}>Rejoindre une entreprise</Button>
-                <Button size={"sm"}>
-                  {user.company ? "Modifier" : "Ajouter"} mon entreprise
-                </Button>
+              {user.myCompany && <Button size={"sm"} onClick={handleOpenModify}>Modifier mon entreprise</Button>}
+                {!user.myCompany && <Button size={"sm"} onClick={handleOpenAdd}>Ajouter une entreprise</Button>}
+                {user.company && <Button size={"sm"} onClick={handleOpenQuit}>Quitter mon entreprise</Button>}
+                {!user.company && <Button size={"sm"} onClick={handleOpenRejoin}>Rejoindre une entreprise</Button>}
+                {openRejoin && <RejoinCompanyModal open={openRejoin} handleOpen={handleOpenRejoin} handleReload={handleReload}/> }
+                {openAdd && <AddCompanyModal open={openAdd} handleOpen={handleOpenAdd} handleReload={handleReload}/> }
+                {openModify && <ModifyCompanyModal user={user} open={openModify} handleOpen={handleOpenModify} handleReload={handleReload} /> }
+                {openQuit && <QuitCompanyModal open={openQuit} handleOpen={handleOpenQuit} handleReload={handleReload}/> }
               </div>
             </div>
 
@@ -193,15 +251,16 @@ export default function UserProfilePage() {
               {/* Besoin d'ajouter des modals pour ajouter et rejoindre */}
 
               {user.myCompany && (
-          
+          <div className={"mb-5 w-full !bg-light-100"}>
                 <Input
                   label="Mon entreprise"
                   className={"bg-light-100"}
                   crossOrigin={undefined}
                   name="owner"
                   id="owner"
-                  defaultValue={user.myCompany.name}
+                  value={user.myCompany.name}
                 />
+                </div>
               )}
 
               {/* {user.companies.length != 0 && (
@@ -222,7 +281,45 @@ export default function UserProfilePage() {
               )} */}
               {!user.myCompany && 
                 <div>
-                  <p>Vous n'avez pas d'entreprise</p>
+                  <p>Vous ne gérez pas d'entreprise</p>
+                </div>
+              }
+            </div>
+            <div className="mb-5">
+              {/* Besoin d'ajouter des modals pour ajouter et rejoindre */}
+
+              {user.company && (
+              <div className={"mb-5 w-full !bg-light-100"}>
+                <Input
+                  label="Entreprise dont je suis salarié"
+                  className={"!bg-light-100"}
+                  crossOrigin={undefined}
+                  name="company"
+                  id="company"
+                  value={user.company.name}
+                />
+                </div>
+              )}
+
+              {/* {user.companies.length != 0 && (
+                <ul className="flex">
+                  {user.companies.map((_company, index) => (
+                    <li key={index} className="mt-5">
+                      <Input
+                        label="Salarié de l'entreprise"
+                        className={"bg-light-100"}
+                        crossOrigin={undefined}
+                        name="member"
+                        id={`member ${index}`}
+                        defaultValue={user.companies[index].name}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              )} */}
+              {!user.company && 
+                <div>
+                  <p>Vous n'êtes dans aucune entreprise</p>
                 </div>
               }
             </div>
@@ -244,7 +341,7 @@ export default function UserProfilePage() {
               </a>
             </div>
           </article>
-
+          </section>
           <div className={"flex justify-center my-10"}>
             <a href="#buttons-with-link">
               <Button className={"bg-brick-400"}
@@ -258,8 +355,8 @@ export default function UserProfilePage() {
               </Button>
             </a>
           </div>
-        </form>
-      </section>
+       
+      
       </>
       )}
     </main>

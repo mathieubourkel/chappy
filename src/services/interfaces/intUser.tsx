@@ -16,8 +16,14 @@ export interface intCompany {
     description?: string,
 }
 
+export interface intLightCompany {
+    id: number,
+}
+
 export interface intRegister {
     userInfos: intUser,
     companyInfos: intCompany,
     companyNameEmployee: string
 }
+
+export type intLightCompanies = intLightCompany[]

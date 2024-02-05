@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { URL_API, handleApiCall, useApi } from "../../hooks/useApi";
 import { intProfileUser } from "../interfaces/intProject";
-import { intCompany, intUser } from "../interfaces/intUser";
+import { intCompany, intLightCompany, intUser } from "../interfaces/intUser";
 import {AxiosInstance} from "axios";
 const api:AxiosInstance = useApi();
 
@@ -26,17 +26,21 @@ export async function getMembersByProject(idProject: string | undefined) {
                                                    {idProject, idUser}));
   }
 
-  export async function modifyUserToBDD(idUser: string | null, data: intProfileUser) {
-    const body = data
-    return handleApiCall(() => api.put(`${USERS_ENDPOINT}/${idUser}`, body));
+  export async function modifyUserToBDD(data: intProfileUser) {
+    return handleApiCall(async () => await api.put(`${USER_ENDPOINT}`, data));
   }
+
+  export async function resetPwd(data: {oldPassword: string, newPassword: string, email: string}) {
+    return handleApiCall(async () => await api.put(`${URL_API}/auth/resetPwd`, data));
+  }
+
 
   
   export async function deleteUserToProjectToBDD(
       idProject: number | string | undefined,
       idUser: number | string | null
   ) {
-    return handleApiCall(() => api.put(`${PROJECT_ENDPOINT}/${USER_ENDPOINT}/delete`, {idProject, idUser}));
+    return handleApiCall(async () => await api.put(`${PROJECT_ENDPOINT}/${USER_ENDPOINT}/delete`, {idProject, idUser}));
   }
 
   export async function getAllCompanies() {
@@ -61,10 +65,24 @@ export async function getMembersByProject(idProject: string | undefined) {
     return handleApiCall(async () => await api.get(`${USERS_ENDPOINT}`));
   }
 
-export async function addCompanyToBDD(data: intCompany) {
-  const body = data;
-  console.log("body", body, "data", data)
-  return handleApiCall(async () => await api.post(`${URL_API}/auth/company/register`, body))
+export async function addCompanyToBDDFromUser(data: intCompany) {
+  return handleApiCall(async () => await api.post(`company`, data))
+}
+
+export async function modifyCompanyToBDD(idCompany: number | string |null, data: intCompany) {
+  return handleApiCall(async () => await api.put(`company/${idCompany}`, data))
+}
+
+export async function rejoinCompany(data: intLightCompany) {
+  return handleApiCall(async () => await api.put(`${USER_ENDPOINT}/rejoinCompany`, data))
+}
+
+export async function quitCompany() {
+  return handleApiCall(async () => await api.put(`${USER_ENDPOINT}/quitCompany`, {}))
+}
+
+export async function deleteCompanyToBDD(idCompany: string |null| number) {
+  return handleApiCall(async () => await api.delete(`company/${idCompany}`))
 }
 
 

@@ -4,7 +4,7 @@ import axios, { AxiosInstance } from "axios";
 export async function handleApiCall(apiCall: any) {
   try {
     const response = await apiCall();
-    if (!response.data || !response) return {};
+    if (!response.data || !response) throw new Error()
     return response.data.data;
   } catch (error) {
     return error;

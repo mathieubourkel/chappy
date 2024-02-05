@@ -149,10 +149,10 @@ export type intSelectDocument = {
 export interface intUser extends intUserLight {
     city:string,
     address: string,
-    zip: number,
+    zip: string,
     status:number,
     phone:string,
-    
+   
 }
 
 export interface intProfileUser extends intUser {
@@ -167,7 +167,7 @@ export interface intUserLight {
     firstname?: string,
     lastname?: string,
     company?: intCompany,
-    email?: string,
+    email: string,
     id: number | null | string
     tasks?:intTasks
 }
