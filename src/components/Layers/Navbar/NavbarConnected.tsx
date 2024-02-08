@@ -24,7 +24,7 @@ type Props = {
   toggleSidebar: () => void;
 };
 
-export function NavbarConnected({ toggleSidebar }: Props) {
+export function NavbarConnected({ toggleSidebar}: Props) {
   const [openNav, setOpenNav] = useState(false);
 
   useEffect(() => {
@@ -45,7 +45,6 @@ export function NavbarConnected({ toggleSidebar }: Props) {
         >
           <FontAwesomeIcon icon={faPlay} className="h-3 w-3 text-white" />
         </IconButton>
-
         <NavLink to={"/dashboard"} className="cursor-pointer lg:ml-[17em]">
           <img src={logo} alt={"logo de Chappy"} />
         </NavLink>

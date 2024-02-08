@@ -28,6 +28,7 @@ import SelectStatus from "../elements/Select/SelectStatus";
 import "./modal.css";
 import { addNotificationToBDD } from "../../../services/api/notifications";
 import { formatDate } from "../../../services/utils/FormatDate";
+import { sendMessage } from "../../../services/utils/WebSocket";
 
 type Props = {
   handleReload: () => void;
@@ -94,6 +95,7 @@ export default function StepCreateTask({
       .then(async (validForm:any) => {
         await addTaskToStepToBDD(validForm);
         await addNotificationToBDD(notif);
+        sendMessage(notif.content)
         handleOpen();
         handleReload();
       })
