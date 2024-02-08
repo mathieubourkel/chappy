@@ -13,7 +13,7 @@ import PurchasesPage from "./pages/Purchases/PurchasesPage.tsx";
 import DocumentsPage from "./pages/Documents/DocumentsPage.tsx";
 import CalendarPage from "./pages/Calendar/CalendarPage.tsx";
 import Footer from "./components/Layers/Footer/Footer.tsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AboutPage from "./pages/About/AboutPage.tsx";
 import ContactUsPage from "./pages/ContactUs/ContactUsPage.tsx";
 import PrivateRoute from "./services/utils/PrivateRoute.tsx";
@@ -25,44 +25,44 @@ import ScrollToTop from "./services/utils/ScrollToTop.tsx";
 import PublicRoute from "./services/utils/PublicRoute.tsx";
 import ContextIsLogged from "./context/ContextIsLogged.tsx";
 import Sidebar from "./components/Layers/Sidebar/Sidebar.tsx";
-import { Popup } from "./components/Layers/Popup/Popup.tsx";
-import { socket } from "./services/utils/WebSocket.tsx";
+//import { Popup } from "./components/Layers/Popup/Popup.tsx";
+//import { socket } from "./services/utils/WebSocket.tsx";
 
 export default function App() {
   const token = localStorage.getItem("token");
   const [isLogged, setIsLogged] = useState<boolean>(!!token);
   token && !isLogged && setIsLogged(true);
-  const [popUp, setPopUp] = useState<string[]>([])
+ // const [popUp, setPopUp] = useState<string[]>([])
   const [open, setOpen] = useState(false);
 
   const toggleSidebar = () => setOpen(!open)
 
-    useEffect(() => {
-      socket.on('connect', () => {
-        console.log("connected")
-      });
+    // useEffect(() => {
+    //   socket.on('connect', () => {
+    //     console.log("connected")
+    //   });
   
-      socket.on('disconnect', () => {
-        console.log("disconnected")
-      });
+    //   socket.on('disconnect', () => {
+    //     console.log("disconnected")
+    //   });
   
-      socket.on('notif', (e) => {
-        setPopUp((prevPopups) => [...prevPopups, e.message])
-        setTimeout(() => {
-          removePopup(e.message);
-        }, 10000);
-      });
+    //   socket.on('notif', (e) => {
+    //     setPopUp((prevPopups) => [...prevPopups, e.message])
+    //     setTimeout(() => {
+    //       removePopup(e.message);
+    //     }, 10000);
+    //   });
 
-      const removePopup = (newPopup:string) => {
-        setPopUp((prevPopups) => prevPopups.filter((popup) => popup !== newPopup));
-      };
+    //   const removePopup = (newPopup:string) => {
+    //     setPopUp((prevPopups) => prevPopups.filter((popup) => popup !== newPopup));
+    //   };
   
-      return () => {
-        socket.off('connect');
-        socket.off('disconnect');
-        socket.off('notif');
-      };
-    }, []);
+    //   return () => {
+    //     socket.off('connect');
+    //     socket.off('disconnect');
+    //     socket.off('notif');
+    //   };
+    // }, []);
 
   return (
     <ContextIsLogged.Provider value={{ isLogged, setIsLogged }}>
@@ -76,7 +76,7 @@ export default function App() {
           <NavbarVisitor />
         )}
       </header>
-      <Popup popUp={popUp}/>
+      {/* <Popup popUp={popUp}/> */}
       <ScrollToTop>
         <Routes>
           <Route element={<PublicRoute />}>
