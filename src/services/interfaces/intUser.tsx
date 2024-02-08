@@ -3,7 +3,7 @@ export interface intUser {
     firstname: string,
     email: string,
     address: string,
-    zip: number | null,
+    zip: string,
     city: string,
     phone: number | null,
     password: string,

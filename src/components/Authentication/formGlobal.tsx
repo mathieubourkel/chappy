@@ -73,7 +73,7 @@ export default function FormGlobal() {
         firstname: "",
         email: "",
         address: "",
-        zip: null,
+        zip: '',
         city: "",
         phone: null,
         password: "",

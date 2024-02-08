@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
 import { intProjectLight } from "../../services/interfaces/intProject";
@@ -20,7 +21,7 @@ export default function MembersPage() {
     name: "",
     code: "",
     owner: { id : 0, lastname: "", firstname: "", email: ""},
-    users: [ { id:0 } ],
+    users: [ { id:0, email:"" } ],
   });
   const [busy, setBusy] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);

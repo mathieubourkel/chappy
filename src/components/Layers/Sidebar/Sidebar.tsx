@@ -47,7 +47,7 @@ export default function Sidebar(props: any) {
     email: "",
     phone: "",
     status: 0,
-    zip: 0,
+    zip: '',
     firstname: "",
     lastname: "",
     id: 0,
