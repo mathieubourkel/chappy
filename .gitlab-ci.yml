@@ -15,6 +15,7 @@ publish:
     - docker build --target=production -t $CI_REGISTRY_IMAGE:$TAG_PROD --build-arg "VITE_PROTOCOL=http" --build-arg "VITE_BACK_PORT=3000" --build-arg "VITE_BACK_HOST=ec2-15-237-216-144.eu-west-3.compute.amazonaws.com" .
     - docker push $CI_REGISTRY_IMAGE:$TAG_PROD
   rules:
+  - if: $CI_COMMIT_BRANCH == "main"
   - when: manual
 
 deploy:
@@ -32,5 +33,5 @@ deploy:
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $AWS_USER@$AWS_DNS "docker container rm -f front_chappy_prod || true"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $AWS_USER@$AWS_DNS "docker-compose up -d"
   rules:
+  - if: $CI_COMMIT_BRANCH == "main"
   - when: manual
-
