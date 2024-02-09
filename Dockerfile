@@ -1,10 +1,10 @@
 FROM node:20.10.0-alpine as base
 ARG TZ
 RUN apk add --no-cache --virtual .build-tz tzdata;\
-    cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone;\
+    cp /usr/share/zoneinfo/Europe/Paris /etc/localtime && echo Europe/Paris > /etc/timezone;\
     apk del .build-tz;\
-    echo /usr/share/zoneinfo/$TZ | cut -d'/' -f-5 | xargs mkdir -p;\
-    cp /etc/localtime /usr/share/zoneinfo/$TZ
+    echo /usr/share/zoneinfo/Europe/Paris | cut -d'/' -f-5 | xargs mkdir -p;\
+    cp /etc/localtime /usr/share/zoneinfo/Europe/Paris
 WORKDIR /app
 COPY package.json ./
 

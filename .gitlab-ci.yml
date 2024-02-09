@@ -9,7 +9,7 @@ build-prod-fr:
   before_script:
     - docker login $CI_REGISTRY -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" 
   script:
-    - docker build --target=production -t $CI_REGISTRY_IMAGE:$TAG_PROD  .
+    - docker build --target=production -t $CI_REGISTRY_IMAGE:$TAG_PROD  --build-arg="VITE_BACK_HOST=0.0.0.0" --build-arg="VITE_BACK_PORT=3001" --build-arg="VITE_PROTOCOL=http" .
     - docker push $CI_REGISTRY_IMAGE:$TAG_PROD
   rules:
   - when: manual
