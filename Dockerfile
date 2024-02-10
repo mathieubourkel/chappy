@@ -33,7 +33,7 @@ RUN chown -R nginx:nginx /var/cache/nginx && \
     chown -R nginx:nginx /var/log/nginx && \
     touch /var/run/nginx.pid && \
     chown -R nginx:nginx /var/run/nginx.pid &&\
-    mkdir /etc/nginx/ssl /var/www/certbot &&\
+    mkdir /etc/nginx/ssl && mkdir /var/www/certbot && \
     chown -R nginx:nginx /etc/nginx/ssl &&\
     chown -R nginx:nginx /var/www/certbot
 COPY nginx.conf /etc/nginx/conf.d/default.conf
