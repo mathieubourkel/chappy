@@ -32,7 +32,9 @@ LABEL version="production"
 RUN chown -R nginx:nginx /var/cache/nginx && \
     chown -R nginx:nginx /var/log/nginx && \
     touch /var/run/nginx.pid && \
-    chown -R nginx:nginx /var/run/nginx.pid
+    chown -R nginx:nginx /var/run/nginx.pid \
+    chown -R nginx:nginx /etc/nginx/ssl \
+    chown -R nginx:nginx /var/www/certbot
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=buildprod --chown=nginx:nginx /app/dist /app/dist
 USER nginx
