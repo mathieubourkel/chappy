@@ -16,7 +16,7 @@ publish:
   script:
     - echo $CI_REGISTRY
     - echo $CI_REGISTRY_IMAGE:$TAG_PROD
-    - docker build --target=production -t $CI_REGISTRY_IMAGE:$TAG_PROD --build-arg "VITE_PROTOCOL=http" --build-arg "VITE_BACK_PORT=3000" --build-arg "VITE_BACK_HOST=ec2-15-237-216-144.eu-west-3.compute.amazonaws.com" .
+    - docker build --target=production -t $CI_REGISTRY_IMAGE:$TAG_PROD --build-arg "VITE_PROTOCOL=https" --build-arg "VITE_BACK_PORT=3000" --build-arg "VITE_BACK_HOST=ec2-15-237-216-144.eu-west-3.compute.amazonaws.com" .
     - docker push $CI_REGISTRY_IMAGE:$TAG_PROD
 
 deploy:
