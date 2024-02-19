@@ -40,7 +40,7 @@ export default function StepCard({ step, idProject }: Props) {
         </Typography>
       </CardBody>
       <CardFooter className="pt-0 flex justify-end">
-        <Link to={`/project/${idProject}/step/${step.id}`}>
+        <Link to={`/project/${idProject}/step/${step._id}`}>
           <AccederButton />
         </Link>
       </CardFooter>

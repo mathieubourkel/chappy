@@ -33,14 +33,14 @@ export default function ProjectCreateStep({ setReload }: Props) {
   const handleOpen = () => setOpen((cur) => !cur);
   const { idProject } = useParams();
   const [form, setForm] = useState<intStep>({
-    id: undefined,
+    _id: undefined,
     tasks: [],
     name: "",
     description: "",
     budget: 0,
     estimEndDate: formatDate(date),
     status: 0,
-    project: Number(idProject),
+    project: idProject,
   });
 
   const handleChange = (e: InputEvent) => {

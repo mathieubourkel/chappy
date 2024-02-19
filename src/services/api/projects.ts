@@ -5,11 +5,11 @@ const api = useApi();
 const PROJECT_ENDPOINT = "project";
 
 export async function getProjectsFromOwner() {
-    return handleApiCall(async () => await api.get(`myprojects`));
+    return handleApiCall(async () => await api.get(`my-projects`));
   }
   
   export async function getProjectsFromUsers() {
-    return handleApiCall(async () => await api.get(`mycollabs`));
+    return handleApiCall(async () => await api.get(`my-collabs`));
   }
   
   export async function getProjectById(idProject: string | undefined) {

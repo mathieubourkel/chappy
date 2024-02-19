@@ -10,7 +10,7 @@ import {
 import "./modal.css";
 import makeAnimated from "react-select/animated";
 import { intLightCompany } from "../../../services/interfaces/intUser.tsx";
-import { getAllCompanies, rejoinCompany } from "../../../services/api/users.ts";
+import { getAllCompanies, rejoinCompanyDemand } from "../../../services/api/users.ts";
 import ReactSelect from "react-select";
 import { intCompany, intSelect } from "../../../services/interfaces/intProject.tsx";
 
@@ -48,7 +48,7 @@ export default function RejoinCompanyModal({ open, handleOpen, handleReload}: Pr
 
   const handleClick = async () => {
     try {
-      await rejoinCompany(company);
+      await rejoinCompanyDemand(company);
       handleOpen()
       handleReload()
     } catch {

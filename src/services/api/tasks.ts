@@ -10,8 +10,12 @@ const TASKS_ENDPOINT = "tasks";
     return handleApiCall(async () => await api.get(`${TASKS_ENDPOINT}/project/${idProject}`));
   }
 
-  export async function getTasksByUser(idUser: string | undefined |null) {
-    return handleApiCall(async () => await api.get(`${TASKS_ENDPOINT}/owner/${idUser}`));
+  export async function getTasksByStepId(idStep: string | undefined) {
+    return handleApiCall(async () => await api.get(`${TASKS_ENDPOINT}/step/${idStep}`));
+  }
+
+  export async function getTasksByUser() {
+    return handleApiCall(async () => await api.get(`my-tasks`));
   }
 
   export async function getTasksByUsers(idUser: string | undefined|null) {

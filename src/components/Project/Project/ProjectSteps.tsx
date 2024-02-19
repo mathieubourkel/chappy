@@ -41,7 +41,7 @@ export default function ProjectSteps({ idProject, isOwner, project, setReload}: 
 
         <div className="flex flex-wrap justify-center gap-10 mt-10">
           {project.steps.map((step: intStep) => (
-            <StepCard key={step.id} step={step} idProject={idProject} />
+            <StepCard key={step._id} step={step} idProject={idProject} />
           ))}
         </div>
       {project.steps.length == 0 && <Alert

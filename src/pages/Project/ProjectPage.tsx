@@ -21,9 +21,9 @@ export default function ProjectPage() {
     name: "",
     description: "",
     status: Status[0].value,
-    owner: {id:0},
+    owner: 0,
     budget: undefined,
-    id: undefined,
+    _id: undefined,
     estimEndDate: new Date(),
     code:"",
     steps: []
@@ -34,7 +34,7 @@ export default function ProjectPage() {
       try {
       const result = await getProjectById(idProject);
       setProject(result);
-      result.owner.id.toString() === idUser && setIsOwner(true); 
+      result.owner.toString() === idUser && setIsOwner(true); 
       } catch (_error) {
         setError(true)
       } finally {

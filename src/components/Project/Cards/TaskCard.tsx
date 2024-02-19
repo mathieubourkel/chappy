@@ -32,59 +32,37 @@ type Props = {
   id: number | undefined;
   handleReload: () => void;
   allUsers: Array<intSelect>;
+  task: intTaskRelou
 };
 
-export default function TaskCard({ id, handleReload, allUsers }: Props) {
+export default function TaskCard({ id, handleReload, allUsers, task }: Props) {
   const userId: string | undefined | null = localStorage.getItem("id") || ""
   const [openM, setOpenM] = useState(false);
   const [error, setError] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false)
   const handleReloadTask = () => setReload((bool) => !bool);
   const handleOpenM = () => setOpenM((bool) => !bool);
-  const [task, setTask] = useState<intTaskRelou>({
-    name: "",
-    status: 0,
-    category: 0,
-    description: "",
-    startDate: "",
-    endDate: "",
-    users: [],
-    owner: { id: 0 },
-    budget: 0,
-  });
 
-  const [isOwner, setIsOwner] = useState(false);
+  let isOwner = false;
+  if (task.owner == userId || task.members.find((member:{id: number}) => member.id == +userId)) isOwner = true;
 
-  useEffect(() => {
-    const getTask = async () => {
-        try {
-            const result = await getTaskById(id);
-            if (result.owner.id == userId || result.users.find((user: { id: number }) => user.id == +userId)) setIsOwner(true);
-            setTask(result);
-        } catch (error) {
-            setError(true)
-        }
-      
-    };
-    getTask();
-  }, [id, userId, reload]);
 
   const handleDelete = async (indexT: number) => {
-    const tempUsers = [...task.users];
+    const tempUsers = [...task.members];
     tempUsers.splice(indexT, 1);
-    const tempTask = { ...task, users: tempUsers };
-    await deleteUserToTaskToBDD(task.users[indexT].id, task.id);
+    const tempTask = { ...task, members: tempUsers };
+    await deleteUserToTaskToBDD(task.members[indexT].id, task._id);
     setTask(tempTask);
   };
 
   const handleDeleteTask = async () => {
-    await deleteTaskFromBDD(task.id);
+    await deleteTaskFromBDD(task._id);
     handleReload();
   };
 
   const handleStatus = async (values: any) => {
     const data = { ...task, status: values.value };
-    await modifyTaskToBDD(task.id, data);
+    await modifyTaskToBDD(task._id, data);
     setTask(data);
   };
 
@@ -187,7 +165,7 @@ export default function TaskCard({ id, handleReload, allUsers }: Props) {
           className="pr-3 py-3 flex flex-wrap gap-x-2 justify-end"
           onClick={handleOpenM}
         >
-          {task.users.map((user: any, indexT: number) => (
+          {task.members.map((user: any, indexT: number) => (
             <ButtonGroup
               size={"sm"}
               className={"divide-light-100/50 mb-2"}

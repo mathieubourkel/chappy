@@ -87,7 +87,7 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
             Participants
           </Typography>
           <div className="flex gap-2 flex-wrap justify-center">
-            {task.users.map((user: any, indexT: number) => (
+            {task.members.map((user: any, indexT: number) => (
                 <div key={indexT}>
                     <Button
                         className={"bg-marine-300 disabled:opacity-100"}

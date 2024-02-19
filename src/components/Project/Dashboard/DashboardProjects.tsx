@@ -48,7 +48,7 @@ export default function DashboardProjects({ projects }: Props) {
               ))}
             </div>
             <div className="flex md:justify-end justify-center basis-1/4 gap-5">
-              <Link to={"/project/" + projects[selected].id}>
+              <Link to={"/project/" + projects[selected]._id}>
                 <OpenButton value="Ouvrir le projet" />
               </Link>
               <Link to="/create-project">
@@ -75,7 +75,7 @@ export default function DashboardProjects({ projects }: Props) {
                     variant="paragraph"
                     className={"inline-block font-semibold text-brick-400 hover:text-marine-300 underline underline-offset-4 decoration-marine-300 hover:decoration-brick-300 cursor-pointer ml-1"}
                 >
-                  <Link to={"/project/" + projects[selected].id}>
+                  <Link to={"/project/" + projects[selected]._id}>
                      créer votre premier jalon.
                   </Link>
                 </Typography>

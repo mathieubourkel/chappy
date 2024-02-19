@@ -56,16 +56,16 @@ export default function StepModifyTask({ task, allUsers, handleReload }: Props) 
   };
 
   const handleDeleteUser = async (idUser:number, indexT:number) => {
-    await deleteUserToTaskToBDD(idUser, task.id)
-    const tempUsers = [...task.users];
+    await deleteUserToTaskToBDD(idUser, task._id)
+    const tempUsers = [...task.members];
     tempUsers.splice(indexT, 1);
-    setForm({ ...form, users: tempUsers });
+    setForm({ ...form, members: tempUsers });
     handleReload()
   }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await modifyTaskToBDD(task.id, form);
+    await modifyTaskToBDD(task._id, form);
     handleReload()
   };
 
@@ -74,7 +74,7 @@ export default function StepModifyTask({ task, allUsers, handleReload }: Props) 
     value.map((element: any) => (
       goodArray.push({id: element.value})
     ));
-    setForm({ ...form, users: goodArray });
+    setForm({ ...form, members: goodArray });
   };
 
   return (
@@ -145,7 +145,7 @@ export default function StepModifyTask({ task, allUsers, handleReload }: Props) 
               </Typography>
 
               <div className={"flex gap-2 justify-center flex-wrap"}>
-                {task.users.map((user: any, indexT: number) => (
+                {task.members.map((user: any, indexT: number) => (
                     <div key={indexT}>
                     <ButtonGroup
                         size={"sm"}

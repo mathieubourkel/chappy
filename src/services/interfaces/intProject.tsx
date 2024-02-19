@@ -8,7 +8,7 @@ export interface intProject extends intProjectLight {
     steps?: intSteps
     estimEndDate: string
     owner: intOwner
-    users?: intUser[]
+    members?: intUser[]
     companies?: intCompanies
 }
 
@@ -19,7 +19,7 @@ export interface intProjectDash extends intProjectLight {
     steps: intSteps
     estimEndDate: Date | null
     owner: intOwner
-    users?: intUser[]
+    members?: intUser[]
     companies?: intCompanies
 }
 
@@ -40,7 +40,7 @@ export interface intCompany {
 
 export interface intNotification {
     content: string
-    id: number
+    _id: number
     receivers: number[]
     isView:boolean
     sendDate: string
@@ -48,15 +48,15 @@ export interface intNotification {
 }
 
 export interface intProjectLight {
-    id?:number | string | undefined
+    _id?:number | string | undefined
     name?:string
     owner?: intOwner,
     code:string
-    users?: intUserLight[]
+    members?: intUserLight[]
   }
 
   export interface intStepLight {
-    id?:number | string | undefined
+    _id?:number | string | undefined
     name?:string
   }
 
@@ -74,7 +74,7 @@ export interface intStepNew extends intStepLight{
     budget: number,
     estimEndDate: Date | null
     status:number
-    project: {id: number, name:string, owner: {id: number}, users: []}
+    project: {_id: number, name:string, owner: {id: number}, users: []}
     tasks : intTasks
 }
 
@@ -87,7 +87,7 @@ export interface intComment {
     content: string,
     table: string,
     idParent: number
-    id?: number
+    _id?: number
     author: intUserLight
 }
 
@@ -100,8 +100,8 @@ export interface intTask {
     endDate:string,
     comments?: intComments
     owner?: {id: number}
-    users: Array<{id: number, email?:string}>
-    id?:number
+    members: Array<{id: number, email?:string}>
+    _id?:number
     step?:number | string |undefined
     project?:number
     budget:number
@@ -117,27 +117,26 @@ export interface intTaskRelou {
     endDate:string,
     comments?: intComments
     owner?: {id: number}
-    users: any
-    id?:number
+    members: any
+    _id?:number
     step?:number | string |undefined
     project?:number
 }
 
 export interface intPurchase {
-    name: string,
-    price: number,
-    ref: string,
+    description: string,
+    price: {devise: number, fullTaxPrice:number},
     commandDate: string,
     deliveryDate: string,
     status: number,
-    id:number,
-    project: intProjectLight | number
+    _id:string,
+    project: string
   }
 
 export interface intDocument {
     path: string,
     type: number,
-    id:number,
+    _id:number,
     project: intProjectLight | number
 }
 

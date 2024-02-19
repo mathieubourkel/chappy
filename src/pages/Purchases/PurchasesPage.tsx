@@ -13,7 +13,7 @@ import PurchaseCard from "../../components/Project/Cards/PurchaseCard";
 import PurchaseAdd from "../../components/Project/Modals/PurchaseAdd";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
 import { useParams } from "react-router-dom";
-import { getPurchasesByProject } from "../../services/api/purchases";
+import { getPurchasesByProject } from "../../services/api/compta";
 import {
   FontAwesomeIcon
 } from "@fortawesome/react-fontawesome";
@@ -49,7 +49,7 @@ export default function PurchasesPage() {
 
   const handleReload = () => setReload((bool) => !bool);
   const calculateTotal = () => {
-    return purchases.reduce((total, purchase) => total + Math.floor(purchase.price), 0);
+    return purchases.reduce((total, purchase) => total + Math.floor(purchase.price.fullTaxPrice), 0);
   };
 
   if (error) return (<NotFoundPage />)
@@ -73,7 +73,7 @@ export default function PurchasesPage() {
         <div className="mt-5 mb-20">
           {purchases.map((purchase: intPurchase) => (
             <PurchaseCard
-              key={purchase.id}
+              key={purchase._id}
               purchase={purchase}
               handleReload={handleReload}
             />

@@ -43,10 +43,11 @@ export default function StepTasks({step, handleReload}:Props) {
         <div className="mt-10">
           {step.tasks.map((task: intTask) => (
             <TaskCard
-              key={task.id}
-              id={task.id}
+              key={task._id}
+              id={task._id}
               handleReload={handleReload}
-              allUsers={step.project.users}
+              allUsers={step.project.members}
+              task={task}
             />
           ))}
         </div>

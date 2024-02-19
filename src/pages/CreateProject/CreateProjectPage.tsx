@@ -36,10 +36,10 @@ export default function CreateProjectPage() {
     status: Status[0].value,
     estimEndDate: formatDate(date),
     steps: [],
-    owner: {id:0, firstname:"", lastname:"", email:""},
-    users: [],
+    owner: 0,
+    members: [],
     companies: [],
-    code: randomCode(),
+    code: '',
   });
 
   const projectSchema = Yup.object().shape({
@@ -67,21 +67,9 @@ export default function CreateProjectPage() {
     getUsers();
   }, []);
 
-  function randomCode() {
-    let nombre = "";
-    const longueurNombre = 16;
-
-    for (let i = 0; i < longueurNombre; i++) {
-      const chiffreAleatoire = Math.floor(Math.random() * 10);
-      nombre += chiffreAleatoire.toString();
-    }
-
-    return nombre;
-  }
-
   const handleUsers = (value: Array<intSelect>) => {
     const goodArray: any = value.map((element: intSelect) => (element.value));
-    setForm({ ...form, users: goodArray });
+    setForm({ ...form, members: goodArray });
   };
 
   const handleCompanies = (value: Array<intSelect>) => {

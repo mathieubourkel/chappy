@@ -6,7 +6,7 @@ import PurchaseModify from "../Modals/PurchaseModify";
 import {
   intPurchase,
 } from "../../../services/interfaces/intProject";
-import { deletePurchaseFromBDD } from "../../../services/api/purchases";
+import { deletePurchaseFromBDD } from "../../../services/api/compta";
 
 type Props = {
   purchase: intPurchase;
@@ -19,7 +19,7 @@ export default function PurchaseCard({
 }: Props) {
 
   const handleDelete = async () => {
-    await deletePurchaseFromBDD(purchase.id);
+    await deletePurchaseFromBDD(purchase._id);
     handleReload()
   };
 
@@ -33,13 +33,13 @@ export default function PurchaseCard({
           <span
               className="ml-3 text-brick-300 font-extrabold"
           >
-            {purchase.name}
+            {purchase.description}
           </span>
 
           <div className={"flex gap-2"}>
             <div
                 className="border px-5 rounded-xl bg-light-200 m-2 text-sm text-marine-300 font-bold uppercase">
-              Prix : {purchase.price}€
+              Prix : {purchase.price.fullTaxPrice}€
             </div>
                 <div
                     className="flex gap-2 items-center">

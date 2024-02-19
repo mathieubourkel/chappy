@@ -22,7 +22,7 @@ export async function login(data: Login) {
 
   try {
     const result = await api.post(`${URL_API}/auth/login`, body, options);
-    const { token, user } = result.data.data;
+    const { token, user } = result.data
     localStorage.setItem("token", token);
     localStorage.setItem("name", `${user.firstname} ${user.lastname}`);
     localStorage.setItem("id", user.id);

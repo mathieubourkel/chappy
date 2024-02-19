@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FormEvent, InputEvent, intPurchase } from "../../../services/interfaces/intProject";
 import './modal.css'
-import { modifyPurchaseFromBDD } from "../../../services/api/purchases";
+import { modifyPurchaseFromBDD } from "../../../services/api/compta";
 
 type Props = {
   purchase: intPurchase

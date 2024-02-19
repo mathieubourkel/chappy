@@ -53,9 +53,9 @@ export default function StepCreateTask({
     startDate: formatDate(date),
     endDate: formatDate(date),
     status: 0,
-    users: [],
-    step: step.id,
-    project: step.project.id,
+    members: [],
+    step: idStep,
+    project: idProject,
     budget: 0
   });
 
@@ -77,25 +77,25 @@ export default function StepCreateTask({
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const tmpIdUsers:number[] = [];
-    step.project.users.map((user: any) => {
-      tmpIdUsers.push(user.value);
-    });
+    // step.project.members.map((user: any) => {
+    //   tmpIdUsers.push(user.value);
+    // });
     
-    const notif = {
-      content: `${userName} a créé la tâche ${form.name} dans ${step.name} sur le projet ${step.project.name}`,
-      receivers: tmpIdUsers,
-      sendDate: date.toISOString(),
-      path: `/project/${idProject}/step/${idStep}`,
-      id:0,
-      isView:false
-    };
+    // const notif = {
+    //   content: `${userName} a créé la tâche ${form.name} dans ${step.name} sur le projet ${step.project.name}`,
+    //   receivers: tmpIdUsers,
+    //   sendDate: date.toISOString(),
+    //   path: `/project/${idProject}/step/${idStep}`,
+    //   id:0,
+    //   isView:false
+    // };
 
     taskSchema
       .validate(form)
       .then(async (validForm:any) => {
         await addTaskToStepToBDD(validForm);
-        await addNotificationToBDD(notif);
-        sendMessage(notif.content)
+        // await addNotificationToBDD(notif);
+        // sendMessage(notif.content)
         handleOpen();
         handleReload();
       })

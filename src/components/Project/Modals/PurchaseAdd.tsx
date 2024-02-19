@@ -12,7 +12,7 @@ import {
 import { FormEvent, InputEvent, intPurchase } from "../../../services/interfaces/intProject";
 import CreateButton from "../elements/Buttons/CreateButton";
 import { useParams } from "react-router-dom";
-import { addPurchaseToBDD } from "../../../services/api/purchases";
+import { addPurchaseToBDD } from "../../../services/api/compta";
 import './modal.css'
 import Datepicker from "react-tailwindcss-datepicker";
 import SelectStatus from "../elements/Select/SelectStatus";
@@ -28,9 +28,9 @@ export default function PurchaseAdd({ handleReload }: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const [form, setForm] = useState<intPurchase>({
-    name: "", price:0,
-    ref:'', deliveryDate: formatDate(date), commandDate: formatDate(date),
-    status:0, project: Number(idProject), id:0
+    description: "", price:{fullTaxPrice:0, devise:0},
+    deliveryDate: formatDate(date), commandDate: formatDate(date),
+    status:0, refId: idProject, refModel:0
   });
 
   function handleChange(e: InputEvent) {
@@ -40,6 +40,10 @@ export default function PurchaseAdd({ handleReload }: Props) {
 
   const handleDate = (value: any) => {
     setForm({ ...form, commandDate: value.startDate });
+  };
+
+  const handlePrice = (e:InputEvent) => {
+    setForm({ ...form, price: {fullTaxPrice: +e.target.value, devise:0} });
   };
   const handleDate2 = (value: any) => {
     setForm({ ...form, deliveryDate: value.startDate });
@@ -72,11 +76,11 @@ export default function PurchaseAdd({ handleReload }: Props) {
                 Ajouter un achat
               </Typography>
               <Input
-                label="Nom de l'achat"
+                label="Description de l'achat"
                 size="lg"
                 className={"border-select"}
-                name="name"
-                id="name"
+                name="description"
+                id="description"
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />
@@ -88,17 +92,9 @@ export default function PurchaseAdd({ handleReload }: Props) {
                 name="price"
                 id="price"
                 crossOrigin={undefined}
-                onChange={(e: InputEvent) => handleChange(e)}
+                onChange={(e: InputEvent) => handlePrice(e)}
               />
-              <Input
-                label="Référence de la commande"
-                size="lg"
-                className={"border-select"}
-                name="ref"
-                id="ref"
-                crossOrigin={undefined}
-                onChange={(e: InputEvent) => handleChange(e)}
-              />
+
               <Datepicker
                   inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black border-select"
                   onChange={handleDate}

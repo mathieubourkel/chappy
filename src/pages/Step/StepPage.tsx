@@ -28,7 +28,7 @@ export default function StepPage() {
     estimEndDate: new Date(),
     budget: 0,
     status: 0,
-    project: { id: 0, name:'', owner: { id: 0 }, users: [] },
+    project: { _id: 0, name:'', owner: { id: 0 }, members: [] },
     tasks: [],
   });
 
@@ -36,14 +36,14 @@ export default function StepPage() {
     const getStep = async () => {
       try {
         const tmpStep = await getStepById(idStep);
-        tmpStep.project.owner.id.toString() === idUser && setIsOwner(true);
-        const emailArray: Array<intSelect> = tmpStep.project.users.map(
-          (element: intUser) => ({
-            label: element.email,
-            value: element.id,
-          })
-        );
-        tmpStep.project.users = emailArray;
+        tmpStep.project.owner.toString() === idUser && setIsOwner(true);
+        // const emailArray: Array<intSelect> = tmpStep.project.users.map(
+        //   (element: intUser) => ({
+        //     label: element.email,
+        //     value: element.id,
+        //   })
+        // );
+       // tmpStep.project.users = emailArray;
         setStep(tmpStep);
       } catch (error) {
         setError(true);

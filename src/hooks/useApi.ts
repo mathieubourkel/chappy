@@ -5,7 +5,7 @@ export async function handleApiCall(apiCall: any) {
   try {
     const response = await apiCall();
     if (!response.data || !response) throw new Error()
-    return response.data.data;
+    return response.data;
   } catch (error) {
     return error;
   }
@@ -22,7 +22,7 @@ export function useApi() {
   };
 
   const api: AxiosInstance = axios.create({
-    baseURL: `${URL_API}/api/`,
+    baseURL: `${URL_API}/`,
     headers,
   });
 
@@ -66,6 +66,7 @@ export function useApi() {
             isRefreshing = true;
 
             try {
+              console.log('je try to refresh')
               const options = {
                 credentials: "include",
                 withCredentials: true,
@@ -74,7 +75,7 @@ export function useApi() {
                 `${URL_API}/auth/refreshToken`,
                 options
               );
-              const { token } = result.data.data;
+              const { token } = result.data;
               localStorage.setItem("token", token);
               console.log("I just refreshed the token");
 
