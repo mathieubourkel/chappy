@@ -29,12 +29,10 @@ export async function getMembersByProject(idProject: string | undefined) {
     return handleApiCall(async () => await api.put(`${USER_ENDPOINT}`, data));
   }
 
-  export async function resetPwd(data: {oldPassword: string, newPassword: string, email: string}) {
-    return handleApiCall(async () => await api.put(`${URL_API}/auth/resetPwd`, data));
+  export async function resetPwd(data: {oldPwd: string, newPwd: string}) {
+    return handleApiCall(async () => await api.put(`${USER_ENDPOINT}/resetPwd`, data));
   }
 
-
-  
   export async function deleteUserToProjectToBDD(
       idProject: number | string | undefined,
       idUser: number | string | null
@@ -58,6 +56,18 @@ export async function getMembersByProject(idProject: string | undefined) {
 
   export async function getUserInfo() {
     return handleApiCall(async () => await api.get(`${USER_ENDPOINT}`));
+  }
+
+  export async function sendEmailForReset(email:string) {
+    return handleApiCall(async () => await api.post(`${URL_API}/auth/resetPwd/sendMail`, {email: email}));
+  }
+
+  export async function getEmailToken(token:string) {
+    return handleApiCall(async () => await api.get(`${URL_API}/auth/emailToken/${token}`));
+  }
+
+  export async function resetPwdWithEmail(data: {newPwd: string, emailToken: string}) {
+    return handleApiCall(async () => await api.post(`${URL_API}/auth/resetPwd/withMail`, data));
   }
 
   export async function getAllUsers() {

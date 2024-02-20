@@ -130,7 +130,8 @@ export interface intPurchase {
     deliveryDate: string,
     status: number,
     _id:string,
-    project: string
+    refId: string
+    refModel: number
   }
 
 export interface intDocument {

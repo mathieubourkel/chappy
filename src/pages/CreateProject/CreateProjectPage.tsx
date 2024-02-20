@@ -104,7 +104,7 @@ export default function CreateProjectPage() {
   };
 
   return (
-    <main className="project-page sm:mx-20 mx-5 mt-10">
+    <main className="sm:mx-20 mx-5 mt-10">
       <Typography variant="h1" className={"font-bold text-center"}>
         Créer un projet
       </Typography>

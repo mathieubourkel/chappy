@@ -13,11 +13,10 @@ export async function getPurchasesByProject(idProject:string) {
     return handleApiCall(async () => await api.post(COMPTA_ENDPOINT, data));
   }
 
-  export async function modifyPurchaseFromBDD(idPurchase: number, data: intPurchase) {
-    data.price = Number(data.price)
+  export async function modifyPurchaseFromBDD(idPurchase: string, data: intPurchase) {
     return handleApiCall(async () => await api.put(`${COMPTA_ENDPOINT}/${idPurchase}`, data));
   }
   
-  export async function deletePurchaseFromBDD(idPurchase: number) {
+  export async function deletePurchaseFromBDD(idPurchase: string) {
     return handleApiCall(async () => await api.delete(`${COMPTA_ENDPOINT}/${idPurchase}`));
   }

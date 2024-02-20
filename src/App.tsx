@@ -27,6 +27,8 @@ import ContextIsLogged from "./context/ContextIsLogged.tsx";
 import Sidebar from "./components/Layers/Sidebar/Sidebar.tsx";
 import { Popup } from "./components/Layers/Popup/Popup.tsx";
 import { socket } from "./services/utils/WebSocket.tsx";
+import ForgotPwd from "./pages/Password/ForgotPwd.tsx";
+import ResetPwd from "./pages/Password/ResetPwd.tsx";
 
 export default function App() {
   const token = localStorage.getItem("token");
@@ -112,6 +114,8 @@ export default function App() {
 
           <Route path="/legal-mentions" element={<LegalMentionsPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/reset-pwd" element={<ResetPwd />} />
+          <Route path="/forgot-pwd/:emailToken" element={<ForgotPwd />} />
           <Route path="/contact-us" element={<ContactUsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

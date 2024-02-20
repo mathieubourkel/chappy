@@ -1,9 +1,8 @@
-import FormLogin from "../../components/Authentication/formLogin";
 import {
     Typography
 } from "@material-tailwind/react";
 import {NavLink} from "react-router-dom";
-
+import FormLogin from "../../components/Project/elements/Forms/formLogin"
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function LoginPage() {
@@ -33,6 +32,23 @@ export default function LoginPage() {
                 >
                     <NavLink to={"/signup"}>
                         Créer un compte
+                    </NavLink>
+                </Typography>
+            </div>
+            <div className={"flex gap-x-2 mt-2 m-auto"}>
+                <Typography
+                    variant="paragraph"
+                    className={"text-center text-sm"}
+                >
+                    Mot de passe oublié ?
+                </Typography>
+
+                <Typography
+                    variant="paragraph"
+                    className={"text-center text-sm text-brick-400 font-bold hover:text-marine-300 underline underline-offset-4 decoration-marine-300 hover:decoration-brick-300 cursor-pointer"}
+                >
+                    <NavLink to={"/reset-pwd"}>
+                        Réinitialiser son mot de passe
                     </NavLink>
                 </Typography>
             </div>

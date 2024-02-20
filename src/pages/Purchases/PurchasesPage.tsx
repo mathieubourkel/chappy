@@ -24,10 +24,10 @@ import NotFoundPage from "../../services/utils/NotFoundPage";
 import { getProjectById } from "../../services/api/projects";
 
 export default function PurchasesPage() {
-  const { idProject } = useParams();
+  const { idProject } = useParams()
   const [busy, setBusy] = useState<boolean>(true);
   const [purchases, setPurchases] = useState<intPurchases>([])
-  const [project, setProject] = useState<intProjectLight>({id:undefined, name:"", code:''})
+  const [project, setProject] = useState<intProjectLight>({_id:undefined, name:"", code:''})
   const [reload, setReload] = useState(false);
   const [error, setError] = useState<boolean>(false);
 
@@ -35,7 +35,7 @@ export default function PurchasesPage() {
     const fetchData = async () => {
       try {
         const tmpProj = await getProjectById(idProject)
-        const result = await getPurchasesByProject(idProject)
+        const result = await getPurchasesByProject(idProject || "")
         setProject(tmpProj);
         setPurchases(result)
       } catch (error) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance } from "axios";
 
@@ -7,7 +8,7 @@ export async function handleApiCall(apiCall: any) {
     if (!response.data || !response) throw new Error()
     return response.data;
   } catch (error) {
-    return error;
+    throw error;
   }
 }
 
