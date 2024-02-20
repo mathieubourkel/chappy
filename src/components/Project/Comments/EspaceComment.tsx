@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
-import {
-  intComment,
-  intComments,
-} from "../../../services/interfaces/intProject";
-import DisplayMore from "./DisplayMore";
-import CreateComment from "./CreateComment";
-import CommentCard from "../Cards/CommentCard";
-import { getComments } from "../../../services/api/comments";
-import { Spinner } from "@material-tailwind/react";
+import { useEffect, useState } from 'react';
+import { intComment, intComments } from '../../../services/interfaces/intProject';
+import DisplayMore from './DisplayMore';
+import CreateComment from './CreateComment';
+import CommentCard from '../Cards/CommentCard';
+import { getComments } from '../../../services/api/comments';
+import { Spinner } from '@material-tailwind/react';
+import { RefCommentEnum} from '../../../services/enums/comment.ref.enum.ts';
 
 type Props = {
-  table: string;
+  table: RefCommentEnum;
   idParent: string
 };
 
@@ -22,10 +20,11 @@ export default function EspaceComment({ table, idParent }: Props) {
   const [busy, setBusy] = useState<boolean>(true);
   const handleReload = () => setReload((bool) => !bool);
 
+
   useEffect(() => {
     async function fetchData() {
       try {
-        const result = await getComments(table, idParent);
+        const result = await getComments(RefCommentEnum[table], idParent);
         setComments(result);
       } catch (error) {
         setError(true)
@@ -53,10 +52,10 @@ export default function EspaceComment({ table, idParent }: Props) {
           <div className="flex flex-col mt-10">
             {display ? (
               comments.map((comment: intComment) => (
-                <CommentCard comment={comment} key={comment.id} />
+                <CommentCard comment={comment} key={comment._id} />
               ))
             ) : (
-              <CommentCard comment={comments[0]} key={comments[0].id} />
+              <CommentCard comment={comments[0]} key={comments[0]._id} />
             )}
           </div>
     

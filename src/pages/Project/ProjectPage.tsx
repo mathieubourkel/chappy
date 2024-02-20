@@ -9,6 +9,9 @@ import {getProjectById} from "../../services/api/projects";
 import ProjectSteps from "../../components/Project/Project/ProjectSteps";
 import { Status } from "../../services/enums/status.enum";
 import NotFoundPage from "../../services/utils/NotFoundPage";
+import {
+  RefCommentEnum
+} from '../../services/enums/comment.ref.enum.ts';
 
 export default function ProjectPage() {
   const { idProject } = useParams();
@@ -21,7 +24,7 @@ export default function ProjectPage() {
     name: "",
     description: "",
     status: Status[0].value,
-    owner: 0,
+    owner: {id: 0},
     budget: undefined,
     _id: undefined,
     estimEndDate: new Date(),
@@ -65,7 +68,7 @@ export default function ProjectPage() {
             isOwner={isOwner}
             setReload={setReload}
           />
-          <EspaceComment table="project" idParent={idProject || ''} />
+          <EspaceComment table={RefCommentEnum.projet} idParent={idProject || ''} />
         </>
       )}
     </main>

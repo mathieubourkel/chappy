@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ChangeEvent } from "react"
+import { RefCommentEnum } from '../enums/comment.ref.enum.ts';
+import {
+    StatusCommentEnum
+} from '../enums/status.enum.ts';
 
 export interface intProject extends intProjectLight {
     description: string,
@@ -84,11 +88,17 @@ export type intSelect = {
   };
 
 export interface intComment {
+    _id?: number,
+    ref: RefCommentEnum,
+    refId: string,
+    author:
+      {
+          id : string,
+          username: string
+      }
     content: string,
-    table: string,
-    idParent: number
-    _id?: number
-    author: intUserLight
+    status: StatusCommentEnum,
+    medias?: string[]
 }
 
 export interface intTask {
@@ -166,7 +176,7 @@ export interface intUserLight {
     firstname?: string,
     lastname?: string,
     company?: intCompany,
-    email: string,
+    email?: string,
     id: number | null | string
     tasks?:intTasks
 }
