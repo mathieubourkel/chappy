@@ -9,7 +9,6 @@ import {
   Typography,
   Input,
 } from "@material-tailwind/react";
-import { FormEvent, InputEvent, intPurchase } from "../../../services/interfaces/intProject";
 import CreateButton from "../elements/Buttons/CreateButton";
 import { useParams } from "react-router-dom";
 import { addPurchaseToBDD } from "../../../services/api/compta";
@@ -17,6 +16,8 @@ import './modal.css'
 import Datepicker from "react-tailwindcss-datepicker";
 import SelectStatus from "../elements/Select/SelectStatus";
 import { formatDate } from "../../../services/utils/FormatDate";
+import { intPurchase } from "../../../services/interfaces/intCompta";
+import {  FormEvent, InputEvent } from "../../../services/interfaces/generique.interface";
 
 type Props = {
   handleReload: () => void;
@@ -55,7 +56,6 @@ export default function PurchaseAdd({ handleReload }: Props) {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    console.log(form)
     await addPurchaseToBDD(form);
     handleReload();
   }

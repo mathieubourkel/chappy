@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { intLogin } from "../../services/interfaces/intLogin";
 import {
   Button,
   Input
@@ -15,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import ContextIsLogged from "../../../../context/ContextIsLogged"
 import { useContext } from "react";
 import {login} from "../../../../services/api/auth"
+import { intLogin } from "../../../../services/interfaces/intAuth";
 
 export default function FormLogin() {
   const {setIsLogged}:any = useContext(ContextIsLogged)
@@ -38,7 +38,7 @@ export default function FormLogin() {
     validateOnChange:false,
     validationSchema: validationLogin,
    onSubmit: async (values) => {
-      if (formik.errors.length >0) return;
+      if (Object.keys(formik.errors).length >0) return;
       await login(values)
       const token = localStorage.getItem('token')
       token && setIsLogged(true)

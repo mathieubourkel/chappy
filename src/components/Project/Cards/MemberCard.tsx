@@ -4,25 +4,24 @@ import {
   Typography
 } from "@material-tailwind/react";
 import DeleteButton from "../elements/Buttons/DeleteButton";
-import {
-  intUserLight
-} from "../../../services/interfaces/intProject";
+
 import user from "../../../assets/img/icon_user.png";
 import {
   deleteUserToProjectToBDD
 } from "../../../services/api/users.ts";
+import { intUserLight } from "../../../services/interfaces/intUser.tsx";
 
 type Props = {
-  member: intUserLight;
+  member: intUserLight
   index: number;
-  idProject: string | undefined;
+  idProject: string;
   handleReload: () => void
 };
 
 export default function MemberCard({ member, handleReload, idProject }: Props) {
 
   async function handleDelete() {
-    await deleteUserToProjectToBDD(idProject, member.id );
+    await deleteUserToProjectToBDD(idProject, member.id ||0 );
     handleReload()
   }
 

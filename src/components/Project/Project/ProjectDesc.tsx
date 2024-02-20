@@ -7,7 +7,6 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import ModifiableInput from "../elements/Input/ModifiableInput";
-import { intProjectDash } from "../../../services/interfaces/intProject";
 import SelectStatus from "../elements/Select/SelectStatus";
 import SelectDate from "../elements/Select/SelectDate";
 import { useParams } from "react-router-dom";
@@ -16,23 +15,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen, faSitemap } from "@fortawesome/free-solid-svg-icons";
 import CalendarProject from "../Calendar/CalendarProject";
 import { Status } from "../../../services/enums/status.enum";
+import { intProject } from "../../../services/interfaces/intProject";
 
 type Props = {
-  project: intProjectDash;
-  setProject: (project: intProjectDash) => void;
+  project: intProject;
+  setProject: (project: intProject) => void;
   isOwner: boolean;
 };
 
 export default function ProjectDesc({ project, setProject, isOwner }: Props) {
   const { idProject } = useParams();
 
-  const handleModifyProject = async (data: intProjectDash) => {
-    await modifyProjectToBDD(idProject, data);
+  const handleModifyProject = async (data: intProject) => {
+    await modifyProjectToBDD(idProject ||"", data);
   }
 
   const handleStatus = async (values: any) => {
     const data = { ...project, status: values.value };
-    await modifyProjectToBDD(idProject, data);
+    await modifyProjectToBDD(idProject ||"", data);
     setProject(data);
   };
 

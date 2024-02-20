@@ -11,9 +11,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { addUserAndCompanyToBDD, addUserToBDD } from "../../services/api/users";
 import { useNavigate, useLocation } from "react-router-dom";
-import { intRegister } from "../../services/interfaces/intUser";
 import { SelectionEnum } from "../../services/enums/selection.enum";
 import { useState } from "react";
+import { intRegister } from "../../services/interfaces/intAuth";
 
 export default function SignupPage() {
   const location = useLocation();
@@ -63,6 +63,7 @@ export default function SignupPage() {
           email: "",
           address: "",
           zip: "",
+          status: 0,
           city: "",
           phone: "",
           password: "",
@@ -80,7 +81,7 @@ export default function SignupPage() {
 
       onSubmit: async (values) => {
         try {
-          if (errors.length > 0) return;
+          if (Object.keys(errors).length > 0) return;
           if (selectedOption !== 0) {
             await addUserAndCompanyToBDD(values.userInfos, values.companyInfos);
           } else {
@@ -371,14 +372,10 @@ export default function SignupPage() {
                     type="text"
                     name="companyNameEmployee"
                     id="companyNameEmployee"
-                    value={values.companyNameEmployee}
                     aria-required
                     onChange={handleChange}
                     crossOrigin={undefined}
                   />
-                  {errors.companyNameEmployee && (
-                    <small>{errors.companyNameEmployee}</small>
-                  )}
                 </Card>
               )}
               </article>

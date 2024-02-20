@@ -2,14 +2,6 @@
 import { Input, Textarea, Typography, Button } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import {
-  FormEvent,
-  InputEvent,
-  intCompany,
-  intUser,
-  intProject,
-  intSelect,
-} from "../../services/interfaces/intProject";
 import { useEffect, useState } from "react";
 import { addProjectToBDD } from "../../services/api/projects";
 import Datepicker from "react-tailwindcss-datepicker";
@@ -20,6 +12,10 @@ import * as Yup from "yup";
 import makeAnimated from "react-select/animated";
 import { Status } from "../../services/enums/status.enum";
 import { formatDate } from "../../services/utils/FormatDate";
+import { intProject } from "../../services/interfaces/intProject";
+import { FormEvent, InputEvent, intSelect, intSelects } from "../../services/interfaces/generique.interface";
+import { intCompany } from "../../services/interfaces/intCompany";
+import { intUser } from "../../services/interfaces/intUser";
 
 
 const animatedComponents = makeAnimated();
@@ -27,8 +23,8 @@ const animatedComponents = makeAnimated();
 export default function CreateProjectPage() {
   const navigate = useNavigate();
   const date = new Date()
-  const [users, setUsers] = useState<Array<intSelect>>([]);
-  const [companies, setCompanies] = useState<Array<intSelect>>([]);
+  const [users, setUsers] = useState<intSelects>([]);
+  const [companies, setCompanies] = useState<intSelects>([]);
   const [form, setForm] = useState<intProject>({
     name: "",
     description: "",
@@ -36,7 +32,7 @@ export default function CreateProjectPage() {
     status: Status[0].value,
     estimEndDate: formatDate(date),
     steps: [],
-    owner: 0,
+    owner: {id:0},
     members: [],
     companies: [],
     code: '',
@@ -53,12 +49,12 @@ export default function CreateProjectPage() {
     async function getUsers() {
       const result2 = await getAllCompanies();
       const result = await getAllUsers();
-      const nameArray: Array<intSelect> = result2.map(
+      const nameArray:intSelects = result2.map(
         (element: intCompany) => ({ label: element.name, value: element.id })
       );
       setCompanies(nameArray);
 
-      const emailArray: Array<intSelect> = result.map((element: intUser) => ({
+      const emailArray:intSelects = result.map((element: intUser) => ({
         label: element.email,
         value: element.id,
       }));
@@ -67,12 +63,12 @@ export default function CreateProjectPage() {
     getUsers();
   }, []);
 
-  const handleUsers = (value: Array<intSelect>) => {
+  const handleUsers = (value: intSelects) => {
     const goodArray: any = value.map((element: intSelect) => (element.value));
     setForm({ ...form, members: goodArray });
   };
 
-  const handleCompanies = (value: Array<intSelect>) => {
+  const handleCompanies = (value: intSelects) => {
     const goodArray: any = value.map((element: intSelect) => (element.value));
     setForm({ ...form, companies: goodArray });
   };
@@ -90,8 +86,8 @@ export default function CreateProjectPage() {
     e.preventDefault();
     projectSchema
       .validate(form)
-      .then(async (validForm) => {
-        await addProjectToBDD(validForm);
+      .then(async () => {
+        await addProjectToBDD(form);
         navigate("/dashboard");
       })
       .catch((validationError) => {

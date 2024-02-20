@@ -8,13 +8,14 @@ import {
   Input, Button,
 } from "@material-tailwind/react";
 
-import { intTaskRelou} from "../../../services/interfaces/intProject";
-import { enumStatus } from "../../../services/interfaces/Status";
 import './modal.css'
 import { CategoriesEnum } from "../../../services/enums/categories.enum";
+import { intTask } from "../../../services/interfaces/intTask";
+import { enumStatus } from "../../../services/enums/status.enum";
+import { intUserLight } from "../../../services/interfaces/intUser";
 
 type Props = {
-  task: intTaskRelou;
+  task: intTask;
   handleOpenM: () => void;
   openM: boolean;
 };
@@ -87,7 +88,7 @@ export default function StepDisplayTask({ task, handleOpenM, openM }: Props) {
             Participants
           </Typography>
           <div className="flex gap-2 flex-wrap justify-center">
-            {task.members.map((user: any, indexT: number) => (
+            {task.members && task.members.map((user: intUserLight, indexT: number) => (
                 <div key={indexT}>
                     <Button
                         className={"bg-marine-300 disabled:opacity-100"}

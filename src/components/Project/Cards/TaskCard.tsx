@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import {
   Button,
   ButtonGroup,
@@ -15,34 +15,28 @@ import StepModifyTask from "../Modals/StepModifyTask";
 import StepDisplayTask from "../Modals/StepDisplayTask";
 import DeleteButton from "../elements/Buttons/DeleteButton";
 import {
-  intSelect,
-  intTaskRelou,
-} from "../../../services/interfaces/intProject";
-
-import {
   deleteTaskFromBDD,
-  getTaskById,
   modifyTaskToBDD,
   deleteUserToTaskToBDD,
 } from "../../../services/api/tasks";
-import { enumStatus } from "../../../services/interfaces/Status";
+
 import { CategoriesEnum } from "../../../services/enums/categories.enum";
+import { intSelects } from "../../../services/interfaces/generique.interface";
+import { enumStatus } from "../../../services/enums/status.enum";
+import { intTask } from "../../../services/interfaces/intTask";
+import {  intUserLight } from "../../../services/interfaces/intUser";
 
 type Props = {
-  id: number | undefined;
   handleReload: () => void;
-  allUsers: Array<intSelect>;
-  task: intTaskRelou
+  allUsers: intSelects;
+  task: intTask
 };
 
-export default function TaskCard({ id, handleReload, allUsers, task }: Props) {
-  const userId: string | undefined | null = localStorage.getItem("id") || ""
+export default function TaskCard({ handleReload, allUsers, task }: Props) {
+  const userId: string = localStorage.getItem("id") || ""
   const [openM, setOpenM] = useState(false);
-  const [error, setError] = useState<boolean>(false);
-  const [reload, setReload] = useState<boolean>(false)
-  const handleReloadTask = () => setReload((bool) => !bool);
   const handleOpenM = () => setOpenM((bool) => !bool);
-
+  if (!task.members ||task.members.length == 0) task.members = []
   let isOwner = false;
   if (task.owner == userId || task.members.find((member:{id: number}) => member.id == +userId)) isOwner = true;
 
@@ -52,18 +46,22 @@ export default function TaskCard({ id, handleReload, allUsers, task }: Props) {
     tempUsers.splice(indexT, 1);
     const tempTask = { ...task, members: tempUsers };
     await deleteUserToTaskToBDD(task.members[indexT].id, task._id);
-    setTask(tempTask);
+    handleReload()
   };
 
   const handleDeleteTask = async () => {
-    await deleteTaskFromBDD(task._id);
+    await deleteTaskFromBDD(task._id ||'');
     handleReload();
   };
 
+  const handleReloadTask = () => {
+    console.log("reload task")
+  }
+
   const handleStatus = async (values: any) => {
     const data = { ...task, status: values.value };
-    await modifyTaskToBDD(task._id, data);
-    setTask(data);
+    await modifyTaskToBDD(task._id ||'', data);
+    handleReload()
   };
 
   const renderTaskOwner = () => (
@@ -155,7 +153,7 @@ export default function TaskCard({ id, handleReload, allUsers, task }: Props) {
       </Typography>
     </CardBody>
   );
-    if (error) return (<div>Error Fetching this Task</div>)
+
   return (
     <Card className={`w-full custom-card-task mb-5`}>
       <div>
@@ -165,7 +163,7 @@ export default function TaskCard({ id, handleReload, allUsers, task }: Props) {
           className="pr-3 py-3 flex flex-wrap gap-x-2 justify-end"
           onClick={handleOpenM}
         >
-          {task.members.map((user: any, indexT: number) => (
+          {task.members && task.members.map((user: intUserLight, indexT: number) => (
             <ButtonGroup
               size={"sm"}
               className={"divide-light-100/50 mb-2"}

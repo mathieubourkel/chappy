@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Input, Typography } from "@material-tailwind/react";
 import {  useState } from "react";
-import { FormEvent, InputEvent } from "../../services/interfaces/intProject";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { sendEmailForReset } from "../../services/api/users";
+import { FormEvent, InputEvent } from "../../services/interfaces/generique.interface";
 
 export default function ResetPwd() {
 
@@ -16,7 +16,7 @@ export default function ResetPwd() {
         setEmail(value);
       };
 
-      const handleSubmit = async (e:any) => {
+      const handleSubmit = async (e:FormEvent) => {
         e.preventDefault()
         await sendEmailForReset(email)
         setMailSent(true)

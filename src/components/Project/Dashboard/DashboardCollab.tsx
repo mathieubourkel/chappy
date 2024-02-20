@@ -1,10 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  intProjectDash,
-  intProjectsDash,
-  intStep,
-} from "../../../services/interfaces/intProject.tsx";
-import {
   faBan,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -17,9 +12,11 @@ import {
 } from "../elements/Menu/MenuCollab.tsx";
 import RejoinButton from "../elements/Buttons/OpenButton.tsx";
 import RejoinModal from "../Modals/RejoinModal.tsx";
+import { intProject, intProjects } from "../../../services/interfaces/intProject.tsx";
+import { intStep } from "../../../services/interfaces/intStep.tsx";
 
 type Props = {
-  collabs: intProjectsDash;
+  collabs: intProjects;
   setReload: (bool:boolean) => void
 };
 
@@ -42,7 +39,7 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
         <article>
           <nav className="flex">
             <div className="ml-20 lg:flex justify-center basis-3/4">
-              {collabs.map((collab: intProjectDash, index: number) => (
+              {collabs.map((collab: intProject, index: number) => (
                 <button
                   key={index}
                   onClick={() => handleClick(index)}
@@ -56,7 +53,7 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
               ))}
             </div>
             <div className="flex basis-1/4 justify-end items-center gap-2">
-              <MenuCollab handleOpenD={handleOpenD} see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} setReload={setReload} idProject={collabs[selected]._id} menu />
+              <MenuCollab handleOpenD={handleOpenD} see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} setReload={setReload} idProject={collabs[selected]._id ||""} menu />
             </div>
           </nav>
 
@@ -64,7 +61,7 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
             {collabs[selected].steps.map((step: intStep) => (
               <DashboardCollabStepCard
                 step={step}
-                key={step.id}
+                key={step._id}
                 collab={collabs[selected]}
               />
             ))}

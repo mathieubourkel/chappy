@@ -1,206 +1,23 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ChangeEvent } from "react"
-import { RefCommentEnum } from '../enums/comment.ref.enum.ts';
-import {
-    StatusCommentEnum
-} from '../enums/status.enum.ts';
-
-export interface intProject extends intProjectLight {
-    description: string,
-    budget?: number,
-    status: number
-    steps?: intSteps
-    estimEndDate: string
-    owner: intOwner
-    members?: intUser[]
-    companies?: intCompanies
-}
-
-export interface intProjectDash extends intProjectLight {
-    description: string,
-    budget?: number,
-    status: number
-    steps: intSteps
-    estimEndDate: Date | null
-    owner: intOwner
-    members?: intUser[]
-    companies?: intCompanies
-}
-
-export interface intOwner {
-    id: number,
-    firstname?: string,
-    lastname?: string,
-    email?: string
-}
-
-export interface intCompany {
-    name?: string
-    siret?: string,
-    description?: string,
-    user?: intUserLight
-    id: number | null | string
-}
-
-export interface intNotification {
-    content: string
-    _id: number
-    receivers: number[]
-    isView:boolean
-    sendDate: string
-    path: string
-}
+import { intCompanies } from "./intCompany"
+import { intSteps } from "./intStep"
+import { intUserLight } from "./intUser"
 
 export interface intProjectLight {
-    _id?:number | string | undefined
+    _id?:string
     name?:string
-    owner?: intOwner,
-    code:string
+    owner?: intUserLight
+    code?:string
     members?: intUserLight[]
   }
 
-  export interface intStepLight {
-    _id?:number | string | undefined
-    name?:string
-  }
-
-export interface intStep extends intStepLight{
+export interface intProject extends intProjectLight {
     description: string,
     budget: number,
+    status: number
+    steps: intSteps
     estimEndDate: string
-    status:number
-    project: number
-    tasks : intTasks
+    companies: intCompanies
 }
 
-export interface intStepNew extends intStepLight{
-    description: string,
-    budget: number,
-    estimEndDate: Date | null
-    status:number
-    project: {_id: number, name:string, owner: {id: number}, users: []}
-    tasks : intTasks
-}
-
-export type intSelect = {
-    value: number | null | string
-    label: string | undefined
-  };
-
-export interface intComment {
-    _id?: number,
-    ref: RefCommentEnum,
-    refId: string,
-    author:
-      {
-          id : string,
-          username: string
-      }
-    content: string,
-    status: StatusCommentEnum,
-    medias?: string[]
-}
-
-export interface intTask {
-    name: string,
-    status: number
-    category: number
-    description: string,
-    startDate: string,
-    endDate:string,
-    comments?: intComments
-    owner?: {id: number}
-    members: Array<{id: number, email?:string}>
-    _id?:number
-    step?:number | string |undefined
-    project?:number
-    budget:number
-}
-
-export interface intTaskRelou {
-    budget: number
-    name: string,
-    status: number
-    category: number
-    description: string,
-    startDate: string,
-    endDate:string,
-    comments?: intComments
-    owner?: {id: number}
-    members: any
-    _id?:number
-    step?:number | string |undefined
-    project?:number
-}
-
-export interface intPurchase {
-    description: string,
-    price: {devise: number, fullTaxPrice:number},
-    commandDate: string,
-    deliveryDate: string,
-    status: number,
-    _id:string,
-    refId: string
-    refModel: number
-  }
-
-export interface intDocument {
-    path: string,
-    type: number,
-    _id:number,
-    project: intProjectLight | number
-}
-
-export type intSelectDocument = {
-    value: number | null | string
-    label: string | undefined
-};
-
-export interface intUser extends intUserLight {
-    city:string,
-    address: string,
-    zip: string,
-    status:number,
-    phone:string,
-   
-}
-
-export interface intProfileUser extends intUser {
-    projects: intProjects
-    participations: intProjects
-    myOwnTasks: intTasks
-    company: intCompany,
-    myCompany: intCompany
-}
-
-export interface intUserLight {
-    firstname?: string,
-    lastname?: string,
-    company?: intCompany,
-    email?: string,
-    id: number | null | string
-    tasks?:intTasks
-}
-
-export interface intRangeDate {
-    startDate: Date,
-    endDate: Date
-}
-
-export type intStatus = string[]
 export type intProjects = intProject[]
-export type intProjectsDash = intProjectDash[]
 export type intProjectsLight = intProjectLight[]
-export type intStepsLight = intStepLight[]
-export type intUsers = intUser[]
-export type intUsersLight = intUserLight[]
-export type intDocuments = intDocument[]
-export type intPurchases = intPurchase[]
-export type intTasks = intTask[]
-export type intSteps = intStep[]
-export type intComments = intComment[]
-export type intCompanies = intCompany[]
-export type intNotifications = intNotification[]
-
-export type InputEvent = ChangeEvent<HTMLInputElement>
-export type FormEvent = React.FormEvent<HTMLFormElement>;

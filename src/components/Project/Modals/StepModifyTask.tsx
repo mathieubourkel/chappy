@@ -13,26 +13,22 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faXmark } from "@fortawesome/free-solid-svg-icons";
-import {
-  FormEvent,
-  InputEvent,
-  intSelect,
-  intTask
-} from "../../../services/interfaces/intProject";
 import Datepicker from "react-tailwindcss-datepicker";
 import { deleteUserToTaskToBDD, modifyTaskToBDD } from "../../../services/api/tasks";
 import SelectCategory from "../elements/Select/SelectCategory";
 import makeAnimated from "react-select/animated";
 import SelectStatus from "../elements/Select/SelectStatus";
-import { enumStatus } from "../../../services/interfaces/Status";
 import ReactSelect from "react-select";
 const animatedComponents = makeAnimated();
 import './modal.css'
 import { CategoriesEnum } from "../../../services/enums/categories.enum";
+import { intTask } from "../../../services/interfaces/intTask";
+import { FormEvent, intSelects, InputEvent } from "../../../services/interfaces/generique.interface";
+import { enumStatus } from "../../../services/enums/status.enum";
 
 type Props = {
   task: intTask;
-  allUsers: Array<intSelect>;
+  allUsers: intSelects;
   handleReload: () => void;
 };
 
@@ -56,7 +52,7 @@ export default function StepModifyTask({ task, allUsers, handleReload }: Props) 
   };
 
   const handleDeleteUser = async (idUser:number, indexT:number) => {
-    await deleteUserToTaskToBDD(idUser, task._id)
+    await deleteUserToTaskToBDD(idUser, task._id ||'')
     const tempUsers = [...task.members];
     tempUsers.splice(indexT, 1);
     setForm({ ...form, members: tempUsers });
@@ -65,7 +61,7 @@ export default function StepModifyTask({ task, allUsers, handleReload }: Props) 
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await modifyTaskToBDD(task._id, form);
+    await modifyTaskToBDD(task._id || '', form);
     handleReload()
   };
 
@@ -145,7 +141,7 @@ export default function StepModifyTask({ task, allUsers, handleReload }: Props) 
               </Typography>
 
               <div className={"flex gap-2 justify-center flex-wrap"}>
-                {task.members.map((user: any, indexT: number) => (
+                {task.members && task.members.map((user: any, indexT: number) => (
                     <div key={indexT}>
                     <ButtonGroup
                         size={"sm"}

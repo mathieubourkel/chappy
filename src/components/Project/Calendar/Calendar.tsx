@@ -14,7 +14,7 @@ import {
 
 } from "@devexpress/dx-react-scheduler-material-ui";
 import { useState, useEffect } from "react";
-import { getTasksByUser, getTasksByUsers } from "../../../services/api/tasks";
+import { getTasksByUser } from "../../../services/api/tasks";
 import { Spinner } from "@material-tailwind/react";
 import './calendar.css'
 
@@ -47,7 +47,7 @@ type Props = {
 
 
 export default function Calendar({className}:Props) {
-  const idUser = localStorage.getItem("id");
+  const idUser:string = localStorage.getItem("id") ||"";
   const [busy, setBusy] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false)
   const currentDate = new Date();
@@ -58,8 +58,8 @@ export default function Calendar({className}:Props) {
   useEffect(() => {
     const getFetchData = async () => {
       try {
-        const dataOwner = await getTasksByUser(idUser);
-        const dataCollab = await getTasksByUser(idUser);
+        const dataOwner = await getTasksByUser();
+        const dataCollab = await getTasksByUser();
         const tmpTasks:Array<Task> = []
         dataOwner.map((task: any) => {
           task.title = task.name;

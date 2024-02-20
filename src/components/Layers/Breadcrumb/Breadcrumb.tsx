@@ -8,14 +8,12 @@ import {
 import {
     faHouse
 } from "@fortawesome/free-solid-svg-icons";
-import {
-     intStepNew
-} from "../../../services/interfaces/intProject.tsx";
+import { intStep } from "../../../services/interfaces/intStep";
 
 type Props = {
     nameProject?:string,
-    idProject?: string | number | undefined
-    step?:intStepNew
+    idProject?: string
+    step?:intStep
 }
 
 export default function Breadcrumb({nameProject, idProject, step}:Props) {
@@ -42,8 +40,8 @@ export default function Breadcrumb({nameProject, idProject, step}:Props) {
 
                 <Link
                     to={"/project/" +
-                        step.project.id +
-                        "/step/" + step.id}
+                        step.project._id +
+                        "/step/" + step._id}
                     className="text-marine-100 hover:!text-marine-300">
                     {step.name}
                 </Link></>

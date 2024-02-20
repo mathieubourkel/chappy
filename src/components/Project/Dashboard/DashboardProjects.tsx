@@ -1,8 +1,4 @@
-import {
-  intProjectDash,
-  intProjectsDash,
-  intStep,
-} from "../../../services/interfaces/intProject";
+
 import StepCard from "../Cards/StepCard";
 import {
   faBan, faCircleExclamation
@@ -15,13 +11,15 @@ import {Link} from "react-router-dom";
 import {
   Alert, Typography
 } from "@material-tailwind/react";
+import { intProject, intProjects } from "../../../services/interfaces/intProject";
+import { intStep } from "../../../services/interfaces/intStep";
 
 type Props = {
-  projects: intProjectsDash;
+  projects: intProjects;
 };
 
 export default function DashboardProjects({ projects }: Props) {
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState<number>(0);
 
   const handleClick = (index: number) => {
     setSelected(index);
@@ -35,7 +33,7 @@ export default function DashboardProjects({ projects }: Props) {
         <article>
           <nav className="md:flex md:mb-3">
             <div className="ml-20 mb-3 md:flex justify-center basis-3/4 ">
-              {projects.map((project: intProjectDash, index: number) => (
+              {projects.map((project: intProject, index: number) => (
                 <button
                   key={index}
                   onClick={() => handleClick(index)}
@@ -60,8 +58,8 @@ export default function DashboardProjects({ projects }: Props) {
             {projects[selected].steps.map((step: intStep) => (
               <StepCard
                 step={step}
-                key={step.id}
-                idProject={projects[selected].id}
+                key={step._id}
+                idProject={projects[selected]._id}
               />
             ))}
             {projects[selected].steps.length == 0 &&

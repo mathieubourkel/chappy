@@ -10,12 +10,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ProjectCreateStep from "../Modals/ProjectCreateStep";
 import StepCard from "../Cards/StepCard";
-import { intProjectDash, intStep } from "../../../services/interfaces/intProject";
+import { intProject } from "../../../services/interfaces/intProject";
+import { intStep } from "../../../services/interfaces/intStep";
 
 type Props = {
-  idProject: string | undefined
+  idProject: string
   isOwner:boolean
-  project: intProjectDash
+  project: intProject
   setReload: (bool:boolean) => void;
 };
 

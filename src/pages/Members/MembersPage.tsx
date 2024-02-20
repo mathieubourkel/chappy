@@ -13,15 +13,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import NotFoundPage
   from "../../services/utils/NotFoundPage.tsx";
+import { intUserLight } from "../../services/interfaces/intUser.tsx";
 
 export default function MembersPage() {
   const { idProject } = useParams();
   const [project, setProject] = useState<intProjectLight>({
-    id: undefined,
+    _id: '',
     name: "",
     code: "",
     owner: { id : 0, lastname: "", firstname: "", email: ""},
-    users: [ { id:0, email:"" } ],
+    members: [ { id:0, email:"" } ],
   });
   const [busy, setBusy] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
@@ -30,7 +31,7 @@ export default function MembersPage() {
   useEffect(() => {
     async function getMembers() {
       try {
-        const result = await getMembersByProject(idProject);
+        const result = await getMembersByProject(idProject ||"");
         setProject(result);
       } catch (e) {
         setError(true)
@@ -53,7 +54,7 @@ export default function MembersPage() {
 
   return (
     <main className="sm:mx-20 mx-5 mt-10">
-      <ProjectHeader isOwner project={project} idProject={idProject} />
+      <ProjectHeader isOwner project={project} idProject={idProject ||''} />
       <section className="flex justify-between mt-20">
         <div className={"w-full flex justify-between gap-5 items-baseline"}>
           <h2>Les participants</h2>
@@ -68,17 +69,17 @@ export default function MembersPage() {
         </div>
       ) : (
         <div className="mt-5">
-          {project.users && project.users.map((member: any, index: number) => (
+          {project.members && project.members.map((member: intUserLight, index:number) => (
             <MemberCard
-              key={index}
+              key={member.id}
               member={member}
               index={index}
               handleReload={handleReload}
-              idProject={idProject}
+              idProject={idProject ||''}
             />
           ))}
 
-          {project.users?.length == 0 &&
+          {project.members?.length == 0 &&
               <Alert
                   icon={<FontAwesomeIcon icon={faCircleInfo} className={"text-marine-300 text-xl"}/>}
                   className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 mb-5"

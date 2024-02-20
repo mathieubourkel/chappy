@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { intComment, intComments } from '../../../services/interfaces/intProject';
 import DisplayMore from './DisplayMore';
 import CreateComment from './CreateComment';
 import CommentCard from '../Cards/CommentCard';
 import { getComments } from '../../../services/api/comments';
 import { Spinner } from '@material-tailwind/react';
 import { RefCommentEnum} from '../../../services/enums/comment.ref.enum.ts';
+import { intComment, intComments } from '../../../services/interfaces/intComment.tsx';
 
 type Props = {
   table: RefCommentEnum;

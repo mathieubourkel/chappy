@@ -9,12 +9,9 @@ import {
   Button,
 } from "@material-tailwind/react";
 import "./modal.css";
-import {
-    FormEvent,
-    InputEvent,
-  } from "../../../services/interfaces/intProject";
-import { intCompany} from "../../../services/interfaces/intUser.tsx";
 import { addCompanyToBDDFromUser } from "../../../services/api/users.ts";
+import { intCompany } from "../../../services/interfaces/intCompany.tsx";
+import { FormEvent, InputEvent } from "../../../services/interfaces/generique.interface.tsx";
 
 type Props = {
   open: boolean

@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { URL_API, handleApiCall, useApi } from "../../hooks/useApi";
-import { intProfileUser } from "../interfaces/intProject";
-import { intCompany, intLightCompany, intUser } from "../interfaces/intUser";
+import { intOldPwd } from "../interfaces/intAuth";
 import {AxiosInstance} from "axios";
+import { intProfileUser, intUser } from "../interfaces/intUser";
+import { intCompany, intLightCompany } from "../interfaces/intCompany";
 const api:AxiosInstance = useApi();
 
 const USER_ENDPOINT = "user";
@@ -12,15 +13,15 @@ const PROJECT_ENDPOINT = "project"
 
 
 
-export async function getMembersByProject(idProject: string | undefined) {
+export async function getMembersByProject(idProject: string) {
     return handleApiCall(async () => await api.get(`${PROJECT_ENDPOINT}/${idProject}/members`));
   }
   
-  export async function getMembersByTask(idTask: number | undefined) {
+  export async function getMembersByTask(idTask: string) {
     return handleApiCall(async () => await api.get(`step-tasks/${idTask}?[fields]=id&populate[0]=users`));
   }
   
-  export async function addUserToProjectToBDD(idProject: string | undefined, idUser: number) {
+  export async function addUserToProjectToBDD(idProject: string, idUser: number) {
     return handleApiCall(async () => await api.put(`${PROJECT_ENDPOINT}/${USER_ENDPOINT}/add`,
                                                    {idProject, idUser}));
   }
@@ -29,14 +30,11 @@ export async function getMembersByProject(idProject: string | undefined) {
     return handleApiCall(async () => await api.put(`${USER_ENDPOINT}`, data));
   }
 
-  export async function resetPwd(data: {oldPwd: string, newPwd: string}) {
+  export async function resetPwd(data:intOldPwd) {
     return handleApiCall(async () => await api.put(`${USER_ENDPOINT}/resetPwd`, data));
   }
 
-  export async function deleteUserToProjectToBDD(
-      idProject: number | string | undefined,
-      idUser: number | string | null
-  ) {
+  export async function deleteUserToProjectToBDD(idProject:string,idUser: number) {
     return handleApiCall(async () => await api.put(`${PROJECT_ENDPOINT}/${USER_ENDPOINT}/delete`, {idProject, idUser}));
   }
 
@@ -78,7 +76,7 @@ export async function addCompanyToBDDFromUser(data: intCompany) {
   return handleApiCall(async () => await api.post(`company`, data))
 }
 
-export async function modifyCompanyToBDD(idCompany: number | string |null, data: intCompany) {
+export async function modifyCompanyToBDD(idCompany: number, data: intCompany) {
   return handleApiCall(async () => await api.put(`company/${idCompany}`, data))
 }
 
@@ -94,11 +92,11 @@ export async function quitCompany() {
   return handleApiCall(async () => await api.put(`${USER_ENDPOINT}/quitCompany`, {}))
 }
 
-export async function deleteCompanyToBDD(idCompany: string |null| number) {
+export async function deleteCompanyToBDD(idCompany: number) {
   return handleApiCall(async () => await api.delete(`${COMPANY_ENDPOINT}/${idCompany}`))
 }
 
-export async function deleteUserToBDD(idUser: string |null| number) {
+export async function deleteUserToBDD(idUser: number) {
   return handleApiCall(async () => await api.delete(`${USER_ENDPOINT}/${idUser}`))
 }
 

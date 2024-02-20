@@ -12,17 +12,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import avatar from "../../assets/img/icon_user.png";
 import "./userProfile.css";
-import {
-  intProfileUser,
-  InputEvent,
-  FormEvent,
-} from "../../services/interfaces/intProject";
 import { getUserInfo, modifyUserToBDD, resetPwd } from "../../services/api/users";
 import NotFoundPage from "../../services/utils/NotFoundPage";
 import AddCompanyModal from "../../components/Project/Modals/AddCompanyModal";
 import RejoinCompanyModal from "../../components/Project/Modals/RejoinCompanyModal";
 import ModifyCompanyModal from "../../components/Project/Modals/ModifyCompanyModal";
 import QuitCompanyModal from "../../components/Project/Modals/QuitCompanyModal";
+import { intProfileUser } from "../../services/interfaces/intUser";
+import { FormEvent, InputEvent } from "../../services/interfaces/generique.interface";
 
 export default function UserProfilePage() {
   const [user, setUser] = useState<intProfileUser>({
@@ -46,8 +43,8 @@ export default function UserProfilePage() {
   const [busy, setBusy] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const [reload, setReload] = useState(false);
-  const [passwords, setPasswords] = useState({
-    oldPassword: "", newPassword:""
+  const [passwords, setPasswords] = useState<{oldPwd:string, newPwd:string}>({
+    oldPwd: "", newPwd:""
   })
 
   const handleReload = () => setReload((bool) => !bool);
@@ -99,7 +96,7 @@ export default function UserProfilePage() {
   const sendPwd = async (e: any) => {
     e.preventDefault();
     try {
-      await resetPwd({...passwords, email: user.email});
+      await resetPwd(passwords);
       alert("Votre mot de passe a bien été mis à jour");
       setDisplayPwd(false);
     } catch (error) {

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
-import { intDocument, intDocuments, intProjectLight} from "../../services/interfaces/intProject";
 import DocumentCard from "../../components/Project/Cards/DocumentCard";
 import DocumentsAdd from "../../components/Project/Modals/DocumentsAdd";
 import { useParams } from "react-router-dom";
@@ -17,10 +16,12 @@ import {
   faCircleInfo
 } from "@fortawesome/free-solid-svg-icons";
 import NotFoundPage from "../../services/utils/NotFoundPage";
+import { intProjectLight } from "../../services/interfaces/intProject";
+import { intDocument, intDocuments } from "../../services/interfaces/intDocument";
 
 export default function DocumentsPage() {
   const {idProject} = useParams();
-  const [project, setProject] = useState<intProjectLight>({id:undefined, name:"", code:''})
+  const [project, setProject] = useState<intProjectLight>({_id:'', name:"", code:''})
   const [documents, setDocument] = useState<intDocuments>([]);
   const [reload, setReload] = useState(false)
   const [busy, setBusy] = useState<boolean>(true);
@@ -30,8 +31,8 @@ export default function DocumentsPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const tmpProj = await getProjectById(idProject)
-        const result = await getDocumentsByProject(idProject)
+        const tmpProj = await getProjectById(idProject ||"")
+        const result = await getDocumentsByProject(idProject ||"")
         setDocument(result)
         setProject(tmpProj)
       } catch (error) {
@@ -48,7 +49,7 @@ export default function DocumentsPage() {
   
   return (
     <main className="sm:mx-20 mx-5 mt-10">
-      <ProjectHeader isOwner project={project} idProject={idProject}/>
+      <ProjectHeader isOwner project={project} idProject={idProject ||""}/>
       <section
           className="flex justify-between mt-20">
         <div className={"w-full flex justify-between gap-5 items-center"}>
@@ -66,7 +67,7 @@ export default function DocumentsPage() {
       <div className="mt-5 mb-20">
         {documents.map((document: intDocument) => (
           <DocumentCard
-            key={document.id}
+            key={document._id}
             document={document}
             handleReload={handleReload}
           />

@@ -9,14 +9,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import StepCreateTask from "../Modals/StepCreateTask";
 import TaskCard from "../Cards/TaskCard";
-import {
-  intStepNew,
-  intTask,
-} from "../../../services/interfaces/intProject";
-
+import { intStep } from "../../../services/interfaces/intStep";
+import { intTask } from "../../../services/interfaces/intTask";
 
 type Props = {
-  step:intStepNew
+  step:intStep
   handleReload: () => void;
 }
 
@@ -44,7 +41,6 @@ export default function StepTasks({step, handleReload}:Props) {
           {step.tasks.map((task: intTask) => (
             <TaskCard
               key={task._id}
-              id={task._id}
               handleReload={handleReload}
               allUsers={step.project.members}
               task={task}

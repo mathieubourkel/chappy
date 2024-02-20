@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Avatar,Button,Card,CardBody,Typography} from "@material-tailwind/react";
 import user from "../../../assets/img/icon_user.png"
-import { intComment } from "../../../services/interfaces/intProject";
+import { intComment } from '../../../services/interfaces/intComment';
 
 type Props = {
   comment: intComment;

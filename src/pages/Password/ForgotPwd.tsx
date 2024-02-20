@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Input, Spinner, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { FormEvent, InputEvent } from "../../services/interfaces/intProject";
 import { getEmailToken, resetPwdWithEmail } from "../../services/api/users";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -10,13 +9,14 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { intConfirmPwd } from "../../services/interfaces/intAuth";
 
 export default function ForgotPwd() {
   const navigate  = useNavigate()
     const { emailToken } = useParams();
     const [busy, setBusy] = useState<boolean>(true);
     const [error, setError] = useState<boolean>(false);
-    const [token, setToken] = useState<string>({id:0, emailToken:''})
+    const [token, setToken] = useState<{id: number, emailToken: string}>({id:0, emailToken:''})
 
       const validationLogin = yup.object({
         newPwd: yup.string()
@@ -41,7 +41,7 @@ export default function ForgotPwd() {
         getToken();
       }, [emailToken]);
 
-      const formik = useFormik<intLogin>({
+      const formik = useFormik<intConfirmPwd>({
         initialValues: {
           newPwd: "",
           confirmNewPwd: "",
@@ -49,7 +49,7 @@ export default function ForgotPwd() {
         validateOnChange:false,
         validationSchema: validationLogin,
        onSubmit: async (values) => {
-          if (formik.errors.length >0) return;
+          if (Object.keys(formik.errors).length > 0) return;
           await resetPwdWithEmail({newPwd: values.newPwd, emailToken: token.emailToken})
           navigate('/')
         },

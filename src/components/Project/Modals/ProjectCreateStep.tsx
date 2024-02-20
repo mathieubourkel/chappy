@@ -10,11 +10,6 @@ import {
   Input,
   Textarea,
 } from "@material-tailwind/react";
-import {
-  FormEvent,
-  InputEvent,
-  intStep,
-} from "../../../services/interfaces/intProject";
 import CreateButton from "../elements/Buttons/CreateButton";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useParams } from "react-router-dom";
@@ -22,6 +17,8 @@ import { addProjectStepToBDD } from "../../../services/api/steps";
 import SelectStatus from "../elements/Select/SelectStatus";
 import "./modal.css";
 import { formatDate } from "../../../services/utils/FormatDate";
+import { intStep } from "../../../services/interfaces/intStep";
+import { FormEvent, InputEvent } from "../../../services/interfaces/generique.interface";
 
 type Props = {
   setReload: (bool: boolean) => void;
@@ -40,7 +37,7 @@ export default function ProjectCreateStep({ setReload }: Props) {
     budget: 0,
     estimEndDate: formatDate(date),
     status: 0,
-    project: idProject,
+    project: {_id:idProject},
   });
 
   const handleChange = (e: InputEvent) => {

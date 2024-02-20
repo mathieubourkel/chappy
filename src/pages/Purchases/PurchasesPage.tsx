@@ -5,8 +5,6 @@ import {
   Spinner,
 } from "@material-tailwind/react";
 import {
-  intPurchase,
-  intPurchases,
   intProjectLight,
 } from "../../services/interfaces/intProject";
 import PurchaseCard from "../../components/Project/Cards/PurchaseCard";
@@ -22,6 +20,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import NotFoundPage from "../../services/utils/NotFoundPage";
 import { getProjectById } from "../../services/api/projects";
+import { intPurchase, intPurchases } from "../../services/interfaces/intCompta";
 
 export default function PurchasesPage() {
   const { idProject } = useParams()
@@ -34,7 +33,7 @@ export default function PurchasesPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const tmpProj = await getProjectById(idProject)
+        const tmpProj = await getProjectById(idProject ||'')
         const result = await getPurchasesByProject(idProject || "")
         setProject(tmpProj);
         setPurchases(result)
@@ -56,7 +55,7 @@ export default function PurchasesPage() {
   
   return (
     <main className="sm:mx-20 mx-5 mt-10">
-      <ProjectHeader isOwner project={project} idProject={idProject} />
+      <ProjectHeader isOwner project={project} idProject={idProject ||''} />
       <section
           className={"w-full flex justify-between gap-5 items-center"}>
         <div>

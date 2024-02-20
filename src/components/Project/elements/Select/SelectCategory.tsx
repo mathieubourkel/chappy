@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {intSelect} from "../../../../services/interfaces/intProject";
 import ReactSelect from "react-select";
 import makeAnimated from "react-select/animated";
 import { CategoriesEnum } from "../../../../services/enums/categories.enum";
 import { useEffect, useState } from "react";
+import { intSelect } from "../../../../services/interfaces/generique.interface";
 
 type Props = {
   handleCategory: (category: intSelect) => void;

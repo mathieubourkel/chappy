@@ -12,15 +12,13 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import {
-  FormEvent,
-  InputEvent,
-  intPurchase,
-} from "../../../services/interfaces/intProject";
+
 import "./modal.css";
 import { modifyPurchaseFromBDD } from "../../../services/api/compta";
 import Datepicker from "react-tailwindcss-datepicker";
 import SelectStatus from "../elements/Select/SelectStatus";
+import { intPurchase } from "../../../services/interfaces/intCompta";
+import { FormEvent, InputEvent} from "../../../services/interfaces/generique.interface";
 
 type Props = {
   purchase: intPurchase;

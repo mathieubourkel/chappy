@@ -3,10 +3,8 @@ import {
 } from "@material-tailwind/react";
 import DeleteButton from "../elements/Buttons/DeleteButton";
 import PurchaseModify from "../Modals/PurchaseModify";
-import {
-  intPurchase,
-} from "../../../services/interfaces/intProject";
 import { deletePurchaseFromBDD } from "../../../services/api/compta";
+import { intPurchase } from "../../../services/interfaces/intCompta";
 
 type Props = {
   purchase: intPurchase;

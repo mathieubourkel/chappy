@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { enumStatus } from "../../../../services/interfaces/Status";
 import ReactSelect from "react-select";
 import makeAnimated from "react-select/animated";
-import { intSelect } from "../../../../services/interfaces/intProject";
 import { useEffect, useState } from "react";
+import { intSelect } from "../../../../services/interfaces/generique.interface";
+import { enumStatus } from "../../../../services/enums/status.enum";
 
 type Props = {
   classState?: string;

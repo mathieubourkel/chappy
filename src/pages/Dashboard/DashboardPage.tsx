@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import DashboardCollab from "../../components/Project/Dashboard/DashboardCollab";
 import DashboardHeader from "../../components/Project/Dashboard/DashboardHeader";
 import DashboardProjects from "../../components/Project/Dashboard/DashboardProjects";
-import { intProjectsDash } from "../../services/interfaces/intProject";
 import { Spinner } from "@material-tailwind/react";
 import {
   getProjectsFromOwner,
 } from "../../services/api/projects";
+import { intProjects } from "../../services/interfaces/intProject";
 
 export default function DashboardPage() {
-  const [collabs, setCollab] = useState<intProjectsDash>([]);
-  const [projects, setProject] = useState<intProjectsDash>([]);
+  const [collabs, setCollab] = useState<intProjects>([]);
+  const [projects, setProject] = useState<intProjects>([]);
   const [error, setError] = useState<boolean>(false);
   const [busy, setBusy] = useState<boolean>(true);
   const [reload, setReload] = useState<boolean>(false)

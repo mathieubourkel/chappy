@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ReactSelect from "react-select";
 import makeAnimated from "react-select/animated";
-import { enumType } from "../../../../services/interfaces/Type.tsx";
+import { enumType } from "../../../../services/enums/type.enum.tsx";
 import { useState } from "react";
-import { intSelectDocument } from "../../../../services/interfaces/intProject.tsx";
+import { intSelect } from "../../../../services/interfaces/generique.interface.tsx";
 
 type Props = {
   classState?: string;
-  handleDocument: (type: intSelectDocument) => void;
-  value? :intSelectDocument
+  handleDocument: (type: intSelect) => void;
+  value? :intSelect
 };
 
 export default function SelectTypeDocument({ handleDocument, value, classState }: Props) {
   const animatedComponents = makeAnimated();
     const [selected, setSelected] = useState<any>(value);
 
-    function handleDocumentsEnfant(value: intSelectDocument) {
+    function handleDocumentsEnfant(value: intSelect) {
         setSelected(value);
         handleDocument(value);
     }

@@ -11,7 +11,7 @@ import {MenuProject} from "../elements/Menu/MenuProject.tsx";
 
 type Props = {
   project: intProjectLight
-  idProject: string | undefined | number
+  idProject: string
   isOwner: boolean
 }
 
@@ -26,7 +26,7 @@ export default function ProjectHeader({project ,idProject, isOwner} :Props) {
                 {project.name}
             </Typography>
 
-            <Breadcrumb nameProject={project.name} idProject={project.id}/>
+            <Breadcrumb nameProject={project.name} idProject={project._id}/>
 
         </div>
         {isOwner && 

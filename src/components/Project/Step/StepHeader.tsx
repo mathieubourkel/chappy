@@ -5,7 +5,6 @@ import {
   CardBody, Chip,
   Typography
 } from "@material-tailwind/react";
-import { intStepNew } from "../../../services/interfaces/intProject.tsx";
 import {
   faBookOpen,
   faListCheck,
@@ -27,10 +26,11 @@ import SelectStatus
 import {
   Status
 } from "../../../services/enums/status.enum.ts";
+import { intStep } from "../../../services/interfaces/intStep.tsx";
 
 type Props = {
-  step:intStepNew,
-  setStep: (step:intStepNew) => void;
+  step:intStep,
+  setStep: (step:intStep) => void;
   isOwner:boolean
 }
 
@@ -38,13 +38,13 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
 
   const { idStep } = useParams();
 
-  const handleModifyStep = (data: intStepNew) => {
-    modifyStepToBDD(idStep, data);
+  const handleModifyStep = async (data: intStep) => {
+    await modifyStepToBDD(idStep || '', data);
   };
 
   const handleStatus = async (values:any):Promise<void> => {
     const data = { ...step, status:values.value};
-    await modifyStepToBDD(idStep, data);
+    await modifyStepToBDD(idStep ||"", data);
     setStep(data);
   };
 
@@ -59,7 +59,7 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
           >
             {step.name}
           </Typography>
-          <Breadcrumb step={step} idProject={step.project.id} nameProject={step.project.name} />
+          <Breadcrumb step={step} idProject={step.project._id} nameProject={step.project.name} />
         </div>
 
       </div>

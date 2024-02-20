@@ -9,17 +9,14 @@ import {
   Typography,
   Input,
 } from "@material-tailwind/react";
-import {
-  FormEvent,
-  InputEvent,
-  intDocument,
-} from "../../../services/interfaces/intProject";
+
 import CreateButton from "../elements/Buttons/CreateButton";
 import { addDocumentToBDD } from "../../../services/api/documents";
-import { useParams } from "react-router-dom";
 import './modal.css'
 import SelectTypeDocument from "../elements/Select/SelectTypeDocument.tsx";
 import { Type } from "../../../services/enums/document.type.enum.ts";
+import { intDocument } from "../../../services/interfaces/intDocument.tsx";
+import { FormEvent, InputEvent } from "../../../services/interfaces/generique.interface.tsx";
 
 type Props = {
   handleReload: () => void;
@@ -27,10 +24,9 @@ type Props = {
 
 export default function DocumentsAdd({ handleReload }: Props) {
 
-  const {idProject} = useParams();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  const [form, setForm] = useState<intDocument>({path: "", type: 0, id:0, project: Number(idProject)});
+  const [form, setForm] = useState<intDocument>({path: "", type: 0, _id:'', project: ''});
 
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
@@ -39,10 +35,8 @@ export default function DocumentsAdd({ handleReload }: Props) {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    console.log(form)
     await addDocumentToBDD(form);
     handleReload();
-    
   }
 
   const handleTypeDocument = (value:any) : void => {

@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { intNotification, intNotifications } from "../../../services/interfaces/intProject";
 import {Avatar,IconButton,MenuItem,MenuList,Typography,} from "@material-tailwind/react";
 import { faClock, faEye, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import iUser from "../../../assets/img/icon_user.png";
 import {deleteNotificationFromBDD,getNotificationsByUser,viewNotificationToBDD,} from "../../../services/api/notifications";
 import { Link } from "react-router-dom";
+import { intNotification, intNotifications } from "../../../services/interfaces/intNotification";
 
 export default function Notifications() {
 
@@ -34,12 +34,12 @@ export default function Notifications() {
     return Math.floor((now - heureCrea) / 60000);
   };
 
-  const handleDelete = async (idNotification: number) => {
+  const handleDelete = async (idNotification: string) => {
     await deleteNotificationFromBDD(idNotification);
     handleReload()
   };
 
-  const handleView = async (idNotification:number, isView:boolean) => {
+  const handleView = async (idNotification:string, isView:boolean) => {
     await viewNotificationToBDD(idNotification, !isView);
     handleReload()
   };
@@ -49,7 +49,7 @@ export default function Notifications() {
   return (
     <MenuList>
       {notifications.map((notification:intNotification) => (
-        <div key={notification.id} className="flex justify-between">
+        <div key={notification._id} className="flex justify-between">
           <Link to={notification.path}>
             <MenuItem
               className={`flex items-center gap-4 py-2 pl-2 pr-8 hover:bg-marine-100/10 ${
@@ -75,10 +75,10 @@ export default function Notifications() {
               <div className={"flex gap-2 items-center pl-1"}></div>
             </MenuItem>
           </Link>
-          <IconButton size={"lg"} onClick={() => handleView(notification.id, notification.isView)}>
+          <IconButton size={"lg"} onClick={() => handleView(notification._id, notification.isView)}>
             <FontAwesomeIcon icon={faEye} size="sm" />
           </IconButton>
-          <IconButton size={"lg"} onClick={() => handleDelete(notification.id)}>
+          <IconButton size={"lg"} onClick={() => handleDelete(notification._id)}>
             <FontAwesomeIcon icon={faXmark} size="sm" />
           </IconButton>
         </div>

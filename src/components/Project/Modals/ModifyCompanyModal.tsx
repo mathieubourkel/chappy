@@ -9,13 +9,11 @@ import {
   Button,
 } from "@material-tailwind/react";
 import "./modal.css";
-import {
-    InputEvent,
-    intProfileUser,
-  } from "../../../services/interfaces/intProject";
-import { intCompany} from "../../../services/interfaces/intUser.tsx";
-import { deleteCompanyToBDD, modifyCompanyToBDD } from "../../../services/api/users.ts";
 
+import { deleteCompanyToBDD, modifyCompanyToBDD } from "../../../services/api/users.ts";
+import { intProfileUser } from "../../../services/interfaces/intUser.tsx";
+import { intCompany } from "../../../services/interfaces/intCompany.tsx";
+import { InputEvent } from "../../../services/interfaces/generique.interface";
 type Props = {
   open: boolean
   handleOpen: () => void;
@@ -33,13 +31,13 @@ export default function ModifyCompanyModal({ handleReload, user,open, handleOpen
   };
 
   const handleClick = async () => {
-    await modifyCompanyToBDD(user.myCompany.id, company);
+    await modifyCompanyToBDD(user.myCompany.id ||0, company);
     handleOpen()
     handleReload()
   };
 
   const handleDelete = async () => {
-    await deleteCompanyToBDD(user.myCompany.id);
+    await deleteCompanyToBDD(user.myCompany.id || 0);
     handleOpen()
     handleReload()
   };

@@ -2,13 +2,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from '@material-tailwind/react'
 import { FormEvent, useState } from 'react';
-import { intComment, } from '../../../services/interfaces/intProject';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { addCommentToBDD } from '../../../services/api/comments';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { StatusCommentEnum } from '../../../services/enums/status.enum.ts';
 import { RefCommentEnum } from '../../../services/enums/comment.ref.enum.ts';
+import { intComment } from '../../../services/interfaces/intComment.tsx';
 
 type Props = {
   table:RefCommentEnum,
@@ -17,11 +17,11 @@ type Props = {
 }
 
 export default function CreateComment({ idParent, table, handleReload }:Props) {
-  const idUser:string | null = localStorage.getItem('id')
+  const idUser:string = localStorage.getItem('id') ||""
   const [form, setForm] = useState<intComment>({
                ref: table,
                refId: idParent,
-               author: { id : idUser },
+               author: { id : idUser, username:"" },
                content: "",
                status: StatusCommentEnum.PENDING,
                medias: []

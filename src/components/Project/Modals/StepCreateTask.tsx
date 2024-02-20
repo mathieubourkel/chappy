@@ -10,12 +10,7 @@ import {
   Input,
   Textarea,
 } from "@material-tailwind/react";
-import {
-  FormEvent,
-  InputEvent,
-  intTask,
-  intStepNew,
-} from "../../../services/interfaces/intProject";
+
 import Datepicker from "react-tailwindcss-datepicker";
 import { addTaskToStepToBDD } from "../../../services/api/tasks";
 import { useParams } from "react-router-dom";
@@ -26,13 +21,15 @@ import CreateButton from "../elements/Buttons/CreateButton";
 import SelectCategory from "../elements/Select/SelectCategory";
 import SelectStatus from "../elements/Select/SelectStatus";
 import "./modal.css";
-import { addNotificationToBDD } from "../../../services/api/notifications";
 import { formatDate } from "../../../services/utils/FormatDate";
-import { sendMessage } from "../../../services/utils/WebSocket";
+import { intStep } from "../../../services/interfaces/intStep";
+import { intTask } from "../../../services/interfaces/intTask";
+import { FormEvent, InputEvent } from "../../../services/interfaces/generique.interface";
+
 
 type Props = {
   handleReload: () => void;
-  step: intStepNew;
+  step: intStep;
 };
 
 export default function StepCreateTask({
@@ -40,12 +37,12 @@ export default function StepCreateTask({
   step,
 }: Props) {
   const { idStep, idProject } = useParams();
-  const userName = localStorage.getItem("name");
+  const userName:string = localStorage.getItem("name") ||'';
   const animatedComponents = makeAnimated();
   const date = new Date()
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-
+  console.log(userName, idStep)
   const [form, setForm] = useState<intTask>({
     name: "",
     description: "",
@@ -76,7 +73,7 @@ export default function StepCreateTask({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const tmpIdUsers:number[] = [];
+    // const tmpIdUsers:number[] = [];
     // step.project.members.map((user: any) => {
     //   tmpIdUsers.push(user.value);
     // });
@@ -119,7 +116,7 @@ export default function StepCreateTask({
     value.map((element: any) => (
       goodArray.push({id: element.value})
     ));
-    setForm({ ...form, users: goodArray });
+    setForm({ ...form, members: goodArray });
   };
 
   return (
@@ -184,7 +181,7 @@ export default function StepCreateTask({
                 />
               </div>
               <ReactSelect
-                options={step.project.users}
+                options={step.project.members}
                 className="rounded-xl border-select"
                 isMulti
                 placeholder="Ajouter des participants à la tâche"

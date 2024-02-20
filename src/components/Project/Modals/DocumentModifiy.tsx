@@ -12,7 +12,6 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { FormEvent, InputEvent, intDocument} from "../../../services/interfaces/intProject";
 import './modal.css'
 import {
   Type
@@ -20,6 +19,8 @@ import {
 import SelectTypeDocument
   from "../elements/Select/SelectTypeDocument.tsx";
 import { modifyDocumentFromBDD } from "../../../services/api/documents.ts";
+import { intDocument } from "../../../services/interfaces/intDocument.tsx";
+import { FormEvent, InputEvent } from "../../../services/interfaces/generique.interface.tsx";
 
 type Props = {
   document: intDocument
@@ -39,7 +40,7 @@ export default function DocumentModify({ document, handleReload}: Props) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await modifyDocumentFromBDD(document.id, form)
+    await modifyDocumentFromBDD(document._id, form)
     handleReload()
   }
   

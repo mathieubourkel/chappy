@@ -1,13 +1,14 @@
 import { Card, CardBody, Typography } from "@material-tailwind/react";
-import {  intProjectDash, intStep } from "../../../services/interfaces/intProject";
 import AccederButton from "../elements/Buttons/AccederButton";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartPie } from "@fortawesome/free-solid-svg-icons";
+import { intProject } from "../../../services/interfaces/intProject";
+import { intStep } from "../../../services/interfaces/intStep";
 
 type Props = {
   step: intStep;
-  collab: intProjectDash;
+  collab: intProject;
 };
 
 export default function DashboardCollabStepCard({ step, collab }: Props) {
@@ -27,13 +28,13 @@ export default function DashboardCollabStepCard({ step, collab }: Props) {
           </Typography>
           <Typography className="mt-2">
             Propriétaire :
-            <span className="font-bold">
+            {/* <span className="font-bold">
               {" " + collab.owner.firstname + " " + collab.owner.lastname}
-            </span>
+            </span> */}
           </Typography>
         </div>
 
-        <Link to={"/project/" + collab.id + "/step/" + step.id}>
+        <Link to={"/project/" + collab._id + "/step/" + step._id}>
           <AccederButton />
         </Link>
       </CardBody>

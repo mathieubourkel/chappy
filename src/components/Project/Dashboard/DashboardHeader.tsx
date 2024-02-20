@@ -24,7 +24,7 @@ type Props = {
 };
 
 export default function DashboardHeader({ nbProj }: Props) {
-  const userName = localStorage.getItem('name')
+  const userName:string = localStorage.getItem('name') ||""
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((bool) => !bool);

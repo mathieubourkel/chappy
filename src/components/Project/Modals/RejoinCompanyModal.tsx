@@ -9,10 +9,10 @@ import {
 } from "@material-tailwind/react";
 import "./modal.css";
 import makeAnimated from "react-select/animated";
-import { intLightCompany } from "../../../services/interfaces/intUser.tsx";
 import { getAllCompanies, rejoinCompanyDemand } from "../../../services/api/users.ts";
 import ReactSelect from "react-select";
-import { intCompany, intSelect } from "../../../services/interfaces/intProject.tsx";
+import { intSelects } from "../../../services/interfaces/generique.interface.tsx";
+import { intCompany, intLightCompany } from "../../../services/interfaces/intCompany.tsx";
 
 type Props = {
   open: boolean
@@ -23,7 +23,7 @@ type Props = {
 const animatedComponents = makeAnimated();
 
 export default function RejoinCompanyModal({ open, handleOpen, handleReload}: Props) {
-    const [companies, setCompanies] = useState<Array<intSelect>>([]);
+    const [companies, setCompanies] = useState<intSelects>([]);
     const [error, setError] = useState<boolean>(false)
     const [company, setCompany] = useState<intLightCompany>({id:0})
 
@@ -31,7 +31,7 @@ export default function RejoinCompanyModal({ open, handleOpen, handleReload}: Pr
     const getCompanies = async () => {
         try {
             const result = await getAllCompanies()
-            const formatArray: Array<intSelect> = result.map(
+            const formatArray: intSelects = result.map(
                 (element: intCompany) => ({ label: element.name, value: element.id })
               );
             setCompanies(formatArray)

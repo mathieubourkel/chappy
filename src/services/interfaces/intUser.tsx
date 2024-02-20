@@ -1,29 +1,39 @@
-export interface intUser {
+import { intCompany } from "./intCompany"
+import { intProjects } from "./intProject"
+import { intTasks } from "./intTask"
+
+export interface intUser extends intUserLight {
     lastname: string,
     firstname: string,
     email: string,
     address: string,
     zip: string,
     city: string,
-    phone: number | null,
-    password: string,
-    checkPassword: string,
+    phone: string,
+    password?: string,
+    checkPassword?: string
+    status:number
 }
 
-export interface intCompany {
-    name?: string,
-    siret?: string,
-    description?: string,
+
+export interface intUserLight {
+    firstname?: string,
+    lastname?: string,
+    company?: intCompany,
+    email?: string,
+    id?: number
+    tasks?:intTasks
 }
 
-export interface intLightCompany {
-    id: number,
+
+export interface intProfileUser extends intUser {
+    projects: intProjects
+    participations: intProjects
+    myOwnTasks: intTasks
+    company: intCompany,
+    myCompany: intCompany
 }
 
-export interface intRegister {
-    userInfos: intUser,
-    companyInfos: intCompany,
-    companyNameEmployee: string
-}
 
-export type intLightCompanies = intLightCompany[]
+export type intUsers = intUser[]
+export type intUsersLight = intUserLight[]

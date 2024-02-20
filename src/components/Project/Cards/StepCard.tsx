@@ -8,8 +8,9 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import AccederButton from "../elements/Buttons/AccederButton";
-import { intStep } from "../../../services/interfaces/intProject";
-import { enumStatus } from "../../../services/interfaces/Status";
+import { intStep } from "../../../services/interfaces/intStep";
+import { enumStatus } from "../../../services/enums/status.enum";
+
 
 type Props = {
   step: intStep;

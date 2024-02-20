@@ -14,10 +14,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./modal.css";
 import { userRejoinProject } from "../../../services/api/projects.ts";
+import { InputEvent } from "../../../services/interfaces/generique.interface.tsx";
 
 type Props = {
-  setReload: (bool:boolean) => void |undefined;
-
+  setReload: (bool:boolean) => void;
 };
 
 export default function RejoinModalSidebar({setReload}: Props) {
@@ -25,7 +25,7 @@ export default function RejoinModalSidebar({setReload}: Props) {
   const handleOpen = () => setOpen((bool) => !bool);
   const [code, setCode] = useState<string>("");
 
-  const handleCode = (e: any) => {
+  const handleCode = (e: InputEvent) => {
     setCode(e.target.value);
   };
 

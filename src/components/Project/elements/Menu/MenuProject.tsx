@@ -16,7 +16,7 @@ import { intProjectLight } from "../../../../services/interfaces/intProject.tsx"
 import { useState } from "react";
 
 type Props = {
-  idProject: string | undefined | number;
+  idProject: string
   project: intProjectLight
 };
 
@@ -82,7 +82,7 @@ export function MenuProject({ project, idProject }: Props) {
         </Menu>
       </Tooltip>
       <ProjectDisplayCode
-        code={project.code}
+        code={project.code ||""}
         open={open}
         handleOpen={handleOpen}
       />

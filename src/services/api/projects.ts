@@ -1,5 +1,5 @@
 import { handleApiCall, useApi } from "../../hooks/useApi";
-import { intProjectDash } from "../interfaces/intProject";
+import { intProject } from "../interfaces/intProject";
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const api = useApi();
 const PROJECT_ENDPOINT = "project";
@@ -12,21 +12,20 @@ export async function getProjectsFromOwner() {
     return handleApiCall(async () => await api.get(`my-collabs`));
   }
   
-  export async function getProjectById(idProject: string | undefined) {
+  export async function getProjectById(idProject: string) {
     return handleApiCall(async () => await api.get(`${PROJECT_ENDPOINT}/${idProject}`));
   }
-  
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export async function addProjectToBDD(data: any) {
+
+  export async function addProjectToBDD(data: intProject) {
     data.budget = Number(data.budget)
     return handleApiCall(async () => await api.post(PROJECT_ENDPOINT, data));
   }
   
-  export async function deleteProjectFromBDD(idProject: string | number | undefined) {
+  export async function deleteProjectFromBDD(idProject: string) {
     return handleApiCall(async () => await api.delete(`${PROJECT_ENDPOINT}/${idProject}`));
   }
   
-  export async function modifyProjectToBDD(idProject: string | undefined, data: intProjectDash) {
+  export async function modifyProjectToBDD(idProject: string, data: intProject) {
     data.budget = Number(data.budget)
     return handleApiCall(async () => await api.put(`${PROJECT_ENDPOINT}/${idProject}`, data));
   }

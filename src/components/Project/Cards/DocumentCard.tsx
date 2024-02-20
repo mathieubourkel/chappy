@@ -3,10 +3,10 @@ import {
   Typography
 } from "@material-tailwind/react";
 import DeleteButton from "../elements/Buttons/DeleteButton";
-import { intDocument} from "../../../services/interfaces/intProject";
 import DocumentModify from "../Modals/DocumentModifiy";
 import { deleteDocumentFromBDD } from "../../../services/api/documents";
 import { DocumentTypeEnum } from "../../../services/enums/document.type.enum.ts";
+import { intDocument } from "../../../services/interfaces/intDocument.tsx";
 
 type Props = {
   document: intDocument
@@ -22,7 +22,7 @@ export default function DocumentCard({ document, handleReload }: Props) {
   };
   
   const handleDelete = async () => {
-    await deleteDocumentFromBDD(document.id)
+    await deleteDocumentFromBDD(document._id)
     handleReload()
   }
 

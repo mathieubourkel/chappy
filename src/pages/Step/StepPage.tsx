@@ -2,40 +2,38 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button, Spinner } from "@material-tailwind/react";
 import { deleteStepFromBDD, getStepById } from "../../services/api/steps";
-import {
-  intSelect,
-  intStepNew,
-  intUser,
-} from "../../services/interfaces/intProject";
 import StepTasks from "../../components/Project/Step/StepTasks";
 import EspaceComment from "../../components/Project/Comments/EspaceComment";
 import StepHeader from "../../components/Project/Step/StepHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import NotFoundPage from "../../services/utils/NotFoundPage";
+import { intStep } from "../../services/interfaces/intStep";
+import { formatDate } from "../../services/utils/FormatDate";
+import { RefCommentEnum } from "../../services/enums/comment.ref.enum";
 
 export default function StepPage() {
   const [busy, setBusy] = useState<boolean>(true);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const { idStep, idProject } = useParams();
-  const idUser = localStorage.getItem("id");
+  const idUser:string = localStorage.getItem("id") ||'';
   const [reload, setReload] = useState(false);
   const navigate = useNavigate();
-  const [step, setStep] = useState<intStepNew>({
+  const [step, setStep] = useState<intStep>({
     name: "",
     description: "",
-    estimEndDate: new Date(),
+    estimEndDate: formatDate(new Date()),
     budget: 0,
     status: 0,
-    project: { _id: 0, name:'', owner: { id: 0 }, members: [] },
+    project: { _id: '', name:'', owner: { id: 0 }, members: [] },
     tasks: [],
   });
 
   useEffect(() => {
     const getStep = async () => {
       try {
-        const tmpStep = await getStepById(idStep);
+        const tmpStep = await getStepById(idStep || "");
         tmpStep.project.owner.toString() === idUser && setIsOwner(true);
         // const emailArray: Array<intSelect> = tmpStep.project.users.map(
         //   (element: intUser) => ({
@@ -55,7 +53,7 @@ export default function StepPage() {
   }, [idProject, idStep, idUser, reload]);
 
   const handleDeleteStep = async () => {
-    await deleteStepFromBDD(idStep);
+    await deleteStepFromBDD(idStep ||"");
     navigate("/project/" + idProject);
   };
 
@@ -78,7 +76,7 @@ export default function StepPage() {
             step={step}
             handleReload={handleReload}
           />
-          <EspaceComment table="step" idParent={idStep || ''} />
+          <EspaceComment table={RefCommentEnum.jalon} idParent={idStep || ''} />
 
           <div className={"flex justify-center mb-10"}>
             <Button

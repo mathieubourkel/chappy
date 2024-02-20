@@ -3,7 +3,7 @@ import { useState } from "react";
 import { IconButton, Input, Typography } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faPen } from "@fortawesome/free-solid-svg-icons";
-import { FormEvent } from "../../../../services/interfaces/intProject";
+import { FormEvent } from "../../../../services/interfaces/generique.interface";
 
 type Props = {
   type: string;
