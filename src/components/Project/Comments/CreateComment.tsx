@@ -2,25 +2,29 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from '@material-tailwind/react'
 import { FormEvent, useState } from 'react';
-import { intComment } from '../../../services/interfaces/intProject';
+import { intComment, } from '../../../services/interfaces/intProject';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { addCommentToBDD } from '../../../services/api/comments';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { StatusCommentEnum } from '../../../services/enums/status.enum.ts';
+import { RefCommentEnum } from '../../../services/enums/comment.ref.enum.ts';
 
 type Props = {
-  table: string
-  idParent: string
+  table:RefCommentEnum,
+  idParent: string,
   handleReload: () => void;
 }
 
 export default function CreateComment({ idParent, table, handleReload }:Props) {
-
-
-  const idUser = localStorage.getItem('id')
+  const idUser:string | null = localStorage.getItem('id')
   const [form, setForm] = useState<intComment>({
-    content: "", author: {id: idUser, email:""}, table:table,
-     idParent: +idParent
+               ref: table,
+               refId: idParent,
+               author: { id : idUser },
+               content: "",
+               status: StatusCommentEnum.PENDING,
+               medias: []
 })
 
 const handleEditorChange = (_event: any, editor: any) => {

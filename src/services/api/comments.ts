@@ -1,11 +1,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { handleApiCall, useApi } from "../../hooks/useApi";
 import { intComment } from "../interfaces/intProject";
+
 const api = useApi();
 const COMMENTS_ENDPOINT = "comments";
 const COMMENT_ENDPOINT = "comment";
 
-export async function getComments(table:string, idParent: string | undefined) {
+export async function getComments(
+  table: string,
+  idParent: string | undefined,
+) {
    return handleApiCall(async () => await api.get(`${COMMENTS_ENDPOINT}/${table}/${idParent}`));
   }
 
