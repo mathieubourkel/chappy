@@ -28,7 +28,7 @@ export default function CommentCard({ comment }: Props) {
               {comment.author.firstname}
             </Typography>
           </div>
-          <div>
+          <div className={"flex gap-2"}>
             <Button variant="outlined" size="sm" className={"flex items-center justify-center"}>
               <FontAwesomeIcon
                 icon={faReply}
@@ -36,6 +36,22 @@ export default function CommentCard({ comment }: Props) {
                 className="mr-3 text-marine-100"
               />
               <span className="hidden lg:flex whitespace-nowrap">Répondre</span>
+            </Button>
+
+            <Button variant="outlined" size="sm" className={"flex items-center justify-center"}>
+              <FontAwesomeIcon
+                  icon={faReply}
+                  size="xl"
+                  className="text-marine-100"
+              />
+            </Button>
+
+            <Button variant="outlined" size="sm" className={"flex items-center justify-center"}>
+              <FontAwesomeIcon
+                  icon={faReply}
+                  size="xl"
+                  className="text-marine-100"
+              />
             </Button>
           </div>
         </div>
