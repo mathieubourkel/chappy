@@ -26,11 +26,13 @@ import PublicRoute from "./services/utils/PublicRoute.tsx";
 import ContextIsLogged from "./context/ContextIsLogged.tsx";
 import Sidebar from "./components/Layers/Sidebar/Sidebar.tsx";
 import { Popup } from "./components/Layers/Popup/Popup.tsx";
-import { socket } from "./services/utils/WebSocket.tsx";
 import ForgotPwd from "./pages/Password/ForgotPwd.tsx";
 import ResetPwd from "./pages/Password/ResetPwd.tsx";
+import { ClientToServerEvents, ServerToClientEvents } from "./services/interfaces/chat.interface.ts";
+import { Socket, io } from "socket.io-client";
 
 export default function App() {
+  const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(`${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_WEB_SOCKET_HOST}:${import.meta.env.VITE_WEB_SOCKET_PORT}`);
   const token = localStorage.getItem("token");
   const [isLogged, setIsLogged] = useState<boolean>(!!token);
   token && !isLogged && setIsLogged(true);
