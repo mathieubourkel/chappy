@@ -17,7 +17,7 @@ export default function PurchaseCard({
 }: Props) {
 
   const handleDelete = async () => {
-    await deletePurchaseFromBDD(purchase._id);
+    await deletePurchaseFromBDD(purchase._id ||'');
     handleReload()
   };
 

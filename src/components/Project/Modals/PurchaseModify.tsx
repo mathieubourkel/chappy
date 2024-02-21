@@ -53,7 +53,7 @@ export default function PurchaseModify({ purchase, handleReload }: Props) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await modifyPurchaseFromBDD(purchase._id, form);
+    await modifyPurchaseFromBDD(purchase._id ||'', form);
     handleReload();
   };
 

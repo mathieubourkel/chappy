@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Avatar,
-  Card,
-  CardBody,
   Typography,
 } from '@material-tailwind/react';
 import user from "../../../assets/img/icon_user.png"
@@ -20,8 +18,13 @@ export default function ReplyCard({ idComment }: Props) {
   const [reload, setReload] = useState(false);
   const userId: string = localStorage.getItem("id") || ""
 
+
   const handleReload = () => setReload((bool) => !bool);
 
+  // Pour build - Erreurs typage
+  console.log(userId)
+  console.log(handleReload())
+  
   useEffect(() => {
     async function fetchData() {
       try {
