@@ -6,7 +6,6 @@ interface ImportMetaEnv {
     readonly VITE_PROTOCOL: string
     readonly VITE_WEB_SOCKET_PORT: string
     readonly VITE_WEB_SOCKET_HOST: string
-    
 }
   
 interface ImportMeta {

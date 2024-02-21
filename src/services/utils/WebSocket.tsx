@@ -2,7 +2,7 @@
 import { Socket, io } from "socket.io-client";
 import { ClientToServerEvents, ServerToClientEvents } from "../interfaces/chat.interface";
 
-export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(`http://${import.meta.env.VITE_WEB_SOCKET_HOST}:${import.meta.env.VITE_WEB_SOCKET_PORT}`);
+export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(`${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_WEB_SOCKET_HOST}:${import.meta.env.VITE_WEB_SOCKET_PORT}`);
 
 const userId = localStorage.getItem("id") ||""
 const userName = localStorage.getItem("name") ||""
