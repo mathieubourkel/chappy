@@ -3,9 +3,18 @@ import DisplayMore from './DisplayMore';
 import CreateComment from './CreateComment';
 import CommentCard from '../Cards/CommentCard';
 import { getComments } from '../../../services/api/comments';
-import { Spinner } from '@material-tailwind/react';
+import {
+  Alert,
+  Spinner,
+} from '@material-tailwind/react';
 import { RefCommentEnum} from '../../../services/enums/comment.ref.enum.ts';
 import { intComment, intComments } from '../../../services/interfaces/intComment.tsx';
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+import {
+  faBan
+} from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   table: RefCommentEnum;
@@ -25,7 +34,9 @@ export default function EspaceComment({ table, idParent }: Props) {
     async function fetchData() {
       try {
         const result = await getComments(RefCommentEnum[table], idParent);
+        console.log(result)
         setComments(result);
+
       } catch (error) {
         setError(true)
       } finally {
@@ -52,10 +63,10 @@ export default function EspaceComment({ table, idParent }: Props) {
           <div className="flex flex-col mt-10">
             {display ? (
               comments.map((comment: intComment) => (
-                <CommentCard comment={comment} key={comment._id} />
+                <CommentCard comment={comment} key={comment._id} handleReload={handleReload} />
               ))
             ) : (
-              <CommentCard comment={comments[0]} key={comments[0]._id} />
+              <CommentCard comment={comments[0]} key={comments[0]._id} handleReload={handleReload} />
             )}
           </div>
     
@@ -64,6 +75,13 @@ export default function EspaceComment({ table, idParent }: Props) {
         </div>
         </>
         }
+
+          {comments.length == 0 && <><Alert
+            icon={<FontAwesomeIcon icon={faBan} className={"text-marine-300 text-xl"}/>}
+            className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-10"
+          >
+            Aucun commentaire trouvé.
+          </Alert></>}
         </>)}
         <CreateComment
           idParent={idParent}
