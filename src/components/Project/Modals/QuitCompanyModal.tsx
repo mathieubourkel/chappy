@@ -7,19 +7,23 @@ import {
 } from "@material-tailwind/react";
 import "./modal.css";
 import { quitCompany } from "../../../services/api/users";
+import { intAlert } from "../../../services/interfaces/generique.interface";
 
 type Props = {
   open: boolean
   handleOpen: () => void;
   handleReload: () => void;
+  setAlert: (alert:intAlert) => void;
+  idDemand: number
 };
 
-export default function QuitCompanyModal({handleReload, open, handleOpen}: Props) {
+export default function QuitCompanyModal({idDemand, handleReload, open, handleOpen, setAlert}: Props) {
 
   const handleClick = async () => {
-      await quitCompany();
-      handleOpen()
+      await quitCompany(idDemand);
+      setAlert({open: true, message:"Vous avez quitté une entreprise.", color: 'green'})
       handleReload()
+      handleOpen()
   };
  
   return (
@@ -40,9 +44,8 @@ export default function QuitCompanyModal({handleReload, open, handleOpen}: Props
         <div className="gap-5 flex justify-center">
           <Button
             size={"sm"}
-            onClick={handleClick}
+            onClick={() => handleClick()}
             className={"bg-brick-300"}
-            type="submit"
           >
             Confirmer
           </Button>
@@ -50,7 +53,7 @@ export default function QuitCompanyModal({handleReload, open, handleOpen}: Props
             size={"sm"}
             onClick={handleOpen}
             className={"border-marine-300"}
-            type="submit"
+            type='submit'
           >
             Annuler
           </Button>

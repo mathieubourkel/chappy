@@ -15,8 +15,13 @@ import ContextIsLogged from "../../../../context/ContextIsLogged"
 import { useContext } from "react";
 import {login} from "../../../../services/api/auth"
 import { intLogin } from "../../../../services/interfaces/intAuth";
+import { intAlert } from "../../../../services/interfaces/generique.interface";
 
-export default function FormLogin() {
+type Props = {
+  setAlert: (alert:intAlert) => void;
+}
+
+export default function FormLogin({setAlert}:Props) {
   const {setIsLogged}:any = useContext(ContextIsLogged)
   const navigate  = useNavigate()
   const validationLogin = yup.object({
@@ -42,7 +47,7 @@ export default function FormLogin() {
       await login(values)
       const token = localStorage.getItem('token')
       token && setIsLogged(true)
-      token ? navigate('/dashboard') : alert('Rentre les bons logins !!!')  
+      token ? navigate('/dashboard') : setAlert({open: true, message:'Identifiants incorrects', color: 'red', reDisplay:true })
     },
     
   });

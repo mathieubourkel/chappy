@@ -11,17 +11,18 @@ import {
 import "./modal.css";
 import { addCompanyToBDDFromUser } from "../../../services/api/users.ts";
 import { intCompany } from "../../../services/interfaces/intCompany.tsx";
-import { FormEvent, InputEvent } from "../../../services/interfaces/generique.interface.tsx";
+import { FormEvent, InputEvent, intAlert } from "../../../services/interfaces/generique.interface.tsx";
 
 type Props = {
   open: boolean
   handleOpen: () => void;
   handleReload: () => void;
+  setAlert: (alert:intAlert) => void;
 };
 
-export default function AddCompanyModal({ open, handleOpen, handleReload}: Props) {
+export default function AddCompanyModal({ open, handleOpen, handleReload, setAlert}: Props) {
   const [company, setCompany] = useState<intCompany>({
-    name:'', siret:'', description: ''
+    name:'', additionalInfos:'', description: ''
   })
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
@@ -31,6 +32,7 @@ export default function AddCompanyModal({ open, handleOpen, handleReload}: Props
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     await addCompanyToBDDFromUser(company);
+    setAlert({open: true, message:"L'entreprise a été ajouté avec succès.", color: 'green'})
     handleOpen()
     handleReload()
   };
@@ -62,8 +64,8 @@ export default function AddCompanyModal({ open, handleOpen, handleReload}: Props
               <div className='mb-5'>
               <Input
                 label="Siret l'entreprise"
-                id="siret"
-                name="siret"
+                id="additionalInfos"
+                name="additionalInfos"
                 size="lg"
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}

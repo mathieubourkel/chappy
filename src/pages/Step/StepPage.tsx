@@ -11,6 +11,8 @@ import NotFoundPage from "../../services/utils/NotFoundPage";
 import { intStep } from "../../services/interfaces/intStep";
 import { formatDate } from "../../services/utils/FormatDate";
 import { RefCommentEnum } from "../../services/enums/comment.ref.enum";
+import { intSelects } from "../../services/interfaces/generique.interface";
+import { intUser } from "../../services/interfaces/intUser";
 
 export default function StepPage() {
   const [busy, setBusy] = useState<boolean>(true);
@@ -34,14 +36,14 @@ export default function StepPage() {
     const getStep = async () => {
       try {
         const tmpStep = await getStepById(idStep || "");
-        tmpStep.project.owner.toString() === idUser && setIsOwner(true);
-        // const emailArray: Array<intSelect> = tmpStep.project.users.map(
-        //   (element: intUser) => ({
-        //     label: element.email,
-        //     value: element.id,
-        //   })
-        // );
-       // tmpStep.project.users = emailArray;
+        tmpStep.project.owner.id.toString() === idUser && setIsOwner(true);
+        const emailArray: intSelects = tmpStep.project.members.map(
+          (element: intUser) => ({
+            label: element.email,
+            value: element.id,
+          })
+       );
+        tmpStep.project.members = emailArray;
         setStep(tmpStep);
       } catch (error) {
         setError(true);

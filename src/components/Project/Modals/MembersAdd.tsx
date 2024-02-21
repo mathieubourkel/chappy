@@ -32,26 +32,36 @@ export default function MembersAdd({ project, setProject}: Props) {
   const [selected, setSelected] = useState<string | undefined>('')
 
   useEffect(() => {
-    async function getUsers(){
+    const getUsers = async () => {
+    try {
       const result = await getAllUsers();
-      result && setUsers(result)
+      setUsers(result)
+    } catch (error) {
+      console.log(error)
+    }
     }
     getUsers();
   }, []);
 
   function handleChange(value: string | undefined) {
+    console.log(value)
     setSelected(value)
   }
 
   const handleOpen = () => setOpen((cur) => !cur);
 
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    const user:any = users.find((element:intUser) => element.email == selected)
-    const tmpArrayUsers = project.members;
-    tmpArrayUsers?.push(user)
-    setProject({ ...project, members: tmpArrayUsers});
-    addUserToProjectToBDD(idProject ||'', user.id)
+  const handleSubmit = async (e: FormEvent) => {
+    try {
+      e.preventDefault();
+      const user:any = users.find((element:intUser) => element.email == selected)
+      const tmpArray:any = project.members
+      tmpArray.push({id: user.id, email: selected})
+      await addUserToProjectToBDD(idProject ||'', user.id, selected || "")
+      setProject({ ...project, members: tmpArray});
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
 
   return (
@@ -74,9 +84,9 @@ export default function MembersAdd({ project, setProject}: Props) {
               value={selected}
               onChange={(value: any) => handleChange(value as string | undefined)}
               >
-              {users.map((user: intUserLight, index: number) => (
-            <Option key={index} value={user.email}>
-              {user.firstname} {user.lastname}
+              {users.map((user: intUserLight) => (
+            <Option key={user.id} value={user.email}>
+              {user.email}
             </Option>
           ))}
               </Select>

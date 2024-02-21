@@ -3,7 +3,7 @@ import { URL_API, handleApiCall, useApi } from "../../hooks/useApi";
 import { intOldPwd } from "../interfaces/intAuth";
 import {AxiosInstance} from "axios";
 import { intProfileUser, intUser } from "../interfaces/intUser";
-import { intCompany, intLightCompany } from "../interfaces/intCompany";
+import { intCompany } from "../interfaces/intCompany";
 const api:AxiosInstance = useApi();
 
 const USER_ENDPOINT = "user";
@@ -14,16 +14,18 @@ const PROJECT_ENDPOINT = "project"
 
 
 export async function getMembersByProject(idProject: string) {
-    return handleApiCall(async () => await api.get(`${PROJECT_ENDPOINT}/${idProject}/members`));
+    return handleApiCall(async () => await api.get(`${PROJECT_ENDPOINT}/members/${idProject}`));
   }
   
   export async function getMembersByTask(idTask: string) {
     return handleApiCall(async () => await api.get(`step-tasks/${idTask}?[fields]=id&populate[0]=users`));
   }
+  export async function deleteUserToProjectToBDD(idProject:string,idUser: number) {
+    return handleApiCall(async () => await api.put(`${PROJECT_ENDPOINT}/members/delete`, {idProject, idUser}));
+  }
   
-  export async function addUserToProjectToBDD(idProject: string, idUser: number) {
-    return handleApiCall(async () => await api.put(`${PROJECT_ENDPOINT}/${USER_ENDPOINT}/add`,
-                                                   {idProject, idUser}));
+  export async function addUserToProjectToBDD(idProject: string, idUser: number, email:string) {
+    return handleApiCall(async () => await api.put(`${PROJECT_ENDPOINT}/members/add`,{idProject, idUser, email}));
   }
 
   export async function modifyUserToBDD(data: intProfileUser) {
@@ -34,9 +36,7 @@ export async function getMembersByProject(idProject: string) {
     return handleApiCall(async () => await api.put(`${USER_ENDPOINT}/resetPwd`, data));
   }
 
-  export async function deleteUserToProjectToBDD(idProject:string,idUser: number) {
-    return handleApiCall(async () => await api.put(`${PROJECT_ENDPOINT}/${USER_ENDPOINT}/delete`, {idProject, idUser}));
-  }
+  
 
   export async function getAllCompanies() {
     return handleApiCall(async () => await api.get(`${COMPANY_ENDPOINT}/all`));
@@ -73,23 +73,27 @@ export async function getMembersByProject(idProject: string) {
   }
 
 export async function addCompanyToBDDFromUser(data: intCompany) {
-  return handleApiCall(async () => await api.post(`company`, data))
+  return handleApiCall(async () => await api.post(`${COMPANY_ENDPOINT}`, data))
 }
 
 export async function modifyCompanyToBDD(idCompany: number, data: intCompany) {
-  return handleApiCall(async () => await api.put(`company/${idCompany}`, data))
+  return handleApiCall(async () => await api.put(`${COMPANY_ENDPOINT}/${idCompany}`, data))
 }
 
-export async function rejoinCompanyDemand(data: intLightCompany) {
-  return handleApiCall(async () => await api.put(`${COMPANY_ENDPOINT}/demand/add`, data))
+export async function rejoinCompanyDemand(idCompany:number) {
+  return handleApiCall(async () => await api.get(`${COMPANY_ENDPOINT}/demand/add/${idCompany}`))
 }
 
-export async function demandCompanyStatusChange(data: intLightCompany, idDemand: string | number) {
-  return handleApiCall(async () => await api.put(`${COMPANY_ENDPOINT}/demand/change-status/${idDemand}`, data))
+export async function validateDemandCompany(idDemand: number) {
+  return handleApiCall(async () => await api.get(`${COMPANY_ENDPOINT}/demand/valid/${idDemand}`))
 }
 
-export async function quitCompany() {
-  return handleApiCall(async () => await api.put(`${USER_ENDPOINT}/quitCompany`, {}))
+export async function refuseDemandCompany(idDemand: number) {
+  return handleApiCall(async () => await api.get(`${COMPANY_ENDPOINT}/demand/refuse/${idDemand}`))
+}
+
+export async function quitCompany(idDemand: number) {
+  return handleApiCall(async () => await api.get(`${COMPANY_ENDPOINT}/demand/quit/${idDemand}`))
 }
 
 export async function deleteCompanyToBDD(idCompany: number) {

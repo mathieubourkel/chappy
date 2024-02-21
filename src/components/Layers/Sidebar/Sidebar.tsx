@@ -42,8 +42,8 @@ export default function Sidebar(props: any) {
   const [user, setUser] = useState<intProfileUser>({
     address: "",
     city: "",
-    myCompany: { name: "", siret: "", description: "", id: 0 },
-    company: { name: "", siret: "", description: "", id: 0 },
+    myOwnGroups: [{ name: "", additionalInfos: "", description: "", id: 0 }],
+    company: { name: "", additionalInfos: "", description: "", id: 0 },
     email: "",
     phone: "",
     status: 0,
@@ -54,6 +54,7 @@ export default function Sidebar(props: any) {
     projects: [],
     myOwnTasks: [],
     participations: [],
+    demands:[]
   });
 
   const idUser = localStorage.getItem("id");

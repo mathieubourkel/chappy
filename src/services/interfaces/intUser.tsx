@@ -1,4 +1,4 @@
-import { intCompany } from "./intCompany"
+import { intCompanies, intCompany } from "./intCompany"
 import { intProjects } from "./intProject"
 import { intTasks } from "./intTask"
 
@@ -29,11 +29,18 @@ export interface intUserLight {
 export interface intProfileUser extends intUser {
     projects: intProjects
     participations: intProjects
-    myOwnTasks: intTasks
-    company: intCompany,
-    myCompany: intCompany
+    myOwnTasks: intTasks,
+    myOwnGroups: intCompanies,
+    demands:intDemands
 }
 
+export interface intDemand {
+    id?: number,
+    group: intCompany,
+    user?:intUser
+    status:number
+}
 
+export type intDemands = intDemand[]
 export type intUsers = intUser[]
 export type intUsersLight = intUserLight[]

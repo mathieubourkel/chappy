@@ -16,5 +16,14 @@ export interface intStepLight {
     tasks : intTasks
 }
 
+export interface intCreateStep extends intStepLight {
+    description: string,
+    budget: number,
+    estimEndDate: string
+    status:number
+    project: string
+    tasks : intTasks
+}
+
 export type intSteps = intStep[]
 export type intStepsLight = intStepLight[]

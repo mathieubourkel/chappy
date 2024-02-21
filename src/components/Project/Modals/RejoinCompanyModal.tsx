@@ -11,18 +11,19 @@ import "./modal.css";
 import makeAnimated from "react-select/animated";
 import { getAllCompanies, rejoinCompanyDemand } from "../../../services/api/users.ts";
 import ReactSelect from "react-select";
-import { intSelects } from "../../../services/interfaces/generique.interface.tsx";
+import { intAlert, intSelects } from "../../../services/interfaces/generique.interface.tsx";
 import { intCompany, intLightCompany } from "../../../services/interfaces/intCompany.tsx";
 
 type Props = {
   open: boolean
   handleOpen: () => void;
   handleReload: () => void;
+  setAlert: (alert:intAlert) => void;
 };
 
 const animatedComponents = makeAnimated();
 
-export default function RejoinCompanyModal({ open, handleOpen, handleReload}: Props) {
+export default function RejoinCompanyModal({ open, handleOpen, handleReload, setAlert}: Props) {
     const [companies, setCompanies] = useState<intSelects>([]);
     const [error, setError] = useState<boolean>(false)
     const [company, setCompany] = useState<intLightCompany>({id:0})
@@ -48,11 +49,12 @@ export default function RejoinCompanyModal({ open, handleOpen, handleReload}: Pr
 
   const handleClick = async () => {
     try {
-      await rejoinCompanyDemand(company);
+      await rejoinCompanyDemand(company.id || 0);
+      setAlert({open: true, message:"Votre demande pour rejoindre l'entreprise a été envoyé.", color: 'green'})
       handleOpen()
       handleReload()
     } catch {
-      alert("Error pour rejoindre l'entreprise");
+      setAlert({open: true, message:"Votre demande pour rejoindre l'entreprise a échoué.", color: 'red'})
     }
   };
   if (error) return <div>Error Fetching Companies</div>
@@ -68,8 +70,8 @@ export default function RejoinCompanyModal({ open, handleOpen, handleReload}: Pr
             <Typography variant="h3" className="text-marine-300 text-xl font-extrabold text-center">
               Veuillez renseigner le nom de l'entreprise que vous voulez rejoindre
             </Typography>
-            <div className="flex gap-2 mt-5">
-            <div>
+            <div className="gap-2 mt-5">
+            <div className='w-full'>
               <ReactSelect
                 options={companies}
                 components={animatedComponents}
@@ -88,7 +90,9 @@ export default function RejoinCompanyModal({ open, handleOpen, handleReload}: Pr
                 })}
               />
             </div>
-              <Button onClick={handleClick} size={"sm"} className={"bg-brick-300"}>Rejoindre</Button>
+            <div className='flex justify-center mt-5'>
+              <Button onClick={handleClick} size={"sm"} className={"bg-brick-300"}>Envoyer la demande</Button>
+              </div>
             </div>
           </CardBody>
         </Card>

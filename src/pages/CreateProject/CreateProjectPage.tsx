@@ -46,8 +46,9 @@ export default function CreateProjectPage() {
   });
 
   useEffect(() => {
-    async function getUsers() {
-      const result2 = await getAllCompanies();
+    const getUsers = async () =>  {
+      try {
+        const result2 = await getAllCompanies();
       const result = await getAllUsers();
       const nameArray:intSelects = result2.map(
         (element: intCompany) => ({ label: element.name, value: element.id })
@@ -59,12 +60,15 @@ export default function CreateProjectPage() {
         value: element.id,
       }));
       setUsers(emailArray);
+      } catch (error) {
+        console.log(error)
+      }
     }
     getUsers();
   }, []);
 
   const handleUsers = (value: intSelects) => {
-    const goodArray: any = value.map((element: intSelect) => (element.value));
+    const goodArray: any = value.map((element: intSelect) => ({id:element.value, email: element.label}));
     setForm({ ...form, members: goodArray });
   };
 

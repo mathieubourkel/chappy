@@ -17,7 +17,7 @@ import { addProjectStepToBDD } from "../../../services/api/steps";
 import SelectStatus from "../elements/Select/SelectStatus";
 import "./modal.css";
 import { formatDate } from "../../../services/utils/FormatDate";
-import { intStep } from "../../../services/interfaces/intStep";
+import { intCreateStep } from "../../../services/interfaces/intStep";
 import { FormEvent, InputEvent } from "../../../services/interfaces/generique.interface";
 
 type Props = {
@@ -29,7 +29,7 @@ export default function ProjectCreateStep({ setReload }: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const { idProject } = useParams();
-  const [form, setForm] = useState<intStep>({
+  const [form, setForm] = useState<intCreateStep>({
     _id: undefined,
     tasks: [],
     name: "",
@@ -37,7 +37,7 @@ export default function ProjectCreateStep({ setReload }: Props) {
     budget: 0,
     estimEndDate: formatDate(date),
     status: 0,
-    project: {_id:idProject},
+    project: idProject || "",
   });
 
   const handleChange = (e: InputEvent) => {
@@ -47,7 +47,7 @@ export default function ProjectCreateStep({ setReload }: Props) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
+    console.log(form)
     await addProjectStepToBDD(form);
     setReload(true);
   };

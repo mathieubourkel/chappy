@@ -39,7 +39,7 @@ export default function ProjectPage() {
       try {
       const result = await getProjectById(idProject ||"");
       setProject(result);
-      result.owner.toString() === idUser && setIsOwner(true); 
+      result.owner.id.toString() === idUser && setIsOwner(true); 
       } catch (_error) {
         setError(true)
       } finally {

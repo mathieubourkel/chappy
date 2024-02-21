@@ -24,7 +24,7 @@ import "./modal.css";
 import { formatDate } from "../../../services/utils/FormatDate";
 import { intStep } from "../../../services/interfaces/intStep";
 import { intTask } from "../../../services/interfaces/intTask";
-import { FormEvent, InputEvent } from "../../../services/interfaces/generique.interface";
+import { FormEvent, InputEvent, intSelect, intSelects } from "../../../services/interfaces/generique.interface";
 
 
 type Props = {
@@ -37,12 +37,10 @@ export default function StepCreateTask({
   step,
 }: Props) {
   const { idStep, idProject } = useParams();
-  const userName:string = localStorage.getItem("name") ||'';
   const animatedComponents = makeAnimated();
   const date = new Date()
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  console.log(userName, idStep)
   const [form, setForm] = useState<intTask>({
     name: "",
     description: "",
@@ -73,6 +71,7 @@ export default function StepCreateTask({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    //const userName:string = localStorage.getItem("name") ||'';
     // const tmpIdUsers:number[] = [];
     // step.project.members.map((user: any) => {
     //   tmpIdUsers.push(user.value);
@@ -111,11 +110,8 @@ export default function StepCreateTask({
     setForm({ ...form, category: value.value});
   };
 
-  const handleUsers = (value: Array<any>) => {
-    const goodArray: Array<{id:number}> = [];
-    value.map((element: any) => (
-      goodArray.push({id: element.value})
-    ));
+  const handleUsers = (value: intSelects) => {
+    const goodArray: any = value.map((element: intSelect) => ({id:element.value, email: element.label}));
     setForm({ ...form, members: goodArray });
   };
 

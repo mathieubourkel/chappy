@@ -59,7 +59,7 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
           >
             {step.name}
           </Typography>
-          <Breadcrumb step={step} idProject={step.project._id} nameProject={step.project.name} />
+          <Breadcrumb step={step} idProject={step.project._id ||""} nameProject={step.project.name} />
         </div>
 
       </div>

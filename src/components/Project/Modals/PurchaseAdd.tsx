@@ -31,7 +31,7 @@ export default function PurchaseAdd({ handleReload }: Props) {
   const [form, setForm] = useState<intPurchase>({
     description: "", price:{fullTaxPrice:0, devise:0},
     deliveryDate: formatDate(date), commandDate: formatDate(date),
-    status:0, refId: idProject || '', refModel:0, _id:''
+    status:0, refId: idProject || '', refModel:0
   });
 
   function handleChange(e: InputEvent) {

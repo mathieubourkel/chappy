@@ -4,7 +4,7 @@ import DashboardHeader from "../../components/Project/Dashboard/DashboardHeader"
 import DashboardProjects from "../../components/Project/Dashboard/DashboardProjects";
 import { Spinner } from "@material-tailwind/react";
 import {
-  getProjectsFromOwner,
+  getProjectsFromOwner, getProjectsFromUsers,
 } from "../../services/api/projects";
 import { intProjects } from "../../services/interfaces/intProject";
 
@@ -19,8 +19,8 @@ export default function DashboardPage() {
     const fetchProjects = async () => {
       try {
         const tmpProjects = await getProjectsFromOwner()
-        // const tmpCollabs = await getProjectsFromUsers()
-        setCollab(tmpProjects);
+        const tmpCollabs = await getProjectsFromUsers()
+        setCollab(tmpCollabs);
         setProject(tmpProjects);
       } catch (error) {
         setError(true)

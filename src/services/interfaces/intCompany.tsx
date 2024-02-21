@@ -1,15 +1,15 @@
-import { intUserLight } from "./intUser"
+import { intDemands, intUserLight } from "./intUser"
 
-export interface intCompany {
+export interface intCompany extends intLightCompany {
     name: string
-    siret: string,
     description: string,
+    additionalInfos?: string,
     user?: intUserLight
-    id?: number
+    demands?:intDemands
 }
 
 export interface intLightCompany {
-    id:number
+    id?:number
 }
 
 export type intCompanies = intCompany[]

@@ -42,7 +42,7 @@ export default function StepTasks({step, handleReload}:Props) {
             <TaskCard
               key={task._id}
               handleReload={handleReload}
-              allUsers={step.project.members}
+              allUsers={step.project.members ||[]}
               task={task}
             />
           ))}

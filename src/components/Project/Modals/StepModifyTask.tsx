@@ -23,7 +23,7 @@ const animatedComponents = makeAnimated();
 import './modal.css'
 import { CategoriesEnum } from "../../../services/enums/categories.enum";
 import { intTask } from "../../../services/interfaces/intTask";
-import { FormEvent, intSelects, InputEvent } from "../../../services/interfaces/generique.interface";
+import { FormEvent, intSelects, InputEvent, intSelect } from "../../../services/interfaces/generique.interface";
 import { enumStatus } from "../../../services/enums/status.enum";
 
 type Props = {
@@ -36,7 +36,6 @@ export default function StepModifyTask({ task, allUsers, handleReload }: Props) 
   const [form, setForm] = useState<intTask>(task);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -51,11 +50,8 @@ export default function StepModifyTask({ task, allUsers, handleReload }: Props) 
     setForm({ ...form, status: value.value });
   };
 
-  const handleDeleteUser = async (idUser:number, indexT:number) => {
-    await deleteUserToTaskToBDD(idUser, task._id ||'')
-    const tempUsers = [...task.members];
-    tempUsers.splice(indexT, 1);
-    setForm({ ...form, members: tempUsers });
+  const handleDeleteUser = async (idUser:number) => {
+    await deleteUserToTaskToBDD( task._id ||'', idUser)
     handleReload()
   }
 
@@ -65,12 +61,10 @@ export default function StepModifyTask({ task, allUsers, handleReload }: Props) 
     handleReload()
   };
 
-  const handleUsers = (value: Array<any>) => {
-    const goodArray: Array<{id:number}> = [];
-    value.map((element: any) => (
-      goodArray.push({id: element.value})
-    ));
-    setForm({ ...form, members: goodArray });
+  const handleUsers = (value: intSelects) => {
+    const goodArray:any = task.members
+    const newArr:any = value.map((element: intSelect) => ({id:element.value, email: element.label}));
+    setForm({ ...form, members: [...goodArray, ...newArr] });
   };
 
   return (
@@ -150,7 +144,7 @@ export default function StepModifyTask({ task, allUsers, handleReload }: Props) 
                       <Button>
                         {user.email}
                       </Button>
-                       <Button onClick={() => handleDeleteUser(user.id, indexT)}>
+                       <Button onClick={() => handleDeleteUser(user.id)}>
                             <FontAwesomeIcon
                                 icon={faXmark}
                                 size="sm"/>

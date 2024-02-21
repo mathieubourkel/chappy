@@ -1,5 +1,5 @@
 export interface intPurchase {
-    _id:string,
+    _id?:string,
     refId: string
     refModel: number
     description: string,

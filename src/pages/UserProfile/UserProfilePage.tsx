@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import {
+  Alert,
   Avatar,
   Button,
   IconButton,
@@ -12,14 +13,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import avatar from "../../assets/img/icon_user.png";
 import "./userProfile.css";
-import { getUserInfo, modifyUserToBDD, resetPwd } from "../../services/api/users";
+import { getUserInfo, modifyUserToBDD, quitCompany, resetPwd } from "../../services/api/users";
 import NotFoundPage from "../../services/utils/NotFoundPage";
 import AddCompanyModal from "../../components/Project/Modals/AddCompanyModal";
 import RejoinCompanyModal from "../../components/Project/Modals/RejoinCompanyModal";
 import ModifyCompanyModal from "../../components/Project/Modals/ModifyCompanyModal";
 import QuitCompanyModal from "../../components/Project/Modals/QuitCompanyModal";
 import { intProfileUser } from "../../services/interfaces/intUser";
-import { FormEvent, InputEvent } from "../../services/interfaces/generique.interface";
+import { FormEvent, InputEvent, intAlert } from "../../services/interfaces/generique.interface";
+import DeleteUser from "../../components/Project/Modals/DeleteUser";
 
 export default function UserProfilePage() {
   const [user, setUser] = useState<intProfileUser>({
@@ -34,29 +36,29 @@ export default function UserProfilePage() {
     phone: "",
     projects: [],
     participations: [],
-    company: {name:'', siret: "", description:'', id:0},
-    myCompany: {name:'', siret:'', description:'', id:0},
-    myOwnTasks: []
+    myOwnGroups: [{name:'', additionalInfos:'', description:'', id:0, demands:[]}],
+    myOwnTasks: [],
+    demands: []
   });
-  const idUser = localStorage.getItem("id");
+  const idUser:string = localStorage.getItem("id") ||'';
   const [displayPwd, setDisplayPwd] = useState<boolean>(false);
   const [busy, setBusy] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
-  const [reload, setReload] = useState(false);
+  const [reload, setReload] = useState<boolean>(false);
+  const [alert, setAlert] = useState<intAlert>({open: false, message:'', color:'green'})
   const [passwords, setPasswords] = useState<{oldPwd:string, newPwd:string}>({
     oldPwd: "", newPwd:""
   })
-
-  const handleReload = () => setReload((bool) => !bool);
-  const [openRejoin, setOpenRejoin] = useState(false);
-  const handleOpenRejoin = () => setOpenRejoin((bool) => !bool);
-  const [openAdd, setOpenAdd] = useState(false);
-  const handleOpenAdd = () => setOpenAdd((bool) => !bool);
-  const [openModify, setOpenModify] = useState(false);
-  const handleOpenModify = () => setOpenModify((bool) => !bool);
-  const [openQuit, setOpenQuit] = useState(false);
+  const [openRejoin, setOpenRejoin] = useState<boolean>(false);
+  const [openAdd, setOpenAdd] = useState<boolean>(false);
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
+  const [openQuit, setOpenQuit] = useState<boolean>(false);
   const handleOpenQuit = () => setOpenQuit((bool) => !bool);
-
+  const handleReload = () => setReload((bool) => !bool);
+  const handleOpenRejoin = () => setOpenRejoin((bool) => !bool);
+  const handleOpenAdd = () => setOpenAdd((bool) => !bool);
+  const handleOpenDelete = () => setOpenDelete((bool) => !bool);
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -81,26 +83,31 @@ export default function UserProfilePage() {
     setPasswords({ ...passwords, [name]: value });
   };
 
+  const handleCancelDemand = async (demandId:number) => {
+    await quitCompany(demandId);
+    handleReload()
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
       await modifyUserToBDD(user);
-      alert("Les modifications ont été enregistré");
+      setAlert({open: true, message:"Les modifications ont bien été enregistrés.", color: 'green'})
     } catch (error) {
-      alert(error);
+      setAlert({open: true, message:"Erreur lors de l'envoie des modifications", color: 'red'})
     } 
   };
 
   const handlePassword = () => setDisplayPwd(!displayPwd);
 
-  const sendPwd = async (e: any) => {
+  const sendPwd = async (e: FormEvent) => {
     e.preventDefault();
     try {
       await resetPwd(passwords);
-      alert("Votre mot de passe a bien été mis à jour");
+      setAlert({open: true, message:'Le mot de passe a été mise à jour', color: 'green'})
       setDisplayPwd(false);
     } catch (error) {
-      alert("Erreur lors de la réinitialisation du mot de passe");
+      setAlert({open: true, message:'Erreur lors de la réinitialisation du mot de passe', color: 'red'})
     }
   };
 
@@ -128,6 +135,8 @@ export default function UserProfilePage() {
       <section
         className={"flex flex-col justify-center items-center gap-5 mt-10"}
       >
+        
+        
         <Typography variant="h1" className={"font-bold"}>
           Profil
         </Typography>
@@ -139,6 +148,9 @@ export default function UserProfilePage() {
           </div>
         </div>
       </section>
+      <Alert color={alert.color} className='m-1 sticky top-0 my-10' open={alert.open} onClose={() => setAlert({...alert, open:false})}>
+            {alert.message}
+          </Alert>
       <section className={"mt-5 lg:w-[55lvw] m-auto"}>
         <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
           <article>
@@ -206,6 +218,7 @@ export default function UserProfilePage() {
                 </Button>
               </div>
             )}
+            
           </article>
 
           <article>
@@ -221,124 +234,6 @@ export default function UserProfilePage() {
             </div>
             <div className={"!bg-light-100"}>{renderInput("Téléphone", "phone")}</div>
           </article>
-          </form>
-          </section>
-          <section className={"mt-5 lg:w-[55lvw] m-auto"}>
-          <article>
-            <div className="flex items-center justify-between">
-              <Typography
-                variant="h2"
-                className={"text-xl font-extrabold my-10"}
-              >
-                Accès professionnel
-              </Typography>
-              <div className="md:flex gap-3">
-              {user.myCompany && <Button size={"sm"} onClick={handleOpenModify}>Modifier mon entreprise</Button>}
-                {!user.myCompany && <Button size={"sm"} onClick={handleOpenAdd}>Ajouter une entreprise</Button>}
-                {user.company && <Button size={"sm"} onClick={handleOpenQuit}>Quitter mon entreprise</Button>}
-                {!user.company && <Button size={"sm"} onClick={handleOpenRejoin}>Rejoindre une entreprise</Button>}
-                {openRejoin && <RejoinCompanyModal open={openRejoin} handleOpen={handleOpenRejoin} handleReload={handleReload}/> }
-                {openAdd && <AddCompanyModal open={openAdd} handleOpen={handleOpenAdd} handleReload={handleReload}/> }
-                {openModify && <ModifyCompanyModal user={user} open={openModify} handleOpen={handleOpenModify} handleReload={handleReload} /> }
-                {openQuit && <QuitCompanyModal open={openQuit} handleOpen={handleOpenQuit} handleReload={handleReload}/> }
-              </div>
-            </div>
-
-            <div className="mb-5">
-              {/* Besoin d'ajouter des modals pour ajouter et rejoindre */}
-
-              {user.myCompany && (
-          <div className={"mb-5 w-full !bg-light-100"}>
-                <Input
-                  label="Mon entreprise"
-                  className={"bg-light-100"}
-                  crossOrigin={undefined}
-                  name="owner"
-                  id="owner"
-                  value={user.myCompany.name}
-                />
-                </div>
-              )}
-
-              {/* {user.companies.length != 0 && (
-                <ul className="flex">
-                  {user.companies.map((_company, index) => (
-                    <li key={index} className="mt-5">
-                      <Input
-                        label="Salarié de l'entreprise"
-                        className={"bg-light-100"}
-                        crossOrigin={undefined}
-                        name="member"
-                        id={`member ${index}`}
-                        defaultValue={user.companies[index].name}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              )} */}
-              {!user.myCompany && 
-                <div>
-                  <p>Vous ne gérez pas d'entreprise</p>
-                </div>
-              }
-            </div>
-            <div className="mb-5">
-              {/* Besoin d'ajouter des modals pour ajouter et rejoindre */}
-
-              {user.company && (
-              <div className={"mb-5 w-full !bg-light-100"}>
-                <Input
-                  label="Entreprise dont je suis salarié"
-                  className={"!bg-light-100"}
-                  crossOrigin={undefined}
-                  name="company"
-                  id="company"
-                  value={user.company.name}
-                />
-                </div>
-              )}
-
-              {/* {user.companies.length != 0 && (
-                <ul className="flex">
-                  {user.companies.map((_company, index) => (
-                    <li key={index} className="mt-5">
-                      <Input
-                        label="Salarié de l'entreprise"
-                        className={"bg-light-100"}
-                        crossOrigin={undefined}
-                        name="member"
-                        id={`member ${index}`}
-                        defaultValue={user.companies[index].name}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              )} */}
-              {!user.company && 
-                <div>
-                  <p>Vous n'êtes dans aucune entreprise</p>
-                </div>
-              }
-            </div>
-          </article>
-
-          <article>
-            <Typography variant="h2" className={"text-xl font-extrabold"}>
-              Supprimer son compte
-            </Typography>
-            <div className={"flex justify-center mt-10"}>
-              <a href="#buttons-with-link">
-                <Button
-                  variant="outlined"
-                  size={"sm"}
-                  className={"!border !border-marine-300 !text-marine-300"}
-                >
-                  Supprimer mon compte
-                </Button>
-              </a>
-            </div>
-          </article>
-          </section>
           <div className={"flex justify-center my-10"}>
             <a href="#buttons-with-link">
               <Button className={"bg-brick-400"}
@@ -352,8 +247,116 @@ export default function UserProfilePage() {
               </Button>
             </a>
           </div>
-       
-      
+          </form>
+          </section>
+          <section className={"mt-5 lg:w-[55lvw] m-auto"}>
+          <article>
+            <div className="flex items-center justify-between">
+              <Typography
+                variant="h2"
+                className={"text-xl font-extrabold my-10"}
+              >
+                Mes entreprises
+              </Typography>
+              <div className="md:flex gap-3">
+                <Button size={"sm"} onClick={handleOpenAdd}>Ajouter une entreprise</Button>
+                {openAdd && <AddCompanyModal setAlert={setAlert} open={openAdd} handleOpen={handleOpenAdd} handleReload={handleReload}/> }
+
+              </div>
+            </div>
+
+            <div className="mb-5">
+              {user.myOwnGroups.length > 0 && user.myOwnGroups.map((group) => (
+                <div key={group.id} className={"mb-5 w-full flex gap-5 items-center"}>
+                <Input
+                  label="Mon entreprise"
+                  className={"!bg-light-100"}
+                  crossOrigin={undefined}
+                  name="owner"
+                  id={`owner${group.id?.toString()}`}
+                  readOnly
+                  value={group.name}
+                />
+               <ModifyCompanyModal setAlert={setAlert} group={group} handleReload={handleReload} /> 
+                </div>
+                ))
+              }
+              {user.myOwnGroups.length == 0  && 
+                <div>
+                  <p>Vous ne gérez pas d'entreprise</p>
+                </div>
+              }
+            </div>
+            
+          </article>
+          <article>
+          <div className="flex items-center justify-between">
+              <Typography
+                variant="h2"
+                className={"text-xl font-extrabold my-10"}
+              >
+                Salarié
+              </Typography>
+              <div className="md:flex gap-3">
+              
+                <Button size={"sm"} onClick={handleOpenRejoin}>Rejoindre une entreprise</Button>
+                {openRejoin && <RejoinCompanyModal setAlert={setAlert} open={openRejoin} handleOpen={handleOpenRejoin} handleReload={handleReload}/> }
+                </div>
+                </div>
+                <div className="mb-5">
+              {user.demands && user.demands.map((demand) => (
+                <div key={demand.id}>
+                  {demand.status == 1 ? 
+                    <div className={"mb-5 w-full flex gap-5 items-center"}>
+                      <Input
+                        label="Entreprise dont je suis salarié"
+                        className={"!bg-light-100"}
+                        crossOrigin={undefined}
+                        name="company"
+                        id={`companyto${demand.id?.toString()}`}
+                        readOnly
+                        value={demand.group.name}
+                      />
+                    <Button size={"sm"} onClick={handleOpenQuit}>Quitter mon entreprise</Button>
+                    <QuitCompanyModal idDemand={demand.id || 0} setAlert={setAlert} open={openQuit} handleOpen={handleOpenQuit} handleReload={handleReload}/>
+                      </div> : 
+                      <div className={"mb-5 w-full flex gap-5 items-center"}>
+                       <Input
+                        label="Demande en attente"
+                        crossOrigin={undefined}
+                        name="company"
+                        id={`company${demand.id?.toString()}`}
+                        readOnly
+                        value={demand.group.name}
+                      />
+                    <Button size={"sm"} onClick={() => handleCancelDemand(demand.id ||0)}>Annuler la demande</Button>
+                        </div>}
+                      </div>
+                      )) }
+              {user.demands.length == 0 && 
+                <div>
+                  <p>Vous n'êtes dans aucune entreprise</p>
+                </div>
+              }
+            </div>
+          </article>
+
+          <article className='mt-10'>
+            <div className={"flex justify-center my-10"}>
+              <a href="#buttons-with-link">
+                <Button
+                onClick={() => handleOpenDelete()}
+                  variant="outlined"
+                  size={"sm"}
+                  className={"!border !border-marine-300 !text-marine-300"}
+                >
+                  Supprimer mon compte
+                </Button>
+                <DeleteUser open={openDelete} handleOpen={handleOpenDelete}/>
+              </a>
+            </div>
+          </article>
+          </section>
       </>
       )}
     </main>

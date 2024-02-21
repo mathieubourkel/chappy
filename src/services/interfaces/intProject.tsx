@@ -7,7 +7,7 @@ export interface intProjectLight {
     name?:string
     owner?: intUserLight
     code?:string
-    members?: intUserLight[]
+    members?: []
   }
 
 export interface intProject extends intProjectLight {

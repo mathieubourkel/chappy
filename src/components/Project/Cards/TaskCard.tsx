@@ -21,14 +21,13 @@ import {
 } from "../../../services/api/tasks";
 
 import { CategoriesEnum } from "../../../services/enums/categories.enum";
-import { intSelects } from "../../../services/interfaces/generique.interface";
 import { enumStatus } from "../../../services/enums/status.enum";
 import { intTask } from "../../../services/interfaces/intTask";
 import {  intUserLight } from "../../../services/interfaces/intUser";
 
 type Props = {
   handleReload: () => void;
-  allUsers: intSelects;
+  allUsers: []
   task: intTask
 };
 
@@ -38,14 +37,11 @@ export default function TaskCard({ handleReload, allUsers, task }: Props) {
   const handleOpenM = () => setOpenM((bool) => !bool);
   if (!task.members ||task.members.length == 0) task.members = []
   let isOwner = false;
-  if (task.owner == userId || task.members.find((member:{id: number}) => member.id == +userId)) isOwner = true;
+  if (task.owner && task.owner.id == +userId) isOwner = true
 
 
-  const handleDelete = async (indexT: number) => {
-    const tempUsers = [...task.members];
-    tempUsers.splice(indexT, 1);
-    const tempTask = { ...task, members: tempUsers };
-    await deleteUserToTaskToBDD(task.members[indexT].id, task._id);
+  const handleDelete = async (userId: number) => {
+    await deleteUserToTaskToBDD( task._id ||'', userId || 0);
     handleReload()
   };
 
@@ -53,10 +49,6 @@ export default function TaskCard({ handleReload, allUsers, task }: Props) {
     await deleteTaskFromBDD(task._id ||'');
     handleReload();
   };
-
-  const handleReloadTask = () => {
-    console.log("reload task")
-  }
 
   const handleStatus = async (values: any) => {
     const data = { ...task, status: values.value };
@@ -86,7 +78,7 @@ export default function TaskCard({ handleReload, allUsers, task }: Props) {
             />
           </form>
           <div className="flex gap-x-2">
-            <StepModifyTask task={task} handleReload={handleReloadTask} allUsers={allUsers} />
+            <StepModifyTask task={task} handleReload={handleReload} allUsers={allUsers} />
             <DeleteButton handleDeleteBDD={handleDeleteTask} />
           </div>
         </div>
@@ -163,18 +155,18 @@ export default function TaskCard({ handleReload, allUsers, task }: Props) {
           className="pr-3 py-3 flex flex-wrap gap-x-2 justify-end"
           onClick={handleOpenM}
         >
-          {task.members && task.members.map((user: intUserLight, indexT: number) => (
+          {task.members && task.members.map((user: intUserLight) => (
             <ButtonGroup
               size={"sm"}
               className={"divide-light-100/50 mb-2"}
-              key={indexT}
+              key={user.id}
             >
               <Button className={!isOwner ? "rounded-r-lg" : undefined}>
                 {user.email}
               </Button>
 
               {isOwner && (
-                <Button onClick={() => handleDelete(indexT)}>
+                <Button onClick={() => handleDelete(user.id ||0)}>
                   <FontAwesomeIcon icon={faXmark} size="sm" />
                 </Button>
               )}

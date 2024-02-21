@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -6,6 +7,7 @@ import {
   Input,
   Typography,
   Card,
+  Alert,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +16,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { SelectionEnum } from "../../services/enums/selection.enum";
 import { useState } from "react";
 import { intRegister } from "../../services/interfaces/intAuth";
+import { intAlert } from "../../services/interfaces/generique.interface";
 
 export default function SignupPage() {
   const location = useLocation();
@@ -21,7 +24,7 @@ export default function SignupPage() {
     parseInt(location.hash.replace(/\D/g, ""), 10)
   );
   const navigate = useNavigate();
-
+  const [alert, setAlert] = useState<intAlert>({open: false, message:'', color:'green'})
   const validationGlobal = Yup.object({
     userInfos: Yup.object().shape({
       lastname: Yup.string()
@@ -71,7 +74,7 @@ export default function SignupPage() {
         },
         companyInfos: {
           name: "",
-          siret: "",
+          additionalInfos: "",
           description: "",
         },
       },
@@ -82,15 +85,17 @@ export default function SignupPage() {
       onSubmit: async (values) => {
         try {
           if (Object.keys(errors).length > 0) return;
-          if (selectedOption !== 0) {
+          if (values.companyInfos && values.companyInfos.name != '') {
             await addUserAndCompanyToBDD(values.userInfos, values.companyInfos);
           } else {
             await addUserToBDD(values.userInfos);
           }
-
-          navigate("/login");
-        } catch (error) {
-          console.error("Erreur lors de l'envoi du formulaire");
+          navigate("/login#created");
+        } catch (error:any) {
+          if (error.response.data.message.error === "USER-ALRDY-EXIST") {
+           setAlert({open: true, message:"L'adresse email renseignée existe déjà", color: 'red'})
+          }
+          console.error(error);
         }
       },
     }
@@ -98,6 +103,9 @@ export default function SignupPage() {
 
   return (
     <main className="sm:mx-20 mx-5 mt-10">
+      <Alert color={alert.color} className='m-1 sticky top-0 my-10' open={alert.open} onClose={() => setAlert({...alert, open:false})}>
+            {alert.message}
+          </Alert>
       <Typography variant="h1" className={"font-bold text-center"}>
         Créer son compte
       </Typography>
@@ -336,19 +344,15 @@ export default function SignupPage() {
                   <Input
                     label="SIRET"
                     type="text"
-                    name="companyInfos.siret"
-                    id="siret"
-                    value={
-                      values.companyInfos.siret !== null
-                        ? values.companyInfos.siret
-                        : ""
-                    }
+                    name="companyInfos.additionalInfos"
+                    id="additionalInfos"
+                    value={values.companyInfos.additionalInfos}
                     aria-required
                     onChange={handleChange}
                     crossOrigin={undefined}
                   />
                   {errors.companyInfos && (
-                    <small>{errors.companyInfos.siret}</small>
+                    <small>{errors.companyInfos.additionalInfos}</small>
                   )}
                   <Input
                     label="Décrire vos activités"

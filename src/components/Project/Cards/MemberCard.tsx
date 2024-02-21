@@ -38,12 +38,12 @@ export default function MemberCard({ member, handleReload, idProject }: Props) {
                     className={"border border-brick-300 shadow-xl shadow-brick-300/20 ring-4 ring-brick-300"}
                     src={user}/>
 
-            {member.company?.name && <div className="border p-1 rounded-xl bg-light-200 m-2 text-sm text-marine-300 font-bold ml-5 uppercase">{member.company?.name}</div> }
+            {/* {member.company?.name && <div className="border p-1 rounded-xl bg-light-200 m-2 text-sm text-marine-300 font-bold ml-5 uppercase">{member.company?.name}</div> } */}
             <Typography
                 variant="h5"
                 className="ml-3 p-2 text-marine-300 font-extrabold"
             >
-              {member.firstname} {member.lastname}
+              {member.email}
             </Typography>
           </div>
 
