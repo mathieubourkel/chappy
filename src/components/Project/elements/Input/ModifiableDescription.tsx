@@ -51,6 +51,7 @@ export default function ModifiableDescription(props: Props) {
       ) : (
         <form className="flex w-full gap-2" onSubmit={handleSubmit}>
           <div className="flex w-full !bg-white">
+
             <Textarea
               variant="standard"
               className={"modifiableDescription !text-text-100 !outline-offset-0"}

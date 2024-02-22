@@ -17,6 +17,9 @@ import { addCommentReplyToBDD } from '../../../services/api/comments.ts';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { StatusCommentEnum } from '../../../services/enums/status.enum.ts';
+import {
+  editorConfiguration
+} from '../Comments/CK.tsx';
 
 type Props = {
   idComment: string | undefined;
@@ -44,8 +47,7 @@ export default function ReplyCreate({ idComment, handleReload }: Props) {
   const handleSubmit = async (e:FormEvent) => {
     e.preventDefault();
     console.log(form)
-    const tmpContent = form.content.replace(/^<p>(.*?)<\/p>$/, '$1');
-    await addCommentReplyToBDD({...form, content: tmpContent})
+    await addCommentReplyToBDD({...form, content: form.content})
     setForm({...form, content:""})
     handleReload();
   }
@@ -76,6 +78,7 @@ export default function ReplyCreate({ idComment, handleReload }: Props) {
 
               <CKEditor
                 editor={ClassicEditor}
+                config={ editorConfiguration }
                 data={form.content}
                 onChange={handleEditorChange}
               />

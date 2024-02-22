@@ -40,6 +40,6 @@ export async function modifyReplyToBDD(idResponse: string, data:intReplyComment)
   return handleApiCall(async () => await api.patch(`${RESPONSE_ENDPOINT}/${idResponse}`, data));
 }
 
-export async function deleteReplyFromBDD(idResponse: string) {
+export async function deleteReplyFromBDD(idResponse: string | undefined) {
   return handleApiCall(async () => await api.delete(`${RESPONSE_ENDPOINT}/${idResponse}`));
 }

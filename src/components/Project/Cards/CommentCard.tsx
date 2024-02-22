@@ -8,6 +8,7 @@ import { deleteCommentFromBDD } from '../../../services/api/comments.ts';
 import CommentModify from '../Modals/CommentModify.tsx';
 import ReplyCreate from '../Modals/ReplyCreate.tsx';
 import ReplyCard from './ReplyCard.tsx';
+import parse from 'html-react-parser';
 
 type Props = {
   handleReload: () => void;
@@ -59,12 +60,13 @@ export default function CommentCard({ comment, handleReload }: Props) {
             )}
           </div>
         </div>
-        <div style={CommentStyle}
-        >{comment.content}</div>
+        <div style={CommentStyle} >
+          {parse(`${comment.content}`)}
+        </div>
       </CardBody>
     </Card>
 
-    <ReplyCard idComment={comment._id} />
+    <ReplyCard idComment={comment._id} handleReload={handleReload} />
     </>
   );
 }
