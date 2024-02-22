@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBan,
+  faBan, faChevronLeft, faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import {
-  Alert,
+  Alert, IconButton,
 } from "@material-tailwind/react";
 import DashboardCollabStepCard from "../Cards/DashboardCollabStepCard.tsx";
 import {
@@ -21,10 +21,22 @@ type Props = {
 };
 
 export default function DashboardCollab({ collabs, setReload }: Props) {
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(collabs[0]);
 
-  function handleClick(index: number) {
-    setSelected(index);
+  const handleClick = (collab:intProject) => {
+    setSelected(collab);
+  }
+
+  const [collabsDisplay, setCollabsDisplay] = useState(collabs.slice(0,5))
+  const [current, setCurrent] = useState(0)
+  const nextOrBefore = (next: boolean) => {
+    if (next) {
+      setCurrent(Math.min(current +5, collabs.length))
+      setCollabsDisplay(collabs.slice(current, Math.min(current +5, collabs.length)))
+    } else {
+      setCurrent(Math.max(0, current -5))
+      setCollabsDisplay(collabs.slice(Math.max(0, current -5), current))
+    }
   }
 
   const [openD, setOpenD] = useState(false);
@@ -38,31 +50,35 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
       {collabs.length > 0 ? (
         <article>
           <nav className="flex">
+          
             <div className="ml-20 lg:flex justify-center basis-3/4">
-              {collabs.map((collab: intProject, index: number) => (
+            {current > 0 && <IconButton className='mx-10' onClick={() => nextOrBefore(false)}><FontAwesomeIcon icon={faChevronLeft} /></IconButton>}
+              {collabsDisplay.map((collab: intProject) => (
                 <button
-                  key={index}
-                  onClick={() => handleClick(index)}
+                key={collab._id}
+                onClick={() => handleClick(collab)}
                   className={
                     "px-10 rounded-none border-0 border-b-2 border-b-marine-100 " +
-                    (index === selected && "border-b-marine-300 font-extrabold")
+                    (collab._id === selected._id && "border-b-marine-300 font-extrabold")
                   }
                 >
                   {collab.name}
                 </button>
               ))}
+              {current != collabs.length && <IconButton className='mx-10' onClick={() => nextOrBefore(true)}><FontAwesomeIcon icon={faChevronRight} /></IconButton>}
             </div>
+            
             <div className="flex basis-1/4 justify-end items-center gap-2">
-              <MenuCollab handleOpenD={handleOpenD} see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} setReload={setReload} idProject={collabs[selected]._id ||""} menu />
+              <MenuCollab handleOpenD={handleOpenD} see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} setReload={setReload} idProject={selected._id ||""} menu />
             </div>
           </nav>
 
           <div className="mt-5 flex gap-5 flex-wrap justify-center">
-            {collabs[selected].steps.map((step: intStep) => (
+            {selected.steps.map((step: intStep) => (
               <DashboardCollabStepCard
                 step={step}
                 key={step._id}
-                collab={collabs[selected]}
+                collab={selected}
               />
             ))}
           </div>

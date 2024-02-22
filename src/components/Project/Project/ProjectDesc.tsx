@@ -64,7 +64,7 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
                   className={"w-full bg-marine-100/10 text-marine-300"}
                 />
               </div>
-              <Typography type={"p"} className={"pt-3"}>
+              <Typography type={"p"} className={"truncate pt-3"}>
                 {project.description}
               </Typography>
             </CardBody>

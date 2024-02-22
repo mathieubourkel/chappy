@@ -1,7 +1,7 @@
 
 import StepCard from "../Cards/StepCard";
 import {
-  faBan, faCircleExclamation
+  faBan, faChevronLeft, faChevronRight, faCircleExclamation
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import CreateButton from "../elements/Buttons/CreateButton";
 import OpenButton from "../elements/Buttons/OpenButton";
 import {Link} from "react-router-dom";
 import {
-  Alert, Typography
+  Alert, IconButton, Typography
 } from "@material-tailwind/react";
 import { intProject, intProjects } from "../../../services/interfaces/intProject";
 import { intStep } from "../../../services/interfaces/intStep";
@@ -19,12 +19,23 @@ type Props = {
 };
 
 export default function DashboardProjects({ projects }: Props) {
-  const [selected, setSelected] = useState<number>(0);
-
-  const handleClick = (index: number) => {
-    setSelected(index);
+  const [selected, setSelected] = useState(projects[0]);
+  const handleClick = (project:intProject) => {
+    setSelected(project);
   }
-
+  console.log(projects)
+  const [projectsDisplay, setProjectsDisplay] = useState(projects.slice(0,5))
+  const [current, setCurrent] = useState(0)
+  const nextOrBefore = (next: boolean) => {
+    if (next) {
+      setCurrent(Math.min(current +5, projects.length))
+      setProjectsDisplay(projects.slice(current, Math.min(current +5, projects.length)))
+    } else {
+      setCurrent(Math.max(0, current -5))
+      setProjectsDisplay(projects.slice(Math.max(0, current -5), current))
+    }
+  }
+  
   return (
     <section className="md:mt-5 mt-10 mb-28">
         <h2>Mes projets</h2>
@@ -32,21 +43,25 @@ export default function DashboardProjects({ projects }: Props) {
       {projects.length > 0 ? (
         <article>
           <nav className="md:flex md:mb-3">
+          
             <div className="ml-20 mb-3 md:flex justify-center basis-3/4 ">
-              {projects.map((project: intProject, index: number) => (
+            {current > 0 && <IconButton className='bg-brick-300 mx-10' onClick={() => nextOrBefore(false)}><FontAwesomeIcon icon={faChevronLeft} /></IconButton>}
+              {projectsDisplay.map((project: intProject) => (
                 <button
-                  key={index}
-                  onClick={() => handleClick(index)}
+                  key={project._id}
+                  onClick={() => handleClick(project)}
                   className={
                     "text-brick-300 px-10 rounded-none border-0 border-b-2 border-b-brick-200 " +
-                    (index === selected && "border-b-brick-300 font-extrabold")}
+                    (project._id === selected._id && "border-b-brick-300 font-extrabold")}
                     >
                   {project.name}
                 </button>
               ))}
+              {current != projects.length && <IconButton className='bg-brick-300 mx-10' onClick={() => nextOrBefore(true)}><FontAwesomeIcon icon={faChevronRight} /></IconButton>}
             </div>
+            
             <div className="flex md:justify-end justify-center basis-1/4 gap-5">
-              <Link to={"/project/" + projects[selected]._id}>
+              <Link to={"/project/" + selected._id}>
                 <OpenButton value="Ouvrir le projet" />
               </Link>
               <Link to="/create-project">
@@ -55,14 +70,14 @@ export default function DashboardProjects({ projects }: Props) {
             </div>
           </nav>
           <div className="flex flex-wrap gap-5 justify-center">
-            {projects[selected].steps.map((step: intStep) => (
+            {selected.steps.map((step: intStep) => (
               <StepCard
                 step={step}
                 key={step._id}
-                idProject={projects[selected]._id}
+                idProject={selected._id}
               />
             ))}
-            {projects[selected].steps.length == 0 &&
+            {selected.steps.length == 0 &&
                 <Alert
                 icon={<FontAwesomeIcon icon={faCircleExclamation} className={"text-brick-400 text-xl"}/>}
                 className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5"
@@ -73,7 +88,7 @@ export default function DashboardProjects({ projects }: Props) {
                     variant="paragraph"
                     className={"inline-block font-semibold text-brick-400 hover:text-marine-300 underline underline-offset-4 decoration-marine-300 hover:decoration-brick-300 cursor-pointer ml-1"}
                 >
-                  <Link to={"/project/" + projects[selected]._id}>
+                  <Link to={"/project/" + selected._id}>
                      créer votre premier jalon.
                   </Link>
                 </Typography>
