@@ -1,19 +1,13 @@
 export interface ServerToClientEvents {
-    notif: (e: Message) => void;
+    notifToClient: (e: string) => void;
   }
   
   // Interface for when clients emit events to the server.
   export interface ClientToServerEvents {
-    notif: (e: Message) => void;
+    notifFromClient: (e: Message) => void;
   }
 
-  export interface User {
-    userId: string;
-    userName: string;
-  }
-  
   export interface Message {
-    user: User;
-    timeSent: string;
+    users: string | string[]
     message: string;
   }

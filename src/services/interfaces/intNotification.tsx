@@ -1,10 +1,10 @@
 export interface intNotification {
-    _id: string
+    _id?: string
+    model: {refModel:number, refId: string}
+    message: string
+    status: number
+    createdAt?: Date
     content: string
-    receivers: number[]
-    isView:boolean
-    sendDate: string
-    path: string
 }
 
 export type intNotifications = intNotification[]
