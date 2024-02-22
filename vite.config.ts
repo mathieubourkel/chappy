@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: +process.env.FRONT_PORT
-  },
+  }
   //   https: {
   //     key: './certs/private-key.pem',
   //     cert: './certs/certificate.pem',

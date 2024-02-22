@@ -12,8 +12,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import './modal.css'
 import { FormEvent } from "../../../services/interfaces/generique.interface";
-import { intComment } from '../../../services/interfaces/intComment.tsx';
-import { modifyCommentToBDD } from '../../../services/api/comments.ts';
+import { intReplyComment, } from '../../../services/interfaces/intComment.tsx';
+import { modifyReplyToBDD, } from '../../../services/api/comments.ts';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {
@@ -21,23 +21,24 @@ import {
 } from '../Comments/CK.tsx';
 
 type Props = {
-  comment: intComment;
+  reply: intReplyComment;
   handleReload: () => void;
 };
 
-export default function CommentModify({ comment, handleReload }: Props) {
-  const [form, setForm] = useState<intComment>(comment);
+export default function ReplyModify({ reply, handleReload }: Props) {
+  const [form, setForm] = useState<intReplyComment>(reply);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 
   const handleEditorChange = (_event: any, editor: any) => {
     const content = editor.getData();
     setForm({ ...form, content });
+
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await modifyCommentToBDD(comment._id || '', {...form, content: form.content});
+    await modifyReplyToBDD(reply._id || '', {...form, content: form.content});
     handleReload()
   };
 
@@ -65,7 +66,7 @@ export default function CommentModify({ comment, handleReload }: Props) {
           <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <CardBody className="flex flex-col gap-4">
               <Typography variant="h3" className={"text-marine-300 text-xl font-extrabold text-center mb-5"}>
-                Modifier le commentaire
+                Modifier la réponse au commentaire
               </Typography>
 
               <CKEditor

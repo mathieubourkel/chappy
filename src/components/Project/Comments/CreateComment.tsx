@@ -5,10 +5,12 @@ import { FormEvent, useState } from 'react';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { addCommentToBDD } from '../../../services/api/comments';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { StatusCommentEnum } from '../../../services/enums/status.enum.ts';
 import { RefCommentEnum } from '../../../services/enums/comment.ref.enum.ts';
 import { intComment } from '../../../services/interfaces/intComment.tsx';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { editorConfiguration } from './CK.tsx';
+
 
 type Props = {
   table:RefCommentEnum,
@@ -34,8 +36,7 @@ const handleEditorChange = (_event: any, editor: any) => {
 
 const handleSubmit = async (e:FormEvent) => {
   e.preventDefault();
-  const tmpContent = form.content.replace(/^<p>(.*?)<\/p>$/, '$1');
-  await addCommentToBDD({...form, content: tmpContent})
+  await addCommentToBDD({...form, content: form.content})
   setForm({...form, content:""})
   handleReload();
 }
@@ -53,9 +54,12 @@ const handleDelete = async () => {
                   e)}>
 
                 <CKEditor
-                    editor={ClassicEditor}
+                    editor={ ClassicEditor }
+                    config={ editorConfiguration }
                     data={form.content}
                     onChange={handleEditorChange}
+
+
                 />
 
               <div

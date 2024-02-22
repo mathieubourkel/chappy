@@ -127,6 +127,7 @@ export default function CreateProjectPage() {
                 />
               </div>
             </div>
+
             <Textarea
               label="Description du projet"
               className={"!bg-light-100 border-select placeholder:!text-text-100"}

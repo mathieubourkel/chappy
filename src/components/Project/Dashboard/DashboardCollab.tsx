@@ -74,7 +74,7 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
           </nav>
 
           <Alert
-              icon={<FontAwesomeIcon icon={faBan} className={"text-marine-300 text-xl"}/>}
+              icon={<FontAwesomeIcon icon={faBan} className={"text-brick-300 text-xl"}/>}
               className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5"
           >
             Aucun projet rejoint.
