@@ -16,6 +16,7 @@ import { intProject } from "../../services/interfaces/intProject";
 import { FormEvent, InputEvent, intSelect, intSelects } from "../../services/interfaces/generique.interface";
 import { intCompany } from "../../services/interfaces/intCompany";
 import { intUser } from "../../services/interfaces/intUser";
+import { sendMessage } from "../../services/utils/WebSocket";
 
 
 const animatedComponents = makeAnimated();
@@ -92,6 +93,12 @@ export default function CreateProjectPage() {
       .validate(form)
       .then(async () => {
         await addProjectToBDD(form);
+        const tmpArray:any = []
+        form.members?.map((member:any) => {
+          tmpArray.push(member.id.toString())
+        })
+
+        sendMessage(`Vous avez été invité à rejoindre le projet ${form.name}`, tmpArray) 
         navigate("/dashboard");
       })
       .catch((validationError) => {

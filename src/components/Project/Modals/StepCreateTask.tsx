@@ -10,7 +10,6 @@ import {
   Input,
   Textarea,
 } from "@material-tailwind/react";
-
 import Datepicker from "react-tailwindcss-datepicker";
 import { addTaskToStepToBDD } from "../../../services/api/tasks";
 import { useParams } from "react-router-dom";
@@ -25,7 +24,7 @@ import { formatDate } from "../../../services/utils/FormatDate";
 import { intStep } from "../../../services/interfaces/intStep";
 import { intTask } from "../../../services/interfaces/intTask";
 import { FormEvent, InputEvent, intSelect, intSelects } from "../../../services/interfaces/generique.interface";
-
+import { sendMessage } from "../../../services/utils/WebSocket";
 
 type Props = {
   handleReload: () => void;
@@ -71,27 +70,16 @@ export default function StepCreateTask({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    //const userName:string = localStorage.getItem("name") ||'';
-    // const tmpIdUsers:number[] = [];
-    // step.project.members.map((user: any) => {
-    //   tmpIdUsers.push(user.value);
-    // });
-    
-    // const notif = {
-    //   content: `${userName} a créé la tâche ${form.name} dans ${step.name} sur le projet ${step.project.name}`,
-    //   receivers: tmpIdUsers,
-    //   sendDate: date.toISOString(),
-    //   path: `/project/${idProject}/step/${idStep}`,
-    //   id:0,
-    //   isView:false
-    // };
-
     taskSchema
       .validate(form)
       .then(async (validForm:any) => {
         await addTaskToStepToBDD(validForm);
-        // await addNotificationToBDD(notif);
-        // sendMessage(notif.content)
+        const tmpArray:any = []
+        validForm.members.map((member:any) => {
+          tmpArray.push(member.id.toString())
+        })
+
+        sendMessage(`Vous avez été invité sur la tâche ${validForm.name}`, tmpArray) 
         handleOpen();
         handleReload();
       })
@@ -109,7 +97,6 @@ export default function StepCreateTask({
   const handleCategory = (value: any) => {
     setForm({ ...form, category: value.value});
   };
-
   const handleUsers = (value: intSelects) => {
     const goodArray: any = value.map((element: intSelect) => ({id:element.value, email: element.label}));
     setForm({ ...form, members: goodArray });

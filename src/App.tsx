@@ -41,17 +41,18 @@ export default function App() {
 
     useEffect(() => {
       socket.on('connect', () => {
-        console.log("connected")
+        console.log("Connected...")
       });
   
       socket.on('disconnect', () => {
-        console.log("disconnected")
+        console.log("You have been disconnected")
       });
   
-      socket.on('notif', (e) => {
-        setPopUp((prevPopups) => [...prevPopups, e.message])
+      socket.on('notifToClient', (e) => {
+        console.log(e)
+        setPopUp((prevPopups) => [...prevPopups, e])
         setTimeout(() => {
-          removePopup(e.message);
+          removePopup(e);
         }, 10000);
       });
 
@@ -62,7 +63,7 @@ export default function App() {
       return () => {
         socket.off('connect');
         socket.off('disconnect');
-        socket.off('notif');
+        socket.off('notifToClient');
       };
     }, []);
 
