@@ -3,7 +3,7 @@ export interface intNotification {
     model: {refModel:number, refId: string}
     message: string
     status: number
-    createdAt?: Date
+    createdAt: string
     content: string
 }
 

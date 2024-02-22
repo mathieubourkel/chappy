@@ -13,8 +13,8 @@ export async function addNotificationToBDD(data: intNotification) {
     return handleApiCall(async () => await api.post(LOG_ENDPOINT, data));
   }
 
-  export async function viewNotificationToBDD(idNotification:string, isView:boolean) {
-    return handleApiCall(async() => await api.put(`${LOG_ENDPOINT}/${idNotification}`, {isView}));
+  export async function viewNotificationToBDD(idNotification:string) {
+    return handleApiCall(async() => await api.get(`${LOG_ENDPOINT}/notif/view/${idNotification}`));
   }
   
   export async function deleteNotificationFromBDD(idNotification: string) {
