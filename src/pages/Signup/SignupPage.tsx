@@ -212,7 +212,7 @@ export default function SignupPage() {
                     </small>
                   )}
                 </div>
-                <div className="w-full">
+                <div className="w-full mb-5">
                   <Input
                     label="Ville"
                     type="text"
