@@ -33,8 +33,8 @@ export default function DocumentsPage() {
       try {
         const tmpProj = await getProjectById(idProject ||"")
         const result = await getDocumentsByProject(idProject ||"")
-        setDocument(result)
-        setProject(tmpProj)
+        setDocument(result.data)
+        setProject(tmpProj.data)
       } catch (error) {
         setError(true)
       } finally {

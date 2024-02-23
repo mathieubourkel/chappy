@@ -62,8 +62,8 @@ export default function UserProfilePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await getUserInfo();
-        setUser(result);
+        const {data} = await getUserInfo();
+        setUser(data);
       } catch (error) {
         setError(true)
       } finally {

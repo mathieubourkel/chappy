@@ -29,8 +29,8 @@ export default function MembersPage() {
   useEffect(() => {
     async function getMembers() {
       try {
-        const result = await getProjectById(idProject ||"");
-        setProject(result);
+        const {data} = await getProjectById(idProject ||"");
+        setProject(data);
       } catch (e) {
         setError(true)
       } finally {

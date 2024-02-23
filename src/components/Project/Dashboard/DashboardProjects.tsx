@@ -23,7 +23,6 @@ export default function DashboardProjects({ projects }: Props) {
   const handleClick = (project:intProject) => {
     setSelected(project);
   }
-  console.log(projects)
   const [projectsDisplay, setProjectsDisplay] = useState(projects.slice(0,5))
   const [current, setCurrent] = useState(0)
   const nextOrBefore = (next: boolean) => {

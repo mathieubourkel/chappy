@@ -31,8 +31,8 @@ export default function RejoinCompanyModal({ open, handleOpen, handleReload, set
   useEffect(() => {
     const getCompanies = async () => {
         try {
-            const result = await getAllCompanies()
-            const formatArray: intSelects = result.map(
+            const {data} = await getAllCompanies()
+            const formatArray: intSelects = data.map(
                 (element: intCompany) => ({ label: element.name, value: element.id })
               );
             setCompanies(formatArray)

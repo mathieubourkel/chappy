@@ -62,9 +62,9 @@ export default function CalendarProject({ className }: Props) {
   useEffect(() => {
     const getFetchData = async () => {
       try {
-        const dataOwner = await getTasksByProjectId( idProject ||'');
+        const {data} = await getTasksByProjectId( idProject ||'');
         const tmpTasks:any = []
-        dataOwner.map((task:any, index:number) => {
+        data.map((task:any, index:number) => {
               task.title = task.name
               task.jalons = index + 1
               tmpTasks.push(task)

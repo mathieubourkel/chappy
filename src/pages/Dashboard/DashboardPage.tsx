@@ -20,8 +20,8 @@ export default function DashboardPage() {
       try {
         const tmpProjects = await getProjectsFromOwner()
         const tmpCollabs = await getProjectsFromUsers()
-        setCollab(tmpCollabs);
-        setProject(tmpProjects);
+        setCollab(tmpCollabs.data);
+        setProject(tmpProjects.data);
       } catch (error) {
         setError(true)
       } finally {

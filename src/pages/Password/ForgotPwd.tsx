@@ -30,8 +30,8 @@ export default function ForgotPwd() {
       useEffect(() => {
         const getToken = async () => {
           try {
-          const result = await getEmailToken(emailToken ||'');
-          setToken(result)
+          const {data} = await getEmailToken(emailToken ||'');
+          setToken(data)
           } catch (_error) {
             setError(true)
           } finally {

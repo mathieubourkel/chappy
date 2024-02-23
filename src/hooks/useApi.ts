@@ -5,12 +5,13 @@ import axios, { AxiosInstance } from "axios";
 export async function handleApiCall(apiCall: any) {
   try {
     const response = await apiCall();
-    if (!response.data || !response) throw new Error()
+    if (!response || !response.data) throw new Error()
     return response.data;
   } catch (error) {
-    throw error;
+    throw error
   }
 }
+
 
 let isRefreshing = false;
 let refreshSubscribers: ((token: string) => void)[] = [];
@@ -53,6 +54,7 @@ export function useApi() {
 
   api.interceptors.response.use(
     (res) => {
+
       return res;
     },
     async (err) => {

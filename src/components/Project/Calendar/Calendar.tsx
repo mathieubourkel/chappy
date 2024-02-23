@@ -61,12 +61,12 @@ export default function Calendar({className}:Props) {
         const dataOwner = await getTasksByUser();
         const dataCollab = await getTasksByUser();
         const tmpTasks:Array<Task> = []
-        dataOwner.map((task: any) => {
+        dataOwner.data.map((task: any) => {
           task.title = task.name;
           task.owner = 1;
           tmpTasks.push(task)
         });
-        dataCollab.map((task: any) => {
+        dataCollab.data.map((task: any) => {
           task.title = task.name;
           task.owner = 2;
           task.id = task.id * 4589647524

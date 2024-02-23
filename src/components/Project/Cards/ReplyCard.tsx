@@ -24,8 +24,8 @@ export default function ReplyCard({ idComment, handleReload }: Props) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const result = await getCommentsReply(idComment || '');
-        setReplies(result);
+        const {data} = await getCommentsReply(idComment || '');
+        setReplies(data);
 
       } catch (error) {
         setError(true)

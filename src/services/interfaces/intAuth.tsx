@@ -11,6 +11,7 @@ export interface intLogin {
     password:string,
 }
 
+
 export interface intConfirmPwd {
     newPwd:string
     confirmNewPwd: string

@@ -34,8 +34,8 @@ export default function MembersAdd({ project, setProject}: Props) {
   useEffect(() => {
     const getUsers = async () => {
     try {
-      const result = await getAllUsers();
-      setUsers(result)
+      const {data} = await getAllUsers();
+      setUsers(data)
     } catch (error) {
       console.log(error)
     }

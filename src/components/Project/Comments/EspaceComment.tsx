@@ -33,9 +33,9 @@ export default function EspaceComment({ table, idParent }: Props) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const result = await getComments(RefCommentEnum[table], idParent);
-        console.log(result)
-        setComments(result);
+        const {data} = await getComments(RefCommentEnum[table], idParent);
+        console.log(data)
+        setComments(data);
 
       } catch (error) {
         setError(true)

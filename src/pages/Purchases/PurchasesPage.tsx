@@ -35,8 +35,8 @@ export default function PurchasesPage() {
       try {
         const tmpProj = await getProjectById(idProject ||'')
         const result = await getPurchasesByProject(idProject || "")
-        setProject(tmpProj);
-        setPurchases(result)
+        setProject(tmpProj.data);
+        setPurchases(result.data)
       } catch (error) {
         setError(true)
       } finally {

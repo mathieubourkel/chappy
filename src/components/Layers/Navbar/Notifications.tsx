@@ -16,8 +16,8 @@ export default function Notifications() {
   useEffect(() => {
     const getNotifs = async () => {
       try {
-        const result = await getNotificationsByUser();
-        setNotifications(result.reverse());
+        const {data} = await getNotificationsByUser();
+        setNotifications(data.reverse());
       } catch (error) {
         setError(true);
       }

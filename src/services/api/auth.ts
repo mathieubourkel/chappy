@@ -1,35 +1,28 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { URL_API, useApi } from "../../hooks/useApi";
+import { intLogin } from "../interfaces/intAuth";
 const api = useApi();
 
-export interface Login {
-  email: string;
-  password: string;
-}
-
-export async function login(data: Login) {
-
-  const body = {
-    email: data.email,
-    password: data.password,
-  };
+export async function login(data: intLogin) {
 
   const options = {
     credentials: "include",
     withCredentials: true,
   };
 
-
   try {
-    const result = await api.post(`${URL_API}/auth/login`, body, options);
-    const { token, user } = result.data
+    const result:{token: string, refreshToken:string, user:any} = await api.post(`${URL_API}/auth/login`, data, options);
+    const { token, user } = result
     localStorage.setItem("token", token);
     localStorage.setItem("name", `${user.firstname} ${user.lastname}`);
     localStorage.setItem("id", user.id);
     localStorage.setItem("email", user.email);
     return result;
-
   } catch (error) {
-    console.log(error);
+    return;
   }
+
+    
+
 }

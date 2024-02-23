@@ -61,8 +61,8 @@ export default function Sidebar(props: any) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getUserInfo();
-      if (idUser == result.id) setUser(result);
+      const {data} = await getUserInfo();
+      if (idUser == data.id) setUser(data);
     };
     fetchData();
   }, [idUser, reload]);

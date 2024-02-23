@@ -35,16 +35,16 @@ export default function StepPage() {
   useEffect(() => {
     const getStep = async () => {
       try {
-        const tmpStep = await getStepById(idStep || "");
-        tmpStep.project.owner.id.toString() === idUser && setIsOwner(true);
-        const emailArray: intSelects = tmpStep.project.members.map(
+        const {data} = await getStepById(idStep || "");
+        data.project.owner.id.toString() === idUser && setIsOwner(true);
+        const emailArray: intSelects = data.project.members.map(
           (element: intUser) => ({
             label: element.email,
             value: element.id,
           })
        );
-        tmpStep.project.members = emailArray;
-        setStep(tmpStep);
+        data.project.members = emailArray;
+        setStep(data);
       } catch (error) {
         setError(true);
       } finally {

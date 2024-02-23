@@ -33,13 +33,12 @@ export default function ProjectPage() {
     steps: [],
     companies: []
   });
- 
   useEffect(() => {
     const getProject = async () => {
       try {
-      const result = await getProjectById(idProject ||"");
-      setProject(result);
-      result.owner.id.toString() === idUser && setIsOwner(true); 
+      const {data} = await getProjectById(idProject ||"");
+      setProject(data);
+      data.owner.id.toString() === idUser && setIsOwner(true); 
       } catch (_error) {
         setError(true)
       } finally {

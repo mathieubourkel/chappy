@@ -51,12 +51,12 @@ export default function CreateProjectPage() {
       try {
         const result2 = await getAllCompanies();
       const result = await getAllUsers();
-      const nameArray:intSelects = result2.map(
+      const nameArray:intSelects = result2.data.map(
         (element: intCompany) => ({ label: element.name, value: element.id })
       );
       setCompanies(nameArray);
 
-      const emailArray:intSelects = result.map((element: intUser) => ({
+      const emailArray:intSelects = result.data.map((element: intUser) => ({
         label: element.email,
         value: element.id,
       }));
