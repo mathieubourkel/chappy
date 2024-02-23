@@ -43,6 +43,7 @@ export default function StepPage() {
             value: element.id,
           })
        );
+          data.tasks.reverse()
         data.project.members = emailArray;
         setStep(data);
       } catch (error) {

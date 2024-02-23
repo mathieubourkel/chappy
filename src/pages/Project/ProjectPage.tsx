@@ -21,6 +21,7 @@ export default function ProjectPage() {
   const [error, setError] = useState<boolean>(false);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false)
+  const handleReload = () => setReload((bool) => !bool);
   const [project, setProject] = useState<intProject>({
     _id: undefined,
     name: "",
@@ -37,6 +38,7 @@ export default function ProjectPage() {
     const getProject = async () => {
       try {
       const {data} = await getProjectById(idProject ||"");
+      data.steps.reverse()
       setProject(data);
       data.owner.id.toString() === idUser && setIsOwner(true); 
       } catch (_error) {
@@ -67,7 +69,7 @@ export default function ProjectPage() {
             project={project}
             idProject={idProject ||''}
             isOwner={isOwner}
-            setReload={setReload}
+            handleReload={handleReload}
           />
           <EspaceComment table={RefCommentEnum.projet} idParent={idProject ||""} />
         </>

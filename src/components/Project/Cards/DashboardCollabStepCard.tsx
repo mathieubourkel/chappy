@@ -13,7 +13,7 @@ type Props = {
 
 export default function DashboardCollabStepCard({ step, collab }: Props) {
   return (
-    <Card className="md:flex justify-between custom-task w-full md:w-[92lvh]">
+    <Card className="md:flex justify-between custom-task w-full xl:w-[92lvh]">
       <CardBody className="custom-task-body flex justify-between items-center">
         <div>
           <div className={"flex gap-2 items-center"}>

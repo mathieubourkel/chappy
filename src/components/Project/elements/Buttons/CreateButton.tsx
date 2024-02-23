@@ -25,7 +25,7 @@ export default function CreateButton({value, handleClick}:Props) {
     <Button size={"sm"} className="bg-brick-300 flex items-center"
     onClick={handleClick}>
       <FontAwesomeIcon icon={faFolderPlus} className={"text-sm"} />
-      <span className="pl-2 hidden lg:inline whitespace-nowrap">{value}</span>
+      <span className="pl-2 hidden 2xl:inline whitespace-nowrap">{value}</span>
     </Button>
       </Tooltip>
   );

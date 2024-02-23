@@ -6,7 +6,7 @@ import {
 import {NavLink} from "react-router-dom";
 export default function NotFoundPage() {
   return (
-    <main className={"flex gap-5 justify-center items-center"}>
+    <main className={"lg:flex gap-5 justify-center items-center"}>
 
         <div className={"flex flex-col items-center justify-center"}>
             <Typography variant="h1" className={"font-extrabold text-xxl"}>Oups..</Typography>

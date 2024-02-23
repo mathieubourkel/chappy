@@ -29,7 +29,7 @@ export default function Breadcrumb({nameProject, idProject, step}:Props) {
             { idProject && <><div className="text-marine-100 hover:!text-marine-300 mr-2">/</div>
                 <NavLink
                     to={"/project/" + idProject}
-                    className="text-marine-100 hover:!text-marine-300">
+                    className="text-marine-100 hover:!text-marine-300 w-32 lg:w-full truncate">
                     {nameProject}</NavLink></>
             }
 
@@ -42,7 +42,7 @@ export default function Breadcrumb({nameProject, idProject, step}:Props) {
                     to={"/project/" +
                         step.project._id +
                         "/step/" + step._id}
-                    className="text-marine-100 hover:!text-marine-300">
+                    className="text-marine-100 hover:!text-marine-300 md:mx-2 w-32 lg:w-full truncate">
                     {step.name}
                 </Link></>
             }

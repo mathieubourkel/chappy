@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBan, faChevronLeft, faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import {  useEffect, useState } from "react";
 import {
   Alert, IconButton,
 } from "@material-tailwind/react";
@@ -25,17 +25,41 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
 
   const handleClick = (collab:intProject) => {
     setSelected(collab);
+    setStepsDisplay(collab.steps.slice(0,5))
   }
 
   const [collabsDisplay, setCollabsDisplay] = useState(collabs.slice(0,5))
-  const [current, setCurrent] = useState(0)
+  const [stepsDisplay, setStepsDisplay] = useState(selected.steps.slice(0,5))
+  const [current, setCurrent] = useState(5)
+  const [currentSteps, setCurrentSteps] = useState(5)
+  const [firstTime, setFirstTime] = useState(false)
+
+  useEffect(() => {
+    if(firstTime) {
+      setCollabsDisplay(collabs.slice(0,5))
+      setCurrent(5)
+    }
+    setFirstTime(true)
+    
+  }, [collabs, firstTime])
+
   const nextOrBefore = (next: boolean) => {
     if (next) {
-      setCurrent(Math.min(current +5, collabs.length))
       setCollabsDisplay(collabs.slice(current, Math.min(current +5, collabs.length)))
+      setCurrent(current +5)
     } else {
-      setCurrent(Math.max(0, current -5))
-      setCollabsDisplay(collabs.slice(Math.max(0, current -5), current))
+      setCollabsDisplay(collabs.slice(Math.max(0, current -10), current-5))
+      setCurrent(current -5)
+    }
+  }
+
+  const nextOrBeforeSteps = (next: boolean) => {
+    if (next) {
+      setStepsDisplay(selected.steps.slice(currentSteps, Math.min(currentSteps +5, selected.steps.length)))
+      setCurrentSteps(currentSteps +5)
+    } else {
+      setStepsDisplay(selected.steps.slice(Math.max(0, currentSteps -10), currentSteps-5))
+      setCurrentSteps(currentSteps -5)
     }
   }
 
@@ -49,38 +73,52 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
 
       {collabs.length > 0 ? (
         <article>
-          <nav className="flex">
+          <div className="mb-3 lg:flex lg:justify-between">
           
-            <div className="ml-20 lg:flex justify-center basis-3/4">
-            {current > 0 && <IconButton className='mx-10' onClick={() => nextOrBefore(false)}><FontAwesomeIcon icon={faChevronLeft} /></IconButton>}
+          <nav className="2xl:pl-20 flex w-[70vw] gap-5">
+          <div className="w-[5vw] flex justify-end">
+            {(current-5 !=0 && current != 0) && <IconButton className='bg-transparent text-black' onClick={() => nextOrBefore(false)}><FontAwesomeIcon icon={faChevronLeft} /></IconButton>}
+            </div>
+            <div className="flex justify-center w-full ml-5 sm:ml-0 max-w-[50vw]">
               {collabsDisplay.map((collab: intProject) => (
                 <button
                 key={collab._id}
                 onClick={() => handleClick(collab)}
                   className={
-                    "px-10 rounded-none border-0 border-b-2 border-b-marine-100 " +
+                    "px-5 md:px-10 w-[10vw] line-clamp-1 rounded-none border-0 border-b-2 border-b-marine-100 " +
                     (collab._id === selected._id && "border-b-marine-300 font-extrabold")
                   }
                 >
-                  {collab.name}
+                  <p className='w-[8vw] truncate'>{collab.name}</p>
                 </button>
               ))}
-              {current != collabs.length && <IconButton className='mx-10' onClick={() => nextOrBefore(true)}><FontAwesomeIcon icon={faChevronRight} /></IconButton>}
-            </div>
+              </div>
+              <div className="w-[5vw]">
+              {current < collabs.length && current+5 != collabs.length && <IconButton className='bg-transparent text-black' onClick={() => nextOrBefore(true)}><FontAwesomeIcon icon={faChevronRight} /></IconButton>}
+              </div>
+            </nav>
             
-            <div className="flex basis-1/4 justify-end items-center gap-2">
+            <div className="flex basis-1/4 my-5 lg:my-0 2xl:justify-end justify-center items-center gap-2">
               <MenuCollab handleOpenD={handleOpenD} see={"Voir le projet"} request={"Voir les demandes"} join={"Rejoindre un projet"} setReload={setReload} idProject={selected._id ||""} menu />
             </div>
-          </nav>
+          </div>
 
-          <div className="mt-5 flex gap-5 flex-wrap justify-center">
-            {selected.steps.map((step: intStep) => (
+          <div className="flex gap-5 justify-between">
+          <div className='w-1/12 justify-end flex items-center'>
+            {(currentSteps-5 !=0 && currentSteps != 0) && <IconButton className='bg-transparent text-black' onClick={() => nextOrBeforeSteps(false)}><FontAwesomeIcon icon={faChevronLeft} /></IconButton>}
+            </div>
+            <div className="mt-5 flex gap-5 flex-wrap justify-center gap-5">
+            {stepsDisplay.map((step: intStep) => (
               <DashboardCollabStepCard
                 step={step}
                 key={step._id}
                 collab={selected}
               />
             ))}
+            </div>
+            <div className='w-1/12 justify-left flex items-center'>
+              {currentSteps < selected.steps.length && currentSteps+5 != selected.steps.length && <IconButton className='bg-transparent text-black' onClick={() => nextOrBeforeSteps(true)}><FontAwesomeIcon icon={faChevronRight} /></IconButton>}
+              </div>
           </div>
         </article>
       ) : (

@@ -33,7 +33,7 @@ export default function StepCard({ step, idProject }: Props) {
           </Typography>
         </div>
 
-        <Typography variant="h3" className="mb-2 font-bold text-marine-300">
+        <Typography variant="h3" className="mb-2 truncate font-bold text-marine-300">
           {step.name}
         </Typography>
         <Typography variant="paragraph" className="truncate text-text-100 min-h-[2rem]">

@@ -12,8 +12,8 @@ export async function login(data: intLogin) {
   };
 
   try {
-    const result:{token: string, refreshToken:string, user:any} = await api.post(`${URL_API}/auth/login`, data, options);
-    const { token, user } = result
+    const result = await api.post(`${URL_API}/auth/login`, data, options);
+    const { token, user } = result.data
     localStorage.setItem("token", token);
     localStorage.setItem("name", `${user.firstname} ${user.lastname}`);
     localStorage.setItem("id", user.id);

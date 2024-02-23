@@ -18,10 +18,10 @@ type Props = {
 export default function ProjectHeader({project ,idProject, isOwner} :Props) {
   return (
       <section className="lg:flex justify-between mb-20">
-        <div>
+        <div className='lg:w-1/2'>
             <Typography
                 variant="h1"
-                className={"font-bold text-4xl"}
+                className={"font-bold text-4xl truncate"}
             >
                 {project.name}
             </Typography>
@@ -30,12 +30,12 @@ export default function ProjectHeader({project ,idProject, isOwner} :Props) {
 
         </div>
         {isOwner && 
-        <nav className="flex gap-2 items-center justify-center lg:justify-end">
+        <nav className="flex gap-2 items-center justify-center xl:justify-end lg:w-1/2">
           <MenuProject idProject={idProject} project={project} />
 
             <Tooltip
                 content={"Participants"}
-                className="lg:hidden bg-marine-300 px-4"
+                className="xl:hidden bg-marine-300 px-4"
                 animate={{
                     mount: { scale: 1, y: 0 },
                     unmount: { scale: 0, y: 25 },
@@ -44,7 +44,7 @@ export default function ProjectHeader({project ,idProject, isOwner} :Props) {
           <Link to={"/project/"+ idProject + "/members"}>
             <Button variant="outlined" size={"sm"} className="flex text-marine-300 border-marine-300">
               <FontAwesomeIcon icon={faUser} className="lg:mr-2" />
-              <span className="hidden lg:inline whitespace-nowrap">Participants</span>
+              <span className="hidden 2xl:inline whitespace-nowrap">Participants</span>
             </Button>
           </Link>
             </Tooltip>
@@ -60,7 +60,7 @@ export default function ProjectHeader({project ,idProject, isOwner} :Props) {
               <Link to={"/project/"+ idProject + "/documents"}>
                 <Button className="bg-brick-300 flex" size={"sm"}>
                   <FontAwesomeIcon icon={faFolderOpen} className="lg:mr-2" />
-                  <span className="hidden whitespace-nowrap lg:inline">Mes documents</span>
+                  <span className="hidden whitespace-nowrap 2xl:inline">Mes documents</span>
                 </Button>
               </Link>
             </Tooltip>
@@ -79,7 +79,7 @@ export default function ProjectHeader({project ,idProject, isOwner} :Props) {
                   variant="outlined" size={"sm"}
                 >
                   <FontAwesomeIcon icon={faCartShopping} className="lg:mr-2" />
-                  <div className="hidden whitespace-nowrap lg:inline">Mes achats</div>
+                  <div className="hidden whitespace-nowrap 2xl:inline">Mes achats</div>
                 </Button>
               </Link>
             </Tooltip>

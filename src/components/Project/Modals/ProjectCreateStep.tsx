@@ -21,10 +21,10 @@ import { intCreateStep } from "../../../services/interfaces/intStep";
 import { FormEvent, InputEvent } from "../../../services/interfaces/generique.interface";
 
 type Props = {
-  setReload: (bool: boolean) => void;
+  handleReload: () => void;
 };
 
-export default function ProjectCreateStep({ setReload }: Props) {
+export default function ProjectCreateStep({ handleReload }: Props) {
   const date = new Date()
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -47,9 +47,8 @@ export default function ProjectCreateStep({ setReload }: Props) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(form)
     await addProjectStepToBDD(form);
-    setReload(true);
+    handleReload()
   };
 
   const handleDate = (value: any) => {

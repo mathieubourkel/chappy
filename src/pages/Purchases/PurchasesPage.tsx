@@ -54,7 +54,7 @@ export default function PurchasesPage() {
   if (error) return (<NotFoundPage />)
   
   return (
-    <main className="sm:mx-20 mx-5 mt-10">
+    <main className="sm:mx-20 mx-5 mt-10 min-h-[70vh]">
       <ProjectHeader isOwner project={project} idProject={idProject ||''} />
       <section
           className={"w-full flex justify-between gap-5 items-center"}>

@@ -6,7 +6,7 @@ import { Spinner } from "@material-tailwind/react";
 import {
   getProjectsFromOwner, getProjectsFromUsers,
 } from "../../services/api/projects";
-import { intProjects } from "../../services/interfaces/intProject";
+import { intProject, intProjects } from "../../services/interfaces/intProject";
 
 export default function DashboardPage() {
   const [collabs, setCollab] = useState<intProjects>([]);
@@ -20,8 +20,14 @@ export default function DashboardPage() {
       try {
         const tmpProjects = await getProjectsFromOwner()
         const tmpCollabs = await getProjectsFromUsers()
-        setCollab(tmpCollabs.data);
-        setProject(tmpProjects.data);
+        tmpCollabs.data.map((collab:intProject) => {
+          collab.steps.reverse()
+        })
+        tmpProjects.data.map((project:intProject) => {
+          project.steps.reverse()
+        })
+        setCollab(tmpCollabs.data.reverse());
+        setProject(tmpProjects.data.reverse());
       } catch (error) {
         setError(true)
       } finally {

@@ -5,12 +5,15 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBan,
+  faChevronDown,
+  faChevronUp,
   faFilter
 } from "@fortawesome/free-solid-svg-icons";
 import StepCreateTask from "../Modals/StepCreateTask";
 import TaskCard from "../Cards/TaskCard";
 import { intStep } from "../../../services/interfaces/intStep";
 import { intTask } from "../../../services/interfaces/intTask";
+import { useEffect, useState } from "react";
 
 type Props = {
   step:intStep
@@ -18,6 +21,28 @@ type Props = {
 }
 
 export default function StepTasks({step, handleReload}:Props) {
+  const [tasksDisplay, setTasksDisplay] = useState(step.tasks.slice(0,5))
+  const [current, setCurrent] = useState(5)
+  const [firstTime, setFirstTime] = useState(false)
+
+  useEffect(() => {
+    if(firstTime) {
+      setTasksDisplay(step.tasks.slice(0,5))
+      setCurrent(5)
+    }
+    setFirstTime(true)
+    
+  }, [step.tasks, firstTime])
+
+  const nextOrBefore = (next: boolean) => {
+    if (next) {
+      setTasksDisplay(step.tasks.slice(current, Math.min(current +5, step.tasks.length)))
+      setCurrent(current +5)
+    } else {
+      setTasksDisplay(step.tasks.slice(Math.max(0, current -10), current-5))
+      setCurrent(current -5)
+    }
+  }
 
   return (
     <section className="mb-20">
@@ -38,7 +63,8 @@ export default function StepTasks({step, handleReload}:Props) {
         </nav>
       </div>
         <div className="mt-10">
-          {step.tasks.map((task: intTask) => (
+        {(current-5 !=0 && current != 0) && <IconButton className='mx-10' onClick={() => nextOrBefore(false)}><FontAwesomeIcon icon={faChevronUp} /></IconButton>}
+          {tasksDisplay.map((task: intTask) => (
             <TaskCard
               key={task._id}
               handleReload={handleReload}
@@ -46,6 +72,7 @@ export default function StepTasks({step, handleReload}:Props) {
               task={task}
             />
           ))}
+          {current < step.tasks.length && current+5 != step.tasks.length  && <IconButton className='mx-10' onClick={() => nextOrBefore(true)}><FontAwesomeIcon icon={faChevronDown} /></IconButton>}
         </div>
 
       {step.tasks.length == 0 && <><Alert

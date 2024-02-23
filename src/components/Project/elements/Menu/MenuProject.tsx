@@ -40,7 +40,7 @@ export function MenuProject({ project, idProject }: Props) {
           unmount: { scale: 0, y: 25 },
         }}
       >
-        <Menu>
+        <Menu >
           <MenuHandler>
             <Button
               className="text-light-100 bg-marine-300"
@@ -48,9 +48,9 @@ export function MenuProject({ project, idProject }: Props) {
             >
               <FontAwesomeIcon icon={faList} className={"text-sm lg:mr-3"} />
               <Typography
-                className={"hidden lg:inline font-extrabold"}
+                className={"hidden 2xl:inline font-extrabold whitespace-nowrap"}
               >
-                Gérer mon projet
+                Paramètres
               </Typography>
             </Button>
           </MenuHandler>

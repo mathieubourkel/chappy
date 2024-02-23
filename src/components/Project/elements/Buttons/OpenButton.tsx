@@ -27,7 +27,7 @@ export default function RejoinButton({value, onClick}: Props) {
                     size={"sm"}
                     onClick={onClick}>
                 <FontAwesomeIcon icon={faFolderOpen} className={"text-sm"} />
-                <span className="pl-2 hidden lg:flex whitespace-nowrap">{value}</span>
+                <span className="pl-2 hidden 2xl:inline whitespace-nowrap">{value}</span>
             </Button>
         </Tooltip>
     );
