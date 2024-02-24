@@ -7,12 +7,12 @@ import ProjectDesc from "../../components/Project/Project/ProjectDesc";
 import {getProjectById} from "../../services/api/projects";
 import ProjectSteps from "../../components/Project/Project/ProjectSteps";
 import { Status } from "../../services/enums/status.enum";
-import NotFoundPage from "../../services/utils/NotFoundPage";
 import {
   RefCommentEnum
 } from '../../services/enums/comment.ref.enum.ts';
 import { intProject } from "../../services/interfaces/intProject.tsx";
 import { formatDate } from "../../services/utils/FormatDate.tsx";
+import RessourceDontExist from "../../services/utils/RessourceDontExist.tsx";
 
 export default function ProjectPage() {
   const { idProject } = useParams();
@@ -50,7 +50,7 @@ export default function ProjectPage() {
     getProject();
   }, [idProject, idUser, reload]);
 
-  if (error) return (<NotFoundPage />)
+  if (error) return <RessourceDontExist />;
   return (
     <main className="project-page sm:mx-20 mx-5 mt-10">
       {busy ? (

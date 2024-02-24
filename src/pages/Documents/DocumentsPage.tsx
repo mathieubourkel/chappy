@@ -15,9 +15,9 @@ import {
 import {
   faCircleInfo
 } from "@fortawesome/free-solid-svg-icons";
-import NotFoundPage from "../../services/utils/NotFoundPage";
 import { intProjectLight } from "../../services/interfaces/intProject";
 import { intDocument, intDocuments } from "../../services/interfaces/intDocument";
+import RessourceDontExist from "../../services/utils/RessourceDontExist";
 
 export default function DocumentsPage() {
   const {idProject} = useParams();
@@ -45,7 +45,7 @@ export default function DocumentsPage() {
     fetchData();
   }, [idProject, reload]);
 
-  if (error) return (<NotFoundPage />)
+  if (error) return <RessourceDontExist />;
   
   return (
     <main className="sm:mx-20 mx-5 mt-10 min-h-[70vh]">

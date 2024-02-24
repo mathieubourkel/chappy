@@ -7,12 +7,12 @@ import EspaceComment from "../../components/Project/Comments/EspaceComment";
 import StepHeader from "../../components/Project/Step/StepHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import NotFoundPage from "../../services/utils/NotFoundPage";
 import { intStep } from "../../services/interfaces/intStep";
 import { formatDate } from "../../services/utils/FormatDate";
 import { RefCommentEnum } from "../../services/enums/comment.ref.enum";
 import { intSelects } from "../../services/interfaces/generique.interface";
 import { intUser } from "../../services/interfaces/intUser";
+import RessourceDontExist from "../../services/utils/RessourceDontExist";
 
 export default function StepPage() {
   const [busy, setBusy] = useState<boolean>(true);
@@ -64,7 +64,7 @@ export default function StepPage() {
     setReload((cur) => !cur);
   };
 
-  if (error) return <NotFoundPage />;
+  if (error) return <RessourceDontExist />;
 
   return (
     <main className="project-page sm:mx-20 mx-5">

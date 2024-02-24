@@ -39,7 +39,11 @@ export default function Notifications() {
     handleReload()
   };
 
-  if (error) return <div>Failed to get notifs</div>;
+  if (error) return (
+  <MenuList>
+      <span>Failed to get the notifications data</span>
+  </MenuList>
+  )
 
   return (
     <MenuList>

@@ -14,7 +14,6 @@ import { faFloppyDisk, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import avatar from "../../assets/img/icon_user.png";
 import "./userProfile.css";
 import { getUserInfo, modifyUserToBDD, quitCompany, resetPwd } from "../../services/api/users";
-import NotFoundPage from "../../services/utils/NotFoundPage";
 import AddCompanyModal from "../../components/Project/Modals/AddCompanyModal";
 import RejoinCompanyModal from "../../components/Project/Modals/RejoinCompanyModal";
 import ModifyCompanyModal from "../../components/Project/Modals/ModifyCompanyModal";
@@ -22,6 +21,7 @@ import QuitCompanyModal from "../../components/Project/Modals/QuitCompanyModal";
 import { intProfileUser } from "../../services/interfaces/intUser";
 import { FormEvent, InputEvent, intAlert } from "../../services/interfaces/generique.interface";
 import DeleteUser from "../../components/Project/Modals/DeleteUser";
+import ErrorFetchingData from "../../services/utils/ErrorFetchingData";
 
 export default function UserProfilePage() {
   const [user, setUser] = useState<intProfileUser>({
@@ -123,7 +123,7 @@ export default function UserProfilePage() {
       onChange={(e: InputEvent) => handleChange(e)}
     />
   );
-  if (error) return (<NotFoundPage />)
+  if (error) return (<ErrorFetchingData name="User profile" />)
   return (
     <main className={"sm:mx-20 mx-5"}>
       {busy ? (

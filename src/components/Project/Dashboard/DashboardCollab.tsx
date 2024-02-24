@@ -4,7 +4,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {  useEffect, useState } from "react";
 import {
-  Alert, IconButton,
+  Alert, IconButton
 } from "@material-tailwind/react";
 import DashboardCollabStepCard from "../Cards/DashboardCollabStepCard.tsx";
 import {
@@ -20,7 +20,7 @@ type Props = {
   setReload: (bool:boolean) => void
 };
 
-export default function DashboardCollab({ collabs, setReload }: Props) {
+export default function DashboardCollab({ collabs, setReload}: Props) {
   const [selected, setSelected] = useState(collabs[0]);
 
   const handleClick = (collab:intProject) => {
@@ -67,10 +67,7 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
   const handleOpenD = () => setOpenD((bool) => !bool);
 
   return (
-    <section className="my-10 mb-28">
-
-        <h2>Mes collaborations</h2>
-
+    <>
       {collabs.length > 0 ? (
         <article>
           <div className="mb-3 lg:flex lg:justify-between">
@@ -136,6 +133,6 @@ export default function DashboardCollab({ collabs, setReload }: Props) {
         </article>
       )}
       <RejoinModal join={"Rejoindre"} open={openD} handleOpen={handleOpenD} />
-    </section>
+    </>
   );
 }

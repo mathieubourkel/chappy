@@ -70,11 +70,9 @@ export default function DashboardProjects({ projects }: Props) {
       setCurrentSteps(currentSteps - 5);
     }
   };
-
+ 
   return (
-    <section className="md:mt-5 mt-10 mb-28">
-      <h2>Mes projets</h2>
-
+    <>
       {projects.length > 0 ? (
         <article>
           <div className="mb-3 lg:flex lg:justify-between">
@@ -202,6 +200,6 @@ export default function DashboardProjects({ projects }: Props) {
           </Alert>
         </article>
       )}
-    </section>
+      </>
   );
 }

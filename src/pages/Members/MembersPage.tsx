@@ -8,10 +8,9 @@ import { useParams } from "react-router-dom";
 import { Alert, Spinner } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-import NotFoundPage
-  from "../../services/utils/NotFoundPage.tsx";
 import { intUserLight } from "../../services/interfaces/intUser.tsx";
 import { getProjectById } from "../../services/api/projects.ts";
+import RessourceDontExist from "../../services/utils/RessourceDontExist.tsx";
 
 export default function MembersPage() {
   const { idProject } = useParams();
@@ -47,7 +46,7 @@ export default function MembersPage() {
     setReload((cur) => !cur);
   };
 
-  if(error) return <NotFoundPage />
+  if (error) return <RessourceDontExist />;
 
 
   return (

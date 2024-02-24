@@ -22,6 +22,8 @@ import { sendMessage } from "../../services/utils/WebSocket";
 const animatedComponents = makeAnimated();
 
 export default function CreateProjectPage() {
+  const [error, setError] = useState<boolean>(false);
+  const [errorCompanies, setErrorCompanies]= useState<boolean>(false)
   const navigate = useNavigate();
   const date = new Date()
   const [users, setUsers] = useState<intSelects>([]);
@@ -49,22 +51,28 @@ export default function CreateProjectPage() {
   useEffect(() => {
     const getUsers = async () =>  {
       try {
-        const result2 = await getAllCompanies();
       const result = await getAllUsers();
-      const nameArray:intSelects = result2.data.map(
-        (element: intCompany) => ({ label: element.name, value: element.id })
-      );
-      setCompanies(nameArray);
-
       const emailArray:intSelects = result.data.map((element: intUser) => ({
         label: element.email,
         value: element.id,
       }));
       setUsers(emailArray);
       } catch (error) {
-        console.log(error)
+        setError(true)
       }
     }
+    const getCompanies = async () =>  {
+      try {
+        const result = await getAllCompanies();
+        const nameArray:intSelects = result.data.map(
+          (element: intCompany) => ({ label: element.name, value: element.id })
+        );
+      setCompanies(nameArray);
+      } catch (error) {
+        setErrorCompanies(true)
+      }
+    }
+    getCompanies()
     getUsers();
   }, []);
 
@@ -201,6 +209,9 @@ export default function CreateProjectPage() {
                 options={users}
                 className="rounded-xl border-select"
                 isMulti
+                noOptionsMessage={error ? 
+                  (obj: { inputValue:string } ) => obj.inputValue = "Error with fetching users data" 
+                  : (obj: { inputValue:string } ) => obj.inputValue = "There is no users available" }
                 placeholder="Inviter des membres sur votre projet"
                 components={animatedComponents}
                 onChange={(value: any) => handleUsers(value)}
@@ -223,6 +234,9 @@ export default function CreateProjectPage() {
                 components={animatedComponents}
                 placeholder="Inviter des entreprises sur votre projet"
                 className={"border-select"}
+                noOptionsMessage={errorCompanies ? 
+                  (obj: { inputValue:string } ) => obj.inputValue = "Error with fetching companies data" 
+                  : (obj: { inputValue:string } ) => obj.inputValue = "There is no companies available" }
                 onChange={(value: any) => handleCompanies(value)}
                 theme={(theme) => ({
                   ...theme,

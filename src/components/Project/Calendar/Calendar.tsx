@@ -17,6 +17,7 @@ import { useState, useEffect } from "react";
 import { getTasksByUser } from "../../../services/api/tasks";
 import { Spinner } from "@material-tailwind/react";
 import './calendar.css'
+import ErrorFetchingData from "../../../services/utils/ErrorFetchingData";
 
 type Task = {
   title: string;
@@ -82,15 +83,16 @@ export default function Calendar({className}:Props) {
     getFetchData();
   }, [idUser]);
 
-  if (error) return (<div>Error with fetching data</div>)
 
   return (
     <>
     {busy ? (
-        <div className="flex justify-center items-center mt-20">
+        <div className="flex justify-center lg:w-[49.4lvw] overflow-x-clip">
           <Spinner className="h-16 w-16 text-brick-300/50" />
         </div>
       ) : (
+        <div>
+          {error && <ErrorFetchingData name={"Calendar"}/>}
     <Paper className={className}>
       <Scheduler data={tasks}>
         <ViewState defaultCurrentDate={currentDate} />
@@ -101,7 +103,8 @@ export default function Calendar({className}:Props) {
         <Resources data={resources} mainResourceName="owner" />
         <AppointmentTooltip showCloseButton showOpenButton />
       </Scheduler>
-    </Paper>)}
+    </Paper>
+    </div>)}
     </>
   );
 }

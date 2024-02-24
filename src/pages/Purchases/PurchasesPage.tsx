@@ -18,9 +18,9 @@ import {
 import {
   faCircleInfo
 } from "@fortawesome/free-solid-svg-icons";
-import NotFoundPage from "../../services/utils/NotFoundPage";
 import { getProjectById } from "../../services/api/projects";
 import { intPurchase, intPurchases } from "../../services/interfaces/intCompta";
+import RessourceDontExist from "../../services/utils/RessourceDontExist";
 
 export default function PurchasesPage() {
   const { idProject } = useParams()
@@ -51,7 +51,7 @@ export default function PurchasesPage() {
     return purchases.reduce((total, purchase) => total + Math.floor(purchase.price.fullTaxPrice), 0);
   };
 
-  if (error) return (<NotFoundPage />)
+  if (error) return <RessourceDontExist />;
   
   return (
     <main className="sm:mx-20 mx-5 mt-10 min-h-[70vh]">
