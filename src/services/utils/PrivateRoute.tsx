@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { socket } from "./WebSocket";
 import { Popup } from "../../components/Layers/Popup/Popup";
+import { ManageWebSocket } from "./ManageWebSocket";
 
 export default function PrivateRoute() {
   const [popUp, setPopUp] = useState<string[]>([])
+  const socket = new ManageWebSocket().socket
   useEffect(() => {
     socket.on('connect', () => {
       console.log("Connected...")
@@ -14,8 +15,11 @@ export default function PrivateRoute() {
       console.log("You have been disconnected")
     });
 
+    socket.off("disconnect", () => {
+      console.log("client disconnect..")
+    })
+
     socket.on('notifToClient', (e) => {
-      console.log(e)
       setPopUp((prevPopups) => [...prevPopups, e])
       setTimeout(() => {
         removePopup(e);
@@ -31,7 +35,7 @@ export default function PrivateRoute() {
       socket.off('disconnect');
       socket.off('notifToClient');
     };
-  }, []);
+  }, [socket]);
 
   const token = localStorage.getItem('token');
   return token ? <>

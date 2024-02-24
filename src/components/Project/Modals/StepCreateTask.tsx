@@ -24,7 +24,7 @@ import { formatDate } from "../../../services/utils/FormatDate";
 import { intStep } from "../../../services/interfaces/intStep";
 import { intTask } from "../../../services/interfaces/intTask";
 import { FormEvent, InputEvent, intSelect, intSelects } from "../../../services/interfaces/generique.interface";
-import { sendMessage } from "../../../services/utils/WebSocket";
+import { ManageWebSocket } from "../../../services/utils/ManageWebSocket";
 
 type Props = {
   handleReload: () => void;
@@ -79,7 +79,7 @@ export default function StepCreateTask({
           tmpArray.push(member.id.toString())
         })
 
-        sendMessage(`Vous avez été invité sur la tâche ${validForm.name}`, tmpArray) 
+        new ManageWebSocket().sendMessage(`Vous avez été invité sur la tâche ${validForm.name}`, tmpArray) 
         handleOpen();
         handleReload();
       })

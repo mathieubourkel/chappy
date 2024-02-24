@@ -16,7 +16,7 @@ import { intProject } from "../../services/interfaces/intProject";
 import { FormEvent, InputEvent, intSelect, intSelects } from "../../services/interfaces/generique.interface";
 import { intCompany } from "../../services/interfaces/intCompany";
 import { intUser } from "../../services/interfaces/intUser";
-import { sendMessage } from "../../services/utils/WebSocket";
+import { ManageWebSocket } from "../../services/utils/ManageWebSocket";
 
 
 const animatedComponents = makeAnimated();
@@ -106,7 +106,7 @@ export default function CreateProjectPage() {
           tmpArray.push(member.id.toString())
         })
 
-        sendMessage(`Vous avez été invité à rejoindre le projet ${form.name}`, tmpArray) 
+        new ManageWebSocket().sendMessage(`Vous avez été invité à rejoindre le projet ${form.name}`, tmpArray) 
         navigate("/dashboard");
       })
       .catch((validationError) => {
