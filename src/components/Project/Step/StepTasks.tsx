@@ -5,8 +5,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBan,
-  faChevronDown,
-  faChevronUp,
+  faChevronLeft,
+  faChevronRight,
   faFilter
 } from "@fortawesome/free-solid-svg-icons";
 import StepCreateTask from "../Modals/StepCreateTask";
@@ -62,8 +62,11 @@ export default function StepTasks({step, handleReload}:Props) {
           </div>
         </nav>
       </div>
-        <div className="mt-10">
-        {(current-5 !=0 && current != 0) && <IconButton className='mx-10' onClick={() => nextOrBefore(false)}><FontAwesomeIcon icon={faChevronUp} /></IconButton>}
+      <div className="flex gap-5 lg:mt-10">
+      <div className="flex w-[5vw] items-center">
+        {(current-5 !=0 && current != 0) && <IconButton className="bg-transparent text-black" onClick={() => nextOrBefore(false)}><FontAwesomeIcon icon={faChevronLeft} /></IconButton>}
+        </div>
+            <div className="flex w-[80vw] flex-wrap gap-5 justify-center">
           {tasksDisplay.map((task: intTask) => (
             <TaskCard
               key={task._id}
@@ -72,7 +75,10 @@ export default function StepTasks({step, handleReload}:Props) {
               task={task}
             />
           ))}
-          {current < step.tasks.length && current+5 != step.tasks.length  && <IconButton className='mx-10' onClick={() => nextOrBefore(true)}><FontAwesomeIcon icon={faChevronDown} /></IconButton>}
+          </div>
+          <div className="flex w-[5vw] items-center">
+          {current < step.tasks.length && current+5 != step.tasks.length  && <IconButton className="bg-transparent text-black" onClick={() => nextOrBefore(true)}><FontAwesomeIcon icon={faChevronRight} /></IconButton>}
+        </div>
         </div>
 
       {step.tasks.length == 0 && <><Alert

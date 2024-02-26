@@ -37,7 +37,7 @@ export default function DashboardHeader({ nbProj }: Props) {
                   variant="h1"
                   className={"font-bold text-4xl"}
               >
-                  Bienvenue <div className='truncate w-[50vw]'>{userName}</div>
+                  Bienvenue <div className='truncate lg:w-[50vw] w-[90vw]'>{userName}</div>
               </Typography>
           </div>
         ) : (

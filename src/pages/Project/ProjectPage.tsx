@@ -52,7 +52,7 @@ export default function ProjectPage() {
 
   if (error) return <RessourceDontExist />;
   return (
-    <main className="project-page sm:mx-20 mx-5 mt-10">
+    <main className="project-page md:mx-20 mx-5 mt-10">
       {busy ? (
         <div className="flex justify-center mt-20">
           <Spinner className="h-16 w-16 text-brick-300" />

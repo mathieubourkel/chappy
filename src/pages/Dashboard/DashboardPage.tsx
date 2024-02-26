@@ -53,7 +53,7 @@ export default function DashboardPage() {
   
   
   return (
-    <main className="sm:mx-20 mx-5">
+    <main className="md:mx-20 mx-5">
 
           <DashboardHeader nbProj={nbProj}/>
           {busy ? (

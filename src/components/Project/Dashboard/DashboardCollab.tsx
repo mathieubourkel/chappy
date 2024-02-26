@@ -69,24 +69,24 @@ export default function DashboardCollab({ collabs, setReload}: Props) {
   return (
     <>
       {collabs.length > 0 ? (
-        <article>
+        <article className='mt-5'>
           <div className="mb-3 lg:flex lg:justify-between">
           
-          <nav className="2xl:pl-20 flex w-[70vw] gap-5">
-          <div className="w-[5vw] flex justify-end">
+          <nav className="2xl:pl-20 flex justify-between lg:w-[70vw] gap-5">
+          <div className="w-[5vw]">
             {(current-5 !=0 && current != 0) && <IconButton className='bg-transparent text-black' onClick={() => nextOrBefore(false)}><FontAwesomeIcon icon={faChevronLeft} /></IconButton>}
             </div>
-            <div className="flex justify-center w-full ml-5 sm:ml-0 max-w-[50vw]">
+            <div className="flex justify-center w-full ml-5 w-[80vw] sm:ml-0 lg:max-w-[50vw]">
               {collabsDisplay.map((collab: intProject) => (
                 <button
                 key={collab._id}
                 onClick={() => handleClick(collab)}
                   className={
-                    "px-5 md:px-10 w-[10vw] line-clamp-1 rounded-none border-0 border-b-2 border-b-marine-100 " +
+                    "w-[13vw] line-clamp-1 rounded-none border-0 border-b-2 border-b-marine-100 " +
                     (collab._id === selected._id && "border-b-marine-300 font-extrabold")
                   }
                 >
-                  <p className='w-[8vw] truncate'>{collab.name}</p>
+                  <p className='truncate'>{collab.name}</p>
                 </button>
               ))}
               </div>
@@ -104,7 +104,7 @@ export default function DashboardCollab({ collabs, setReload}: Props) {
           <div className='w-1/12 justify-end flex items-center'>
             {(currentSteps-5 !=0 && currentSteps != 0) && <IconButton className='bg-transparent text-black' onClick={() => nextOrBeforeSteps(false)}><FontAwesomeIcon icon={faChevronLeft} /></IconButton>}
             </div>
-            <div className="mt-5 flex gap-5 flex-wrap justify-center gap-5">
+            <div className="mt-5 flex gap-5 w-[80vw] flex-wrap justify-center gap-5">
             {stepsDisplay.map((step: intStep) => (
               <DashboardCollabStepCard
                 step={step}

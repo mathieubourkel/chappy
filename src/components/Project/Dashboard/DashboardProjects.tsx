@@ -74,10 +74,10 @@ export default function DashboardProjects({ projects }: Props) {
   return (
     <>
       {projects.length > 0 ? (
-        <article>
-          <div className="mb-3 lg:flex lg:justify-between">
-            <nav className="2xl:pl-20 flex w-[70vw] gap-5">
-              <div className="w-[5vw] flex justify-end">
+        <article className='mt-5'>
+          <div className="m-3 lg:flex lg:justify-between">
+            <nav className="2xl:pl-20 flex justify-between lg:w-[70vw] gap-5">
+              <div className="w-[5vw]">
                 {current - 5 != 0 && current != 0 && (
                   <IconButton
                     className="bg-transparent text-black"
@@ -87,18 +87,18 @@ export default function DashboardProjects({ projects }: Props) {
                   </IconButton>
                 )}
               </div>
-              <div className="flex justify-center w-full ml-5 sm:ml-0 max-w-[50vw]">
+              <div className="flex justify-center w-full ml-5 sm:ml-0 w-[80vw] lg:max-w-[50vw]">
                 {projectsDisplay.map((project: intProject) => (
                   <button
                     key={project._id}
                     onClick={() => handleClick(project)}
                     className={
-                      "text-brick-300 w-[10vw] line-clamp-1 px-5 rounded-none border-0 border-b-2 border-b-brick-200 " +
+                      "text-brick-300 w-[13vw] line-clamp-1 rounded-none border-0 border-b-2 border-b-brick-200 " +
                       (project._id === selected._id &&
                         "border-b-brick-300 font-extrabold")
                     }
                   >
-                    <p className="w-[8vw] truncate">{project.name}</p>
+                    <p className="truncate">{project.name}</p>
                   </button>
                 ))}
               </div>
@@ -135,7 +135,7 @@ export default function DashboardProjects({ projects }: Props) {
                 </IconButton>
               )}
             </div>
-            <div className="flex flex-wrap gap-5 justify-center">
+            <div className="flex flex-wrap w-[80vw] gap-5 justify-center">
               {stepsDisplay.map((step: intStep) => (
                 <StepCard step={step} key={step._id} idProject={selected._id} />
               ))}

@@ -66,7 +66,7 @@ export default function ProjectSteps({ idProject, isOwner, project, handleReload
       <div className="flex w-[5vw] items-center">
             {(currentSteps-5 !=0 && currentSteps != 0) && <IconButton className="bg-transparent text-black" onClick={() => nextOrBeforeSteps(false)}><FontAwesomeIcon icon={faChevronLeft} /></IconButton>}
             </div>
-            <div className="flex flex-wrap gap-5 justify-center">
+            <div className="flex flex-wrap w-[80vw] gap-5 justify-center">
           {stepsDisplay.map((step: intStep) => (
             <StepCard key={step._id} step={step} idProject={idProject} />
           ))}

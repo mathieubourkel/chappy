@@ -38,7 +38,6 @@ export default function Sidebar(props: any) {
   const [open, setOpen] = React.useState(0);
 
   const [reload, setReload] = useState<boolean>(false);
-
   const [user, setUser] = useState<intProfileUser>({
     address: "",
     city: "",

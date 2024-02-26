@@ -55,7 +55,7 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
         <div className="shrink-0">
           <Typography
               variant="h1"
-              className={"font-bold text-4xl"}
+              className={"font-bold text-4xl truncate"}
           >
             {step.name}
           </Typography>

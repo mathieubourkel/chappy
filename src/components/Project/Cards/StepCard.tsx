@@ -23,7 +23,7 @@ export default function StepCard({ step, idProject }: Props) {
     (step.description.length >= 75 ? "..." : "");
 
   return (
-    <Card className="mt-3 w-96 custom-card">
+    <Card className="mt-3 w-[70vw] custom-card">
       <CardBody className={"custom-card-body"}>
         <div className={"flex gap-2 items-center"}>
           <FontAwesomeIcon icon={faBarsProgress} />
