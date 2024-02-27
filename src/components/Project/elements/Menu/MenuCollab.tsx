@@ -26,7 +26,6 @@ type Props = {
   menu: boolean;
   handleOpenD: () => void;
   idProject: string
-  setReload: (bool: boolean) => void
 };
 export function MenuCollab({ handleOpenD, see, request, join, menu, idProject }: Props) {
   const [open, setOpen] = useState(false);

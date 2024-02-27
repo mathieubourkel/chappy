@@ -12,22 +12,18 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import './modal.css'
-import {
-  Type
-} from "../../../services/enums/document.type.enum.ts";
-import SelectTypeDocument
-  from "../elements/Select/SelectTypeDocument.tsx";
+import {Type} from "../../../services/enums/document.type.enum.ts";
+import SelectTypeDocument from "../elements/Select/SelectTypeDocument.tsx";
 import { modifyDocumentFromBDD } from "../../../services/api/documents.ts";
 import { intDocument } from "../../../services/interfaces/intDocument.tsx";
 import { FormEvent, InputEvent } from "../../../services/interfaces/generique.interface.tsx";
 
 type Props = {
   document: intDocument
-  handleReload: () => void;
+  setDocument: (document:intDocument) => void;
 };
 
-export default function DocumentModify({ document, handleReload}: Props) {
+export default function DocumentModify({ document, setDocument }: Props) {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -40,8 +36,8 @@ export default function DocumentModify({ document, handleReload}: Props) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await modifyDocumentFromBDD(document._id, form)
-    handleReload()
+    const tmpDoc = await modifyDocumentFromBDD(document._id, form)
+    setDocument(tmpDoc.data)
   }
   
   const handleTypeDocument = (value:any) : void => {

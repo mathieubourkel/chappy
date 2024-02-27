@@ -1,4 +1,4 @@
-export interface intPurchase {
+export interface intCompta {
     _id?:string,
     refId: string
     refModel: number
@@ -9,4 +9,4 @@ export interface intPurchase {
     deliveryDate: string
   }
 
-  export type intPurchases = intPurchase[]
+  export type intComptas = intCompta[]

@@ -1,79 +1,42 @@
-import { useEffect, useState } from "react";
-import { Spinner } from "@material-tailwind/react";
 import { useParams } from "react-router-dom";
+import { useFetch } from "../../hooks/useFetch.tsx";
 import EspaceComment from "../../components/Project/Comments/EspaceComment";
 import ProjectHeader from "../../components/Project/Project/ProjectHeader";
 import ProjectDesc from "../../components/Project/Project/ProjectDesc";
-import {getProjectById} from "../../services/api/projects";
 import ProjectSteps from "../../components/Project/Project/ProjectSteps";
-import { Status } from "../../services/enums/status.enum";
-import {
-  RefCommentEnum
-} from '../../services/enums/comment.ref.enum.ts';
-import { intProject } from "../../services/interfaces/intProject.tsx";
-import { formatDate } from "../../services/utils/FormatDate.tsx";
-import RessourceDontExist from "../../services/utils/RessourceDontExist.tsx";
+import {RefCommentEnum} from '../../services/enums/comment.ref.enum.ts';
+import { DataStatusEnum } from "../../services/enums/data.status.enum.ts";
+import { ApiPathEnum } from "../../services/enums/api.path.enum.ts";
 
 export default function ProjectPage() {
   const { idProject } = useParams();
   const idUser:string = localStorage.getItem("id") || "";
-  const [busy, setBusy] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
-  const [isOwner, setIsOwner] = useState<boolean>(false);
-  const [reload, setReload] = useState<boolean>(false)
-  const handleReload = () => setReload((bool) => !bool);
-  const [project, setProject] = useState<intProject>({
-    _id: undefined,
-    name: "",
-    description: "",
-    status: Status[0].value,
-    owner: {id: 0},
-    budget: 0,
-    estimEndDate: formatDate(new Date()),
-    code:"",
-    steps: [],
-    companies: []
-  });
-  useEffect(() => {
-    const getProject = async () => {
-      try {
-      const {data} = await getProjectById(idProject ||"");
-      data.steps.reverse()
-      setProject(data);
-      data.owner.id.toString() === idUser && setIsOwner(true); 
-      } catch (_error) {
-        setError(true)
-      } finally {
-        setBusy(false)
-      }   
-    }
-    getProject();
-  }, [idProject, idUser, reload]);
+ 
+  const {data, updateData, status, handleErrorAndLoading} = useFetch(`${ApiPathEnum.PROJECT}/${idProject}`)
 
-  if (error) return <RessourceDontExist />;
+  if (status === DataStatusEnum.FIRST_FETCH){
+    data.owner.id.toString() === idUser && (data.isOwner = true)
+    data.steps.reverse()
+  }
+
   return (
-    <main className="project-page md:mx-20 mx-5 mt-10">
-      {busy ? (
-        <div className="flex justify-center mt-20">
-          <Spinner className="h-16 w-16 text-brick-300" />
-        </div>
-      ) : (
-        <>
-          <ProjectHeader isOwner={isOwner} project={project} idProject={idProject ||''} />
-          <ProjectDesc
-            project={project}
-            setProject={setProject}
-            isOwner={isOwner}
-          />
-          <ProjectSteps
-            project={project}
-            idProject={idProject ||''}
-            isOwner={isOwner}
-            handleReload={handleReload}
-          />
-          <EspaceComment table={RefCommentEnum.projet} idParent={idProject ||""} />
-        </>
-      )}
-    </main>
-  );
+    <>
+    {handleErrorAndLoading()}
+    {data && <main className="project-page md:mx-20 mx-5 mt-10">
+      
+      <ProjectHeader isOwner={data.isOwner} project={data} />
+      <ProjectDesc
+        setProject={updateData}
+        project={data}
+        isOwner={data.isOwner}
+      />
+      <ProjectSteps
+        project={data}
+        isOwner={data.isOwner}
+        setProject={updateData}
+      />
+      <EspaceComment table={RefCommentEnum.projet} idParent={idProject ||""} />
+    </main>}
+    </>
+  )
 }

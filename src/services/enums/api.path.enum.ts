@@ -1,0 +1,25 @@
+export enum ApiPathEnum {
+    PROJECTS = "projects",
+    PROJECT = "project",
+    STEP = "step",
+    STEPS = "steps",
+    TASK = "task",
+    TASKS = "tasks",
+    COMPTA = "compta",
+    COMTPAS = "comptas",
+    COMMENT = "comment",
+    COMMENTS = "comments",
+    NOTIF = "notif",
+    NOTIFS = "log/notifs",
+    LOG = "log",
+    USER = "user",
+    USERS = "users",
+    COMPANY = "company",
+    COMPANIES = "companies",
+    MY_PROJECTS = "my-projects",
+    MY_COLLABS = "my-collabs",
+    MY_TASKS = "my-tasks",
+    DOCUMENT = "document",
+    DOCUMENTS = "documents"
+  }
+  

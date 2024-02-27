@@ -11,8 +11,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faListCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import SelectStatus from "../elements/Select/SelectStatus";
-import StepModifyTask from "../Modals/StepModifyTask";
-import StepDisplayTask from "../Modals/StepDisplayTask";
+import StepModifyTask from "./StepModifyTask";
+import StepDisplayTask from "./StepDisplayTask";
 import DeleteButton from "../elements/Buttons/DeleteButton";
 import {
   deleteTaskFromBDD,

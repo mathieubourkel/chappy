@@ -1,34 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import {
-  Button,
-  Dialog,
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
-  Input,
-} from "@material-tailwind/react";
+import {Button,Dialog,Card,CardBody,CardFooter,Typography,Input,} from "@material-tailwind/react";
 import CreateButton from "../elements/Buttons/CreateButton";
 import { useParams } from "react-router-dom";
 import { addPurchaseToBDD } from "../../../services/api/compta";
-import './modal.css'
 import Datepicker from "react-tailwindcss-datepicker";
 import SelectStatus from "../elements/Select/SelectStatus";
 import { formatDate } from "../../../services/utils/FormatDate";
-import { intPurchase } from "../../../services/interfaces/intCompta";
 import {  FormEvent, InputEvent } from "../../../services/interfaces/generique.interface";
+import { intCompta, intComptas } from "../../../services/interfaces/intCompta";
 
 type Props = {
-  handleReload: () => void;
+  setComptas: (comptas:intComptas) => void;
+  comptas: intComptas
 };
 
-export default function PurchaseAdd({ handleReload }: Props) {
+export default function ComptaAdd({ comptas, setComptas }: Props) {
   const date = new Date()
   const {idProject} = useParams();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  const [form, setForm] = useState<intPurchase>({
+  const [form, setForm] = useState<intCompta>({
     description: "", price:{fullTaxPrice:0, devise:0},
     deliveryDate: formatDate(date), commandDate: formatDate(date),
     status:0, refId: idProject || '', refModel:0
@@ -56,8 +48,8 @@ export default function PurchaseAdd({ handleReload }: Props) {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    await addPurchaseToBDD(form);
-    handleReload();
+    const newCompta = await addPurchaseToBDD(form);
+    setComptas([newCompta.data, ...comptas])
   }
 
   return (

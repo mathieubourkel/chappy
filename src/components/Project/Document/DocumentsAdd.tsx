@@ -1,28 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import {
-  Button,
-  Dialog,
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
-  Input,
-} from "@material-tailwind/react";
-
-import CreateButton from "../elements/Buttons/CreateButton";
-import { addDocumentToBDD } from "../../../services/api/documents";
-import './modal.css'
+import {Button,Dialog,Card,CardBody,CardFooter,Typography,Input,} from "@material-tailwind/react";
+import CreateButton from "../elements/Buttons/CreateButton.tsx";
+import { addDocumentToBDD } from "../../../services/api/documents.ts";
 import SelectTypeDocument from "../elements/Select/SelectTypeDocument.tsx";
 import { Type } from "../../../services/enums/document.type.enum.ts";
-import { intDocument } from "../../../services/interfaces/intDocument.tsx";
+import { intDocument, intDocuments } from "../../../services/interfaces/intDocument.tsx";
 import { FormEvent, InputEvent } from "../../../services/interfaces/generique.interface.tsx";
 
 type Props = {
-  handleReload: () => void;
+  setDocuments: (documents:intDocuments) => void;
+  documents: intDocuments
 };
 
-export default function DocumentsAdd({ handleReload }: Props) {
+export default function DocumentsAdd({ setDocuments, documents }: Props) {
 
   const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -35,8 +26,8 @@ export default function DocumentsAdd({ handleReload }: Props) {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    await addDocumentToBDD(form);
-    handleReload();
+    const newDoc = await addDocumentToBDD(form);
+    setDocuments([newDoc.data, ...documents])
   }
 
   const handleTypeDocument = (value:any) : void => {

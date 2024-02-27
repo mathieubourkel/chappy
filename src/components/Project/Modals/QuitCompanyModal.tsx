@@ -7,21 +7,21 @@ import {
 } from "@material-tailwind/react";
 import "./modal.css";
 import { quitCompany } from "../../../services/api/users";
-import { intAlert } from "../../../services/interfaces/generique.interface";
+import { colors } from "@material-tailwind/react/types/generic";
 
 type Props = {
   open: boolean
   handleOpen: () => void;
   handleReload: () => void;
-  setAlert: (alert:intAlert) => void;
+  newAlert: (message: string, color: colors) => void;
   idDemand: number
 };
 
-export default function QuitCompanyModal({idDemand, handleReload, open, handleOpen, setAlert}: Props) {
+export default function QuitCompanyModal({idDemand, handleReload, open, handleOpen, newAlert}: Props) {
 
   const handleClick = async () => {
       await quitCompany(idDemand);
-      setAlert({open: true, message:"Vous avez quitté une entreprise.", color: 'green'})
+      newAlert("Vous avez quitté une entreprise.", 'green')
       handleReload()
       handleOpen()
   };

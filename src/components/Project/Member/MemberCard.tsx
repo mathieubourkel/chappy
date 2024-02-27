@@ -1,28 +1,21 @@
-import {
-  Avatar,
-  Card, CardBody,
-  Typography
-} from "@material-tailwind/react";
-import DeleteButton from "../elements/Buttons/DeleteButton";
-
+import {Avatar,Card, CardBody,Typography} from "@material-tailwind/react";
+import DeleteButton from "../elements/Buttons/DeleteButton.tsx";
 import user from "../../../assets/img/icon_user.png";
-import {
-  deleteUserToProjectToBDD
-} from "../../../services/api/users.ts";
+import {deleteUserToProjectToBDD} from "../../../services/api/users.ts";
 import { intUserLight } from "../../../services/interfaces/intUser.tsx";
+import { intProject } from "../../../services/interfaces/intProject.tsx";
 
 type Props = {
   member: intUserLight
-  index: number;
-  idProject: string;
-  handleReload: () => void
+  project: intProject
+  setProject:(project:intProject) => void;
 };
 
-export default function MemberCard({ member, handleReload, idProject }: Props) {
+export default function MemberCard({ member, project, setProject }: Props) {
 
   async function handleDelete() {
-    await deleteUserToProjectToBDD(idProject, member.id ||0 );
-    handleReload()
+    await deleteUserToProjectToBDD(project._id|| "", member.id ||0 );
+    setProject({...project})
   }
 
   return (

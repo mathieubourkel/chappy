@@ -9,8 +9,6 @@ import LegalMentionsPage from "./pages/LegalMentions/LegalMentionsPage.tsx";
 import UserProfilePage from "./pages/UserProfile/UserProfilePage.tsx";
 import StepPage from "./pages/Step/StepPage.tsx";
 import MembersPage from "./pages/Members/MembersPage.tsx";
-import PurchasesPage from "./pages/Purchases/PurchasesPage.tsx";
-import DocumentsPage from "./pages/Documents/DocumentsPage.tsx";
 import CalendarPage from "./pages/Calendar/CalendarPage.tsx";
 import Footer from "./components/Layers/Footer/Footer.tsx";
 import { useState } from "react";
@@ -27,18 +25,17 @@ import ContextIsLogged from "./context/ContextIsLogged.tsx";
 import Sidebar from "./components/Layers/Sidebar/Sidebar.tsx";
 import ForgotPwd from "./pages/Password/ForgotPwd.tsx";
 import ResetPwd from "./pages/Password/ResetPwd.tsx";
+import DocumentPage from "./pages/Document/DocumentPage.tsx";
+import ComptaPage from "./pages/Compta/ComptaPage.tsx";
 
 
 export default function App() {
+
   const token = localStorage.getItem("token");
   const [isLogged, setIsLogged] = useState<boolean>(!!token);
   token && !isLogged && setIsLogged(true);
-  
   const [open, setOpen] = useState(false);
-
   const toggleSidebar = () => setOpen(!open)
-
-    
 
   return (
     <ContextIsLogged.Provider value={{ isLogged, setIsLogged }}>
@@ -69,11 +66,11 @@ export default function App() {
             <Route path="/project/:idProject" element={<ProjectPage />} />
             <Route
               path="/project/:idProject/documents"
-              element={<DocumentsPage />}
+              element={<DocumentPage />}
             />
             <Route
-              path="/project/:idProject/purchases"
-              element={<PurchasesPage />}
+              path="/project/:idProject/comptas"
+              element={<ComptaPage />}
             />
             <Route
               path="/project/:idProject/members"
@@ -94,10 +91,7 @@ export default function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </ScrollToTop>
-      <footer>
-        <Footer />
-        
-      </footer>
+      <Footer />
     </ContextIsLogged.Provider>
   );
 }

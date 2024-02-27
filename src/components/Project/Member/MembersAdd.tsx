@@ -1,27 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import {
-  Button,
-  Dialog,
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
-  Option,
-  Select,
-} from "@material-tailwind/react";
+import {Button,Dialog,Card,CardBody,CardFooter,Typography,Option,Select,} from "@material-tailwind/react";
 import CreateButton from "../elements/Buttons/CreateButton";
 import { useParams } from "react-router-dom";
 import { addUserToProjectToBDD, getAllUsers } from "../../../services/api/users";
-import './modal.css'
-import { intProjectLight } from "../../../services/interfaces/intProject";
+import { intProject } from "../../../services/interfaces/intProject";
 import { intUser, intUserLight, intUsers } from "../../../services/interfaces/intUser";
 import { FormEvent } from "../../../services/interfaces/generique.interface";
 
-
 type Props = {
-  project: intProjectLight
-  setProject: (project: intProjectLight) => void;
+  project: intProject
+  setProject: (project: intProject) => void;
 };
 
 export default function MembersAdd({ project, setProject}: Props) {
@@ -44,24 +33,18 @@ export default function MembersAdd({ project, setProject}: Props) {
   }, []);
 
   function handleChange(value: string | undefined) {
-    console.log(value)
     setSelected(value)
   }
 
   const handleOpen = () => setOpen((cur) => !cur);
 
   const handleSubmit = async (e: FormEvent) => {
-    try {
-      e.preventDefault();
-      const user:any = users.find((element:intUser) => element.email == selected)
-      const tmpArray:any = project.members
-      tmpArray.push({id: user.id, email: selected})
-      await addUserToProjectToBDD(idProject ||'', user.id, selected || "")
-      setProject({ ...project, members: tmpArray});
-    } catch (error) {
-      console.log(error)
-    }
-    
+    e.preventDefault();
+    const user:any = users.find((element:intUser) => element.email == selected)
+    const tmpArray:any = project.members
+    tmpArray.push({id: user.id, email: selected})
+    await addUserToProjectToBDD(idProject ||'', user.id, selected || "")
+    setProject({ ...project, members: tmpArray});
   }
 
   return (

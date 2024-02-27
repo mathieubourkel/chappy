@@ -20,7 +20,6 @@ import makeAnimated from "react-select/animated";
 import SelectStatus from "../elements/Select/SelectStatus";
 import ReactSelect from "react-select";
 const animatedComponents = makeAnimated();
-import './modal.css'
 import { CategoriesEnum } from "../../../services/enums/categories.enum";
 import { intTask } from "../../../services/interfaces/intTask";
 import { FormEvent, intSelects, InputEvent, intSelect } from "../../../services/interfaces/generique.interface";

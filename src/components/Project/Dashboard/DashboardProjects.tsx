@@ -1,76 +1,26 @@
-import StepCard from "../Cards/StepCard";
-import {
-  faBan,
-  faChevronLeft,
-  faChevronRight,
-  faCircleExclamation,
-} from "@fortawesome/free-solid-svg-icons";
+import StepCard from "../Step/StepCard";
+import {faBan,faCircleExclamation,} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import CreateButton from "../elements/Buttons/CreateButton";
 import OpenButton from "../elements/Buttons/OpenButton";
 import { Link } from "react-router-dom";
-import { Alert, IconButton, Typography } from "@material-tailwind/react";
-import {
-  intProject,
-  intProjects,
-} from "../../../services/interfaces/intProject";
+import { Alert, Typography } from "@material-tailwind/react";
+import {intProject,intProjects,} from "../../../services/interfaces/intProject";
 import { intStep } from "../../../services/interfaces/intStep";
+import { useFilterDisplay } from "../../../hooks/useFilterDisplay";
 
-type Props = {
-  projects: intProjects;
-};
+export default function DashboardProjects({ projects }:{projects:intProjects}) {
 
-export default function DashboardProjects({ projects }: Props) {
-  const [selected, setSelected] = useState(projects[0]);
+  const [selected, setSelected] = useState<intProject>(projects[0]);
+  const {filteredData, renderNextButton, renderBeforeButton } = useFilterDisplay(5, projects)
+  const {filteredData: filteredDataS, renderNextButton: renderNextButtonS, renderBeforeButton: renderBeforeButtonS, reloadFilteredData } = useFilterDisplay(5, selected.steps)
+  
   const handleClick = (project: intProject) => {
     setSelected(project);
-    setStepsDisplay(project.steps.slice(0, 5));
+    reloadFilteredData(project.steps);
   };
 
-  const [projectsDisplay, setProjectsDisplay] = useState(projects.slice(0, 5));
-  const [stepsDisplay, setStepsDisplay] = useState(selected.steps.slice(0, 5));
-  const [current, setCurrent] = useState(5);
-  const [currentSteps, setCurrentSteps] = useState(5);
-  const [firstTime, setFirstTime] = useState(false);
-  useEffect(() => {
-    if (firstTime) {
-      setProjectsDisplay(projects.slice(0, 5));
-      setCurrent(5);
-    }
-    setFirstTime(true);
-  }, [projects, firstTime]);
-  const nextOrBefore = (next: boolean) => {
-    if (next) {
-      setProjectsDisplay(
-        projects.slice(current, Math.min(current + 5, projects.length))
-      );
-      setCurrent(current + 5);
-    } else {
-      setProjectsDisplay(
-        projects.slice(Math.max(0, current - 10), current - 5)
-      );
-      setCurrent(current - 5);
-    }
-  };
-
-  const nextOrBeforeSteps = (next: boolean) => {
-    if (next) {
-      setStepsDisplay(
-        selected.steps.slice(
-          currentSteps,
-          Math.min(currentSteps + 5, selected.steps.length)
-        )
-      );
-      setCurrentSteps(currentSteps + 5);
-    } else {
-      setStepsDisplay(
-        selected.steps.slice(Math.max(0, currentSteps - 10), currentSteps - 5)
-      );
-      setCurrentSteps(currentSteps - 5);
-    }
-  };
- 
   return (
     <>
       {projects.length > 0 ? (
@@ -78,17 +28,10 @@ export default function DashboardProjects({ projects }: Props) {
           <div className="m-3 lg:flex lg:justify-between">
             <nav className="2xl:pl-20 flex justify-between lg:w-[70vw] gap-5">
               <div className="w-[5vw]">
-                {current - 5 != 0 && current != 0 && (
-                  <IconButton
-                    className="bg-transparent text-black"
-                    onClick={() => nextOrBefore(false)}
-                  >
-                    <FontAwesomeIcon icon={faChevronLeft} />
-                  </IconButton>
-                )}
+                {renderBeforeButton()}
               </div>
               <div className="flex justify-center w-full ml-5 sm:ml-0 w-[80vw] lg:max-w-[50vw]">
-                {projectsDisplay.map((project: intProject) => (
+                {filteredData.map((project: intProject) => (
                   <button
                     key={project._id}
                     onClick={() => handleClick(project)}
@@ -103,15 +46,7 @@ export default function DashboardProjects({ projects }: Props) {
                 ))}
               </div>
               <div className="w-[5vw]">
-                {current < projects.length &&
-                  current + 5 != projects.length && (
-                    <IconButton
-                      className="bg-transparent text-black"
-                      onClick={() => nextOrBefore(true)}
-                    >
-                      <FontAwesomeIcon icon={faChevronRight} />
-                    </IconButton>
-                  )}
+              {renderNextButton()}
               </div>
             </nav>
 
@@ -126,33 +61,16 @@ export default function DashboardProjects({ projects }: Props) {
           </div>
           <div className="flex gap-5 lg:mt-10">
             <div className="flex w-[5vw] items-center">
-              {currentSteps - 5 != 0 && currentSteps != 0 && (
-                <IconButton
-                  className="bg-transparent text-black"
-                  onClick={() => nextOrBeforeSteps(false)}
-                >
-                  <FontAwesomeIcon icon={faChevronLeft} />
-                </IconButton>
-              )}
+              {renderBeforeButtonS()}
             </div>
             <div className="flex flex-wrap w-[80vw] gap-5 justify-center">
-              {stepsDisplay.map((step: intStep) => (
+              {filteredDataS.map((step: intStep) => (
                 <StepCard step={step} key={step._id} idProject={selected._id} />
               ))}
             </div>
             <div className="flex w-[5vw] items-center">
-              {currentSteps < selected.steps.length &&
-                currentSteps + 5 != selected.steps.length && (
-                  <IconButton
-                    className="bg-transparent text-black"
-                    onClick={() => nextOrBeforeSteps(true)}
-                  >
-                    <FontAwesomeIcon icon={faChevronRight} />
-                  </IconButton>
-                )}
+            {renderNextButtonS()}
             </div>
-            
-            
           </div>
           {selected.steps.length == 0 && (
               <div>

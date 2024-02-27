@@ -1,51 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
-  Alert,
   Avatar,
   Button,
   IconButton,
   Input,
-  Spinner,
   Typography,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import avatar from "../../assets/img/icon_user.png";
 import "./userProfile.css";
-import { getUserInfo, modifyUserToBDD, quitCompany, resetPwd } from "../../services/api/users";
+import { modifyUserToBDD, quitCompany, resetPwd } from "../../services/api/users";
 import AddCompanyModal from "../../components/Project/Modals/AddCompanyModal";
 import RejoinCompanyModal from "../../components/Project/Modals/RejoinCompanyModal";
 import ModifyCompanyModal from "../../components/Project/Modals/ModifyCompanyModal";
 import QuitCompanyModal from "../../components/Project/Modals/QuitCompanyModal";
-import { intProfileUser } from "../../services/interfaces/intUser";
-import { FormEvent, InputEvent, intAlert } from "../../services/interfaces/generique.interface";
-import DeleteUser from "../../components/Project/Modals/DeleteUser";
-import ErrorFetchingData from "../../services/utils/ErrorFetchingData";
+import { intDemand, intProfileUser } from "../../services/interfaces/intUser";
+import { FormEvent, InputEvent } from "../../services/interfaces/generique.interface";
+import DeleteUser from "../../components/Project/Modals/DeleteMyAccount";
+import { ApiPathEnum } from "../../services/enums/api.path.enum";
+import { useFetch } from "../../hooks/useFetch";
+import { intCompany } from "../../services/interfaces/intCompany";
+import { useAlert } from "../../hooks/useAlert";
 
 export default function UserProfilePage() {
-  const [user, setUser] = useState<intProfileUser>({
-    firstname: "",
-    lastname: "",
-    email: "",
-    id: 0,
-    city: "",
-    address: "",
-    zip: "",
-    status: 0,
-    phone: "",
-    projects: [],
-    participations: [],
-    myOwnGroups: [{name:'', additionalInfos:'', description:'', id:0, demands:[]}],
-    myOwnTasks: [],
-    demands: []
-  });
-  const idUser:string = localStorage.getItem("id") ||'';
+
   const [displayPwd, setDisplayPwd] = useState<boolean>(false);
-  const [busy, setBusy] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
-  const [reload, setReload] = useState<boolean>(false);
-  const [alert, setAlert] = useState<intAlert>({open: false, message:'', color:'green'})
+  const {data, updateData, handleErrorAndLoading, handleReload} = useFetch(`${ApiPathEnum.USER}`)
+  const [renderAlert, newAlert] = useAlert()
   const [passwords, setPasswords] = useState<{oldPwd:string, newPwd:string}>({
     oldPwd: "", newPwd:""
   })
@@ -54,28 +37,13 @@ export default function UserProfilePage() {
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [openQuit, setOpenQuit] = useState<boolean>(false);
   const handleOpenQuit = () => setOpenQuit((bool) => !bool);
-  const handleReload = () => setReload((bool) => !bool);
   const handleOpenRejoin = () => setOpenRejoin((bool) => !bool);
   const handleOpenAdd = () => setOpenAdd((bool) => !bool);
   const handleOpenDelete = () => setOpenDelete((bool) => !bool);
   
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const {data} = await getUserInfo();
-        setUser(data);
-      } catch (error) {
-        setError(true)
-      } finally {
-        setBusy(false)
-      }  
-    };
-    fetchData();
-  }, [idUser, reload]);
-
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    updateData({ ...data, [name]: value });
   };
 
   const handlePasswords = (e: InputEvent) => {
@@ -91,10 +59,10 @@ export default function UserProfilePage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await modifyUserToBDD(user);
-      setAlert({open: true, message:"Les modifications ont bien été enregistrés.", color: 'green'})
+      await modifyUserToBDD(data);
+      newAlert("Les modifications ont bien été enregistrés.", 'green')
     } catch (error) {
-      setAlert({open: true, message:"Erreur lors de l'envoie des modifications", color: 'red'})
+      newAlert("Erreur lors de l'envoie des modifications", 'red')
     } 
   };
 
@@ -104,10 +72,10 @@ export default function UserProfilePage() {
     e.preventDefault();
     try {
       await resetPwd(passwords);
-      setAlert({open: true, message:'Le mot de passe a été mise à jour', color: 'green'})
+      newAlert('Le mot de passe a été mise à jour', 'green')
       setDisplayPwd(false);
     } catch (error) {
-      setAlert({open: true, message:'Erreur lors de la réinitialisation du mot de passe', color: 'red'})
+      newAlert('Erreur lors de la réinitialisation du mot de passe', 'red')
     }
   };
 
@@ -119,38 +87,28 @@ export default function UserProfilePage() {
       name={name}
       id={name}
       type={type}
-      value={user[name] as string}
+      value={data[name] as string}
       onChange={(e: InputEvent) => handleChange(e)}
     />
   );
-  if (error) return (<ErrorFetchingData name="User profile" />)
+
   return (
-    <main className={"sm:mx-20 mx-5"}>
-      {busy ? (
-        <div className="flex justify-center mt-20">
-          <Spinner className="h-16 w-16 text-brick-300" />
-        </div>
-      ) : (
-        <>
-      <section
-        className={"flex flex-col justify-center items-center gap-5 mt-10"}
-      >
-        
-        
+    <>
+    {handleErrorAndLoading()}
+    {data && <main className={"sm:mx-20 mx-5"}>
+      <section className={"flex flex-col justify-center items-center gap-5 mt-10"}>
         <Typography variant="h1" className={"font-bold"}>
           Profil
         </Typography>
         <Avatar src={avatar} alt="avatar" size="xxl" className={"avatar"} />
         <div className={"flex gap-5 justify-center"}>
-          <div className={"chip"}>{user.projects.length} projets</div>
+          <div className={"chip"}>{data.projects.length} projets</div>
           <div className={"chip"}>
-            {user.participations.length} collaborations
+            {data.participations.length} collaborations
           </div>
         </div>
       </section>
-      <Alert color={alert.color} className='m-1 sticky top-0 my-10' open={alert.open} onClose={() => setAlert({...alert, open:false})}>
-            {alert.message}
-          </Alert>
+      {renderAlert}
       <section className={"mt-5 lg:w-[55lvw] m-auto"}>
         <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
           <article>
@@ -260,13 +218,13 @@ export default function UserProfilePage() {
               </Typography>
               <div className="md:flex gap-3">
                 <Button size={"sm"} onClick={handleOpenAdd}>Ajouter une entreprise</Button>
-                {openAdd && <AddCompanyModal setAlert={setAlert} open={openAdd} handleOpen={handleOpenAdd} handleReload={handleReload}/> }
+                {openAdd && <AddCompanyModal newAlert={newAlert} open={openAdd} handleOpen={handleOpenAdd} handleReload={handleReload}/> }
 
               </div>
             </div>
 
             <div className="mb-5">
-              {user.myOwnGroups.length > 0 && user.myOwnGroups.map((group) => (
+              {data.myOwnGroups.length > 0 && data.myOwnGroups.map((group:intCompany) => (
                 <div key={group.id} className={"mb-5 w-full flex gap-5 items-center"}>
                 <Input
                   label="Mon entreprise"
@@ -277,11 +235,11 @@ export default function UserProfilePage() {
                   readOnly
                   value={group.name}
                 />
-               <ModifyCompanyModal setAlert={setAlert} group={group} handleReload={handleReload} /> 
+               <ModifyCompanyModal newAlert={newAlert} group={group} handleReload={handleReload} /> 
                 </div>
                 ))
               }
-              {user.myOwnGroups.length == 0  && 
+              {data.myOwnGroups.length == 0  && 
                 <div>
                   <p>Vous ne gérez pas d'entreprise</p>
                 </div>
@@ -300,11 +258,11 @@ export default function UserProfilePage() {
               <div className="md:flex gap-3">
               
                 <Button size={"sm"} onClick={handleOpenRejoin}>Rejoindre une entreprise</Button>
-                {openRejoin && <RejoinCompanyModal setAlert={setAlert} open={openRejoin} handleOpen={handleOpenRejoin} handleReload={handleReload}/> }
+                {openRejoin && <RejoinCompanyModal newAlert={newAlert} open={openRejoin} handleOpen={handleOpenRejoin} handleReload={handleReload}/> }
                 </div>
                 </div>
                 <div className="mb-5">
-              {user.demands && user.demands.map((demand) => (
+              {data.demands && data.demands.map((demand:intDemand) => (
                 <div key={demand.id}>
                   {demand.status == 1 ? 
                     <div className={"mb-5 w-full flex gap-5 items-center"}>
@@ -318,7 +276,7 @@ export default function UserProfilePage() {
                         value={demand.group.name}
                       />
                     <Button size={"sm"} onClick={handleOpenQuit}>Quitter mon entreprise</Button>
-                    <QuitCompanyModal idDemand={demand.id || 0} setAlert={setAlert} open={openQuit} handleOpen={handleOpenQuit} handleReload={handleReload}/>
+                    <QuitCompanyModal idDemand={demand.id || 0} newAlert={newAlert} open={openQuit} handleOpen={handleOpenQuit} handleReload={handleReload}/>
                       </div> : 
                       <div className={"mb-5 w-full flex gap-5 items-center"}>
                        <Input
@@ -333,7 +291,7 @@ export default function UserProfilePage() {
                         </div>}
                       </div>
                       )) }
-              {user.demands.length == 0 && 
+              {data.demands.length == 0 && 
                 <div>
                   <p>Vous n'êtes dans aucune entreprise</p>
                 </div>
@@ -357,8 +315,7 @@ export default function UserProfilePage() {
             </div>
           </article>
           </section>
-      </>
-      )}
-    </main>
+    </main>}
+    </>
   );
 }

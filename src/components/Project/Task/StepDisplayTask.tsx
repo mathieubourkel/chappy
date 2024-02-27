@@ -1,14 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Dialog,
-  Card,
-  CardBody,
-  Typography,
-  Textarea,
-  Input, Button,
-} from "@material-tailwind/react";
-
-import './modal.css'
+import {Dialog,Card,CardBody,Typography,Textarea,Input, Button,} from "@material-tailwind/react";
 import { CategoriesEnum } from "../../../services/enums/categories.enum";
 import { intTask } from "../../../services/interfaces/intTask";
 import { enumStatus } from "../../../services/enums/status.enum";

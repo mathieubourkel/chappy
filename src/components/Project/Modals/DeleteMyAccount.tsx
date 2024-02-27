@@ -7,7 +7,7 @@ type Props = {
   handleOpen: () => void;
 };
 
-export default function DeleteUser({open,handleOpen,}: Props) {
+export default function DeleteMyAccount({open,handleOpen,}: Props) {
   const handleDeleteUser = async () => {
     await deleteMyAccount();
     localStorage.removeItem("token");

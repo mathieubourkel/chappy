@@ -9,20 +9,20 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode, faList, faXmark } from "@fortawesome/free-solid-svg-icons";
-import ProjectDisplayCode from "../../Modals/ProjectDisplayCode.tsx";
-import DeleteProject from "../../Modals/DeleteProject.tsx";
+import ProjectDisplayCode from "../../Project/ProjectDisplayCode.tsx";
+import DeleteProject from "../../Project/DeleteProject.tsx";
 import { deleteProjectFromBDD } from "../../../../services/api/projects.ts";
 import { intProjectLight } from "../../../../services/interfaces/intProject.tsx";
 import { useState } from "react";
 
 type Props = {
-  idProject: string
   project: intProjectLight
 };
 
-export function MenuProject({ project, idProject }: Props) {
+export function MenuProject({ project }: Props) {
+
   async function handleDelete() {
-    await deleteProjectFromBDD(idProject);
+    await deleteProjectFromBDD(project._id || '');
   }
 
   const [open, setOpen] = useState(false);

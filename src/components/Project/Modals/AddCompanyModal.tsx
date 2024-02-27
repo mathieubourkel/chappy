@@ -11,16 +11,17 @@ import {
 import "./modal.css";
 import { addCompanyToBDDFromUser } from "../../../services/api/users.ts";
 import { intCompany } from "../../../services/interfaces/intCompany.tsx";
-import { FormEvent, InputEvent, intAlert } from "../../../services/interfaces/generique.interface.tsx";
+import { FormEvent, InputEvent } from "../../../services/interfaces/generique.interface.tsx";
+import { colors } from "@material-tailwind/react/types/generic";
 
 type Props = {
   open: boolean
   handleOpen: () => void;
   handleReload: () => void;
-  setAlert: (alert:intAlert) => void;
+  newAlert: (message: string, color: colors) => void;
 };
 
-export default function AddCompanyModal({ open, handleOpen, handleReload, setAlert}: Props) {
+export default function AddCompanyModal({ open, handleOpen, handleReload, newAlert}: Props) {
   const [company, setCompany] = useState<intCompany>({
     name:'', additionalInfos:'', description: ''
   })
@@ -32,7 +33,7 @@ export default function AddCompanyModal({ open, handleOpen, handleReload, setAle
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     await addCompanyToBDDFromUser(company);
-    setAlert({open: true, message:"L'entreprise a été ajouté avec succès.", color: 'green'})
+    newAlert("L'entreprise a été ajouté avec succès.", 'green')
     handleOpen()
     handleReload()
   };

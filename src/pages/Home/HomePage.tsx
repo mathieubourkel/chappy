@@ -13,11 +13,13 @@ export default function HomePage() {
             Bienvenue sur Chappy
           </Typography>
           <Typography variant="h3">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Une application de suivi de chantier pour particulier.
           </Typography>
           <Typography variant="paragraph" className={""}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut autem
-            commodi facilis magni non possimus, quibusdam repellat velit?{" "}
+            Vous pouvez créer un compte sur l'application et/ou ajouter une entreprise
+            si vous en avez une.
+            Vous aurez ensuite accès à un tableau de bord ou vous pourrez créer vos 
+            projets de rénovation ou de construction.
           </Typography>
         </article>
         <article className={"flex flex-wrap gap-5 justify-center"}>

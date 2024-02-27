@@ -1,6 +1,5 @@
 import { Button, Dialog, Card, CardBody, Typography } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
-import "./modal.css";
 
 type Props = {
   handleDelete: () => void;

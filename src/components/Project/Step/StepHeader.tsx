@@ -1,31 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Alert,
-  Card,
-  CardBody, Chip,
-  Typography
-} from "@material-tailwind/react";
-import {
-  faBookOpen,
-  faListCheck,
-} from "@fortawesome/free-solid-svg-icons";
+import {Alert,Card,CardBody, Chip,Typography} from "@material-tailwind/react";
+import {faBookOpen,faListCheck,} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModifiableInput from "../elements/Input/ModifiableInput.tsx";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
 import SelectDate from "../elements/Select/SelectDate.tsx";
 import { useParams } from "react-router-dom";
-import {
-  modifyStepToBDD,
-} from "../../../services/api/steps.ts";
+import {modifyStepToBDD,} from "../../../services/api/steps.ts";
 import Breadcrumb from "../../Layers/Breadcrumb/Breadcrumb.tsx";
-import ModifiableDescription
-  from "../elements/Input/ModifiableDescription.tsx";
-import SelectStatus
-  from "../elements/Select/SelectStatus.tsx";
-import {
-  Status
-} from "../../../services/enums/status.enum.ts";
+import ModifiableDescription from "../elements/Input/ModifiableDescription.tsx";
+import SelectStatus from "../elements/Select/SelectStatus.tsx";
+import {Status} from "../../../services/enums/status.enum.ts";
 import { intStep } from "../../../services/interfaces/intStep.tsx";
 
 type Props = {

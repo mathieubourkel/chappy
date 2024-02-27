@@ -1,15 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useApi } from "../../hooks/useApi";
+import { ApiPathEnum } from "../enums/api.path.enum";
 
 const api = useApi();
-const LOG_ENDPOINT = "log";
-
-export async function getNotificationsByUser() {
-  return await api.get(`${LOG_ENDPOINT}/notifs`)
-}
 
   export async function viewNotificationToBDD(idNotification:string) {
-    return await api.get(`${LOG_ENDPOINT}/notif/view/${idNotification}`)
+    return await api.get(`${ApiPathEnum.LOG}/notif/view/${idNotification}`)
   }
 
 

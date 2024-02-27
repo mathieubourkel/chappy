@@ -12,17 +12,18 @@ import {
 import "./modal.css";
 import { deleteCompanyToBDD, modifyCompanyToBDD, refuseDemandCompany, validateDemandCompany } from "../../../services/api/users.ts";
 import { intCompany } from "../../../services/interfaces/intCompany.tsx";
-import { InputEvent, intAlert } from "../../../services/interfaces/generique.interface";
+import { InputEvent } from "../../../services/interfaces/generique.interface";
 import { faCheck, faPen, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { colors } from "@material-tailwind/react/types/generic";
 
 type Props = {
   group: intCompany
   handleReload: () => void;
-  setAlert: (alert:intAlert) => void;
+  newAlert: (message: string, color: colors) => void;
 };
 
-export default function ModifyCompanyModal({ handleReload,group, setAlert}: Props) {
+export default function ModifyCompanyModal({ handleReload,group, newAlert}: Props) {
   const [company, setCompany] = useState<intCompany>(group)
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((bool) => !bool);
@@ -33,14 +34,14 @@ export default function ModifyCompanyModal({ handleReload,group, setAlert}: Prop
 
   const handleClick = async () => {
     await modifyCompanyToBDD(company.id ||0, company);
-    setAlert({open: true, message:"La modification a été executé avec succès.", color: 'green'})
+    newAlert("La modification a été executé avec succès.", 'green')
     handleOpen()
     handleReload()
   };
 
   const handleDelete = async () => {
     await deleteCompanyToBDD(company.id || 0);
-    setAlert({open: true, message:"L'entreprise a été suprimé.", color: 'green'})
+    newAlert("L'entreprise a été suprimé.",'green')
     handleOpen()
     handleReload()
   };

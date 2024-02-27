@@ -1,34 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import {
-  Button,
-  Dialog,
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
-  Input,
-  IconButton,
-} from "@material-tailwind/react";
+import {Button,Dialog,Card,CardBody,CardFooter,Typography,Input,IconButton} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-
-import "./modal.css";
 import { modifyPurchaseFromBDD } from "../../../services/api/compta";
 import Datepicker from "react-tailwindcss-datepicker";
 import SelectStatus from "../elements/Select/SelectStatus";
-import { intPurchase } from "../../../services/interfaces/intCompta";
+import { intCompta } from "../../../services/interfaces/intCompta";
 import { FormEvent, InputEvent} from "../../../services/interfaces/generique.interface";
 
 type Props = {
-  purchase: intPurchase;
-  handleReload: () => void;
+  compta: intCompta
+  setStateCompta:(compta:intCompta) => void;
 };
 
-export default function PurchaseModify({ purchase, handleReload }: Props) {
+export default function ComptaModify({ compta, setStateCompta }: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  const [form, setForm] = useState<intPurchase>({ ...purchase });
+  const [form, setForm] = useState<intCompta>({ ...compta });
 
   function handleChange(e: InputEvent) {
     const { name, value } = e.target;
@@ -53,8 +42,8 @@ export default function PurchaseModify({ purchase, handleReload }: Props) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await modifyPurchaseFromBDD(purchase._id ||'', form);
-    handleReload();
+    const tmpCompta = await modifyPurchaseFromBDD(form._id ||'', form);
+    setStateCompta(tmpCompta.data)
   };
 
   return (
@@ -77,10 +66,7 @@ export default function PurchaseModify({ purchase, handleReload }: Props) {
             <CardBody className="flex flex-col gap-4">
               <Typography
                 variant="h3"
-                className={
-                  "text-marine-300 text-xl font-extrabold text-center mb-5"
-                }
-              >
+                className={"text-marine-300 text-xl font-extrabold text-center mb-5"}>
                 Modifier un document
               </Typography>
               <Input

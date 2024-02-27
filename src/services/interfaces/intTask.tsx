@@ -17,4 +17,10 @@ export interface intTask {
     project?: string
 }
 
+export interface intTaskForCalendar extends intTask {
+    title : string,
+    jalons: number
+    ownerP: number
+}
+
 export type intTasks = intTask[]

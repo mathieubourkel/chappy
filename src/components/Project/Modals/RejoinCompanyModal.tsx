@@ -11,19 +11,20 @@ import "./modal.css";
 import makeAnimated from "react-select/animated";
 import { getAllCompanies, rejoinCompanyDemand } from "../../../services/api/users.ts";
 import ReactSelect from "react-select";
-import { intAlert, intSelects } from "../../../services/interfaces/generique.interface.tsx";
+import { intSelects } from "../../../services/interfaces/generique.interface.tsx";
 import { intCompany, intLightCompany } from "../../../services/interfaces/intCompany.tsx";
+import { colors } from "@material-tailwind/react/types/generic";
 
 type Props = {
   open: boolean
   handleOpen: () => void;
   handleReload: () => void;
-  setAlert: (alert:intAlert) => void;
+  newAlert: (message: string, color: colors) => void;
 };
 
 const animatedComponents = makeAnimated();
 
-export default function RejoinCompanyModal({ open, handleOpen, handleReload, setAlert}: Props) {
+export default function RejoinCompanyModal({ open, handleOpen, handleReload, newAlert}: Props) {
     const [companies, setCompanies] = useState<intSelects>([]);
     const [error, setError] = useState<boolean>(false)
     const [company, setCompany] = useState<intLightCompany>({id:0})
@@ -50,11 +51,11 @@ export default function RejoinCompanyModal({ open, handleOpen, handleReload, set
   const handleClick = async () => {
     try {
       await rejoinCompanyDemand(company.id || 0);
-      setAlert({open: true, message:"Votre demande pour rejoindre l'entreprise a été envoyé.", color: 'green'})
+      newAlert("Votre demande pour rejoindre l'entreprise a été envoyé.", 'green')
       handleOpen()
       handleReload()
     } catch {
-      setAlert({open: true, message:"Votre demande pour rejoindre l'entreprise a échoué.", color: 'red'})
+      newAlert("Votre demande pour rejoindre l'entreprise a échoué.", 'red')
     }
   };
   if (error) return <div>Error Fetching Companies</div>

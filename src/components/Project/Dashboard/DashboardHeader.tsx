@@ -1,29 +1,15 @@
 import CreateButton from "../elements/Buttons/CreateButton.tsx";
 import {Link} from "react-router-dom";
 import RejoinModal from "../Modals/RejoinModal.tsx";
-import {
-    Alert,
-    Chip,
-    Typography,
-} from "@material-tailwind/react";
-import {
-    FontAwesomeIcon
-} from "@fortawesome/react-fontawesome";
-import {
-    faCircleInfo,
-    faNewspaper,
-} from "@fortawesome/free-solid-svg-icons";
-import Breadcrumb
-    from "../../Layers/Breadcrumb/Breadcrumb.tsx";
-import Calendar from "../Calendar/Calendar.tsx";
+import {Alert,Chip,Typography,} from "@material-tailwind/react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCircleInfo,faNewspaper} from "@fortawesome/free-solid-svg-icons";
+import Breadcrumb from "../../Layers/Breadcrumb/Breadcrumb.tsx";
 import { useState } from "react";
 import RejoinButton from "../elements/Buttons/OpenButton.tsx";
+import Calendar from "../Calendar/Calendar.tsx";
 
-type Props = {
-  nbProj: number;
-};
-
-export default function DashboardHeader({ nbProj }: Props) {
+export default function DashboardHeader({ nbProj }: {nbProj: number}) {
   const userName:string = localStorage.getItem('name') ||""
 
   const [open, setOpen] = useState(false);
@@ -62,17 +48,16 @@ export default function DashboardHeader({ nbProj }: Props) {
                 </div>
 
               <p className="p-2">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
-                obcaecati, perferendis dignissimos quae veritatis vitae fugiat
-                ratione dolorum similique aspernatur deserunt suscipit quaerat
-                porro iure cumque maiores quibusdam est aliquam?
+                Bienvenu sur le dashboard de Chappy, le site est actuellement en cours de développement par l'équipe des
+                SUM42 de la formation ALT Incubateur Tech
+                L'infrastructure est en base microservices, et toute l'équipe vous souhaite une bonne navigation.
               </p>
             </div>
               <Alert
                   icon={<FontAwesomeIcon icon={faCircleInfo} className={"text-marine-300 text-xl"}/>}
                   className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 mb-5"
               >
-                  Message d'information en cas de besoin.
+                  Vous avez un nouveau message ! 
               </Alert>
           </div>
         ) : (

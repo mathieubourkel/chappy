@@ -1,48 +1,21 @@
-import {
-  Alert,
-  IconButton,
-} from "@material-tailwind/react";
+import {Alert,IconButton,} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBan,
-  faChevronLeft,
-  faChevronRight,
-  faFilter
-} from "@fortawesome/free-solid-svg-icons";
-import StepCreateTask from "../Modals/StepCreateTask";
-import TaskCard from "../Cards/TaskCard";
+import {faBan,faFilter} from "@fortawesome/free-solid-svg-icons";
+import StepCreateTask from "../Task/StepCreateTask";
+import TaskCard from "../Task/TaskCard";
 import { intStep } from "../../../services/interfaces/intStep";
 import { intTask } from "../../../services/interfaces/intTask";
-import { useEffect, useState } from "react";
+import { useFilterDisplay } from "../../../hooks/useFilterDisplay";
 
 type Props = {
   step:intStep
+  setStep: (step:intStep) => void;
   handleReload: () => void;
 }
 
-export default function StepTasks({step, handleReload}:Props) {
-  const [tasksDisplay, setTasksDisplay] = useState(step.tasks.slice(0,5))
-  const [current, setCurrent] = useState(5)
-  const [firstTime, setFirstTime] = useState(false)
+export default function StepTasks({step, setStep, handleReload}:Props) {
 
-  useEffect(() => {
-    if(firstTime) {
-      setTasksDisplay(step.tasks.slice(0,5))
-      setCurrent(5)
-    }
-    setFirstTime(true)
-    
-  }, [step.tasks, firstTime])
-
-  const nextOrBefore = (next: boolean) => {
-    if (next) {
-      setTasksDisplay(step.tasks.slice(current, Math.min(current +5, step.tasks.length)))
-      setCurrent(current +5)
-    } else {
-      setTasksDisplay(step.tasks.slice(Math.max(0, current -10), current-5))
-      setCurrent(current -5)
-    }
-  }
+  const {filteredData, renderNextButton, renderBeforeButton, reloadFilteredData} = useFilterDisplay(5, step.tasks)
 
   return (
     <section className="mb-20">
@@ -51,8 +24,9 @@ export default function StepTasks({step, handleReload}:Props) {
         <nav className="flex gap-5 items-center">
           <div>
             <StepCreateTask
-              handleReload={handleReload}
+              setStep={setStep}
               step={step}
+              reloadFilteredData={reloadFilteredData}
             />
           </div>
           <div>
@@ -64,10 +38,10 @@ export default function StepTasks({step, handleReload}:Props) {
       </div>
       <div className="flex gap-5 lg:mt-10">
       <div className="flex w-[5vw] items-center">
-        {(current-5 !=0 && current != 0) && <IconButton className="bg-transparent text-black" onClick={() => nextOrBefore(false)}><FontAwesomeIcon icon={faChevronLeft} /></IconButton>}
+        {renderBeforeButton()}
         </div>
             <div className="flex w-[80vw] flex-wrap gap-5 justify-center">
-          {tasksDisplay.map((task: intTask) => (
+          {filteredData.map((task: intTask) => (
             <TaskCard
               key={task._id}
               handleReload={handleReload}
@@ -77,7 +51,7 @@ export default function StepTasks({step, handleReload}:Props) {
           ))}
           </div>
           <div className="flex w-[5vw] items-center">
-          {current < step.tasks.length && current+5 != step.tasks.length  && <IconButton className="bg-transparent text-black" onClick={() => nextOrBefore(true)}><FontAwesomeIcon icon={faChevronRight} /></IconButton>}
+          {renderNextButton()}
         </div>
         </div>
 

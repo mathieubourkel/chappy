@@ -1,8 +1,5 @@
 import { Link } from "react-router-dom";
-import {
-    Button, Tooltip,
-    Typography
-} from "@material-tailwind/react";
+import { Button, Tooltip,Typography} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCartShopping,faFolderOpen,faUser} from "@fortawesome/free-solid-svg-icons";
 import {  intProjectLight } from "../../../services/interfaces/intProject.tsx";
@@ -11,11 +8,10 @@ import {MenuProject} from "../elements/Menu/MenuProject.tsx";
 
 type Props = {
   project: intProjectLight
-  idProject: string
   isOwner: boolean
 }
 
-export default function ProjectHeader({project ,idProject, isOwner} :Props) {
+export default function ProjectHeader({project, isOwner} :Props) {
   return (
       <section className="lg:flex justify-between mb-20">
         <div className='lg:w-1/2'>
@@ -31,7 +27,7 @@ export default function ProjectHeader({project ,idProject, isOwner} :Props) {
         </div>
         {isOwner && 
         <nav className="flex gap-2 items-center justify-center xl:justify-end lg:w-1/2">
-          <MenuProject idProject={idProject} project={project} />
+          <MenuProject project={project} />
 
             <Tooltip
                 content={"Participants"}
@@ -41,7 +37,7 @@ export default function ProjectHeader({project ,idProject, isOwner} :Props) {
                     unmount: { scale: 0, y: 25 },
                 }}
             >
-          <Link to={"/project/"+ idProject + "/members"}>
+          <Link to={"/project/"+ project._id + "/members"}>
             <Button variant="outlined" size={"sm"} className="flex text-marine-300 border-marine-300">
               <FontAwesomeIcon icon={faUser} className="lg:mr-2" />
               <span className="hidden 2xl:inline whitespace-nowrap">Participants</span>
@@ -57,7 +53,7 @@ export default function ProjectHeader({project ,idProject, isOwner} :Props) {
                     unmount: { scale: 0, y: 25 },
                 }}
             >
-              <Link to={"/project/"+ idProject + "/documents"}>
+              <Link to={"/project/"+ project._id + "/documents"}>
                 <Button className="bg-brick-300 flex" size={"sm"}>
                   <FontAwesomeIcon icon={faFolderOpen} className="lg:mr-2" />
                   <span className="hidden whitespace-nowrap 2xl:inline">Mes documents</span>
@@ -73,7 +69,7 @@ export default function ProjectHeader({project ,idProject, isOwner} :Props) {
                     unmount: { scale: 0, y: 25 },
                 }}
             >
-              <Link to={"/project/"+ idProject + "/purchases"}>
+              <Link to={"/project/"+ project._id + "/comptas"}>
                 <Button
                   className="button-project flex text-brick-300 border-brick-300"
                   variant="outlined" size={"sm"}

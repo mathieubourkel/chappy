@@ -1,11 +1,6 @@
-import {
-    faFolderPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import {faFolderPlus,} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    Button,
-    Tooltip
-} from "@material-tailwind/react";
+import {Button,Tooltip} from "@material-tailwind/react";
 
 type Props = {
     value:string

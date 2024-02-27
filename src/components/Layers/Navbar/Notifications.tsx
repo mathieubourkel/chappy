@@ -1,53 +1,41 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
 import {Avatar,MenuItem,MenuList,Typography,} from "@material-tailwind/react";
 import { faClock} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import iUser from "../../../assets/img/icon_user.png";
-import {getNotificationsByUser,viewNotificationToBDD,} from "../../../services/api/notifications";
-import { intNotification, intNotifications } from "../../../services/interfaces/intNotification";
+import {viewNotificationToBDD,} from "../../../services/api/notifications";
+import { intNotification } from "../../../services/interfaces/intNotification";
+import { useFetch } from "../../../hooks/useFetch";
+import { ApiPathEnum } from "../../../services/enums/api.path.enum";
+import { DataStatusEnum } from "../../../services/enums/data.status.enum";
 
 export default function Notifications() {
 
-  const [notifications, setNotifications] = useState<intNotifications>([]);
-  const [error, setError] = useState<boolean>(false);
-  const [reload, setReload] = useState(false);
+  const {data, status, handleReload} = useFetch(`${ApiPathEnum.NOTIFS}`)
 
-  useEffect(() => {
-    const getNotifs = async () => {
-      try {
-        const {data} = await getNotificationsByUser();
-        setNotifications(data.reverse());
-      } catch (error) {
-        setError(true);
-      }
-    };
+  if (status === DataStatusEnum.FIRST_FETCH) data.reverse()
 
-    getNotifs();
-  }, [reload]);
-
-  const handleReload = () => setReload((cur) => !cur)
-  const now = Date.now()
   const differenceInMinute = (sendDate: string) => {
+    const now = Date.now()
     const heureCrea = Number(new Date(sendDate))
     return Math.floor((now - heureCrea) / 60000);
   };
-
 
   const handleView = async (idNotification:string) => {
     await viewNotificationToBDD(idNotification);
     handleReload()
   };
 
-  if (error) return (
+  if (status == DataStatusEnum.ERRORS) return (
   <MenuList>
       <span>Failed to get the notifications data</span>
   </MenuList>
   )
 
   return (
-    <MenuList>
-      {notifications.map((notification:intNotification) => (
+    <>
+    {data && <MenuList>
+      {data.map((notification:intNotification) => (
         <div key={notification._id} className="flex justify-between">
             <MenuItem onClick={() => handleView(notification._id ||'')}
               className={`flex items-center gap-4 py-2 pl-2 pr-8 hover:bg-marine-100/10`}
@@ -72,6 +60,7 @@ export default function Notifications() {
             </MenuItem>
         </div>
       ))}
-    </MenuList>
+    </MenuList>}
+    </>
   );
 }

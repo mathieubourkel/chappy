@@ -1,19 +1,20 @@
-import {
-  Card, CardBody,
-  Typography
-} from "@material-tailwind/react";
-import DeleteButton from "../elements/Buttons/DeleteButton";
-import DocumentModify from "../Modals/DocumentModifiy";
-import { deleteDocumentFromBDD } from "../../../services/api/documents";
+import {Card, CardBody,Typography} from "@material-tailwind/react";
+import DeleteButton from "../elements/Buttons/DeleteButton.tsx";
+import DocumentModify from "./DocumentModifiy.tsx";
+import { deleteDocumentFromBDD } from "../../../services/api/documents.ts";
 import { DocumentTypeEnum } from "../../../services/enums/document.type.enum.ts";
-import { intDocument } from "../../../services/interfaces/intDocument.tsx";
+import { intDocument, intDocuments } from "../../../services/interfaces/intDocument.tsx";
+import { useState } from "react";
 
 type Props = {
   document: intDocument
-  handleReload: () => void;
+  documents: intDocuments
+  setDocuments: (documents:intDocuments) => void;
 };
 
-export default function DocumentCard({ document, handleReload }: Props) {
+export default function DocumentCard({ document, documents, setDocuments }: Props) {
+
+  const [stateDocument, setStateDocument] = useState<intDocument>(document)
 
   const getDocumentTypeString = (type: DocumentTypeEnum): string => {
     const typeDocument = Object.entries(DocumentTypeEnum);
@@ -23,7 +24,7 @@ export default function DocumentCard({ document, handleReload }: Props) {
   
   const handleDelete = async () => {
     await deleteDocumentFromBDD(document._id)
-    handleReload()
+    setDocuments([...documents])
   }
 
   return (
@@ -46,10 +47,7 @@ export default function DocumentCard({ document, handleReload }: Props) {
             </Typography>
           </div>
               <div className='flex justify-end'>
-                <DocumentModify
-                    document={document}
-                    handleReload={handleReload}
-                />
+                <DocumentModify document={stateDocument} setDocument={setStateDocument}/>
                 <DeleteButton handleDeleteBDD={handleDelete} />
               </div>
         </CardBody>

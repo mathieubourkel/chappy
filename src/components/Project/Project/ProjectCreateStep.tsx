@@ -15,16 +15,18 @@ import Datepicker from "react-tailwindcss-datepicker";
 import { useParams } from "react-router-dom";
 import { addProjectStepToBDD } from "../../../services/api/steps";
 import SelectStatus from "../elements/Select/SelectStatus";
-import "./modal.css";
 import { formatDate } from "../../../services/utils/FormatDate";
 import { intCreateStep } from "../../../services/interfaces/intStep";
 import { FormEvent, InputEvent } from "../../../services/interfaces/generique.interface";
+import { intProject } from "../../../services/interfaces/intProject";
 
 type Props = {
-  handleReload: () => void;
+  setProject: (project:intProject) => void;
+  project: intProject
+  reloadFilteredData: (newData:any[]) => void;
 };
 
-export default function ProjectCreateStep({ handleReload }: Props) {
+export default function ProjectCreateStep({ setProject, project, reloadFilteredData }: Props) {
   const date = new Date()
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -47,8 +49,10 @@ export default function ProjectCreateStep({ handleReload }: Props) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await addProjectStepToBDD(form);
-    handleReload()
+    const newStep = await addProjectStepToBDD(form);
+    const newStepsArray = [newStep.data, ...project.steps]
+    setProject({...project, steps: newStepsArray})
+    reloadFilteredData(newStepsArray)
   };
 
   const handleDate = (value: any) => {

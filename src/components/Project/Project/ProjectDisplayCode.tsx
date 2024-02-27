@@ -8,7 +8,6 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
-import "./modal.css";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 type Props = {

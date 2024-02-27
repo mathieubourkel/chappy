@@ -1,10 +1,9 @@
 import robot from "../../assets/img/404.png";
-import {
-    Button,
-    Typography
-} from "@material-tailwind/react";
+import {Button,Typography} from "@material-tailwind/react";
 import {NavLink} from "react-router-dom";
+
 export default function RessourceDontExist() {
+    
   return (
     <main className={"lg:flex gap-5 justify-center items-center"}>
 

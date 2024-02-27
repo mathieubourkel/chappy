@@ -19,7 +19,6 @@ import makeAnimated from "react-select/animated";
 import CreateButton from "../elements/Buttons/CreateButton";
 import SelectCategory from "../elements/Select/SelectCategory";
 import SelectStatus from "../elements/Select/SelectStatus";
-import "./modal.css";
 import { formatDate } from "../../../services/utils/FormatDate";
 import { intStep } from "../../../services/interfaces/intStep";
 import { intTask } from "../../../services/interfaces/intTask";
@@ -27,14 +26,12 @@ import { FormEvent, InputEvent, intSelect, intSelects } from "../../../services/
 import { ManageWebSocket } from "../../../services/utils/ManageWebSocket";
 
 type Props = {
-  handleReload: () => void;
   step: intStep;
+  setStep: (step:intStep) => void;
+  reloadFilteredData: (newData: any[]) => void;
 };
 
-export default function StepCreateTask({
-  handleReload,
-  step,
-}: Props) {
+export default function StepCreateTask({setStep, step, reloadFilteredData}: Props) {
   const { idStep, idProject } = useParams();
   const animatedComponents = makeAnimated();
   const date = new Date()
@@ -73,7 +70,7 @@ export default function StepCreateTask({
     taskSchema
       .validate(form)
       .then(async (validForm:any) => {
-        await addTaskToStepToBDD(validForm);
+        const newTask = await addTaskToStepToBDD(validForm);
         const tmpArray:any = []
         validForm.members.map((member:any) => {
           tmpArray.push(member.id.toString())
@@ -81,7 +78,9 @@ export default function StepCreateTask({
 
         new ManageWebSocket().sendMessage(`Vous avez été invité sur la tâche ${validForm.name}`, tmpArray) 
         handleOpen();
-        handleReload();
+        const newTasksArray = [newTask.data, ...step.tasks]
+        setStep({...step, tasks: newTasksArray})
+        reloadFilteredData(newTasksArray)
       })
       .catch((validationError) => {
         alert(validationError.errors);
