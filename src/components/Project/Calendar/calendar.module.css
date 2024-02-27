@@ -1,0 +1,9 @@
+@import "../../../css/index.module.css";
+
+.css-sizvqo-MuiTableCell-root .Cell-today {
+    background: var(--input-color) !important;
+}
+
+.css-vnscjq-MuiButtonBase-root-MuiButton-root,.css-71a9mb-MuiButtonBase-root-MuiIconButton-root {
+    color: var(--input-color) !important;
+}
