@@ -153,6 +153,14 @@ p {
     min-height: 8rem;
 }
 
+.css-sizvqo-MuiTableCell-root .Cell-today {
+    background: var(--input-color) !important;
+}
+
+.css-vnscjq-MuiButtonBase-root-MuiButton-root,.css-71a9mb-MuiButtonBase-root-MuiIconButton-root {
+    color: var(--input-color) !important;
+}
+
 .custom-task {
     border: 1px solid var(--border-color);
     border-radius: 0.5em;
@@ -340,17 +348,6 @@ p {
     right: 1rem;
     z-index: 100;
 }
-
-.css-sizvqo-MuiTableCell-root .Cell-today {
-    background: var(--input-color) !important;
-}
-
-.css-vnscjq-MuiButtonBase-root-MuiButton-root,.css-71a9mb-MuiButtonBase-root-MuiIconButton-root {
-    color: var(--input-color) !important;
-}
-
-
-
 
 
 

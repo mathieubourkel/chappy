@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Paper from "@mui/material/Paper";
 import {ViewState,} from "@devexpress/dx-react-scheduler";
 import {Scheduler,MonthView,Appointments,DateNavigator,Toolbar,AppointmentTooltip,Resources,} from "@devexpress/dx-react-scheduler-material-ui";
@@ -11,6 +12,11 @@ export default function Calendar({className}:{className:string}) {
     const currentDate = new Date();
     const {data, updateData, status, handleErrorAndLoading} = useFetch(`${ApiPathEnum.MY_TASKS}`)
 
+    const dayDate = document.querySelectorAll('.Cell-today');
+    const title = document.querySelectorAll('.css-71a9mb-MuiButtonBase-root-MuiIconButton-root, .css-vnscjq-MuiButtonBase-root-MuiButton-root');
+    dayDate.forEach((td:any) => td.style.background = "rgb(126,55,47, 1)")
+    title.forEach((td:any) => td.style.color = "rgb(126,55,47, 1)")
+  
     if (status === DataStatusEnum.FIRST_FETCH){
         const tmpTasks:intTasks = []
         data.map((task:intTaskForCalendar) => {
@@ -18,6 +24,7 @@ export default function Calendar({className}:{className:string}) {
         task.ownerP = 1;
         tmpTasks.push(task)
         })
+        
         updateData(tmpTasks)
     }
   return (
