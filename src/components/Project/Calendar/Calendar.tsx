@@ -12,10 +12,10 @@ export default function Calendar({className}:{className:string}) {
     const currentDate = new Date();
     const {data, updateData, status, handleErrorAndLoading} = useFetch(`${ApiPathEnum.MY_TASKS}`)
 
-    const dayDate = document.querySelectorAll('.Cell-today');
-    const title = document.querySelectorAll('.css-71a9mb-MuiButtonBase-root-MuiIconButton-root, .css-vnscjq-MuiButtonBase-root-MuiButton-root');
-    dayDate.forEach((td:any) => td.style.background = "rgb(126,55,47, 1)")
-    title.forEach((td:any) => td.style.color = "rgb(126,55,47, 1)")
+    // const dayDate = document.querySelectorAll('.Cell-today');
+    // const title = document.querySelectorAll('.css-71a9mb-MuiButtonBase-root-MuiIconButton-root, .css-vnscjq-MuiButtonBase-root-MuiButton-root');
+    // dayDate.forEach((td:any) => td.style.background = "rgb(126,55,47, 1)")
+    // title.forEach((td:any) => td.style.color = "rgb(126,55,47, 1)")
   
     if (status === DataStatusEnum.FIRST_FETCH){
         const tmpTasks:intTasks = []

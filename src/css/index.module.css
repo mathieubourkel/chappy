@@ -35,6 +35,7 @@
 
     --input-color: rgba(126,55,47,1);
     --datepicker-color: rgba(126,55,47,0.2);
+    --datepicker-selected: rgba(126, 55, 47, 0.65);
     --input-gray: rgba(119,125,149,0.4);
     --desc-gray: rgba(119,125,149,0.2);
 
@@ -199,12 +200,18 @@ p {
 
 /*======================================== CALENDAR ========================================*/
 
-
-.css-sizvqo-MuiTableCell-root .Cell-today {
-    background: var(--input-color) !important;
+td .Cell-today {
+    color: var(--brick) !important;
+    background: transparent !important;
+    font-weight: bold;
 }
 
-.css-vnscjq-MuiButtonBase-root-MuiButton-root,.css-71a9mb-MuiButtonBase-root-MuiIconButton-root {
+.MuiTableCell-body .Cell-selected {
+    background: var(--datepicker-selected) !important;
+}
+
+
+.MuiButton-textPrimary, .MuiSvgIcon-fontSizeMedium {
     color: var(--input-color) !important;
 }
 
@@ -398,13 +405,7 @@ p {
     z-index: 100;
 }
 
-.css-sizvqo-MuiTableCell-root .Cell-today {
-    background: var(--input-color) !important;
-}
 
-.css-vnscjq-MuiButtonBase-root-MuiButton-root,.css-71a9mb-MuiButtonBase-root-MuiIconButton-root {
-    color: var(--input-color) !important;
-}
 
 
 
