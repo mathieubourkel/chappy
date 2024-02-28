@@ -8,7 +8,6 @@ import {
   Input,
   Button,
 } from "@material-tailwind/react";
-import "./modal.css";
 import { userRejoinProject } from "../../../services/api/projects.ts";
 
 type Props = {

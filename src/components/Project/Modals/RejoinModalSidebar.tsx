@@ -12,7 +12,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus
 } from "@fortawesome/free-solid-svg-icons";
-import "./modal.css";
 import { userRejoinProject } from "../../../services/api/projects.ts";
 import { InputEvent } from "../../../services/interfaces/generique.interface.tsx";
 

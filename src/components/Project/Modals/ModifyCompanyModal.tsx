@@ -9,7 +9,6 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
-import "./modal.css";
 import { deleteCompanyToBDD, modifyCompanyToBDD, refuseDemandCompany, validateDemandCompany } from "../../../services/api/users.ts";
 import { intCompany } from "../../../services/interfaces/intCompany.tsx";
 import { InputEvent } from "../../../services/interfaces/generique.interface";

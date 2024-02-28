@@ -7,7 +7,6 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
-import "./modal.css";
 import makeAnimated from "react-select/animated";
 import { getAllCompanies, rejoinCompanyDemand } from "../../../services/api/users.ts";
 import ReactSelect from "react-select";

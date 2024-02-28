@@ -8,7 +8,6 @@ import {
   Input,
   Button,
 } from "@material-tailwind/react";
-import "./modal.css";
 import { addCompanyToBDDFromUser } from "../../../services/api/users.ts";
 import { intCompany } from "../../../services/interfaces/intCompany.tsx";
 import { FormEvent, InputEvent } from "../../../services/interfaces/generique.interface.tsx";

@@ -1,5 +1,4 @@
 import { Button, Dialog, Card, CardBody, Typography } from "@material-tailwind/react";
-import "./modal.css";
 import { deleteMyAccount } from "../../../services/api/users";
 
 type Props = {

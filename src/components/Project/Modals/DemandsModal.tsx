@@ -10,7 +10,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
 import DeleteButton from "../elements/Buttons/DeleteButton";
-import './modal.css'
 
 type Props = {
    open: boolean,

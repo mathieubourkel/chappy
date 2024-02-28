@@ -5,7 +5,6 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
-import "./modal.css";
 import { quitCompany } from "../../../services/api/users";
 import { colors } from "@material-tailwind/react/types/generic";
 

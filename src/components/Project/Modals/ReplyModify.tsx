@@ -10,15 +10,12 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import './modal.css'
 import { FormEvent } from "../../../services/interfaces/generique.interface";
 import { intReplyComment, } from '../../../services/interfaces/intComment.tsx';
 import { modifyReplyToBDD, } from '../../../services/api/comments.ts';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {
-  editorConfiguration
-} from '../Comments/CK.tsx';
+import { editorConfiguration } from '../Comments/CK.tsx';
 
 type Props = {
   reply: intReplyComment;

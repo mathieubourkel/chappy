@@ -27,7 +27,6 @@ import {
 import logo from "../../../assets/img/icon_sidebar.png";
 import avatar from "../../../assets/img/icon_user.png";
 import { NavLink } from "react-router-dom";
-import "./sidebar.css";
 import { getUserInfo } from "../../../services/api/users.ts";
 import RejoinModalSidebar from "../../Project/Modals/RejoinModalSidebar.tsx";
 import NestedMenuSidebar from "./NestedMenuSidebar.tsx";

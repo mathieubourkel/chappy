@@ -10,7 +10,6 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply, } from '@fortawesome/free-solid-svg-icons';
-import './modal.css'
 import { FormEvent } from "../../../services/interfaces/generique.interface";
 import { intReplyComment } from '../../../services/interfaces/intComment.tsx';
 import { addCommentReplyToBDD } from '../../../services/api/comments.ts';
