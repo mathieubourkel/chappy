@@ -1,0 +1,31 @@
+@import "../../../css/index.module.css";
+
+/* Sidebar */
+
+.sidebar {
+    height: 100lvh;
+    border-radius: 0;
+}
+
+.sidebar-list {
+    transition: 1s;
+}
+
+.sidebar-list:hover {
+    margin-left: 0.5em;
+    color: var(--border-card);
+}
+
+.l-item:hover, .l-item:active, .l-item:focus {
+    background: var(--gradient) !important;
+    color: var(--bg-color) !important;
+}
+
+.l-small-item:hover, .l-small-item:active, .l-small-item:focus {
+    background: var(--alt-gradient) !important;
+    color: var(--bg-color) !important;
+}
+
+.l-small-item, .l-item {
+    background: transparent;
+}

@@ -31,6 +31,7 @@ import { getUserInfo } from "../../../services/api/users.ts";
 import RejoinModalSidebar from "../../Project/Modals/RejoinModalSidebar.tsx";
 import NestedMenuSidebar from "./NestedMenuSidebar.tsx";
 import { intProfileUser } from "../../../services/interfaces/intUser.tsx";
+import "./sidebar.css"
 
 export default function Sidebar(props: any) {
   const { openSidebar, toggleSidebar } = props;
