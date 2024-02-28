@@ -25,6 +25,7 @@ export default function SignupPage() {
   );
   const navigate = useNavigate();
   const [alert, setAlert] = useState<intAlert>({open: false, message:'', color:'green'})
+  
   const validationGlobal = Yup.object({
     userInfos: Yup.object().shape({
       lastname: Yup.string()
@@ -43,7 +44,7 @@ export default function SignupPage() {
         .required("Ce champ est requis"),
       phone: Yup.string().required("Ce champ est requis"),
       password: Yup.string()
-        .min(8, "Le mot de passe doit contenir au minimum 8 charactères")
+        .min(12, "Le mot de passe doit contenir au minimum 12 charactères")
         .required("Ce champ est requis"),
       checkPassword: Yup.string()
         .oneOf([Yup.ref("password")], "Les mots de passe ne correspondent pas.")

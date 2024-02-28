@@ -12,8 +12,9 @@ import { useFilterDisplay } from "../../../hooks/useFilterDisplay.tsx";
 
 export default function DashboardCollab({ collabs }: {collabs:intProjects}) {
 
-  const [selected, setSelected] = useState<intProject>(collabs[0]);
+  const [selected, setSelected] = useState<intProject>(collabs[0] || {steps:[{id:0}]});
   const {filteredData, renderNextButton, renderBeforeButton } = useFilterDisplay(5, collabs)
+
   const {filteredData: filteredDataS, renderNextButton: renderNextButtonS, renderBeforeButton: renderBeforeButtonS, reloadFilteredData } = useFilterDisplay(5, selected.steps)
   
   const handleClick = (collab:intProject) => {

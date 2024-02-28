@@ -2,12 +2,9 @@
 import { useApi } from "../../hooks/useApi";
 import { ApiPathEnum } from "../enums/api.path.enum";
 import { intTask } from "../interfaces/intTask";
-const api = useApi();
 
-  // Calendar
-  export async function getTasksByUser() {
-    return await api.get(`my-tasks`)
-  }
+
+  const api = useApi();
 
   export async function addTaskToStepToBDD(data: intTask) {
     data.budget = Number(data.budget)
