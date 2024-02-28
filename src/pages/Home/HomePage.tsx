@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "./home.css";
+import "../../css/home.css";
 import { Button, Typography } from "@material-tailwind/react";
 import planning from "../../assets/img/planning.png";
 import blop from "../../assets/img/Blop.svg";

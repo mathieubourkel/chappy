@@ -37,7 +37,6 @@ export default withMT({
                 400: "rgb(126,64,55, 1)", // Couleur primaire (sidebar)
             },
             marine: {
-                DEFAULT: "rgba(201,203,213,0.36)",
                 100: "rgb(119,125,149,1)", // Couleur d'accent (sidebar)
                 200: "rgba(201,203,213, 0.36)", // Couleur d'accent
                 300: "rgb(47,44,54, 1)", // Couleur secondaire

@@ -10,7 +10,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import avatar from "../../assets/img/icon_user.png";
-import "./userProfile.css";
 import { modifyUserToBDD, quitCompany, resetPwd } from "../../services/api/users";
 import AddCompanyModal from "../../components/Project/Modals/AddCompanyModal";
 import RejoinCompanyModal from "../../components/Project/Modals/RejoinCompanyModal";

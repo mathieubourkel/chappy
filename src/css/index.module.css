@@ -1,15 +1,15 @@
-/*==================== CUSTOM FONT ====================*/
+/*======================================== CUSTOM FONT ========================================*/
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap');
 
 
-/*==================== FRAMEWORK CSS ====================*/
+/*======================================== FRAMEWORK CSS ========================================*/
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/*==================== APPLY CUSTOM FONT ====================*/
+/*======================================== APPLY CUSTOM FONT ========================================*/
 
 @layer base {
     html {
@@ -17,7 +17,7 @@
     }
 }
 
-/*==================== VARIABLES CSS ====================*/
+/*======================================== VARIABLES CSS ========================================*/
 
 :root {
     --bg-white: rgb(255,255,255, 1);
@@ -27,6 +27,7 @@
     --brick: rgb(126,55,47,1);
     --marine: rgb(47,44,54,1);
 
+    --border: rgba(126,55,47,1);
     --border-color: rgba(30, 29, 34, 0.15);
     --alt-border-color: rgba(30, 29, 34, 0.3);
     --border-card: rgba(119,125,149,0.8);
@@ -37,6 +38,9 @@
     --input-gray: rgba(119,125,149,0.4);
     --desc-gray: rgba(119,125,149,0.2);
 
+    --bg-chip: rgba(201,203,213,0.36);
+    --text-chip: rgba(47,44,54,1);
+
     --button-marine : rgb(47,44,54,0.8);
 
     --gradient: linear-gradient(90deg, rgba(47,44,54,1) 0%, rgba(126,55,47,1) 100%);
@@ -45,9 +49,42 @@
 
     --ck-color-button-on-color : var(--border-task) !important;
     --ck-color-focus-border: rgba(126,55,47,0.4) !important;
+
 }
 
-/*==================== GLOBAL CSS ====================*/
+
+/*======================================== OVERWRITE CSS ========================================*/
+
+        /* Calendar */
+
+.bg-indigo-500, .bg-blue-500 {
+    background: var(--input-color) !important;
+}
+
+.bg-blue-100 {
+    background: var(--datepicker-color) !important;
+}
+
+.text-indigo-500, .text-blue-500 {
+    color: var(--input-color) !important;
+}
+
+        /* Create Project */
+
+.bg-blue-500 {
+    background: var(--input-color) !important;
+}
+
+        /* Custom Task */
+
+
+.bg-gray-900 {
+    background: var(--marine) !important;
+    transition: 0.2s;
+}
+
+
+/*======================================== GLOBAL CSS ========================================*/
 
         /* Scrollbar */
 
@@ -87,7 +124,9 @@ body > div#root {
     justify-content: space-between;
 }
 
-        /* Typography */
+
+/*======================================== TYPOGRAPHY ========================================*/
+
 
 h1 {
     font-size: 2.4em;
@@ -139,6 +178,39 @@ h4:after {
 p {
     font-size: 0.9em!important;
 }
+
+
+/*======================================== PROFILE USER ========================================*/
+
+
+.avatar {
+    border : 1em solid var(--border);
+}
+
+.chip {
+    background: var(--bg-chip);
+    color: var(--text-chip);
+    padding: 0.35em 1em;
+    font-variant: all-small-caps;
+    font-weight: 800;
+    border-radius: 20px;
+}
+
+
+/*======================================== CALENDAR ========================================*/
+
+
+.css-sizvqo-MuiTableCell-root .Cell-today {
+    background: var(--input-color) !important;
+}
+
+.css-vnscjq-MuiButtonBase-root-MuiButton-root,.css-71a9mb-MuiButtonBase-root-MuiIconButton-root {
+    color: var(--input-color) !important;
+}
+
+
+/*======================================== CUSTOM ELEMENTS ========================================*/
+
 
         /* Card */
 
@@ -253,30 +325,15 @@ p {
     box-shadow: 1px 0.5px 1px rgb(30,29,34, 0.1);
 }
 
-        /* Selection Date */
-
-.bg-indigo-500, .bg-blue-500 {
-    background: var(--input-color) !important;
-}
-
-.bg-blue-100 {
-    background: var(--datepicker-color) !important;
-}
-
-.text-indigo-500, .text-blue-500 {
-    color: var(--input-color) !important;
-}
-
         /* Custom Task */
-
-.bg-gray-900 {
-    background: var(--marine) !important;
-    transition: 0.2s;
-}
 
 .taskDescription {
     border: 1px solid var(--desc-gray);
 }
+
+
+/*======================================== OVERWRITE ELEMENTS ========================================*/
+
 
         /* Custom Text Editor */
 
@@ -348,6 +405,8 @@ p {
 .css-vnscjq-MuiButtonBase-root-MuiButton-root,.css-71a9mb-MuiButtonBase-root-MuiIconButton-root {
     color: var(--input-color) !important;
 }
+
+
 
 
 

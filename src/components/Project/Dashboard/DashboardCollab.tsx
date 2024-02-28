@@ -34,7 +34,7 @@ export default function DashboardCollab({ collabs }: {collabs:intProjects}) {
           <div className="w-[5vw]">
             {renderBeforeButton()}
             </div>
-            <div className="flex justify-center w-full ml-5 w-[80vw] sm:ml-0 lg:max-w-[50vw]">
+            <div className="flex justify-center ml-5 w-[80vw] sm:ml-0 lg:max-w-[50vw]">
               {filteredData.map((collab: intProject) => (
                 <button
                 key={collab._id}
@@ -62,7 +62,7 @@ export default function DashboardCollab({ collabs }: {collabs:intProjects}) {
           <div className='w-1/12 justify-end flex items-center'>
             {renderBeforeButtonS()}
             </div>
-            <div className="mt-5 flex gap-5 w-[80vw] flex-wrap justify-center gap-5">
+            <div className="mt-5 flex gap-5 w-[80vw] flex-wrap justify-center">
             {filteredDataS.map((step: intStep) => (
               <DashboardCollabStepCard
                 step={step}
