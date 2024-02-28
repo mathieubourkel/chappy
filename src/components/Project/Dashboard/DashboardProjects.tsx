@@ -12,7 +12,7 @@ import { useFilterDisplay } from "../../../hooks/useFilterDisplay";
 
 export default function DashboardProjects({ projects }:{projects:intProjects}) {
 
-  const [selected, setSelected] = useState<intProject>(projects[0]);
+  const [selected, setSelected] = useState<intProject>(projects[0] || {steps:[{id:0}]});
   const {filteredData, renderNextButton, renderBeforeButton } = useFilterDisplay(5, projects)
   const {filteredData: filteredDataS, renderNextButton: renderNextButtonS, renderBeforeButton: renderBeforeButtonS, reloadFilteredData } = useFilterDisplay(5, selected.steps)
   

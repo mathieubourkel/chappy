@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Paper from "@mui/material/Paper";
+import { Card } from "@material-tailwind/react";
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import {Scheduler,MonthView,Appointments,DateNavigator,Toolbar,AppointmentTooltip,Resources} from "@devexpress/dx-react-scheduler-material-ui";
 import { useParams } from "react-router-dom";
@@ -26,7 +26,7 @@ export default function CalendarProject({ className }: {className:string}) {
   return (
     <>
     {handleErrorAndLoading()}
-      {data && <Paper className={className}>
+      {data && <Card className={className}>
         <Scheduler data={data}>
           <ViewState defaultCurrentDate={currentDate} />
           <MonthView />
@@ -36,7 +36,7 @@ export default function CalendarProject({ className }: {className:string}) {
           <Resources data={resources} mainResourceName="jalons" />
           <AppointmentTooltip showCloseButton showOpenButton />
         </Scheduler>
-      </Paper>}
+      </Card>}
     </>
   );
 }

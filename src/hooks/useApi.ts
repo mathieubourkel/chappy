@@ -2,17 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance } from "axios";
 
-export async function handleApiCall(apiCall: any) {
-  try {
-    const response = await apiCall();
-    if (!response || !response.data) throw new Error()
-    return response.data;
-  } catch (error) {
-    throw error
-  }
-}
-
-
 let isRefreshing = false;
 let refreshSubscribers: ((token: string) => void)[] = [];
 
@@ -69,7 +58,7 @@ export function useApi() {
             isRefreshing = true;
 
             try {
-              console.log('je try to refresh')
+              
               const options = {
                 credentials: "include",
                 withCredentials: true,
