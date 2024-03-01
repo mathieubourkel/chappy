@@ -16,11 +16,11 @@ import { useAlert } from "../../hooks/useAlert";
 import MagicButton from "../../components/elements/Buttons/MagicButton";
 import { ButtonTypeEnum } from "../../services/enums/button.type";
 import MagicIconButton from "../../components/elements/Buttons/MagicIconButton";
-import AddCompanyModal from "../../components/Modals/AddCompanyModal";
-import ModifyCompanyModal from "../../components/Modals/ModifyCompanyModal";
-import RejoinCompanyModal from "../../components/Modals/RejoinCompanyModal";
-import QuitCompanyModal from "../../components/Modals/QuitCompanyModal";
-import DeleteMyAccount from "../../components/Modals/DeleteMyAccount";
+import AddCompanyModal from "../../components/modals/AddCompanyModal";
+import ModifyCompanyModal from "../../components/modals/ModifyCompanyModal";
+import RejoinCompanyModal from "../../components/modals/RejoinCompanyModal";
+import QuitCompanyModal from "../../components/modals/QuitCompanyModal";
+import DeleteMyAccount from "../../components/modals/DeleteMyAccount";
 
 export default function UserProfilePage() {
 

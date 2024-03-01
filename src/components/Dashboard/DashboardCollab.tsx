@@ -9,7 +9,7 @@ import { intStep } from "../../services/interfaces/intStep.tsx";
 import { useFilterDisplay } from "../../hooks/useFilterDisplay.tsx";
 import { ButtonTypeEnum } from "../../services/enums/button.type.ts";
 import MagicButton from "../elements/Buttons/MagicButton.tsx";
-import RejoinModal from "../Modals/RejoinModal.tsx";
+import RejoinModal from "../modals/RejoinModal.tsx";
 
 export default function DashboardCollab({ collabs }: {collabs:intProjects}) {
 

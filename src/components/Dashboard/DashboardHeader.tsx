@@ -2,12 +2,12 @@ import {Link} from "react-router-dom";
 import {Alert,Chip,Typography,} from "@material-tailwind/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleInfo,faNewspaper} from "@fortawesome/free-solid-svg-icons";
-import Breadcrumb from "../Layers/Breadcrumb/Breadcrumb.tsx";
+import Breadcrumb from "../layers/Breadcrumb/Breadcrumb.tsx";
 import { useState } from "react";
 import Calendar from "../Calendar/Calendar.tsx";
 import MagicButton from "../elements/Buttons/MagicButton.tsx";
 import { ButtonTypeEnum } from "../../services/enums/button.type.ts";
-import RejoinModal from "../Modals/RejoinModal.tsx";
+import RejoinModal from "../modals/RejoinModal.tsx";
 
 export default function DashboardHeader({ nbProj }: {nbProj: number}) {
   const userName:string = localStorage.getItem('name') ||""

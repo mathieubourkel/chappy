@@ -15,7 +15,7 @@ import {
   faList,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import DemandsModal from "../../Modals/DemandsModal.tsx";
+import DemandsModal from "../../modals/DemandsModal.tsx";
 import { useState } from "react";
 import MagicButton from "../Buttons/MagicButton.tsx";
 import { ButtonTypeEnum } from "../../../services/enums/button.type.ts";

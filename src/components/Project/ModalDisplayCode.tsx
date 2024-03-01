@@ -1,7 +1,7 @@
-import {Dialog,Card,CardBody,Typography,Input,IconButton,} from "@material-tailwind/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import {Dialog,Card,CardBody,Typography,Input} from "@material-tailwind/react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import MagicIconButton from "../elements/Buttons/MagicIconButton";
+import { ButtonTypeEnum } from "../../services/enums/button.type";
   
 type Props = {
     code: string;
@@ -30,9 +30,7 @@ export default function ModalDisplayCode({ code, open, handleOpen }: Props) {
             <div className="flex gap-2">
               <Input label={code} disabled size="lg" className={"bg-select !border !border-marine-100/50"} crossOrigin={undefined} />
               <CopyToClipboard text={code}>
-                <IconButton>
-                  <FontAwesomeIcon icon={faCopy} />
-                </IconButton>
+                <MagicIconButton type={ButtonTypeEnum.COPY}/>
               </CopyToClipboard>
             </div>
           </CardBody>

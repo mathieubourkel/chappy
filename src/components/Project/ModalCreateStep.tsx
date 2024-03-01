@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import {Button,Dialog,Card,CardBody,CardFooter,Typography,Input,Textarea,} from "@material-tailwind/react";
-import CreateButton from "../elements/Buttons/CreateButton";
+import {Dialog,Card,CardBody,CardFooter,Typography,Input,Textarea,} from "@material-tailwind/react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useParams } from "react-router-dom";
 import SelectStatus from "../elements/Select/SelectStatus";
@@ -10,18 +9,20 @@ import { intCreateStep } from "../../services/interfaces/intStep";
 import { formatDate } from "../../services/utils/FormatDate";
 import { addProjectStepToBDD } from "../../services/api/steps";
 import { FormEvent, InputEvent } from "../../services/interfaces/generique.interface";
+import MagicButton from "../elements/Buttons/MagicButton";
+import { ButtonTypeEnum } from "../../services/enums/button.type";
 
 
 type Props = {
   setProject: (project:intProject) => void;
   project: intProject
   reloadFilteredData: (newData:any[]) => void;
+  open:boolean;
+  handleOpen: () => void;
 };
 
-export default function ModalCreateStep({ setProject, project, reloadFilteredData }: Props) {
+export default function ModalCreateStep({ setProject, project, reloadFilteredData, open ,handleOpen }: Props) {
   const date = new Date()
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen((cur) => !cur);
   const { idProject } = useParams();
   const [form, setForm] = useState<intCreateStep>({
     _id: undefined,
@@ -45,6 +46,7 @@ export default function ModalCreateStep({ setProject, project, reloadFilteredDat
     const newStepsArray = [newStep.data, ...project.steps]
     setProject({...project, steps: newStepsArray})
     reloadFilteredData(newStepsArray)
+    handleOpen()
   };
 
   const handleDate = (value: any) => {
@@ -56,8 +58,6 @@ export default function ModalCreateStep({ setProject, project, reloadFilteredDat
   };
 
   return (
-    <div>
-      <CreateButton handleClick={handleOpen} value="Créer" />
       <Dialog
         size="sm"
         open={open}
@@ -119,18 +119,10 @@ export default function ModalCreateStep({ setProject, project, reloadFilteredDat
               <SelectStatus handleStatus={handleStatus} />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
-              <Button
-                size="sm"
-                className={"bg-brick-300"}
-                onClick={handleOpen}
-                type="submit"
-              >
-                Créer
-              </Button>
+              <MagicButton type={ButtonTypeEnum.CREATE}/>
             </CardFooter>
           </form>
         </Card>
       </Dialog>
-    </div>
   );
 }

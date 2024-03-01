@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import parse from 'html-react-parser';
-import ReplyModify from '../Modals/ReplyModify.tsx';
+import ReplyModify from '../modals/ReplyModify.tsx';
 
 type Props = {
   handleReload: () => void;

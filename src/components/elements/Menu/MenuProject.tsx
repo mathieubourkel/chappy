@@ -43,10 +43,10 @@ export function MenuProject({ project }: Props) {
         <Menu >
           <MenuHandler>
             <Button
-              className="text-light-100 bg-marine-300"
+              className="text-light-100 bg-marine-300 flex items-center"
               size={"sm"}
             >
-              <FontAwesomeIcon icon={faList} className={"text-sm lg:mr-3"} />
+              <FontAwesomeIcon icon={faList} className={"text-sm 2xl:mr-3"} />
               <Typography
                 className={"hidden 2xl:inline font-extrabold whitespace-nowrap"}
               >

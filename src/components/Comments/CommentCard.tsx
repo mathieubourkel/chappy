@@ -7,8 +7,8 @@ import { intComment } from '../../services/interfaces/intComment.tsx';
 import { deleteCommentFromBDD } from '../../services/api/comments.ts';
 import ReplyCard from './ReplyCard.tsx';
 import parse from 'html-react-parser';
-import CommentModify from '../Modals/CommentModify.tsx';
-import ReplyCreate from '../Modals/ReplyCreate.tsx';
+import CommentModify from '../modals/CommentModify.tsx';
+import ReplyCreate from '../modals/ReplyCreate.tsx';
 
 type Props = {
   handleReload: () => void;

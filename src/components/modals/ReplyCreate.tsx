@@ -10,7 +10,7 @@ import {
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply, } from '@fortawesome/free-solid-svg-icons';
-import { FormEvent } from "../../services/interfaces/generique.interface";
+import { FormEvent } from "../../services/interfaces/generique.interface.tsx";
 import { intReplyComment } from '../../services/interfaces/intComment.tsx';
 import { addCommentReplyToBDD } from '../../services/api/comments.ts';
 import { CKEditor } from '@ckeditor/ckeditor5-react';

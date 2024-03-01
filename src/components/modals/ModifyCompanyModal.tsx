@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { deleteCompanyToBDD, modifyCompanyToBDD, refuseDemandCompany, validateDemandCompany } from "../../services/api/users.ts";
 import { intCompany } from "../../services/interfaces/intCompany.tsx";
-import { InputEvent } from "../../services/interfaces/generique.interface";
+import { InputEvent } from "../../services/interfaces/generique.interface.tsx";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { colors } from "@material-tailwind/react/types/generic";

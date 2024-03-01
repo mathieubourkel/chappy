@@ -1,5 +1,7 @@
-import { Button, Dialog, Card, CardBody, Typography } from "@material-tailwind/react";
+import { Dialog, Card, CardBody, Typography } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
+import MagicButton from "../elements/Buttons/MagicButton";
+import { ButtonTypeEnum } from "../../services/enums/button.type";
 
 type Props = {
   handleDelete: () => void;
@@ -7,14 +9,10 @@ type Props = {
   handleOpenD: () => void;
 };
 
-export default function ModalDeleteProject({
-  handleDelete,
-  openD,
-  handleOpenD,
-}: Props) {
+export default function ModalDeleteProject({handleDelete,openD,handleOpenD}: Props) {
   const navigate = useNavigate();
-  async function handleSubmit() {
-    await handleDelete();
+  function handleSubmit() {
+    handleDelete();
     navigate("/dashboard");
   }
 
@@ -34,22 +32,8 @@ export default function ModalDeleteProject({
             Voulez-vous vraiment supprimer le projet ?
           </Typography>
           <div className="gap-5 flex justify-center">
-            <Button
-              size={"sm"}
-              onClick={handleSubmit}
-              className={"bg-brick-300"}
-              type="submit"
-            >
-              Confirmer
-            </Button>
-            <Button
-              size={"sm"}
-              onClick={handleOpenD}
-              className={"border-marine-300"}
-              type="submit"
-            >
-              Annuler
-            </Button>
+            <MagicButton type={ButtonTypeEnum.BRICK_300} value='Confirmer' handleClick={handleSubmit}/>
+            <MagicButton type={ButtonTypeEnum.MARINE_300} value='Annuler' handleClick={handleOpenD}/>
           </div>
         </CardBody>
       </Card>

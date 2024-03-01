@@ -1,11 +1,15 @@
-import {Alert,IconButton,Typography} from "@material-tailwind/react";
+import {Alert,Typography} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faCircleExclamation,faFilter} from "@fortawesome/free-solid-svg-icons";
+import {faCircleExclamation} from "@fortawesome/free-solid-svg-icons";
 import { intProject } from "../../services/interfaces/intProject";
 import { intStep } from "../../services/interfaces/intStep";
 import { useFilterDisplay } from "../../hooks/useFilterDisplay";
 import ModalCreateStep from "./ModalCreateStep";
 import CardStep from "../Step/CardStep";
+import MagicIconButton from "../elements/Buttons/MagicIconButton";
+import { ButtonTypeEnum } from "../../services/enums/button.type";
+import MagicButton from "../elements/Buttons/MagicButton";
+import { useState } from "react";
 
 type Props = {
   isOwner:boolean
@@ -16,7 +20,9 @@ type Props = {
 export default function ProjectSteps({ isOwner, project, setProject}: Props) {
 
   const {filteredData, renderNextButton, renderBeforeButton, reloadFilteredData} = useFilterDisplay(5, project.steps)
-  
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen((cur) => !cur);
+
   return (
     <section className="mb-20">
       <article className="flex justify-between">
@@ -24,13 +30,12 @@ export default function ProjectSteps({ isOwner, project, setProject}: Props) {
         <nav className="flex gap-5 items-center">
           {isOwner && (
             <div>
-              <ModalCreateStep setProject={setProject} project={project} reloadFilteredData={reloadFilteredData}/>
+              <MagicButton type={ButtonTypeEnum.CREATE} handleClick={handleOpen} wrap="lg"/>
+              <ModalCreateStep setProject={setProject} project={project} reloadFilteredData={reloadFilteredData} open={open} handleOpen={handleOpen}/>
             </div>
           )}
           <div>
-            <IconButton size={"sm"}>
-              <FontAwesomeIcon icon={faFilter} />
-            </IconButton>
+            <MagicIconButton type={ButtonTypeEnum.FILTER}/>
           </div>
         </nav>
       </article>
