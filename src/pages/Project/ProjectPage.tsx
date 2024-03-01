@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch.tsx";
-import EspaceComment from "../../components/Project/Comments/EspaceComment";
-import ProjectHeader from "../../components/Project/Project/ProjectHeader";
-import ProjectDesc from "../../components/Project/Project/ProjectDesc";
-import ProjectSteps from "../../components/Project/Project/ProjectSteps";
+import ProjectHeader from "../../components/Project/ProjectHeader";
+import ProjectSteps from "../../components/Project/ProjectSteps";
 import {RefCommentEnum} from '../../services/enums/comment.ref.enum.ts';
 import { DataStatusEnum } from "../../services/enums/data.status.enum.ts";
 import { ApiPathEnum } from "../../services/enums/api.path.enum.ts";
+import ProjectDesc from "../../components/Project/ProjetDesc.tsx";
+import EspaceComment from "../../components/Comments/EspaceComment.tsx";
 
 export default function ProjectPage() {
   const { idProject } = useParams();

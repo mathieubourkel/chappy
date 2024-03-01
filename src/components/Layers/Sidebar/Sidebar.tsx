@@ -28,10 +28,10 @@ import logo from "../../../assets/img/icon_sidebar.png";
 import avatar from "../../../assets/img/icon_user.png";
 import { NavLink } from "react-router-dom";
 import { getUserInfo } from "../../../services/api/users.ts";
-import RejoinModalSidebar from "../../Project/Modals/RejoinModalSidebar.tsx";
 import NestedMenuSidebar from "./NestedMenuSidebar.tsx";
 import { intProfileUser } from "../../../services/interfaces/intUser.tsx";
 import "./sidebar.css"
+import RejoinModalSidebar from "../../Modals/RejoinModalSidebar.tsx";
 
 export default function Sidebar(props: any) {
   const { openSidebar, toggleSidebar } = props;

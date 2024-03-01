@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Input, Typography } from "@material-tailwind/react";
+import { Input, Typography } from "@material-tailwind/react";
 import {  useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { sendEmailForReset } from "../../services/api/users";
 import { FormEvent, InputEvent } from "../../services/interfaces/generique.interface";
+import MagicButton from "../../components/elements/Buttons/MagicButton";
+import { ButtonTypeEnum } from "../../services/enums/button.type";
 
 export default function ResetPwd() {
 
@@ -42,13 +42,7 @@ export default function ResetPwd() {
                 />
               </div>
               <div className={"flex justify-center my-10"}>
-              <Button className={"bg-brick-400"} type="submit" size={"sm"}>
-                <FontAwesomeIcon
-                  icon={faPaperPlane}
-                  className={"text-sm mr-3"}
-                />{" "}
-                Envoyer l'email
-              </Button>
+              <MagicButton type={ButtonTypeEnum.SEND} />
             </div>
           </article> 
         </form>

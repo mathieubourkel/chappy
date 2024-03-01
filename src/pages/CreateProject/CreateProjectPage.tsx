@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Input, Textarea, Typography, Button } from "@material-tailwind/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { Input, Textarea, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { addProjectToBDD } from "../../services/api/projects";
 import Datepicker from "react-tailwindcss-datepicker";
@@ -17,6 +15,8 @@ import { FormEvent, InputEvent, intSelect, intSelects } from "../../services/int
 import { intCompany } from "../../services/interfaces/intCompany";
 import { intUser } from "../../services/interfaces/intUser";
 import { ManageWebSocket } from "../../services/utils/ManageWebSocket";
+import MagicButton from "../../components/elements/Buttons/MagicButton";
+import { ButtonTypeEnum } from "../../services/enums/button.type";
 
 
 const animatedComponents = makeAnimated();
@@ -77,6 +77,7 @@ export default function CreateProjectPage() {
   }, []);
 
   const handleUsers = (value: intSelects) => {
+    console.log(value)
     const goodArray: any = value.map((element: intSelect) => ({id:element.value, email: element.label}));
     setForm({ ...form, members: goodArray });
   };
@@ -115,6 +116,7 @@ export default function CreateProjectPage() {
   };
 
   const handleDate = (value: any) => {
+    console.log(value)
     setForm({ ...form, estimEndDate: value.startDate });
   };
 
@@ -252,13 +254,7 @@ export default function CreateProjectPage() {
             </div>
 
             <div className={"flex justify-center my-10"}>
-              <Button className={"bg-brick-400"} type="submit" size={"sm"}>
-                <FontAwesomeIcon
-                  icon={faPaperPlane}
-                  className={"text-sm mr-3"}
-                />{" "}
-                Envoyer
-              </Button>
+              <MagicButton type={ButtonTypeEnum.CREATE} />
             </div>
           </article>
         </form>

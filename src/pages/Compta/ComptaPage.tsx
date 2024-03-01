@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
-import ProjectHeader from "../../components/Project/Project/ProjectHeader";
+import ProjectHeader from "../../components/Project/ProjectHeader";
 import { ApiPathEnum } from "../../services/enums/api.path.enum";
 import { useFetch } from "../../hooks/useFetch";
-import Comptas from "../../components/Project/Compta/Comptas";
+import Comptas from "../../components/Compta/Comptas";
 
 export default function ComptaPage() {
   const { idProject } = useParams();

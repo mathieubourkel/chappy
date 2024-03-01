@@ -2,21 +2,20 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
-  Button,
   Radio,
   Input,
   Typography,
   Card,
   Alert,
 } from "@material-tailwind/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { addUserAndCompanyToBDD, addUserToBDD } from "../../services/api/users";
 import { useNavigate, useLocation } from "react-router-dom";
 import { SelectionEnum } from "../../services/enums/selection.enum";
 import { useState } from "react";
 import { intRegister } from "../../services/interfaces/intAuth";
 import { intAlert } from "../../services/interfaces/generique.interface";
+import MagicButton from "../../components/elements/Buttons/MagicButton";
+import { ButtonTypeEnum } from "../../services/enums/button.type";
 
 export default function SignupPage() {
   const location = useLocation();
@@ -386,13 +385,7 @@ export default function SignupPage() {
               </article>
 
               <div className={"flex justify-center my-20"}>
-                <Button className={"bg-brick-400"} type="submit">
-                  <FontAwesomeIcon
-                    icon={faPaperPlane}
-                    className={"text-sm mr-3"}
-                  />
-                  Envoyer
-                </Button>
+                <MagicButton type={ButtonTypeEnum.CREATE} value={'Créer mon compte'}/>
                 </div>
         </form>
       </section>

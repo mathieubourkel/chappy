@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Input, Spinner, Typography } from "@material-tailwind/react";
+import { Input, Spinner, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { getEmailToken, resetPwdWithEmail } from "../../services/api/users";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import NotFoundPage from "../../services/utils/NotFoundPage";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { intConfirmPwd } from "../../services/interfaces/intAuth";
+import MagicButton from "../../components/elements/Buttons/MagicButton";
+import { ButtonTypeEnum } from "../../services/enums/button.type";
 
 export default function ForgotPwd() {
   const navigate  = useNavigate()
@@ -101,14 +101,8 @@ export default function ForgotPwd() {
 
               </div>
               <div className={"flex justify-center my-10"}>
-              <Button className={"bg-brick-400"} type="submit" size={"sm"}>
-                <FontAwesomeIcon
-                  icon={faPaperPlane}
-                  className={"text-sm mr-3"}
-                />{" "}
-                Envoyer
-              </Button>
-            </div>
+                <MagicButton type={ButtonTypeEnum.SEND}/>
+              </div>
             </div>
             
           </article>

@@ -3,7 +3,7 @@ import {
     Typography
 } from "@material-tailwind/react";
 import {NavLink} from "react-router-dom";
-import FormLogin from "../../components/Project/elements/Forms/formLogin"
+import FormLogin from "../../components/elements/Forms/formLogin"
 import { useState } from "react";
 import { intAlert } from "../../services/interfaces/generique.interface";
 

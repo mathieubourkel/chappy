@@ -1,13 +1,7 @@
-import {
-    Breadcrumbs
-} from "@material-tailwind/react";
+import {Breadcrumbs} from "@material-tailwind/react";
 import {Link, NavLink} from "react-router-dom";
-import {
-    FontAwesomeIcon
-} from "@fortawesome/react-fontawesome";
-import {
-    faHouse
-} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHouse} from "@fortawesome/free-solid-svg-icons";
 import { intStep } from "../../../services/interfaces/intStep";
 
 type Props = {
