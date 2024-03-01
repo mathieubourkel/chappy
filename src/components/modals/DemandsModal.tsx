@@ -2,7 +2,8 @@ import { useState } from "react";
 import {Dialog,Card,CardBody,Typography,Input,IconButton} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
-import DeleteButton from "../elements/Buttons/DeleteButton";
+import MagicIconButton from "../elements/Buttons/MagicIconButton";
+import { ButtonTypeEnum } from "../../services/enums/button.type";
 
 type Props = {
    open: boolean,
@@ -23,10 +24,6 @@ export default function DemandsModal({open, handleOpen}:Props) {
     tempTasks.splice(index, 1);
     setDemand(tempTasks);
   }
-
-
-
-
 
   return (
       <Dialog
@@ -57,7 +54,7 @@ export default function DemandsModal({open, handleOpen}:Props) {
                   >
                     <FontAwesomeIcon icon={faCheck} className={"text-sm"} />
                   </IconButton>
-                  <DeleteButton/>
+                  <MagicIconButton type={ButtonTypeEnum.DELETE}/>
                 </div>
               </div>
             ))}

@@ -1,9 +1,10 @@
 import {Avatar,Card, CardBody,Typography} from "@material-tailwind/react";
-import DeleteButton from "../elements/Buttons/DeleteButton.tsx";
 import user from "../../assets/img/icon_user.png";
 import {deleteUserToProjectToBDD} from "../../services/api/users.ts";
 import { intUserLight } from "../../services/interfaces/intUser.tsx";
 import { intProject } from "../../services/interfaces/intProject.tsx";
+import { ButtonTypeEnum } from "../../services/enums/button.type.ts";
+import MagicIconButton from "../elements/Buttons/MagicIconButton.tsx";
 
 type Props = {
   member: intUserLight
@@ -38,9 +39,7 @@ export default function CardMember({ member, project, setProject }: Props) {
           </div>
 
           <div className="flex gap-5 justify-end">
-            <DeleteButton
-                handleDeleteBDD={handleDelete}
-            />
+            <MagicIconButton type={ButtonTypeEnum.DELETE} handleClick={handleDelete}/>
           </div>
         </CardBody>
       </Card>
