@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
 import {Dialog,Card,CardBody,CardFooter,Typography,Input,Textarea,} from "@material-tailwind/react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useParams } from "react-router-dom";
-import SelectStatus from "../elements/Select/SelectStatus";
-import { intProject } from "../../services/interfaces/intProject";
-import { intCreateStep } from "../../services/interfaces/intStep";
-import { formatDate } from "../../services/utils/FormatDate";
+import { intProject } from "../../services/interfaces/intProject"
 import { addProjectStepToBDD } from "../../services/api/steps";
 import { FormEvent, InputEvent } from "../../services/interfaces/generique.interface";
 import MagicButton from "../elements/Buttons/MagicButton";
 import { ButtonTypeEnum } from "../../services/enums/button.type";
-
+import ReactSelect from "react-select";
+import { Status } from "../../services/enums/status.enum";
+import makeAnimated from "react-select/animated";
+import { StepSchema } from "../../services/schemas/step.schema";
+import { useMagicForm } from "../../hooks/useMagicForm";
 
 type Props = {
   setProject: (project:intProject) => void;
@@ -20,41 +20,20 @@ type Props = {
   open:boolean;
   handleOpen: () => void;
 };
-
+const animatedComponents = makeAnimated();
 export default function ModalCreateStep({ setProject, project, reloadFilteredData, open ,handleOpen }: Props) {
-  const date = new Date()
+
   const { idProject } = useParams();
-  const [form, setForm] = useState<intCreateStep>({
-    _id: undefined,
-    tasks: [],
-    name: "",
-    description: "",
-    budget: 0,
-    estimEndDate: formatDate(date),
-    status: 0,
-    project: idProject || "",
-  });
-
-  const handleChange = (e: InputEvent) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  };
-
+  const {form, handleChange, handleSelect, handleDate, validateForm, renderErrors} = useMagicForm()
+  
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const newStep = await addProjectStepToBDD(form);
+    if (!validateForm(StepSchema)) return;
+    const newStep = await addProjectStepToBDD({...form, project: idProject ||''});
     const newStepsArray = [newStep.data, ...project.steps]
     setProject({...project, steps: newStepsArray})
     reloadFilteredData(newStepsArray)
     handleOpen()
-  };
-
-  const handleDate = (value: any) => {
-    setForm({ ...form, estimEndDate: value.startDate });
-  };
-
-  const handleStatus = (value: any) => {
-    setForm({ ...form, status: value.value });
   };
 
   return (
@@ -83,7 +62,10 @@ export default function ModalCreateStep({ setProject, project, reloadFilteredDat
                 className={"border-select"}
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
+                
               />
+              {renderErrors('name')}
+              
               <Textarea
                 label="Description"
                 size="lg"
@@ -92,6 +74,7 @@ export default function ModalCreateStep({ setProject, project, reloadFilteredDat
                 className={"border-select"}
                 onChange={(e: any) => handleChange(e)}
               />
+              {renderErrors('description')}
               <div className="flex gap-3 flex-wrap">
                 <Input
                   label="Budget"
@@ -103,9 +86,10 @@ export default function ModalCreateStep({ setProject, project, reloadFilteredDat
                   className={"border-select"}
                   onChange={(e: InputEvent) => handleChange(e)}
                 />
+                {renderErrors('budget')}
                 <Datepicker
                   inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black border-select"
-                  onChange={handleDate}
+                  onChange={(value:any) => handleDate(value, 'estimEndDate')}
                   value={{
                     startDate: form.estimEndDate,
                     endDate: form.estimEndDate,
@@ -115,8 +99,27 @@ export default function ModalCreateStep({ setProject, project, reloadFilteredDat
                   inputName="rangeDate"
                   placeholder={"Choisir la durée du jalon"}
                 />
+                {renderErrors('estimEndDate')}
               </div>
-              <SelectStatus handleStatus={handleStatus} />
+              <ReactSelect
+                  options={Status}
+                  className="rounded-xl border-select"
+                  placeholder="Status"
+                  defaultValue={Status[0].label}
+                  components={animatedComponents}
+                  onChange={(value: any) => handleSelect(value, 'status')}
+                  theme={(theme) => ({
+                    ...theme,
+                    borderRadius: 5,
+                    colors: {
+                      ...theme.colors,
+                      primary25: 'rgba(126,55,47, 0.2)',
+                      primary:'rgba(126,55,47, 0.7)',
+                      primary50: 'rgba(126,55,47, 0.3)',
+                    },
+                  })}
+                />
+                {renderErrors('status')}
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <MagicButton type={ButtonTypeEnum.CREATE}/>

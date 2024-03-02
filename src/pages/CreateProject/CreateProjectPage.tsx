@@ -6,17 +6,16 @@ import Datepicker from "react-tailwindcss-datepicker";
 import { useNavigate } from "react-router-dom";
 import { getAllCompanies, getAllUsers } from "../../services/api/users";
 import ReactSelect from "react-select";
-import * as Yup from "yup";
 import makeAnimated from "react-select/animated";
 import { Status } from "../../services/enums/status.enum";
-import { formatDate } from "../../services/utils/FormatDate";
-import { intProject } from "../../services/interfaces/intProject";
-import { FormEvent, InputEvent, intSelect, intSelects } from "../../services/interfaces/generique.interface";
+import { FormEvent, InputEvent, intSelects } from "../../services/interfaces/generique.interface";
 import { intCompany } from "../../services/interfaces/intCompany";
 import { intUser } from "../../services/interfaces/intUser";
 import { ManageWebSocket } from "../../services/utils/ManageWebSocket";
 import MagicButton from "../../components/elements/Buttons/MagicButton";
 import { ButtonTypeEnum } from "../../services/enums/button.type";
+import { ProjectSchema } from "../../services/schemas/projet.schema";
+import { useMagicForm } from "../../hooks/useMagicForm";
 
 
 const animatedComponents = makeAnimated();
@@ -25,28 +24,9 @@ export default function CreateProjectPage() {
   const [error, setError] = useState<boolean>(false);
   const [errorCompanies, setErrorCompanies]= useState<boolean>(false)
   const navigate = useNavigate();
-  const date = new Date()
   const [users, setUsers] = useState<intSelects>([]);
   const [companies, setCompanies] = useState<intSelects>([]);
-  const [form, setForm] = useState<intProject>({
-    name: "",
-    description: "",
-    budget: 0,
-    status: Status[0].value,
-    estimEndDate: formatDate(date),
-    steps: [],
-    owner: {id:0},
-    members: [],
-    companies: [],
-    code: '',
-  });
-
-  const projectSchema = Yup.object().shape({
-    name: Yup.string().max(50, "Pas plus de 50 charac").required("Le nom du projet est requis"),
-    description: Yup.string().max(300, "pas plus de 300").required("La description du projet est requise"),
-    budget: Yup.number().required("Le budget du projet est requis"),
-    status: Yup.number().required("Le statut du projet est requis")
-  });
+  const {form, handleChange, handleSelect, handleDate, handleMultiple, validateForm, renderErrors} = useMagicForm()
 
   useEffect(() => {
     const getUsers = async () =>  {
@@ -76,49 +56,18 @@ export default function CreateProjectPage() {
     getUsers();
   }, []);
 
-  const handleUsers = (value: intSelects) => {
-    console.log(value)
-    const goodArray: any = value.map((element: intSelect) => ({id:element.value, email: element.label}));
-    setForm({ ...form, members: goodArray });
-  };
-
-  const handleCompanies = (value: intSelects) => {
-    const goodArray: any = value.map((element: intSelect) => (element.value));
-    setForm({ ...form, companies: goodArray });
-  };
-
-  const handleStatus = (value: any) => {
-    setForm({ ...form, status: value.value });
-  };
-
-  const handleChange = (e: InputEvent) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    projectSchema
-      .validate(form)
-      .then(async () => {
-        await addProjectToBDD(form);
-        const tmpArray:any = []
-        form.members?.map((member:any) => {
-          tmpArray.push(member.id.toString())
-        })
-
-        new ManageWebSocket().sendMessage(`Vous avez été invité à rejoindre le projet ${form.name}`, tmpArray) 
-        navigate("/dashboard");
-      })
-      .catch((validationError) => {
-        alert(validationError.errors);
-      });
+    if (!validateForm(ProjectSchema)) return;
+    await addProjectToBDD(form);
+    const tmpArray:any = []
+    form.members?.map((member:any) => {
+      tmpArray.push(member.id.toString())
+    })
+    new ManageWebSocket().sendMessage(`Vous avez été invité à rejoindre le projet ${form.name}`, tmpArray) 
+    navigate("/dashboard");
   };
 
-  const handleDate = (value: any) => {
-    console.log(value)
-    setForm({ ...form, estimEndDate: value.startDate });
-  };
 
   return (
     <main className="sm:mx-20 mx-5 mt-10">
@@ -142,6 +91,7 @@ export default function CreateProjectPage() {
                   crossOrigin={undefined}
                   onChange={(e: InputEvent) => handleChange(e)}
                 />
+                {renderErrors('name')}
               </div>
             </div>
 
@@ -152,6 +102,7 @@ export default function CreateProjectPage() {
               id="description"
               onChange={(e: any) => handleChange(e)}
             />
+            {renderErrors('description')}
           </article>
 
           <article>
@@ -169,6 +120,7 @@ export default function CreateProjectPage() {
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />
+              {renderErrors('budget')}
             </div>
             <div className="flex gap-5 mb-5 flex-wrap">
               <div className="w-full">
@@ -178,7 +130,7 @@ export default function CreateProjectPage() {
                   placeholder="Status"
                   defaultValue={Status[0].label}
                   components={animatedComponents}
-                  onChange={(value: any) => handleStatus(value)}
+                  onChange={(value: any) => handleSelect(value, 'status')}
                   theme={(theme) => ({
                     ...theme,
                     borderRadius: 5,
@@ -190,11 +142,12 @@ export default function CreateProjectPage() {
                     },
                   })}
                 />
+                {renderErrors('status')}
               </div>
               <div className="w-full">
                 <Datepicker
                   inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-text-100 text-text-100 border-select placeholder:!text-sm"
-                  onChange={handleDate}
+                  onChange={(value:any) => handleDate(value, 'estimEndDate')}
                   value={{
                     startDate: form.estimEndDate,
                     endDate: form.estimEndDate,
@@ -204,6 +157,7 @@ export default function CreateProjectPage() {
                   inputName="rangeDate"
                   placeholder={"Choisir la date de fin estimée du projet"}
                 />
+                {renderErrors('estimEndDate')}
               </div>
             </div>
             <div className="my-5">
@@ -216,7 +170,7 @@ export default function CreateProjectPage() {
                   : (obj: { inputValue:string } ) => obj.inputValue = "There is no users available" }
                 placeholder="Inviter des membres sur votre projet"
                 components={animatedComponents}
-                onChange={(value: any) => handleUsers(value)}
+                onChange={(value: any) => handleMultiple(value, 'members', 'email')}
                 theme={(theme) => ({
                   ...theme,
                   borderRadius: 5,
@@ -239,7 +193,7 @@ export default function CreateProjectPage() {
                 noOptionsMessage={errorCompanies ? 
                   (obj: { inputValue:string } ) => obj.inputValue = "Error with fetching companies data" 
                   : (obj: { inputValue:string } ) => obj.inputValue = "There is no companies available" }
-                onChange={(value: any) => handleCompanies(value)}
+                onChange={(value: any) => handleMultiple(value, 'companies', 'name')}
                 theme={(theme) => ({
                   ...theme,
                   borderRadius: 5,
@@ -252,7 +206,6 @@ export default function CreateProjectPage() {
                 })}
               />
             </div>
-
             <div className={"flex justify-center my-10"}>
               <MagicButton type={ButtonTypeEnum.CREATE} />
             </div>
