@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { URL_API, useApi } from "../../hooks/useApi";
 import { intOldPwd } from "../interfaces/intAuth";
@@ -37,9 +38,8 @@ const PROJECT_ENDPOINT = "project"
     return await api.post(`${URL_API}/auth/register`, data);
   }
 
-  export async function addUserAndCompanyToBDD(data: intUser, dataCompany: intCompany) {
-    const body = {...data, ...dataCompany}
-    return await api.post(`${URL_API}/auth/registerWithCompany`, body)
+  export async function addUserAndCompanyToBDD(data:any) {
+    return await api.post(`${URL_API}/auth/registerWithCompany`, data)
   }
 
   export async function getUserInfo() {

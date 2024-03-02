@@ -99,10 +99,12 @@ export const useMagicForm = ():Props =>{
             case ValidationEnum.PASSWORD:
               if (!regexPwd.test(form[formInput.name])) tmpErrors[formInput.name] = (tmpErrors[formInput.name] || []).concat(`${ErrorsMessagesEnum.PASSWORD}`)
               break;
+            case ValidationEnum.IS_IDENTIC:
+              if (form[formInput.name]!== form[formInput.options.isIdentic]) tmpErrors[formInput.name] = (tmpErrors[formInput.name] || []).concat(`${ErrorsMessagesEnum.IS_IDENTIC}`)
+              break;
           }
         })
       })
-      console.log(tmpErrors)
     setErrors(tmpErrors)
     if (Object.keys(tmpErrors).length !== 0) return false;
     return true;

@@ -1,193 +1,102 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import {
-  Radio,
-  Input,
-  Typography,
-  Card,
-  Alert,
-} from "@material-tailwind/react";
+import {Radio,Input,Typography,Card} from "@material-tailwind/react";
 import { addUserAndCompanyToBDD, addUserToBDD } from "../../services/api/users";
 import { useNavigate, useLocation } from "react-router-dom";
 import { SelectionEnum } from "../../services/enums/selection.enum";
 import { useState } from "react";
-import { intRegister } from "../../services/interfaces/intAuth";
-import { intAlert } from "../../services/interfaces/generique.interface";
+import { FormEvent, InputEvent} from "../../services/interfaces/generique.interface";
 import MagicButton from "../../components/elements/Buttons/MagicButton";
 import { ButtonTypeEnum } from "../../services/enums/button.type";
+import { useMagicForm } from "../../hooks/useMagicForm";
+import { useAlert } from "../../hooks/useAlert";
+import { UserSchema } from "../../services/schemas/user.schema";
+import { CompanySchema } from "../../services/schemas/company.schema";
 
 export default function SignupPage() {
   const location = useLocation();
+  const [renderAlert, newAlert] = useAlert()
   const [selectedOption, setSelectedOption] = useState<SelectionEnum>(
     parseInt(location.hash.replace(/\D/g, ""), 10)
   );
-  const navigate = useNavigate();
-  const [alert, setAlert] = useState<intAlert>({open: false, message:'', color:'green'})
-  
-  const validationGlobal = Yup.object({
-    userInfos: Yup.object().shape({
-      lastname: Yup.string()
-        .min(2, "Votre nom doit contenir au minimum 2 charactères")
-        .required("Ce champ est requis"),
-      firstname: Yup.string()
-        .min(2, "Votre prénom doit contenir au minimum 2 charactères")
-        .required("Ce champ est requis"),
-      email: Yup.string()
-        .email("L'adresse email doit contenir '@'")
-        .required("Ce champ est requis"),
-      address: Yup.string().required("Ce champ est requis"),
-      zip: Yup.string().required("Ce champ est requis"),
-      city: Yup.string()
-        .min(2, "Ce champ doit contenir au minimum 2 charactères")
-        .required("Ce champ est requis"),
-      phone: Yup.string().required("Ce champ est requis"),
-      password: Yup.string()
-        .min(12, "Le mot de passe doit contenir au minimum 12 charactères")
-        .required("Ce champ est requis"),
-      checkPassword: Yup.string()
-        .oneOf([Yup.ref("password")], "Les mots de passe ne correspondent pas.")
-        .required("Ce champ est requis"),
-    }),
+  const {form, handleChange, validateForm, renderErrors} = useMagicForm()
+  const navigate = useNavigate()
 
-    companyInfos: Yup.object().shape({
-      name: Yup.string(),
-      siret: Yup.string(),
-      description: Yup.string(),
-    }),
-  });
-
-  const { handleChange, handleSubmit, values, errors } = useFormik<intRegister>(
-    {
-      initialValues: {
-        userInfos: {
-          lastname: "",
-          firstname: "",
-          email: "",
-          address: "",
-          zip: "",
-          status: 0,
-          city: "",
-          phone: "",
-          password: "",
-          checkPassword: "",
-        },
-        companyInfos: {
-          name: "",
-          additionalInfos: "",
-          description: "",
-        },
-      },
-
-      validateOnChange: false,
-      validationSchema: validationGlobal,
-
-      onSubmit: async (values) => {
-        try {
-          if (Object.keys(errors).length > 0) return;
-          if (values.companyInfos && values.companyInfos.name != '') {
-            await addUserAndCompanyToBDD(values.userInfos, values.companyInfos);
-          } else {
-            await addUserToBDD(values.userInfos);
-          }
-          navigate("/login#created");
-        } catch (error:any) {
-          if (error.response.data.message.error === "USER-ALRDY-EXIST") {
-           setAlert({open: true, message:"L'adresse email renseignée existe déjà", color: 'red'})
-          }
-          console.error(error);
-        }
-      },
+  const handleSubmit = async (e:FormEvent) => {
+    e.preventDefault();
+    if (!validateForm(UserSchema)) return;
+    try {
+      if (form.name) {
+        if (!validateForm(CompanySchema)) return;
+        await addUserAndCompanyToBDD(form);
+      } else {
+        await addUserToBDD(form);
+      }
+      navigate("/login#created");
+    } catch (error:any) {
+      if (error.response.data.message.error === "USER-ALRDY-EXIST") {
+       newAlert("L'adresse email renseignée existe déjà",'red')
+      }
+      console.error(error);
     }
-  );
+  }
 
   return (
     <main className="sm:mx-20 mx-5 mt-10">
-      <Alert color={alert.color} className='m-1 sticky top-0 my-10' open={alert.open} onClose={() => setAlert({...alert, open:false})}>
-            {alert.message}
-          </Alert>
+      {renderAlert}
       <Typography variant="h1" className={"font-bold text-center"}>
         Créer son compte
       </Typography>
       <section className={"mt-10 lg:w-[30lvw] m-auto"}>
-        <form onSubmit={handleSubmit} noValidate>
+        <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
             <div className="md:flex sm:gap-x-5">
               <div className={"mb-5 w-full"}>
                 <Input
                   label="Nom"
-                  type="text"
-                  name="userInfos.lastname"
+                  name="lastname"
                   id="lastname"
                   className={"!bg-light-100"}
-                  value={values.userInfos.lastname}
-                  onChange={handleChange}
+                  onChange={(e: InputEvent) => handleChange(e)}
                   crossOrigin={undefined}
-                  aria-required
                 />
-                {errors.userInfos && errors.userInfos.lastname && (
-                  <small className={"text-brick-400 font-bold"}>
-                    {errors.userInfos.lastname}
-                  </small>
-                )}
+                {renderErrors('lastname')}
               </div>
 
               <div className={"mb-5 w-full"}>
                 <Input
                   label="Prénom"
-                  type="text"
-                  name="userInfos.firstname"
+                  name="firstname"
                   id="firstname"
                   className={"!bg-light-100"}
-                  value={values.userInfos.firstname}
-                  onChange={handleChange}
+                  onChange={(e: InputEvent) => handleChange(e)}
                   crossOrigin={undefined}
-                  aria-required
                 />
-                
-                {errors.userInfos && errors.userInfos.firstname && (
-                  <small className={"text-brick-400 font-bold"}>
-                    {errors.userInfos.firstname}
-                  </small>
-                )}
+                {renderErrors('firstname')}
+
               </div>
               </div>
               <div className="flex gap-5 mb-5 flex-wrap">
                 <div className="w-full">
                   <Input
                     label="E-mail"
-                    type="email"
-                    name="userInfos.email"
+                    name="email"
                     id="email"
                     className={"!bg-light-100"}
-                    value={values.userInfos.email}
-                    onChange={handleChange}
+                    onChange={(e: InputEvent) => handleChange(e)}
                     crossOrigin={undefined}
-                    aria-required
                   />
-                  {errors.userInfos && errors.userInfos.email && (
-                    <small className={"text-brick-400 font-bold"}>
-                      {errors.userInfos.email}
-                    </small>
-                  )}
+                  {renderErrors('email')}
                 </div>
 
                 <div className="w-full">
                   <Input
                     label="Adresse"
-                    type="text"
-                    name="userInfos.address"
+                    name="address"
                     id="address"
                     className={"!bg-light-100"}
-                    value={values.userInfos.address}
-                    onChange={handleChange}
+                    onChange={(e: InputEvent) => handleChange(e)}
                     crossOrigin={undefined}
-                    aria-required
                   />
-                  {errors.userInfos && errors.userInfos.address && (
-                    <small className={"text-brick-400 font-bold"}>
-                      {errors.userInfos.address}
-                    </small>
-                  )}
+                  {renderErrors('address')}
                 </div>
                 </div>
 
@@ -195,100 +104,63 @@ export default function SignupPage() {
               <div className={"mb-5 w-full"}>
                   <Input
                     label="Code postal"
-                    type="text"
-                    name="userInfos.zip"
+                    name="zip"
                     id="zip"
                     className={"!bg-light-100"}
-                    value={
-                      values.userInfos.zip !== null ? values.userInfos.zip : ""
-                    }
-                    onChange={handleChange}
+                    onChange={(e: InputEvent) => handleChange(e)}
                     crossOrigin={undefined}
-                    aria-required
                   />
-                  {errors.userInfos && errors.userInfos.zip && (
-                    <small className={"text-brick-400 font-bold"}>
-                      {errors.userInfos.zip}
-                    </small>
-                  )}
+                  {renderErrors('zip')}
                 </div>
                 <div className="w-full mb-5">
                   <Input
                     label="Ville"
-                    type="text"
-                    name="userInfos.city"
+                    name="city"
                     id="city"
                     className={"!bg-light-100"}
-                    value={values.userInfos.city}
-                    onChange={handleChange}
+                    onChange={(e: InputEvent) => handleChange(e)}
                     crossOrigin={undefined}
-                    aria-required
                   />
-                  {errors.userInfos && errors.userInfos.city && (
-                    <small className={"text-brick-400 font-bold"}>
-                      {errors.userInfos.city}
-                    </small>
-                  )}
+                  {renderErrors('city')}
+
                 </div>
                 </div>
                 <div className="mb-5 w-full">
                   <Input
                     label="Téléphone"
                     type="tel"
-                    name="userInfos.phone"
+                    name="phone"
                     id="phone"
                     className={"!bg-light-100"}
-                    value={
-                      values.userInfos.phone !== null
-                        ? values.userInfos.phone
-                        : ""
-                    }
-                    onChange={handleChange}
+                    onChange={(e: InputEvent) => handleChange(e)}
                     crossOrigin={undefined}
-                    aria-required
                   />
-                  {errors.userInfos && errors.userInfos.phone && (
-                    <small className={"text-brick-400 font-bold"}>
-                      {errors.userInfos.phone}
-                    </small>
-                  )}
+                  {renderErrors('phone')}
                 </div>
                 <div className="md:flex sm:gap-x-5">
                 <div className="mb-5 w-full">
                   <Input
                     label="Mot de passe"
                     type="password"
-                    name="userInfos.password"
+                    name="password"
                     id="password"
                     className={"!bg-light-100"}
-                    value={values.userInfos.password}
-                    onChange={handleChange}
+                    onChange={(e: InputEvent) => handleChange(e)}
                     crossOrigin={undefined}
-                    aria-required
                   />
-                  {errors.userInfos && errors.userInfos.password && (
-                    <small className={"text-brick-400 font-bold"}>
-                      {errors.userInfos.password}
-                    </small>
-                  )}
+                  {renderErrors('password')}
                 </div>
                 <div className="w-full">
                   <Input
                     label="Confirmer du mot de passe"
                     type="password"
-                    name="userInfos.checkPassword"
+                    name="checkPassword"
                     id="checkPassword"
                     className={"!bg-light-100"}
-                    value={values.userInfos.checkPassword}
-                    onChange={handleChange}
+                    onChange={(e: InputEvent) => handleChange(e)}
                     crossOrigin={undefined}
-                    aria-required
                   />
-                  {errors.userInfos && errors.userInfos.checkPassword && (
-                    <small className={"text-brick-400 font-bold"}>
-                      {errors.userInfos.checkPassword}
-                    </small>
-                  )}
+                  {renderErrors('checkPassword')}
                 </div>
                 </div>
                 
@@ -324,48 +196,32 @@ export default function SignupPage() {
               </div>
 
               {selectedOption === SelectionEnum.OWNER && (
-                <Card
-                  className={"w-full p-10 flex flex-col gap-5 taskDescription"}
-                >
+                <Card className={"w-full p-10 flex flex-col gap-5 taskDescription"}>
                   <Input
                     label="Nom de l'entreprise"
-                    type="text"
-                    name="companyInfos.name"
+                    name="name"
                     id="name"
-                    value={values.companyInfos.name}
-                    aria-required
-                    onChange={handleChange}
+                    onChange={(e: InputEvent) => handleChange(e)}
                     crossOrigin={undefined}
                   />
-                  {errors.companyInfos && (
-                    <small>{errors.companyInfos.name}</small>
-                  )}
+                  {renderErrors('name')}
 
                   <Input
                     label="SIRET"
-                    type="text"
-                    name="companyInfos.additionalInfos"
+                    name="additionalInfos"
                     id="additionalInfos"
-                    value={values.companyInfos.additionalInfos}
-                    aria-required
-                    onChange={handleChange}
+                    onChange={(e: InputEvent) => handleChange(e)}
                     crossOrigin={undefined}
                   />
-                  {errors.companyInfos && (
-                    <small>{errors.companyInfos.additionalInfos}</small>
-                  )}
+                  {renderErrors('additionalInfos')}
                   <Input
                     label="Décrire vos activités"
-                    name="companyInfos.description"
+                    name="description"
                     id="description"
-                    value={values.companyInfos.description}
-                    aria-required
-                    onChange={handleChange}
+                    onChange={(e: InputEvent) => handleChange(e)}
                     crossOrigin={undefined}
                   />
-                  {errors.companyInfos && (
-                    <small>{errors.companyInfos.description}</small>
-                  )}
+                  {renderErrors('description')}
                 </Card>
               )}
 
@@ -376,14 +232,12 @@ export default function SignupPage() {
                     type="text"
                     name="companyNameEmployee"
                     id="companyNameEmployee"
-                    aria-required
-                    onChange={handleChange}
+                    onChange={(e: InputEvent) => handleChange(e)}
                     crossOrigin={undefined}
                   />
                 </Card>
               )}
               </article>
-
               <div className={"flex justify-center my-20"}>
                 <MagicButton type={ButtonTypeEnum.CREATE} value={'Créer mon compte'}/>
                 </div>

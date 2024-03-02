@@ -11,5 +11,6 @@ export enum ErrorsMessagesEnum {
     STR_MAX = "Le nombre maximum de charactères est ",
     STR_RANGE = "Le nombre de charactères doit se situer entre ",
     REQUIRED = "Ce champ est requis",
-    SELECT = "Veuillez sélectionner un "
+    SELECT = "Veuillez sélectionner un ",
+    IS_IDENTIC = "Les champs ne sont pas identiques."
 }

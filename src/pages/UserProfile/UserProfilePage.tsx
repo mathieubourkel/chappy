@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import {
-  Avatar,
-  Input,
-  Typography,
-} from "@material-tailwind/react";
+import {Avatar,Input,Typography,} from "@material-tailwind/react";
 import avatar from "../../assets/img/icon_user.png";
 import { modifyUserToBDD, quitCompany, resetPwd } from "../../services/api/users";
 import { intDemand, intProfileUser } from "../../services/interfaces/intUser";

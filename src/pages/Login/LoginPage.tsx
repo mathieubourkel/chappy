@@ -10,10 +10,11 @@ export default function LoginPage() {
     const [accountCreated, setAccountCreated] = useState<boolean>(false)
     
     if (accountCreated) {
-        newAlert("Votre compte a bien été créé, vous trouverez dans votre boite mail, un email de validation", "green")
+        newAlert("Votre compte a bien été créé, vous devez activez votre compte via le lien envoyé par email", "green")
+        location.hash = ""
         setAccountCreated(false)
     }
-    
+
     if (location.hash == "#created") {
         setAccountCreated(true)
     }

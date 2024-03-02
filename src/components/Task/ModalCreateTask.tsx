@@ -1,29 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-import {
-  Dialog,
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
-  Input,
-  Textarea,
-} from "@material-tailwind/react";
+import {Dialog,Card,CardBody,CardFooter,Typography,Input,Textarea,} from "@material-tailwind/react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { addTaskToStepToBDD } from "../../services/api/tasks";
 import { useParams } from "react-router-dom";
-import ReactSelect from "react-select";
-import * as Yup from "yup";
-import makeAnimated from "react-select/animated";
-import SelectCategory from "../elements/Select/SelectCategory";
-import SelectStatus from "../elements/Select/SelectStatus";
-import { formatDate } from "../../services/utils/FormatDate";
 import { intStep } from "../../services/interfaces/intStep";
-import { intTask } from "../../services/interfaces/intTask";
-import { FormEvent, InputEvent, intSelect, intSelects } from "../../services/interfaces/generique.interface";
+import { FormEvent, InputEvent } from "../../services/interfaces/generique.interface";
 import { ManageWebSocket } from "../../services/utils/ManageWebSocket";
 import { ButtonTypeEnum } from "../../services/enums/button.type";
 import MagicButton from "../elements/Buttons/MagicButton";
+import { useMagicForm } from "../../hooks/useMagicForm";
+import { TaskSchema } from "../../services/schemas/task.schema";
+import { Status } from "../../services/enums/status.enum";
+import { CategoriesEnum } from "../../services/enums/categories.enum";
+import MagicSelect from "../elements/Select/MagicSelect";
+import MagicMultipleSelect from "../elements/Select/MagicMultipleSelect";
 
 type Props = {
   step: intStep;
@@ -35,73 +25,23 @@ type Props = {
 
 export default function ModalCreateTask({setStep, step, reloadFilteredData, open, handleOpen}: Props) {
   const { idStep, idProject } = useParams();
-  const animatedComponents = makeAnimated();
-  const date = new Date()
+  const {form, handleChange, handleSelect, handleDate, handleMultiple, validateForm, renderErrors} = useMagicForm()
   
-  const [form, setForm] = useState<intTask>({
-    name: "",
-    description: "",
-    category: 0,
-    startDate: formatDate(date),
-    endDate: formatDate(date),
-    status: 0,
-    members: [],
-    step: idStep,
-    project: idProject,
-    budget: 0
-  });
-
-  const taskSchema = Yup.object().shape({
-    name: Yup.string()
-      .max(50, "Pas plus de 50")
-      .required("Le nom de la tâche est requis"),
-    description: Yup.string()
-      .max(300, "pas plus de 300")
-      .required("La description de la tâche est requise"),
-    status: Yup.number().required("Le statut de la tâche est requis"),
-  });
-
-  const handleChange = (e: InputEvent) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    taskSchema
-      .validate(form)
-      .then(async (validForm:any) => {
-        const newTask = await addTaskToStepToBDD(validForm);
-        const tmpArray:any = []
-        validForm.members.map((member:any) => {
-          tmpArray.push(member.id.toString())
-        })
-
-        new ManageWebSocket().sendMessage(`Vous avez été invité sur la tâche ${validForm.name}`, tmpArray) 
-        handleOpen();
-        const newTasksArray = [newTask.data, ...step.tasks]
-        setStep({...step, tasks: newTasksArray})
-        reloadFilteredData(newTasksArray)
-      })
-      .catch((validationError) => {
-        alert(validationError.errors);
-      });
-  };
-
-  const handleDate = (value: any) => {
-    setForm({ ...form, startDate: value.startDate.toString(), endDate: value.endDate.toString() });
-  };
-  const handleStatus = (value: any) => {
-    setForm({ ...form, status: value.value });
-  };
-  const handleCategory = (value: any) => {
-    setForm({ ...form, category: value.value});
-  };
-  const handleUsers = (value: intSelects) => {
-    const goodArray: any = value.map((element: intSelect) => ({id:element.value, email: element.label}));
-    setForm({ ...form, members: goodArray });
-  };
-
+    if (!validateForm(TaskSchema)) return;
+    const newTask = await addTaskToStepToBDD({...form, project:idProject, step:idStep});
+    const tmpArray:any = []
+    newTask.data.members.map((member:any) => {
+      tmpArray.push(member.id.toString())
+    })
+    new ManageWebSocket().sendMessage(`Vous avez été invité sur la tâche ${form.name}`, tmpArray) 
+    handleOpen();
+    const newTasksArray = [newTask.data, ...step.tasks]
+    setStep({...step, tasks: newTasksArray})
+    reloadFilteredData(newTasksArray)
+  }
+  console.log(step.project.members)
   return (
       <Dialog
         size="sm"
@@ -129,6 +69,7 @@ export default function ModalCreateTask({setStep, step, reloadFilteredData, open
                 crossOrigin={undefined}
                 onChange={(e: InputEvent) => handleChange(e)}
               />
+              {renderErrors('name')}
               <Textarea
                 label="Description"
                 size="lg"
@@ -137,6 +78,7 @@ export default function ModalCreateTask({setStep, step, reloadFilteredData, open
                 id="description"
                 onChange={(e: any) => handleChange(e)}
               />
+              {renderErrors('description')}
               <Input
                 label="Budget"
                 size="lg"
@@ -147,39 +89,22 @@ export default function ModalCreateTask({setStep, step, reloadFilteredData, open
                 id="budget"
                 onChange={(e: InputEvent) => handleChange(e)}
               />
-
-              <SelectStatus handleStatus={handleStatus} />
-
-              <SelectCategory handleCategory={handleCategory} />
-
+              {renderErrors('budget')}
+              <MagicSelect options={Status} handleSelect={handleSelect} label='status' placeholder='Status'/>
+              {renderErrors('status')}
+              <MagicSelect options={CategoriesEnum} handleSelect={handleSelect} label='category' placeholder='Catégorie'/>
+              {renderErrors('category')}
               <div className="sm:flex gap-3">
                 <Datepicker
                   inputClassName="w-full p-2 rounded-md font-normal border-select bg-select placeholder:text-text-100 text-sm placeholder:text-sm"
-                  onChange={handleDate}
+                  onChange={(value:any) => handleDate(value, 'startDate', 'endDate')}
                   value={{ startDate: form.startDate, endDate: form.endDate }}
                   inputName="rangeDate"
                   placeholder={"Choisir la durée de la tâche"}
                 />
+                {renderErrors('endDate')}
               </div>
-              <ReactSelect
-                options={step.project.members}
-                className="rounded-xl border-select"
-                isMulti
-                placeholder="Ajouter des participants à la tâche"
-                components={animatedComponents}
-                onChange={(value: any) => handleUsers(value)}
-                theme={(theme) => ({
-                  ...theme,
-                  borderRadius: 5,
-                  colors: {
-                    ...theme.colors,
-                    primary25: "rgba(126,55,47, 0.2)",
-                    primary: "rgba(126,55,47, 0.7)",
-                    primary50: "rgba(126,55,47, 0.3)",
-                  },
-                  fontSize: '0.875rem',
-                })}
-              />
+              <MagicMultipleSelect options={step.project.members|| []} handleMultiple={handleMultiple} label='members' placeholder='Ajouter des participants à la tâche' alias='email'/>
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
               <MagicButton type={ButtonTypeEnum.CREATE}/>

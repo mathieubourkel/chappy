@@ -11,5 +11,6 @@ export enum ValidationEnum {
     STR_MAX,
     STR_RANGE,
     REQUIRED,
-    SELECT
+    SELECT,
+    IS_IDENTIC
 }
