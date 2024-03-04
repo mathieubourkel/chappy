@@ -20,8 +20,8 @@ export default function CardCompta({compta, comptas, setComptas }: Props) {
 
   const handleDelete = async () => {
     await deletePurchaseFromBDD(compta._id ||'');
-    // BESOIN DE TRAITER LE TABLEAU
-    setComptas([...comptas])
+    const updatedComptas = comptas.filter(item => item._id !== compta._id);
+    setComptas(updatedComptas)
   };
 
   return (
@@ -33,7 +33,7 @@ export default function CardCompta({compta, comptas, setComptas }: Props) {
           </span>
           <div className={"flex gap-2"}>
             <div className="border px-5 rounded-xl bg-light-200 m-2 text-sm text-marine-300 font-bold uppercase">
-              Prix : {stateCompta.price.fullTaxPrice}€
+              Prix : {stateCompta.price}€
             </div>
             <div className="flex gap-2 items-center">
               <MagicIconButton type={ButtonTypeEnum.MODIFY} handleClick={handleOpen}/>

@@ -25,13 +25,14 @@ export default function ModalModifyCompta({ compta, setStateCompta, open, handle
   const {form, handleSetForm, handleChange, handleSelect, handleDate, validateForm, renderErrors} = useMagicForm()
   
   useEffect(() => {
-    handleSetForm({...compta, price: compta.price.fullTaxPrice})
+    handleSetForm(compta)
   }, [compta])
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!validateForm(ComptaSchema)) return;
-    const tmpCompta = await modifyPurchaseFromBDD(form._id ||'', {...form, price:{fullTaxPrice: form.price}});
+    console.log(form)
+    const tmpCompta = await modifyPurchaseFromBDD(form._id ||'', {...form, price: +form.price});
     setStateCompta(tmpCompta.data)
     handleOpen()
   };
@@ -63,7 +64,7 @@ export default function ModalModifyCompta({ compta, setStateCompta, open, handle
                 placeholder='Choisir la date de livraison' 
                 renderErrors={renderErrors}
                 />
-               <MagicSelect value={form.status} options={Status} handleSelect={handleSelect} label='status' placeholder='Status' renderErrors={renderErrors}/>
+               <MagicSelect value={Status[form.status]} options={Status} handleSelect={handleSelect} label='status' placeholder='Status' renderErrors={renderErrors}/>
             </CardBody>
             
             <CardFooter className="pt-0 flex justify-center">

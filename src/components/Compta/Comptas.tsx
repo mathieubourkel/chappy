@@ -18,7 +18,7 @@ export default function Comptas({idProject}:{idProject: string}) {
     const handleOpen = () => setOpen((cur) => !cur);
     const calculateTotal = () => {
         return data.reduce(
-            (total:number, compta:intCompta) => total + Math.floor(compta.price.fullTaxPrice),0);
+            (total:number, compta:intCompta) => total + Math.floor(compta.price),0);
         };
     
     return (

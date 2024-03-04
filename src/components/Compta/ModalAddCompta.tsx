@@ -28,9 +28,7 @@ export default function ModalAddCompta({ comptas, setComptas, open, handleOpen }
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!validateForm(ComptaSchema)) return;
-    console.log(form)
-    const newCompta = await addPurchaseToBDD({...form, price: {fullTaxPrice: +form.price, devise:0},refId:idProject, refModel:0});
-    console.log(newCompta)
+    const newCompta = await addPurchaseToBDD({...form, refId:idProject, refModel:0, price: +form.price});
     setComptas([newCompta.data, ...comptas])
     handleOpen()
   }
