@@ -35,11 +35,7 @@ export default function HomePage() {
       </section>
       <section className={"hidden lg:flex lg:w-1/4 lg:animation-section"}>
         <img src={blop} alt={"fond animé"} className={"scale-in-right"} />
-        <img
-          src={planning}
-          alt={"logo de planning"}
-          className={"planning slide-in-right"}
-        />
+        <img src={planning} alt={"logo de planning"} className={"planning slide-in-right"}/>
       </section>
     </main>
   );

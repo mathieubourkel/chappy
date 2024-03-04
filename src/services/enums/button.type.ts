@@ -26,5 +26,7 @@ export enum ButtonTypeEnum {
     PARAMETERS,
     DOCUMENTS,
     PURCHASES,
-    MEMBERS
+    MEMBERS,
+    VIEW,
+    MAIL_USER
 }

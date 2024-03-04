@@ -1,14 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Input, Textarea, Typography } from "@material-tailwind/react";
+import { Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { addProjectToBDD } from "../../services/api/projects";
-import Datepicker from "react-tailwindcss-datepicker";
 import { useNavigate } from "react-router-dom";
 import { getAllCompanies, getAllUsers } from "../../services/api/users";
-import ReactSelect from "react-select";
-import makeAnimated from "react-select/animated";
 import { Status } from "../../services/enums/status.enum";
-import { FormEvent, InputEvent, intSelects } from "../../services/interfaces/generique.interface";
+import { FormEvent, intSelects } from "../../services/interfaces/generique.interface";
 import { intCompany } from "../../services/interfaces/intCompany";
 import { intUser } from "../../services/interfaces/intUser";
 import { ManageWebSocket } from "../../services/utils/ManageWebSocket";
@@ -16,9 +13,11 @@ import MagicButton from "../../components/elements/Buttons/MagicButton";
 import { ButtonTypeEnum } from "../../services/enums/button.type";
 import { ProjectSchema } from "../../services/schemas/projet.schema";
 import { useMagicForm } from "../../hooks/useMagicForm";
+import SelectDate from "../../components/elements/Select/SelectDate";
+import MagicInput from "../../components/elements/Input/MagicInput";
+import MagicSelect from "../../components/elements/Select/MagicSelect";
+import MagicMultipleSelect from "../../components/elements/Select/MagicMultipleSelect";
 
-
-const animatedComponents = makeAnimated();
 
 export default function CreateProjectPage() {
   const [error, setError] = useState<boolean>(false);
@@ -83,128 +82,39 @@ export default function CreateProjectPage() {
             </Typography>
             <div className="sm:flex sm:gap-x-5">
               <div className={"mb-5 w-full"}>
-                <Input
-                  label="Nom du projet"
-                  className={"!bg-light-100 border-select placeholder:!text-text-100"}
-                  name="name"
-                  id="name"
-                  crossOrigin={undefined}
-                  onChange={(e: InputEvent) => handleChange(e)}
-                />
-                {renderErrors('name')}
+                <MagicInput name="name" label="Nom du projet" handleChange={handleChange} renderErrors={renderErrors}/>
               </div>
             </div>
-
-            <Textarea
-              label="Description du projet"
-              className={"!bg-light-100 border-select placeholder:!text-text-100"}
-              name="description"
-              id="description"
-              onChange={(e: any) => handleChange(e)}
-            />
-            {renderErrors('description')}
+            <MagicInput name="description" label="Description" handleChange={handleChange} renderErrors={renderErrors} type='text' />
           </article>
-
           <article>
             <Typography variant="h2" className={"text-xl font-extrabold my-10"}>
               Mise en oeuvre
             </Typography>
 
             <div className={"mb-5 w-full"}>
-              <Input
-                label="Budget du projet"
-                type="number"
-                className={"!bg-light-100 border-select"}
-                name="budget"
-                id="budget"
-                crossOrigin={undefined}
-                onChange={(e: InputEvent) => handleChange(e)}
-              />
-              {renderErrors('budget')}
+            <MagicInput name='budget' label='Budget' type='number' handleChange={handleChange} renderErrors={renderErrors}/>
             </div>
             <div className="flex gap-5 mb-5 flex-wrap">
               <div className="w-full">
-                <ReactSelect
-                  options={Status}
-                  className="rounded-xl border-select"
-                  placeholder="Status"
-                  defaultValue={Status[0].label}
-                  components={animatedComponents}
-                  onChange={(value: any) => handleSelect(value, 'status')}
-                  theme={(theme) => ({
-                    ...theme,
-                    borderRadius: 5,
-                    colors: {
-                      ...theme.colors,
-                      primary25: 'rgba(126,55,47, 0.2)',
-                      primary:'rgba(126,55,47, 0.7)',
-                      primary50: 'rgba(126,55,47, 0.3)',
-                    },
-                  })}
-                />
-                {renderErrors('status')}
+              <MagicSelect options={Status} handleSelect={handleSelect} label='status' placeholder='Status' renderErrors={renderErrors}/>
               </div>
               <div className="w-full">
-                <Datepicker
-                  inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-text-100 text-text-100 border-select placeholder:!text-sm"
-                  onChange={(value:any) => handleDate(value, 'estimEndDate')}
-                  value={{
-                    startDate: form.estimEndDate,
-                    endDate: form.estimEndDate,
-                  }}
-                  useRange={false}
-                  asSingle={true}
-                  inputName="rangeDate"
-                  placeholder={"Choisir la date de fin estimée du projet"}
+                <SelectDate 
+                value1={form.estimEndDate} handleDate={handleDate} label='estimEndDate'
+                placeholder='Choisir la date de fin estimée du projet' 
+                renderErrors={renderErrors}
                 />
-                {renderErrors('estimEndDate')}
               </div>
             </div>
             <div className="my-5">
-              <ReactSelect
-                options={users}
-                className="rounded-xl border-select"
-                isMulti
-                noOptionsMessage={error ? 
-                  (obj: { inputValue:string } ) => obj.inputValue = "Error with fetching users data" 
-                  : (obj: { inputValue:string } ) => obj.inputValue = "There is no users available" }
-                placeholder="Inviter des membres sur votre projet"
-                components={animatedComponents}
-                onChange={(value: any) => handleMultiple(value, 'members', 'email')}
-                theme={(theme) => ({
-                  ...theme,
-                  borderRadius: 5,
-                  colors: {
-                    ...theme.colors,
-                    primary25: 'rgba(126,55,47, 0.2)',
-                    primary:'rgba(126,55,47, 0.7)',
-                    primary50: 'rgba(126,55,47, 0.3)',
-                  },
-                })}
-              />
+            <MagicMultipleSelect options={users} handleMultiple={handleMultiple} label='members' 
+                  error={error} placeholder='Ajouter des membres à votre projet' alias='email'/>
+            
             </div>
             <div>
-              <ReactSelect
-                options={companies}
-                isMulti
-                components={animatedComponents}
-                placeholder="Inviter des entreprises sur votre projet"
-                className={"border-select"}
-                noOptionsMessage={errorCompanies ? 
-                  (obj: { inputValue:string } ) => obj.inputValue = "Error with fetching companies data" 
-                  : (obj: { inputValue:string } ) => obj.inputValue = "There is no companies available" }
-                onChange={(value: any) => handleMultiple(value, 'companies', 'name')}
-                theme={(theme) => ({
-                  ...theme,
-                  borderRadius: 5,
-                  colors: {
-                    ...theme.colors,
-                    primary25: 'rgba(126,55,47, 0.2)',
-                    primary:'rgba(126,55,47, 0.7)',
-                    primary50: 'rgba(126,55,47, 0.3)',
-                  },
-                })}
-              />
+            <MagicMultipleSelect options={companies} handleMultiple={handleMultiple} label='companies' 
+                  error={errorCompanies} placeholder='Ajouter des entreprises à votre projet' alias='name' />
             </div>
             <div className={"flex justify-center my-10"}>
               <MagicButton type={ButtonTypeEnum.CREATE} />

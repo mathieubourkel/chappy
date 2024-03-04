@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {Dialog,Card,CardBody,CardFooter,Typography,Input,Textarea,} from "@material-tailwind/react";
-import Datepicker from "react-tailwindcss-datepicker";
+import {Dialog,Card,CardBody,CardFooter,Typography} from "@material-tailwind/react";
 import { addTaskToStepToBDD } from "../../services/api/tasks";
 import { useParams } from "react-router-dom";
 import { intStep } from "../../services/interfaces/intStep";
-import { FormEvent, InputEvent } from "../../services/interfaces/generique.interface";
+import { FormEvent } from "../../services/interfaces/generique.interface";
 import { ManageWebSocket } from "../../services/utils/ManageWebSocket";
 import { ButtonTypeEnum } from "../../services/enums/button.type";
 import MagicButton from "../elements/Buttons/MagicButton";
@@ -14,6 +13,8 @@ import { Status } from "../../services/enums/status.enum";
 import { CategoriesEnum } from "../../services/enums/categories.enum";
 import MagicSelect from "../elements/Select/MagicSelect";
 import MagicMultipleSelect from "../elements/Select/MagicMultipleSelect";
+import MagicInput from "../elements/Input/MagicInput";
+import SelectDate from "../elements/Select/SelectDate";
 
 type Props = {
   step: intStep;
@@ -41,75 +42,31 @@ export default function ModalCreateTask({setStep, step, reloadFilteredData, open
     setStep({...step, tasks: newTasksArray})
     reloadFilteredData(newTasksArray)
   }
-  console.log(step.project.members)
+
   return (
-      <Dialog
-        size="sm"
-        open={open}
-        handler={handleOpen}
-        className="bg-transparent shadow-none"
-      >
-        <Card className="custom-modal">
-          <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
-            <CardBody className="flex flex-col gap-4">
-              <Typography
-                variant="h3"
-                className={
-                  "text-marine-300 text-xl font-extrabold text-center mb-5"
-                }
-              >
-                Créer une tâche
-              </Typography>
-              <Input
-                label="Nom de la tâche"
-                className={"bg-select focus:!b-brick-300"}
-                size="lg"
-                name="name"
-                id="name"
-                crossOrigin={undefined}
-                onChange={(e: InputEvent) => handleChange(e)}
+    <Dialog size="sm" open={open} handler={handleOpen} className={`mx-auto mt-20 bg-transparent shadow-none fixed inset-0 flex items-center justify-center overflow-y-auto ${open ? 'block' : 'hidden'}`}>
+    <Card className={`custom-modal rounded-br-none rounded-tr-none overflow-y-auto max-h-[80vh] custom-scroll`}>
+        <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+          <CardBody className="flex flex-col gap-4">
+            <Typography variant="h3" className="text-marine-300 text-xl font-extrabold text-center mb-5">
+              Créer une tâche
+            </Typography>
+            <MagicInput name="name" label="Nom de la tâche" handleChange={handleChange} renderErrors={renderErrors}/>
+            <MagicInput name="description" label="Description" handleChange={handleChange} renderErrors={renderErrors} type='text' />
+            <MagicInput name='budget' label='Budget' type='number' handleChange={handleChange} renderErrors={renderErrors}/>
+            <MagicSelect options={Status} handleSelect={handleSelect} label='status' placeholder='Status' renderErrors={renderErrors}/>
+            <MagicSelect options={CategoriesEnum} handleSelect={handleSelect} label='category' placeholder='Catégorie' renderErrors={renderErrors}/>
+            <SelectDate value1={form.startDate} value2={form.endDate} handleDate={handleDate} label='startDate' label2='endDate'
+                placeholder='Choisir la durée de la tâche' 
+                renderErrors={renderErrors}
               />
-              {renderErrors('name')}
-              <Textarea
-                label="Description"
-                size="lg"
-                className={"bg-select"}
-                name="description"
-                id="description"
-                onChange={(e: any) => handleChange(e)}
-              />
-              {renderErrors('description')}
-              <Input
-                label="Budget"
-                size="lg"
-                className={"bg-select"}
-                crossOrigin={undefined}
-                type="number"
-                name="budget"
-                id="budget"
-                onChange={(e: InputEvent) => handleChange(e)}
-              />
-              {renderErrors('budget')}
-              <MagicSelect options={Status} handleSelect={handleSelect} label='status' placeholder='Status'/>
-              {renderErrors('status')}
-              <MagicSelect options={CategoriesEnum} handleSelect={handleSelect} label='category' placeholder='Catégorie'/>
-              {renderErrors('category')}
-              <div className="sm:flex gap-3">
-                <Datepicker
-                  inputClassName="w-full p-2 rounded-md font-normal border-select bg-select placeholder:text-text-100 text-sm placeholder:text-sm"
-                  onChange={(value:any) => handleDate(value, 'startDate', 'endDate')}
-                  value={{ startDate: form.startDate, endDate: form.endDate }}
-                  inputName="rangeDate"
-                  placeholder={"Choisir la durée de la tâche"}
-                />
-                {renderErrors('endDate')}
-              </div>
-              <MagicMultipleSelect options={step.project.members|| []} handleMultiple={handleMultiple} label='members' placeholder='Ajouter des participants à la tâche' alias='email'/>
-            </CardBody>
-            <CardFooter className="pt-0 flex justify-center">
-              <MagicButton type={ButtonTypeEnum.CREATE}/>
-            </CardFooter>
-          </form>
+            <MagicMultipleSelect options={step.project.members|| []} handleMultiple={handleMultiple} label='members' 
+                placeholder='Ajouter des participants à la tâche' alias='email'/>
+          </CardBody>
+          <CardFooter className="pt-0 flex justify-center">
+            <MagicButton type={ButtonTypeEnum.CREATE}/>
+          </CardFooter>
+        </form>
         </Card>
       </Dialog>
   );

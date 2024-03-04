@@ -50,10 +50,6 @@ const PROJECT_ENDPOINT = "project"
     return await api.post(`${URL_API}/auth/resetPwd/sendMail`, {email: email})
   }
 
-  export async function getEmailToken(token:string) {
-    return await api.get(`${URL_API}/auth/emailToken/${token}`)
-  }
-
   export async function resetPwdWithEmail(data: {newPwd: string, emailToken: string}) {
     return await api.post(`${URL_API}/auth/resetPwd/withMail`, data)
   }

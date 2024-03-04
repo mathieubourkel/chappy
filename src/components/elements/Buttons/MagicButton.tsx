@@ -76,6 +76,9 @@ export default function MagicButton({type, handleClick, wrap, value, reverse}:Pr
         case ButtonTypeEnum.PURCHASES:
             props = {...props, icon:faRightToBracket,variant:'outlined', value:'Achats', color:"flex text-brick-300 border-brick-300"}
             break;
+        case ButtonTypeEnum.MAIL_USER:
+            props = {...props, color:"bg-marine-300 disabled:opacity-100"}
+            break;
     }
 
     if (value) props = {...props, value}

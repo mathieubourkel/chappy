@@ -3,16 +3,15 @@ import {Alert,Card,CardBody, Chip,Typography} from "@material-tailwind/react";
 import {faBookOpen,faListCheck,} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModifiableInput from "../elements/Input/ModifiableInput.tsx";
-import "react-date-picker/dist/DatePicker.css";
-import "react-calendar/dist/Calendar.css";
-import SelectDate from "../elements/Select/SelectDate.tsx";
 import { useParams } from "react-router-dom";
 import {modifyStepToBDD,} from "../../services/api/steps.ts";
 import Breadcrumb from "../layers/Breadcrumb/Breadcrumb.tsx";
 import ModifiableDescription from "../elements/Input/ModifiableDescription.tsx";
-import SelectStatus from "../elements/Select/SelectStatus.tsx";
 import {Status} from "../../services/enums/status.enum.ts";
 import { intStep } from "../../services/interfaces/intStep.tsx";
+import MagicSelect from "../elements/Select/MagicSelect.tsx";
+import SelectDate from "../elements/Select/SelectDate.tsx";
+
 
 type Props = {
   step:intStep,
@@ -23,10 +22,14 @@ type Props = {
 export default function StepHeader({step, setStep, isOwner}:Props) {
 
   const { idStep } = useParams();
-
   const handleModifyStep = async (data: intStep) => {
     await modifyStepToBDD(idStep || '', data);
   };
+
+  const handleDate = async (select:any) => {
+    const newStep = await modifyStepToBDD(idStep || '',{...step, estimEndDate: select.endDate});
+    setStep(newStep.data)
+  }
 
   const handleStatus = async (values:any):Promise<void> => {
     const data = { ...step, status:values.value};
@@ -39,36 +42,24 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
     <section className="mt-20 mb-10">
       <div className="md:flex justify-between items-stretch">
         <div className="shrink-0">
-          <Typography
-              variant="h1"
-              className={"font-bold text-4xl truncate"}
-          >
+          <Typography variant="h1" className={"font-bold text-4xl truncate"}>
             {step.name}
           </Typography>
           <Breadcrumb step={step} idProject={step.project._id ||""} nameProject={step.project.name} />
         </div>
-
       </div>
-
       <article className="mt-10">
         <div>
-          <Alert
-              className={"mb-5 bg-brick-300 p-5"}>
-            <FontAwesomeIcon
-                icon={faListCheck}
-                className={"mr-5 text-light-100"}
-            />
-
+          <Alert className={"mb-5 bg-brick-300 p-5"}>
+            <FontAwesomeIcon icon={faListCheck}className={"mr-5 text-light-100"} />
             <span>
               {step.tasks.length > 0 ?
                   `Vous avez actuellement ${step.tasks.length} ${step.tasks.length ==
                   1 ? "tâche ouverte" :
                       " tâches ouvertes"} dans ce jalon.` :
                   "Vous n'avez aucune tâche ouverte sur ce jalon"}
-
             </span>
           </Alert>
-
           <Card className="custom-block">
             <CardBody
                 className={"custom-project-body custom-scroll"}>
@@ -113,18 +104,16 @@ export default function StepHeader({step, setStep, isOwner}:Props) {
         <div
             className="md:flex gap-5 mt-5">
           <div className="w-full">
-            <SelectStatus
-                handleStatus={handleStatus}
-                value={Status[step.status]}
-            />
+            <MagicSelect options={Status} value={Status[step.status]} label='status'
+            disabled={!isOwner} handleSelect={handleStatus} />
           </div>
 
           <div className="w-full my-5 md:my-0">
-            <SelectDate
-                state={step}
-                setState={setStep}
-                handleBdd={handleModifyStep}
-            />
+          <SelectDate value1={step.estimEndDate} handleDate={handleDate} 
+                label='estimEndDate'
+                  placeholder='Choisir la durée du jalon.' 
+                 disabled={!isOwner}
+                />
           </div>
         </div>
 

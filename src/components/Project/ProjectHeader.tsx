@@ -15,15 +15,10 @@ export default function ProjectHeader({project, isOwner} :Props) {
   return (
       <section className="lg:flex justify-between mb-20">
         <div className='lg:w-1/2'>
-            <Typography
-                variant="h1"
-                className={"font-bold text-4xl truncate"}
-            >
+            <Typography variant="h1" className={"font-bold text-4xl truncate"}>
                 {project.name}
             </Typography>
-
             <Breadcrumb nameProject={project.name} idProject={project._id}/>
-
         </div>
         {isOwner && 
         <nav className="flex gap-2 items-center justify-center xl:justify-end lg:w-1/2">

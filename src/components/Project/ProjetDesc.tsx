@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {Alert,Card,CardBody,Chip,Typography,} from "@material-tailwind/react";
 import ModifiableInput from "../elements/Input/ModifiableInput";
-import SelectStatus from "../elements/Select/SelectStatus";
 import SelectDate from "../elements/Select/SelectDate";
 import { useParams } from "react-router-dom";
 import { modifyProjectToBDD } from "../../services/api/projects";
@@ -10,6 +9,7 @@ import { faBookOpen, faSitemap } from "@fortawesome/free-solid-svg-icons";
 import CalendarProject from "../Calendar/CalendarProject";
 import { Status } from "../../services/enums/status.enum";
 import { intProject } from "../../services/interfaces/intProject";
+import MagicSelect from "../elements/Select/MagicSelect";
   
 type Props = {
     project: intProject;
@@ -23,6 +23,11 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
     const handleModifyProject = async (data: intProject) => {
       await modifyProjectToBDD(idProject ||"", data);
     }
+
+    const handleDate = async (select:any) => {
+      const newProject = await modifyProjectToBDD(idProject || '',{...project, estimEndDate: select.endDate});
+      setProject(newProject.data)
+    }
   
     const handleStatus = async (values: any) => {
       const data = { ...project, status: values.value };
@@ -35,11 +40,7 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
         <div className="lg:flex gap-5">
           <div>
             <Alert className={"mb-5 bg-marine-300 p-5"}>
-              <FontAwesomeIcon
-                icon={faSitemap}
-                className={"mr-5 text-marine-100"}
-              />
-  
+              <FontAwesomeIcon icon={faSitemap} className={"mr-5 text-marine-100"}/>
               <span>
                 Vous avez actuellement {project.steps.length} { project.steps.length > 1 ? "jalons " : "jalon " }
                 ouvert sur ce projet.
@@ -48,10 +49,7 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
             <Card className="custom-block lg:w-[45lvw]">
               <CardBody className={"custom-project-body custom-scroll"}>
                 <div className={"flex gap-2 items-center"}>
-                  <FontAwesomeIcon
-                    icon={faBookOpen}
-                    className={"text-brick-400 text-xl"}
-                  />
+                  <FontAwesomeIcon icon={faBookOpen} className={"text-brick-400 text-xl"}/>
                   <Chip
                     variant="ghost"
                     value="Description"
@@ -81,17 +79,15 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
               <>
                 <div className="md:flex gap-5 md:mb-5">
                   <div className="w-full">
-                    <SelectStatus
-                      handleStatus={handleStatus}
-                      value={Status[project.status]}
-                    />
+                  <MagicSelect options={Status} value={Status[project.status]} label='status'
+            disabled={!isOwner} handleSelect={handleStatus} />
                   </div>
                   <div className="w-full my-5 md:my-0">
-                    <SelectDate
-                      state={project}
-                      setState={setProject}
-                      handleBdd={handleModifyProject}
-                    />
+                  <SelectDate value1={project.estimEndDate} handleDate={handleDate} 
+                label='estimEndDate'
+                  placeholder='Choisir la durée du jalon.' 
+                 disabled={!isOwner}
+                />
                   </div>
                 </div>
               </>

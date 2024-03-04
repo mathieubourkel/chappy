@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { faCheck, faCopy, faFilter, faFolderPlus, faPaperPlane, faPen, faRotateRight, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faCopy, faEye, faFilter, faFolderPlus, faPaperPlane, faPen, faRotateRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {  IconButton, Tooltip } from '@material-tailwind/react'
 import { ButtonTypeEnum } from '../../../services/enums/button.type'
@@ -35,6 +35,9 @@ switch (type) {
         break;
     case ButtonTypeEnum.MODIFY:
         props = {...props, icon:faPen, tooltip:'bg-brick-300', value:'Modifier', variant:'outlined', text:'text-brick-300', border:'border-brick-300'}
+        break;
+    case ButtonTypeEnum.VIEW:
+        props = {...props, icon:faEye, tooltip:'bg-brick-300', value:'Voir', variant:'outlined', text:'text-brick-300', border:'border-brick-300'}
         break;
     case ButtonTypeEnum.REFRESH:
         props = {...props, icon:faRotateRight, size:null}

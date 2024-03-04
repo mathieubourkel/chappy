@@ -1,8 +1,6 @@
 import {Alert} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faBan} from "@fortawesome/free-solid-svg-icons";
-import StepCreateTask from "../Task/ModalCreateTask";
-import TaskCard from "../Task/CardTask";
 import { intStep } from "../../services/interfaces/intStep";
 import { intTask } from "../../services/interfaces/intTask";
 import { useFilterDisplay } from "../../hooks/useFilterDisplay";
@@ -10,6 +8,9 @@ import MagicButton from "../elements/Buttons/MagicButton";
 import { ButtonTypeEnum } from "../../services/enums/button.type";
 import { useState } from "react";
 import MagicIconButton from "../elements/Buttons/MagicIconButton";
+import CardTaskOwner from "../Task/CardTaskOwner";
+import CardTask from "../Task/CardTask";
+import ModalCreateTask from "../Task/ModalCreateTask";
 
 type Props = {
   step:intStep
@@ -18,7 +19,7 @@ type Props = {
 }
 
 export default function StepTasks({step, setStep, handleReload}:Props) {
-
+  const userId: string = localStorage.getItem("id") || ""
   const {filteredData, renderNextButton, renderBeforeButton, reloadFilteredData} = useFilterDisplay(5, step.tasks)
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -28,9 +29,10 @@ export default function StepTasks({step, setStep, handleReload}:Props) {
       <div className="flex justify-between items-center">
           <h2>Les tâches</h2>
         <nav className="flex gap-5 items-center">
+        
           <div>
             <MagicButton type={ButtonTypeEnum.CREATE} handleClick={handleOpen} wrap='xl'/>
-            <StepCreateTask
+            <ModalCreateTask
               setStep={setStep}
               step={step}
               reloadFilteredData={reloadFilteredData}
@@ -49,12 +51,11 @@ export default function StepTasks({step, setStep, handleReload}:Props) {
         </div>
             <div className="flex w-[80vw] flex-wrap gap-5 justify-center">
           {filteredData.map((task: intTask) => (
-            <TaskCard
-              key={task._id}
-              handleReload={handleReload}
-              allUsers={step.project.members ||[]}
-              task={task}
-            />
+            <div key ={task._id} className='w-full'>
+              {(task.owner && task.owner.id == +userId) 
+               ? <CardTaskOwner handleReload={handleReload} allUsers={step.project.members ||[]} task={task}/>
+               : <CardTask allUsers={step.project.members ||[]} task={task}/>}
+            </div>
           ))}
           </div>
           <div className="flex w-[5vw] items-center">

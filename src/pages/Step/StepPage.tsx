@@ -52,6 +52,7 @@ export default function StepPage() {
       <div className={"flex justify-center mb-10"}>
         <MagicButton type={ButtonTypeEnum.DELETE} value='Supprimer le jalon' handleClick={handleDeleteStep}/>
       </div>
+      
     </main>}
     </>
   );

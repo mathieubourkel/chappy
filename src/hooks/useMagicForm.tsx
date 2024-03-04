@@ -7,7 +7,7 @@ import { regexEmail, regexPwd } from "../services/schemas/regex.schema";
 
 type Props = {
   form: any,
-  setForm:(form:any) => void;
+  handleSetForm:(data:any) => void;
   handleChange: (e:InputEvent) => void;
   handleSelect: (select:intSafeSelect, label:string) => void;
   handleMultiple: (arraySelect:intSelects, label:string, aliasLabel:string, aliasValue?:string) => void;
@@ -26,8 +26,13 @@ export const useMagicForm = ():Props =>{
     setForm({ ...form, [name]: value });
   };
 
-  const handleSelect = (select: intSafeSelect, label:string) => {
+  const handleSelect = async (select: intSafeSelect, label:string, callback?:any) => {
     setForm({ ...form, [label]: select.value });
+    if (callback) await callback()
+  };
+
+  const handleSetForm = (data:any) => {
+    setForm(data);
   };
 
   const handleMultiple = (arraySelect:intSelects, label:string, aliasLabel:string, aliasValue?:string) => {
@@ -110,5 +115,5 @@ export const useMagicForm = ():Props =>{
     return true;
   }
 
-  return {form, setForm, handleChange, handleSelect, handleMultiple, handleDate, renderErrors, validateForm}
+  return {form, handleSetForm, handleChange, handleSelect, handleMultiple, handleDate, renderErrors, validateForm}
 }

@@ -2,45 +2,33 @@
 import Datepicker from "react-tailwindcss-datepicker";
 
 type Props = {
-  state: any;
-  setState: any;
-  handleBdd: any;
-};
+  value1: any
+  value2?:any
+  handleDate: (value:any, label:string, label2?:string) => void;
+  label:string;
+  label2?:string;
+  placeholder: string
+  renderErrors?: (label:string) => void;
+  disabled?:boolean
+}
 
-export default function SelectDate({ state, setState, handleBdd }: Props) {
-  const tmpDate = {
-    startDate: state.estimEndDate,
-    endDate: null,
-  };
-
-
-  const handleChange = (value: any) => {
-    setState({ ...state, estimEndDate: value.startDate });
-    const tmpData = {...state, estimEndDate: value.startDate}
-    handleBdd(tmpData)
-  };
-
+export default function SelectDate({value1, value2, handleDate, disabled,placeholder, label, label2, renderErrors}:Props) {
+  if (!value2) value2 = value1
   return (
     <>
-    {state.estimEndDate == null ? 
-        <Datepicker
-        inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-black text-black"
-        primaryColor={"red"}
-        asSingle={true}
-        useRange={false}
-        onChange={handleChange}
-        value={tmpDate}
-        placeholder={"Choisir une date de fin estimée"}
-      /> :
     <Datepicker
-      inputClassName="w-full px-2 py-1.5 rounded-md font-normal focus:ring-0 placeholder:text-black text-black border border-gray-500/50"
-      primaryColor={"indigo"}
-      asSingle={true}
-      useRange={false}
-      onChange={handleChange}
-      value={tmpDate}
-      placeholder={"" + state.estimEndDate}
-    />}
+      inputClassName="w-full p-2 rounded-md font-normal focus:ring-0 placeholder:text-text-100 text-text-100 border-select placeholder:!text-sm"
+      onChange={(value:any) => handleDate(value, label, label2)}
+      value={{
+        startDate: value1,
+        endDate: value2,
+      }}
+      useRange={!label2 ? false : true}
+      asSingle={!label2 && true}
+      placeholder={placeholder}
+      disabled={disabled}
+    />
+    {renderErrors && renderErrors(label)}
     </>
   );
 }

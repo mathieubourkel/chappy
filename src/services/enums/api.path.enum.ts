@@ -1,6 +1,8 @@
 export enum ApiPathEnum {
     PROJECTS = "projects",
     PROJECT = "project",
+    AUTH = "auth",
+    EMAIL_TOKEN = "auth/emailToken",
     STEP = "step",
     STEPS = "steps",
     TASK = "task",

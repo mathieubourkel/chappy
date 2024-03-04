@@ -9,9 +9,10 @@ type Props = {
     label: string
     placeholder?: string
     alias:string
+    error?:boolean
 }
 
-export default function MagicMultipleSelect({options, handleMultiple, label, placeholder, alias}:Props) {
+export default function MagicMultipleSelect({options, error,handleMultiple, label, placeholder, alias}:Props) {
     const animatedComponents = makeAnimated();
   return (
     <ReactSelect
@@ -19,6 +20,9 @@ export default function MagicMultipleSelect({options, handleMultiple, label, pla
         className="rounded-xl border-select"
         placeholder={placeholder}
         isMulti
+        noOptionsMessage={error ? 
+          (obj: { inputValue:string } ) => obj.inputValue = `Error with fetching ${label} data`
+          : (obj: { inputValue:string } ) => obj.inputValue = `There is no ${label} available` }
         components={animatedComponents}
         onChange={(value: any) => handleMultiple(value, label, alias)}
         theme={(theme) => ({

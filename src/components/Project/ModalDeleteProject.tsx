@@ -17,18 +17,10 @@ export default function ModalDeleteProject({handleDelete,openD,handleOpenD}: Pro
   }
 
   return (
-    <Dialog
-      size="sm"
-      open={openD}
-      handler={handleOpenD}
-      className="bg-transparent shadow-none"
-    >
+    <Dialog size="sm" open={openD} handler={handleOpenD} className="bg-transparent shadow-none">
       <Card className="custom-modal">
         <CardBody className="flex flex-col gap-4">
-          <Typography
-            variant="h3"
-            className={"text-marine-300 text-xl font-extrabold text-center"}
-          >
+          <Typography variant="h3" className={"text-marine-300 text-xl font-extrabold text-center"}>
             Voulez-vous vraiment supprimer le projet ?
           </Typography>
           <div className="gap-5 flex justify-center">
