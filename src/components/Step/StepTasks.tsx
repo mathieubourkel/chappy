@@ -15,14 +15,20 @@ import ModalCreateTask from "../Task/ModalCreateTask";
 type Props = {
   step:intStep
   setStep: (step:intStep) => void;
-  handleReload: () => void;
 }
 
-export default function StepTasks({step, setStep, handleReload}:Props) {
+export default function StepTasks({step, setStep}:Props) {
   const userId: string = localStorage.getItem("id") || ""
   const {filteredData, renderNextButton, renderBeforeButton, reloadFilteredData} = useFilterDisplay(5, step.tasks)
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
+
+  const handleUpdateSteps = (id:string) => {
+    const updatedTasks = step.tasks.filter(item => item._id !== id);
+    console.log(updatedTasks)
+    setStep({...step, tasks: updatedTasks})
+    reloadFilteredData(updatedTasks)
+  }
 
   return (
     <section className="mb-20">
@@ -53,8 +59,8 @@ export default function StepTasks({step, setStep, handleReload}:Props) {
           {filteredData.map((task: intTask) => (
             <div key ={task._id} className='w-full'>
               {(task.owner && task.owner.id == +userId) 
-               ? <CardTaskOwner handleReload={handleReload} allUsers={step.project.members ||[]} task={task}/>
-               : <CardTask allUsers={step.project.members ||[]} task={task}/>}
+               ? <CardTaskOwner handleUpdateSteps={handleUpdateSteps} allUsers={step.project.members ||[]} task={task}/>
+               : <CardTask task={task}/>}
             </div>
           ))}
           </div>

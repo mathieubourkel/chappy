@@ -32,6 +32,7 @@ import NestedMenuSidebar from "./NestedMenuSidebar.tsx";
 import { intProfileUser } from "../../../services/interfaces/intUser.tsx";
 import "./sidebar.css"
 import RejoinModalSidebar from "../../modals/RejoinModalSidebar.tsx";
+import { intProject } from "../../../services/interfaces/intProject.tsx";
 
 export default function Sidebar(props: any) {
   const { openSidebar, toggleSidebar } = props;
@@ -61,6 +62,10 @@ export default function Sidebar(props: any) {
   useEffect(() => {
     const fetchData = async () => {
       const {data} = await getUserInfo();
+      data.projects.reverse()
+      data.projects.map((project:intProject) => {
+        project.steps.reverse()
+      })
       if (idUser == data.id) setUser(data);
     };
     fetchData();
@@ -147,7 +152,7 @@ export default function Sidebar(props: any) {
           Vos projets
         </Typography>
 
-        <List className={"text-light-200"}>
+        <List className={"text-light-200 w-[20vw]"}>
           {user.projects.map((project: any, index: number) => (
             <Accordion
               key={index}
@@ -168,10 +173,10 @@ export default function Sidebar(props: any) {
               >
                 <AccordionHeader
                   onClick={() => handleOpen(index)}
-                  className="border-b-0 px-3 py-0"
+                  className="border-b-0 px-3 py-0 text-light-200 text-sm"
                 >
                   <NavLink
-                    to={"/project/" + project.id}
+                    to={"/project/" + project._id}
                     className={"flex items-center"}
                   >
                     <ListItemPrefix>
@@ -180,10 +185,10 @@ export default function Sidebar(props: any) {
                         className="h-5 w-5 text-marine-100 p-2"
                       />
                     </ListItemPrefix>
-
-                    <Typography color="white" className="mr-auto font-normal">
+                    <div className='truncate'>{project.name}</div> 
+                    {/* <Typography color="white" className="font-normal">
                       <span className={"text-sm"}>{project.name}</span>
-                    </Typography>
+                    </Typography> */}
                   </NavLink>
                 </AccordionHeader>
               </ListItem>
@@ -222,7 +227,7 @@ export default function Sidebar(props: any) {
                     className={"py-0.5 px-3 hover:pl-2 l-small-item"}
                   >
                     <NavLink
-                      to={"/project/" + participation.id}
+                      to={"/project/" + participation._id}
                       className={"flex items-center"}
                     >
                       <ListItemPrefix>
@@ -231,7 +236,7 @@ export default function Sidebar(props: any) {
                           className="h-4 w-4 text-marine-100"
                         />
                       </ListItemPrefix>
-                      {participation.name}
+                     <span className='truncate'>{participation.name}</span> 
                     </NavLink>
                   </ListItem>
                 ))}
@@ -263,13 +268,13 @@ export default function Sidebar(props: any) {
               <List className={"text-light-200"}>
                 {user.myOwnTasks.map((task: any) => (
                   <ListItem
-                    key={task.id}
+                    key={task._id}
                     className={
                       "py-0.5 px-3 hover:bg-marine-300 hover:text-marine-100 hover:pl-2 l-small-item"
                     }
                   >
                     <NavLink
-                      to={"/project/step/" + task.id}
+                      to={"/project/step/" + task._id}
                       className={"flex items-center"}
                     >
                       <ListItemPrefix>
@@ -302,7 +307,7 @@ export default function Sidebar(props: any) {
               "border border-brick-300 shadow-xl shadow-brick-300/20 ring-8 ring-brick-300"
             }
           />
-          <Typography className="text-center font-semibold text-light-200 text-sm">
+          <Typography className="text-center font-semibold text-light-200 text-sm truncate">
             {user.firstname} {user.lastname}
           </Typography>
         </div>

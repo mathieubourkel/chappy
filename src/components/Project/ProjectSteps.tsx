@@ -57,7 +57,9 @@ export default function ProjectSteps({ isOwner, project, setProject}: Props) {
           icon={<FontAwesomeIcon icon={faCircleExclamation} className={"text-brick-400 text-xl"}/>}
           className="bg-marine-100/10 text-marine-300 border border-gray-500/30 rounded-lg p-5 my-5">
         Vous n'avez aucun jalon,
-        <Typography variant="paragraph" className={"inline-block font-semibold text-brick-400 hover:text-marine-300 underline underline-offset-4 decoration-marine-300 hover:decoration-brick-300 ml-1"}>
+        <Typography variant="paragraph"
+         onClick={handleOpen}
+         className={"inline-block font-semibold text-brick-400 hover:text-marine-300 underline underline-offset-4 decoration-marine-300 hover:decoration-brick-300 cursor-pointer ml-1"}>
             créer votre premier jalon.
         </Typography>
       </Alert>}

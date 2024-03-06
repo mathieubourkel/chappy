@@ -15,13 +15,11 @@ import { ButtonTypeEnum } from "../../services/enums/button.type";
 export default function StepPage() {
 
   const { idStep, idProject } = useParams();
-  const idUser:string = localStorage.getItem("id") ||'';
-
-  const {data, updateData, status, handleErrorAndLoading, handleReload} = useFetch(`${ApiPathEnum.STEP}/${idStep}`)
+  const {data, updateData, status, handleErrorAndLoading} = useFetch(`${ApiPathEnum.STEP}/${idStep}`)
   const navigate = useNavigate();
 
   if (status === DataStatusEnum.FIRST_FETCH){
-    data.project.owner.id.toString() === idUser && (data.isOwner = true)
+    
     const emailArray: intSelects = data.project.members.map(
       (element: intUser) => ({
         label: element.email,
@@ -36,16 +34,14 @@ export default function StepPage() {
     await deleteStepFromBDD(idStep ||"");
     navigate("/project/" + idProject);
   };
-
   return (
     <>
     {handleErrorAndLoading()}
     {data && <main className="project-page sm:mx-20 mx-5">
-      <StepHeader step={data} isOwner={data.isOwner} setStep={updateData} />
+      <StepHeader step={data} setStep={updateData} />
       <StepTasks
         step={data}
         setStep={updateData}
-        handleReload={handleReload}
       />
       <EspaceComment table={RefCommentEnum.jalon} idParent={idStep || ''} />
 

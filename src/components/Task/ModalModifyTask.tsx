@@ -33,14 +33,18 @@ export default function ModalModifyTask({ task, allUsers, setTask, open, handleO
       handleSetForm(task)
   }, [task])
 
+  const updatedAllUsers:any = allUsers.filter(user => !task.members?.some(taskUser => taskUser.id === user.value));
   const handleDeleteUser = async (idUser:number) => {
     await deleteUserToTaskToBDD( task._id ||'', idUser)
+    const updatedMembers = task.members?.filter(item => item.id !== idUser);
+    setTask({...task, members: updatedMembers})
   }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!validateForm(TaskSchema)) return;
-    const newTask = await modifyTaskToBDD(task._id || '', form);
+    const tmpMembers:any = [...form.members, ...task.members ||[]]
+    const newTask = await modifyTaskToBDD(task._id || '', {...form, members: tmpMembers});
     setTask(newTask.data)
     handleOpen()
   };
@@ -75,7 +79,7 @@ export default function ModalModifyTask({ task, allUsers, setTask, open, handleO
                   </ButtonGroup>
                 ))}
             </div>
-            <MagicMultipleSelect options={allUsers} handleMultiple={handleMultiple} label='members' 
+            <MagicMultipleSelect options={updatedAllUsers} handleMultiple={handleMultiple} label='members' 
                   placeholder='Ajouter des participants à la tâche' alias='email'/>
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">

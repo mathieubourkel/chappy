@@ -28,5 +28,6 @@ export enum ButtonTypeEnum {
     PURCHASES,
     MEMBERS,
     VIEW,
-    MAIL_USER
+    MAIL_USER,
+    DARK
 }

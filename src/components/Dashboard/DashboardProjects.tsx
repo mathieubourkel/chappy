@@ -9,13 +9,16 @@ import { intStep } from "../../services/interfaces/intStep";
 import { useFilterDisplay } from "../../hooks/useFilterDisplay";
 import { ButtonTypeEnum } from "../../services/enums/button.type";
 import MagicButton from "../elements/Buttons/MagicButton";
+import ModalCreateStep from "../Project/ModalCreateStep";
 
 export default function DashboardProjects({ projects }:{projects:intProjects}) {
 
   const [selected, setSelected] = useState<intProject>(projects[0] || {steps:[{id:0}]});
   const {filteredData, renderNextButton, renderBeforeButton } = useFilterDisplay(5, projects)
   const {filteredData: filteredDataS, renderNextButton: renderNextButtonS, renderBeforeButton: renderBeforeButtonS, reloadFilteredData } = useFilterDisplay(5, selected.steps)
-  
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen((cur) => !cur);
+
   const handleClick = (project: intProject) => {
     setSelected(project);
     reloadFilteredData(project.steps);
@@ -25,6 +28,7 @@ export default function DashboardProjects({ projects }:{projects:intProjects}) {
     <article>
       {projects.length > 0 ? (
         <div className='mt-5'>
+          <ModalCreateStep setProject={setSelected} project={selected} reloadFilteredData={reloadFilteredData} open={open} handleOpen={handleOpen}/>
           <div className="m-3 lg:flex mt-5">
             <nav className="2xl:pl-20 flex justify-between lg:w-[70vw] gap-5">
               <div className="w-[5vw]">
@@ -74,6 +78,7 @@ export default function DashboardProjects({ projects }:{projects:intProjects}) {
           </div>
           {selected.steps.length == 0 && (
               <div>
+              
               <Alert
                 icon={
                   <FontAwesomeIcon
@@ -86,13 +91,12 @@ export default function DashboardProjects({ projects }:{projects:intProjects}) {
                 Vous n'avez aucun jalon,
                 <Typography
                   variant="paragraph"
+                  onClick={handleOpen}
                   className={
                     "inline-block font-semibold text-brick-400 hover:text-marine-300 underline underline-offset-4 decoration-marine-300 hover:decoration-brick-300 cursor-pointer ml-1"
                   }
                 >
-                  <Link to={"/project/" + selected._id}>
                     créer votre premier jalon.
-                  </Link>
                 </Typography>
               </Alert>
               </div>

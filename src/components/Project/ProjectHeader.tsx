@@ -12,6 +12,7 @@ type Props = {
 }
 
 export default function ProjectHeader({project, isOwner} :Props) {
+
   return (
       <section className="lg:flex justify-between mb-20">
         <div className='lg:w-1/2'>

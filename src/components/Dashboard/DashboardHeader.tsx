@@ -15,7 +15,7 @@ export default function DashboardHeader({ nbProj }: {nbProj: number}) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((bool) => !bool);
   return (
-    <section className="mt-20 md:flex gap-x-10">
+    <section className="mt-20 lg:flex gap-x-10">
       <div className="basis-[40lvw]">
         {nbProj > 0 ? (
           <div className="flex items-center mb-5">
@@ -79,7 +79,7 @@ export default function DashboardHeader({ nbProj }: {nbProj: number}) {
             </>
         )}
       </div>
-        <Calendar className='lg:w-[49.4lvw] lg:h-[50lvh] overflow-x-clip'/>
+        <Calendar className='lg:w-[49.4lvw] lg:h-[50lvh] lg:overflow-x-clip'/>
 
     </section>
   );

@@ -12,20 +12,17 @@ import { ButtonTypeEnum } from "../../services/enums/button.type";
 import MagicIconButton from "../elements/Buttons/MagicIconButton";
 
 type Props = {
-  allUsers: []
   task: intTask
 };
 
-export default function CardTask({ allUsers, task }: Props) {
+export default function CardTask({task }: Props) {
   
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-  console.log(allUsers)
-  if (!task.members ||task.members.length == 0) task.members = []
 
   return (
     <Card className={`w-full custom-card-task mb-5`}>
-      <CardBody className={"custom-card-body px-6 pt-4"} >
+      <CardBody className={"min-h-[8rem] px-6 pt-4"} >
       <div className={"flex flex-wrap md:justify-between"}>
         <div className={"flex gap-x-2 items-center"}>
           <FontAwesomeIcon icon={faListCheck} size={"sm"} className={"text-marine-100"}/>
@@ -52,7 +49,6 @@ export default function CardTask({ allUsers, task }: Props) {
               task={task}
               handleOpen={handleOpen}
               open={open}
-              // allUsers={allUsers}
             />
             <MagicIconButton type={ButtonTypeEnum.VIEW} handleClick={handleOpen}/>
           </div>

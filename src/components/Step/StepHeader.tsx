@@ -16,19 +16,21 @@ import SelectDate from "../elements/Select/SelectDate.tsx";
 type Props = {
   step:intStep,
   setStep: (step:intStep) => void;
-  isOwner:boolean
 }
 
-export default function StepHeader({step, setStep, isOwner}:Props) {
+export default function StepHeader({step, setStep}:Props) {
 
   const { idStep } = useParams();
+  const idUser:string = localStorage.getItem("id") ||'';
   const handleModifyStep = async (data: intStep) => {
     await modifyStepToBDD(idStep || '', data);
   };
+  let isOwner:boolean = false;
+  step.project?.owner?.id == +idUser && (isOwner = true)
 
   const handleDate = async (select:any) => {
-    const newStep = await modifyStepToBDD(idStep || '',{...step, estimEndDate: select.endDate});
-    setStep(newStep.data)
+    await modifyStepToBDD(idStep || '',{...step, estimEndDate: select.endDate});
+    setStep({...step,estimEndDate: select.endDate })
   }
 
   const handleStatus = async (values:any):Promise<void> => {

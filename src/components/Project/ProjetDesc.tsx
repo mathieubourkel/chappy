@@ -25,8 +25,8 @@ export default function ProjectDesc({ project, setProject, isOwner }: Props) {
     }
 
     const handleDate = async (select:any) => {
-      const newProject = await modifyProjectToBDD(idProject || '',{...project, estimEndDate: select.endDate});
-      setProject(newProject.data)
+      await modifyProjectToBDD(idProject || '',{...project, estimEndDate: select.endDate});
+      setProject({...project, estimEndDate: select.endDate})
     }
   
     const handleStatus = async (values: any) => {

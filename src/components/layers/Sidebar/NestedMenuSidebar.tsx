@@ -20,7 +20,7 @@ export default function NestedMenuSidebar(props: any) {
                 strokeWidth={3}
                 className="h-4 w-4 pl-5 text-marine-100"
               />
-              <div className={"ml-3"}>{step.name}</div>
+              <div className={"ml-3 truncate"}>{step.name}</div>
             </NavLink>
           </div>
         ))}

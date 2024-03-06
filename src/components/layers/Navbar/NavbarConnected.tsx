@@ -1,38 +1,26 @@
-import {
-  Navbar,
-  Button,
-  IconButton,
-  Input,
-  Collapse,
-  Menu,
-  MenuHandler,
-} from "@material-tailwind/react";
+import {Navbar,Button,IconButton,Input,Collapse,Menu,MenuHandler,} from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBell,
-  faMagnifyingGlass,
-  faMoon,
-  faPlay,
-} from "@fortawesome/free-solid-svg-icons";
+import {faBell,faMagnifyingGlass,faMoon,faPlay,} from "@fortawesome/free-solid-svg-icons";
 import logo from "../../../assets/img/logo.png";
-
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Notifications from "./Notifications";
 
-type Props = {
-  toggleSidebar: () => void;
-};
-
-export function NavbarConnected({ toggleSidebar}: Props) {
+export function NavbarConnected({ toggleSidebar}: {toggleSidebar:() => void}) {
   const [openNav, setOpenNav] = useState(false);
+  const [dark, setDark] = useState(false)
 
   useEffect(() => {
+    if (dark){
+      document.body.classList.add('dark')
+    } else {
+      document.body.classList.remove('dark')
+    }
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
-  }, []);
+  }, [dark]);
 
   return (
     <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 shadow-none border-b-text-200 navbar">
@@ -51,7 +39,7 @@ export function NavbarConnected({ toggleSidebar}: Props) {
 
         <div className="flex items-center">
           <div className="hidden lg:flex">
-            <IconButton variant="text" className={"hover:bg-marine-100/20"}>
+            <IconButton variant="text" type='submit' className={"hover:bg-marine-100/20"} onClick={() => setDark((cur) => !cur)}>
               <FontAwesomeIcon
                 icon={faMoon}
                 className="h-4 w-4 text-marine-300"

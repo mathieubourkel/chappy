@@ -14,12 +14,12 @@ import { useState } from 'react'
 import { deleteTaskFromBDD, deleteUserToTaskToBDD, modifyTaskToBDD } from '../../services/api/tasks'
 
 type Props = {
-    handleReload: () => void;
     allUsers: []
     task: intTask
+    handleUpdateSteps: (id:string) => void;
   };
 
-export default function CardTaskOwner({ handleReload, allUsers, task }: Props) {
+export default function CardTaskOwner({ allUsers, task, handleUpdateSteps }: Props) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen((cur) => !cur);
     const [oneTask, setOneTask] = useState<intTask>(task)
@@ -30,18 +30,19 @@ export default function CardTaskOwner({ handleReload, allUsers, task }: Props) {
       };
 
     const handleDeleteTask = async () => {
-    await deleteTaskFromBDD(task._id ||'');
-    handleReload();
+        await deleteTaskFromBDD(task._id ||'');
+        handleUpdateSteps(task._id ||'');
     };
 
     const handleDelete = async (userId: number) => {
-    await deleteUserToTaskToBDD( task._id ||'', userId || 0);
-    handleReload()
+        await deleteUserToTaskToBDD( task._id ||'', userId || 0);
+        const updatedMembers = oneTask.members?.filter(item => item.id !== userId);
+        setOneTask({...task, members: updatedMembers})
     };
   
     return (
         <Card className={`w-full custom-card-task mb-5`}>
-        <CardBody className={"custom-card-body px-6 pt-4"}>
+        <CardBody className={"min-h-[8rem] px-6 pt-4"}>
             <div className={"flex flex-wrap md:justify-between"}>
                 <div className={"flex gap-x-2 items-center"}>
                 <FontAwesomeIcon icon={faListCheck} size={"sm"} className={"text-marine-100"}/>
