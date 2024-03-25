@@ -43,7 +43,6 @@ export default function ReplyCreate({ idComment, handleReload }: Props) {
 
   const handleSubmit = async (e:FormEvent) => {
     e.preventDefault();
-    console.log(form)
     await addCommentReplyToBDD({...form, content: form.content})
     setForm({...form, content:""})
     handleReload();

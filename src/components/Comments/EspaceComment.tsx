@@ -34,7 +34,6 @@ export default function EspaceComment({ table, idParent }: Props) {
     async function fetchData() {
       try {
         const {data} = await getComments(RefCommentEnum[table], idParent);
-        console.log(data)
         setComments(data);
 
       } catch (error) {
