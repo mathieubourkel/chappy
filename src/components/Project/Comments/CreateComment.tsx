@@ -58,8 +58,6 @@ const handleDelete = async () => {
                     config={ editorConfiguration }
                     data={form.content}
                     onChange={handleEditorChange}
-
-
                 />
 
               <div
