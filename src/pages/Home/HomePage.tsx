@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import "../../css/home.css";
-import { Button, Typography } from "@material-tailwind/react";
+import { Typography } from "@material-tailwind/react";
 import planning from "../../assets/img/planning.png";
 import blop from "../../assets/img/Blop.svg";
+import MagicButton from "../../components/elements/Buttons/MagicButton";
+import { ButtonTypeEnum } from "../../services/enums/button.type";
 
 export default function HomePage() {
   return (
@@ -24,25 +26,16 @@ export default function HomePage() {
         </article>
         <article className={"flex flex-wrap gap-5 justify-center"}>
           <Link to={"/signup#0"} className="flex">
-            <Button size="sm" className="bg-brick-400">
-              Je suis un particulier
-            </Button>
+            <MagicButton type={ButtonTypeEnum.BRICK_300} value='Je suis un particulier'/>
           </Link>
-
           <Link to={"/signup#1"}>
-            <Button size="sm" className="bg-brick-400">
-              Je suis un professionnel
-            </Button>
+            <MagicButton type={ButtonTypeEnum.BRICK_300} value='Je suis un professionnel'/>
           </Link>
         </article>
       </section>
       <section className={"hidden lg:flex lg:w-1/4 lg:animation-section"}>
         <img src={blop} alt={"fond animé"} className={"scale-in-right"} />
-        <img
-          src={planning}
-          alt={"logo de planning"}
-          className={"planning slide-in-right"}
-        />
+        <img src={planning} alt={"logo de planning"} className={"planning slide-in-right"}/>
       </section>
     </main>
   );

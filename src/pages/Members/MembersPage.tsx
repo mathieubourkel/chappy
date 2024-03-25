@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import ProjectHeader from "../../components/Project/Project/ProjectHeader";
+import ProjectHeader from "../../components/Project/ProjectHeader";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch.tsx";
-import Members from "../../components/Project/Member/Members.tsx";
+import Members from "../../components/Member/Members.tsx";
 import { ApiPathEnum } from "../../services/enums/api.path.enum.ts";
 
 export default function MembersPage() {

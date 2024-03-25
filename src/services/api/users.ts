@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { URL_API, useApi } from "../../hooks/useApi";
 import { intOldPwd } from "../interfaces/intAuth";
@@ -37,9 +38,8 @@ const PROJECT_ENDPOINT = "project"
     return await api.post(`${URL_API}/auth/register`, data);
   }
 
-  export async function addUserAndCompanyToBDD(data: intUser, dataCompany: intCompany) {
-    const body = {...data, ...dataCompany}
-    return await api.post(`${URL_API}/auth/registerWithCompany`, body)
+  export async function addUserAndCompanyToBDD(data:any) {
+    return await api.post(`${URL_API}/auth/registerWithCompany`, data)
   }
 
   export async function getUserInfo() {
@@ -48,10 +48,6 @@ const PROJECT_ENDPOINT = "project"
 
   export async function sendEmailForReset(email:string) {
     return await api.post(`${URL_API}/auth/resetPwd/sendMail`, {email: email})
-  }
-
-  export async function getEmailToken(token:string) {
-    return await api.get(`${URL_API}/auth/emailToken/${token}`)
   }
 
   export async function resetPwdWithEmail(data: {newPwd: string, emailToken: string}) {

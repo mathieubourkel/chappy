@@ -1,6 +1,6 @@
-import DashboardCollab from "../../components/Project/Dashboard/DashboardCollab";
-import DashboardHeader from "../../components/Project/Dashboard/DashboardHeader";
-import DashboardProjects from "../../components/Project/Dashboard/DashboardProjects";
+import DashboardCollab from "../../components/Dashboard/DashboardCollab";
+import DashboardHeader from "../../components/Dashboard/DashboardHeader";
+import DashboardProjects from "../../components/Dashboard/DashboardProjects";
 import { intProject, intProjects } from "../../services/interfaces/intProject";
 import { ApiPathEnum } from "../../services/enums/api.path.enum";
 import { useFetch } from "../../hooks/useFetch";

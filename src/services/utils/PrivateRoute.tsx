@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { Popup } from "../../components/Layers/Popup/Popup";
+import { Popup } from "../../components/layers/Popup/Popup";
 import { ManageWebSocket } from "./ManageWebSocket";
 
 export default function PrivateRoute() {

@@ -1,7 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "@material-tailwind/react";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useFetch } from "../../hooks/useFetch";
 import { deleteStepFromBDD } from "../../services/api/steps";
 import { RefCommentEnum } from "../../services/enums/comment.ref.enum";
@@ -9,9 +6,11 @@ import { intSelects } from "../../services/interfaces/generique.interface";
 import { intUser } from "../../services/interfaces/intUser";
 import { DataStatusEnum } from "../../services/enums/data.status.enum";
 import { ApiPathEnum } from "../../services/enums/api.path.enum";
-import StepTasks from "../../components/Project/Step/StepTasks";
-import EspaceComment from "../../components/Project/Comments/EspaceComment";
-import StepHeader from "../../components/Project/Step/StepHeader";
+import StepTasks from "../../components/Step/StepTasks";
+import EspaceComment from "../../components/Comments/EspaceComment";
+import StepHeader from "../../components/Step/StepHeader";
+import MagicButton from "../../components/elements/Buttons/MagicButton";
+import { ButtonTypeEnum } from "../../services/enums/button.type";
 
 export default function StepPage() {
 
@@ -51,17 +50,9 @@ export default function StepPage() {
       <EspaceComment table={RefCommentEnum.jalon} idParent={idStep || ''} />
 
       <div className={"flex justify-center mb-10"}>
-        <Button
-          onClick={() => handleDeleteStep()}
-          size={"sm"}
-          className="bg-marine-100 h-full hover:bg-marine-300"
-        >
-          <FontAwesomeIcon icon={faXmark} size="xl" />
-          <span className={"ml-3 whitespace-nowrap"}>
-            Supprimer le jalon
-          </span>
-        </Button>
+        <MagicButton type={ButtonTypeEnum.DELETE} value='Supprimer le jalon' handleClick={handleDeleteStep}/>
       </div>
+      
     </main>}
     </>
   );

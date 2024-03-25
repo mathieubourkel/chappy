@@ -1,26 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Input, Typography } from "@material-tailwind/react";
+import { Typography } from "@material-tailwind/react";
 import {  useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { sendEmailForReset } from "../../services/api/users";
-import { FormEvent, InputEvent } from "../../services/interfaces/generique.interface";
+import { FormEvent } from "../../services/interfaces/generique.interface";
+import MagicButton from "../../components/elements/Buttons/MagicButton";
+import { ButtonTypeEnum } from "../../services/enums/button.type";
+import { ResetPwdSchema } from "../../services/schemas/login.schema";
+import { useMagicForm } from "../../hooks/useMagicForm";
+import MagicInput from "../../components/elements/Input/MagicInput";
 
 export default function ResetPwd() {
 
-    const [email, setEmail] = useState<any>('');
     const [mailSent, setMailSent] = useState<boolean>(false)
+    const {form, handleChange, validateForm, renderErrors} = useMagicForm()
 
-    const handleChange = (e: InputEvent) => {
-        const { value } = e.target;
-        setEmail(value);
-      };
-
-      const handleSubmit = async (e:FormEvent) => {
-        e.preventDefault()
-        await sendEmailForReset(email)
-        setMailSent(true)
-      }
+    const handleSubmit = async (e:FormEvent) => {
+      e.preventDefault()
+      if (!validateForm(ResetPwdSchema)) return;
+      await sendEmailForReset(form)
+      setMailSent(true)
+    };
 
   return (
     <main className={"sm:mx-20 mx-5 flex flex-col justify-center items-center"}>
@@ -32,31 +31,18 @@ export default function ResetPwd() {
               Réinitialiser son mot de passe
             </Typography>
             <div>
-                <Input
-                  label="Entrez votre email"
-                  className={"!bg-light-100 border-select placeholder:!text-text-100"}
-                  name="email"
-                  id="email"
-                  crossOrigin={undefined}
-                  onChange={(e: InputEvent) => handleChange(e)}
-                />
-              </div>
-              <div className={"flex justify-center my-10"}>
-              <Button className={"bg-brick-400"} type="submit" size={"sm"}>
-                <FontAwesomeIcon
-                  icon={faPaperPlane}
-                  className={"text-sm mr-3"}
-                />{" "}
-                Envoyer l'email
-              </Button>
+              <MagicInput name='email' label='Entrez votre email' handleChange={handleChange} renderErrors={renderErrors}/>
+            </div>
+            <div className={"flex justify-center my-10"}>
+              <MagicButton type={ButtonTypeEnum.SEND} />
             </div>
           </article> 
         </form>
         </section>
         : <Typography variant="h3" className={"text-brick-300 text-center mb-10"}>
-        Le lien vers le formulaire de réinitialisaiton du mot de passe a été envoyé par email. <br/>
-        Veuillez attendre quelques instants et vérifier dans vos spams avant de refaire une demande.
-      </Typography>}
+            Le lien vers le formulaire de réinitialisaiton du mot de passe a été envoyé par email. <br/>
+            Veuillez attendre quelques instants et vérifier dans vos spams avant de refaire une demande.
+          </Typography>}
     </main>
   )
 }

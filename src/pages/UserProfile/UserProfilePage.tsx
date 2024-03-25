@@ -1,27 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import {
-  Avatar,
-  Button,
-  IconButton,
-  Input,
-  Typography,
-} from "@material-tailwind/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFloppyDisk, faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import {Avatar,Input,Typography,} from "@material-tailwind/react";
 import avatar from "../../assets/img/icon_user.png";
 import { modifyUserToBDD, quitCompany, resetPwd } from "../../services/api/users";
-import AddCompanyModal from "../../components/Project/Modals/AddCompanyModal";
-import RejoinCompanyModal from "../../components/Project/Modals/RejoinCompanyModal";
-import ModifyCompanyModal from "../../components/Project/Modals/ModifyCompanyModal";
-import QuitCompanyModal from "../../components/Project/Modals/QuitCompanyModal";
 import { intDemand, intProfileUser } from "../../services/interfaces/intUser";
 import { FormEvent, InputEvent } from "../../services/interfaces/generique.interface";
-import DeleteUser from "../../components/Project/Modals/DeleteMyAccount";
 import { ApiPathEnum } from "../../services/enums/api.path.enum";
 import { useFetch } from "../../hooks/useFetch";
 import { intCompany } from "../../services/interfaces/intCompany";
 import { useAlert } from "../../hooks/useAlert";
+import MagicButton from "../../components/elements/Buttons/MagicButton";
+import { ButtonTypeEnum } from "../../services/enums/button.type";
+import MagicIconButton from "../../components/elements/Buttons/MagicIconButton";
+import AddCompanyModal from "../../components/modals/AddCompanyModal";
+import ModifyCompanyModal from "../../components/modals/ModifyCompanyModal";
+import RejoinCompanyModal from "../../components/modals/RejoinCompanyModal";
+import QuitCompanyModal from "../../components/modals/QuitCompanyModal";
+import DeleteMyAccount from "../../components/modals/DeleteMyAccount";
 
 export default function UserProfilePage() {
 
@@ -39,7 +34,8 @@ export default function UserProfilePage() {
   const handleOpenRejoin = () => setOpenRejoin((bool) => !bool);
   const handleOpenAdd = () => setOpenAdd((bool) => !bool);
   const handleOpenDelete = () => setOpenDelete((bool) => !bool);
-  
+  const [openModify, setOpenModify] = useState(false);
+  const handleOpenModify = () => setOpenModify((bool) => !bool);
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target;
     updateData({ ...data, [name]: value });
@@ -67,8 +63,7 @@ export default function UserProfilePage() {
 
   const handlePassword = () => setDisplayPwd(!displayPwd);
 
-  const sendPwd = async (e: FormEvent) => {
-    e.preventDefault();
+  const sendPwd = async () => {
     try {
       await resetPwd(passwords);
       newAlert('Le mot de passe a été mise à jour', 'green')
@@ -128,12 +123,7 @@ export default function UserProfilePage() {
                 name="password"
                 type="password"
               />
-              <IconButton
-                className={"bg-marine-300 text-light-200"}
-                onClick={handlePassword}
-              >
-                <FontAwesomeIcon icon={faRotateRight} />
-              </IconButton>
+              <MagicIconButton type={ButtonTypeEnum.REFRESH} handleClick={handlePassword}/>
             </div>
             {displayPwd && (
               <div className='gap-5'>
@@ -168,11 +158,9 @@ export default function UserProfilePage() {
                   onChange={(e: InputEvent) => handlePasswords(e)}
                 />
                 </div>
-
-                
-                <Button className="mt-5" onClick={(e: any) => sendPwd(e)}>
-                  Envoyer le nouveau pwd
-                </Button>
+                <div className='mt-5 flex justify-center'>
+                <MagicButton type={ButtonTypeEnum.SEND} handleClick={sendPwd} value={'Réinitialiser'}/>
+                </div>
               </div>
             )}
             
@@ -193,15 +181,7 @@ export default function UserProfilePage() {
           </article>
           <div className={"flex justify-center my-10"}>
             <a href="#buttons-with-link">
-              <Button className={"bg-brick-400"}
-                      size={"sm"}
-                      type="submit">
-                <FontAwesomeIcon
-                  icon={faFloppyDisk}
-                  className={"text-sm mr-3"}
-                />{" "}
-                Enregistrer
-              </Button>
+              <MagicButton type={ButtonTypeEnum.SAVE}/>
             </a>
           </div>
           </form>
@@ -216,7 +196,7 @@ export default function UserProfilePage() {
                 Mes entreprises
               </Typography>
               <div className="md:flex gap-3">
-                <Button size={"sm"} onClick={handleOpenAdd}>Ajouter une entreprise</Button>
+                <MagicButton type={ButtonTypeEnum.CREATE} value='Ajouter' handleClick={handleOpenAdd}/>
                 {openAdd && <AddCompanyModal newAlert={newAlert} open={openAdd} handleOpen={handleOpenAdd} handleReload={handleReload}/> }
 
               </div>
@@ -234,7 +214,8 @@ export default function UserProfilePage() {
                   readOnly
                   value={group.name}
                 />
-               <ModifyCompanyModal newAlert={newAlert} group={group} handleReload={handleReload} /> 
+              <MagicIconButton type={ButtonTypeEnum.MODIFY} handleClick={handleOpenModify}/>
+               <ModifyCompanyModal newAlert={newAlert} group={group} handleReload={handleReload} open={openModify} handleOpen={handleOpenModify} /> 
                 </div>
                 ))
               }
@@ -255,8 +236,7 @@ export default function UserProfilePage() {
                 Salarié
               </Typography>
               <div className="md:flex gap-3">
-              
-                <Button size={"sm"} onClick={handleOpenRejoin}>Rejoindre une entreprise</Button>
+                <MagicButton type={ButtonTypeEnum.REJOIN} handleClick={handleOpenRejoin}/>
                 {openRejoin && <RejoinCompanyModal newAlert={newAlert} open={openRejoin} handleOpen={handleOpenRejoin} handleReload={handleReload}/> }
                 </div>
                 </div>
@@ -274,7 +254,7 @@ export default function UserProfilePage() {
                         readOnly
                         value={demand.group.name}
                       />
-                    <Button size={"sm"} onClick={handleOpenQuit}>Quitter mon entreprise</Button>
+                    <MagicButton type={ButtonTypeEnum.MARINE_300} value='Quitter mon entreprise' handleClick={handleOpenQuit}/>
                     <QuitCompanyModal idDemand={demand.id || 0} newAlert={newAlert} open={openQuit} handleOpen={handleOpenQuit} handleReload={handleReload}/>
                       </div> : 
                       <div className={"mb-5 w-full flex gap-5 items-center"}>
@@ -286,7 +266,7 @@ export default function UserProfilePage() {
                         readOnly
                         value={demand.group.name}
                       />
-                    <Button size={"sm"} onClick={() => handleCancelDemand(demand.id ||0)}>Annuler la demande</Button>
+                    <MagicButton type={ButtonTypeEnum.MARINE_300} value='Annuler' handleClick={handleCancelDemand(demand.id ||0)}/>
                         </div>}
                       </div>
                       )) }
@@ -301,15 +281,8 @@ export default function UserProfilePage() {
           <article className='mt-10'>
             <div className={"flex justify-center my-10"}>
               <a href="#buttons-with-link">
-                <Button
-                onClick={() => handleOpenDelete()}
-                  variant="outlined"
-                  size={"sm"}
-                  className={"!border !border-marine-300 !text-marine-300"}
-                >
-                  Supprimer mon compte
-                </Button>
-                <DeleteUser open={openDelete} handleOpen={handleOpenDelete}/>
+                <MagicButton type={ButtonTypeEnum.DELETE} value='Supprimer mon compte' handleClick={handleOpenDelete}/>
+                <DeleteMyAccount open={openDelete} handleOpen={handleOpenDelete}/>
               </a>
             </div>
           </article>

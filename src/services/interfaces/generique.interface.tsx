@@ -16,6 +16,11 @@ export type intSelect = {
     label: string | undefined
   };
 
+  export type intSafeSelect = {
+    value: number
+    label:string
+  }
+
 export interface intAlert {
     open:boolean,
     color: colors | undefined

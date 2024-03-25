@@ -1,8 +1,8 @@
-import ProjectHeader from "../../components/Project/Project/ProjectHeader";
+import ProjectHeader from "../../components/Project/ProjectHeader";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { ApiPathEnum } from "../../services/enums/api.path.enum";
-import Documents from "../../components/Project/Document/Documents";
+import Documents from "../../components/Document/Documents";
 
 export default function DocumentPage() {
   const {idProject} = useParams();

@@ -3,7 +3,7 @@ export interface intCompta {
     refId: string
     refModel: number
     description: string,
-    price: {devise: number, fullTaxPrice:number},
+    price: number,
     status: number,
     commandDate: string,
     deliveryDate: string
