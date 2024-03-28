@@ -152,7 +152,7 @@ export default function Sidebar(props: any) {
           Vos projets
         </Typography>
 
-        <List className={"text-light-200 w-[20vw]"}>
+        <List className={"text-light-200 w-[20vw] xl:w-auto"}>
           {user.projects.map((project: any, index: number) => (
             <Accordion
               key={index}
